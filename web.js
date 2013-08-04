@@ -1,5 +1,6 @@
 var BUFFER_LENGTH = 300;
 var INDEX_HTML = "rooms.html";
+
 var ADAPTER_JS = "js/adapter.js";
 
 var express = require('express');
@@ -22,8 +23,18 @@ app.get('/index.html', function(request, response) {
     printFile(INDEX_HTML,response);
 });
 
+app.get('/room', function(request, response) {
+
+    printFile("room.html",response);
+});
+
 
 var port = process.env.PORT || 8080;
 app.listen(port, function() {
   console.log("Listening on " + port);
 });
+
+var rtcPort = 8001;
+var webRTC = requir1e('webrtc.io');
+webRTC.listen(rtcPort);
+
