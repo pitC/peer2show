@@ -3,11 +3,23 @@ var INDEX_HTML = "rooms.html";
 
 var ADAPTER_JS = "js/adapter.js";
 
-var express = require('express');
+var express = require('express'); 
+var app = express();
+var server = require('http').createServer(app);
+var webRTC = require('webrtc.io');
+
+webRTC.listen(8001, function(){
+	console.log("Webrtc listening");
+	
+});
+
+webRTC.rtc.on("connection",function(){
+	console.log("Connection!");
+});
 
 var fs = require('fs');
 
-var app = express.createServer(express.logger());
+
 
 function printFile(fileName,response){
     response.writeHeader(200, {"Content-Type": "text/html"});
@@ -34,7 +46,4 @@ app.listen(port, function() {
   console.log("Listening on " + port);
 });
 
-var rtcPort = 8001;
-var webRTC = requir1e('webrtc.io');
-webRTC.listen(rtcPort);
 
