@@ -12,10 +12,6 @@
 
 <style>
 
-.whiteboard-container{
-position:relative;
-}
-
 #whiteboard-canvas {
 width:400px;
 height:300px;
@@ -68,13 +64,7 @@ border: solid 1px black;
 <canvas id="whiteboard-canvas">
 </canvas>
 </div>
-
-    <video id='localVideo' autoplay muted ></video>
-    <video id='remoteVideo' autoplay></video>
 <br>
-<script src='/socket.io/socket.io.js'></script>
-<script src='js/adapter.js'></script>
-<script src='js/whiteboard_client.js'></script>
 <script type="text/javascript" src="js/whiteboard.js"></script>
 </body>
 </html>
