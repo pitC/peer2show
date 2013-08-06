@@ -6,6 +6,11 @@
 var canvas, context, tool;
 
 
+var webrtcClient = new WebRTCClient("hello");
+webrtcClient.onRcvChStateChangeCb = function(data){ alert(data);};
+webrtcClient.startUserMedia(null,document.getElementById('localVideo'),document.getElementById('remoteVideo'));
+
+
 if(window.addEventListener) {
 window.addEventListener('load', function () {
   
@@ -37,6 +42,20 @@ window.addEventListener('load', function () {
     canvas.addEventListener('mousedown', ev_canvas, false);
     canvas.addEventListener('mousemove', ev_canvas, false);
     canvas.addEventListener('mouseup',   ev_canvas, false);
+    
+    webrtcClient.onDataRcvCb = function(data){
+    	var splits = data.split("#");
+    	  
+    	  var evType = splits[0];
+    	  var x = splits[1];
+    	  var y = splits[2];
+    	  
+    	  var func = tool[evType];
+    	  if (func) {
+    	    func(x,y);
+    	    
+    	  }
+    };
   }
 
   // This painting tool works like a drawing pencil which tracks the mouse 
@@ -92,7 +111,7 @@ window.addEventListener('load', function () {
     }
     
     //send data to remote peer
-    sendData(ev.type+"#"+ev._x+"#"+ev._y);
+    webrtcClient.sendData(ev.type+"#"+ev._x+"#"+ev._y);
     
   }
 
