@@ -1,5 +1,5 @@
 var MAX_ROOM_SIZE = 1;
-var PORT = 8080d;
+var PORT = 8080;
 var static = require('node-static');
 var http = require('http');
 var file = new(static.Server)();
