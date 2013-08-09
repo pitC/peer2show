@@ -8,8 +8,8 @@ function WebRTCClient(roomId){
 	var localVideo = null;
 	var remoteVideo = null;
 	
-	var sendChannel = null;
-	var receiveChannel = null;
+	var dataChannel = null;
+
 		
 	var isChannelReady = false;
 	var isInitiator = false;
@@ -31,8 +31,7 @@ function WebRTCClient(roomId){
 	};
 	
 	// callbacks
-	this.onSendChStateChangeCb = null;
-	this.onRcvChStateChangeCb = null;
+	this.onDataChStateChangeCb = null;
 	this.onDataRcvCb = null;
 	
 	function launchCallback(callback, event){
@@ -52,7 +51,7 @@ function WebRTCClient(roomId){
 		
 		pc_constraints = {
 		  'optional': [
-		    {'DtlsSrtpKeyAgreement': true},
+		    //{'DtlsSrtpKeyAgreement': true},
 		    {'RtpDataChannels': true}
 		  ]};
 		
@@ -101,7 +100,7 @@ function WebRTCClient(roomId){
 		
 		socket.on('message', function (message){
 			  console.log('Received message:', message);
-			  if (message === 'got user media') {
+			  if (message === 'got user media' || message === 'start data') {
 			  	maybeStart();
 			  } else if (message.type === 'offer') {
 			    if (!isInitiator && !isStarted) {
@@ -162,11 +161,24 @@ function WebRTCClient(roomId){
 		
 	};
 	
+	this.startData = function(){
+			  
+		  sendMessage('start data');
+		  if (isInitiator) {
+		    maybeStart();
+		  }
+		
+		  requestTurn(TURN_SERVER);
+		
+	};
+	
 	
 	function maybeStart() {
-	  if (!isStarted && localStream && isChannelReady) {
+	  if (!isStarted && isChannelReady) {
 	    createPeerConnection();
-	    pc.addStream(localStream);
+	    if (localStream){
+	    	pc.addStream(localStream);
+	    }
 	    isStarted = true;
 	    if (isInitiator) {
 	      doCall();
@@ -193,10 +205,10 @@ function WebRTCClient(roomId){
 	  pc.onaddstream = handleRemoteStreamAdded;
 	  pc.onremovestream = handleRemoteStreamRemoved;
 	
-
+	  if (isInitiator){
 	    try {
 	      // Reliable Data Channels not yet supported in Chrome
-	      sendChannel = pc.createDataChannel("sendDataChannel",
+	      dataChannel = pc.createDataChannel("sendDataChannel",
 	        {reliable: false});
 	      console.log('Created send data channel');
 	    } catch (e) {
@@ -204,16 +216,16 @@ function WebRTCClient(roomId){
 	            'You need Chrome M25 or later with RtpDataChannel enabled');
 	      console.log('createDataChannel() failed with exception: ' + e.message);
 	    }
-	    sendChannel.onopen = handleSendChannelStateChange;
-	    sendChannel.onclose = handleSendChannelStateChange;
-
-	    pc.ondatachannel = gotReceiveChannel;
-
+	    attachDataEvents();
+	  }
+	  else{
+	    pc.ondatachannel = gotDataChannel;
+	  }
 	}
 	
 	this.sendData = function (data) {
-	  if (isChannelReady && sendChannel != null){
-		  sendChannel.send(data);
+	  if (isChannelReady && dataChannel != null){
+		  dataChannel.send(data);
 		  console.log('Sent data: ' + data);
 	  }
 	  else{
@@ -221,32 +233,27 @@ function WebRTCClient(roomId){
 	  }
 	};
 	
-	function gotReceiveChannel(event) {
-	  console.log('Receive Channel Callback');
-	  receiveChannel = event.channel;
-	  receiveChannel.onmessage = handleMessage;
-	  receiveChannel.onopen = handleReceiveChannelStateChange;
-	  receiveChannel.onclose = handleReceiveChannelStateChange;
-	}
 	
 	function handleMessage(event) {
 	  console.log('Received message: ' + event.data);
 	  launchCallback(that.onDataRcvCb, event.data);
 	}
 	
-	function handleSendChannelStateChange() {
-	  var readyState = sendChannel.readyState;
-	  console.log('Send channel state is: ' + readyState);
-	  launchCallback(that.onSendChStateChangeCb, readyState);
-	  
+	function attachDataEvents(){
+		dataChannel.onmessage = handleMessage;
+		dataChannel.onopen = handleDataChannelStateChange;
+		dataChannel.onclose = handleDataChannelStateChange;
 	}
 	
-	function handleReceiveChannelStateChange() {
-	  var readyState = receiveChannel.readyState;
-	  console.log('Receive channel state is: ' + readyState);
-	  //alert(readyState);
-	  launchCallback(that.onRcvChStateChangeCb, readyState);
-	  
+	function gotDataChannel(event){
+		dataChannel = event.channel;
+		attachDataEvents();
+	}
+	
+	function handleDataChannelStateChange(){
+		var readyState = dataChannel.readyState;
+		console.log('Data channel state is: ' + readyState);
+		launchCallback(that.onDataChStateChangeCb, readyState);
 	}
 	
 	function handleIceCandidate(event) {
@@ -311,7 +318,6 @@ function WebRTCClient(roomId){
 	  for (var i in pc_config.iceServers) {
 	    if (pc_config.iceServers[i].url.substr(0, 5) === 'turn:') {
 	      turnExists = true;
-	      turnReady = true;
 	      break;
 	    }
 	  }
@@ -327,7 +333,7 @@ function WebRTCClient(roomId){
 	          'url': 'turn:' + turnServer.username + '@' + turnServer.turn,
 	          'credential': turnServer.password
 	        });
-	        turnReady = true;
+	  
 	      }
 	    };
 	    xhr.open('GET', turn_url, true);

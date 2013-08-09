@@ -7,9 +7,9 @@ var canvas, context, tool;
 
 
 var webrtcClient = new WebRTCClient("hello");
-webrtcClient.onRcvChStateChangeCb = function(data){ alert(data);};
+webrtcClient.onDataChStateChangeCb = function(data){ alert(data);};
 webrtcClient.startUserMedia(null,document.getElementById('localVideo'),document.getElementById('remoteVideo'));
-
+//webrtcClient.startData();
 
 if(window.addEventListener) {
 window.addEventListener('load', function () {
