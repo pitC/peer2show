@@ -1,25 +1,26 @@
+var ROOM = "whiteboard.html";
+var ROOMS = "rooms.html";
 var MAX_ROOM_SIZE = 1;
 var PORT = 8080;
 var static = require('node-static');
 var http = require('http');
 var file = new(static.Server)();
-var app = http.createServer(function (req, res) {
-  file.serve(req, res);
-}).listen(PORT);
 
+var express = require('express');
+var app = express();
 
-// var express = require('express');
-// var app = express();
-// console.log(express.static(__dirname + '/js'));
-// app.use(express.static(__dirname + '/js'));
-// app.all('*', function(req, res){
-// 	res.sendfile("index.html");
-// });
+ app.use("/js", express.static(__dirname + '/js'));
+ app.all('/rooms', function(req, res){
+ 	res.sendfile(ROOMS);
+ });
+ app.all('/room/:roomId', function(req, res){
+	 	console.log("Get room: "+req.params.roomId);
+	 	res.sendfile(ROOM);
+ });
 
-// app.listen(9000);
+var server = http.createServer(app).listen(PORT);
 
-
-var io = require('socket.io').listen(app);
+var io = require('socket.io').listen(server);
 io.sockets.on('connection', function (socket){
 
 	function log(){

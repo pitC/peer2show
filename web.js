@@ -30,7 +30,7 @@ function printFile(fileName,response){
 
 app.use("/js", express.static(__dirname + '/js'));
 
-app.get('/index.html', function(request, response) {
+app.get('/', function(request, response) {
 
     printFile(INDEX_HTML,response);
 });

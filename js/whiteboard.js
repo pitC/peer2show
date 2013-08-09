@@ -5,8 +5,9 @@
 // Keep everything in anonymous function, called on window load.
 var canvas, context, tool;
 
-
-var webrtcClient = new WebRTCClient("hello");
+var urlPath=window.location.pathname; 
+var room = urlPath.split('/').pop();
+var webrtcClient = new WebRTCClient(room);
 webrtcClient.onDataChStateChangeCb = function(data){ alert(data);};
 webrtcClient.startUserMedia(null,document.getElementById('localVideo'),document.getElementById('remoteVideo'));
 //webrtcClient.startData();

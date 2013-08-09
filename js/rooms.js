@@ -36,7 +36,7 @@
 		Rooms.RoomThumbView = Backbone.View.extend({
             template : template('room-thumb'),
             events : {
-                'click button.remove-room' : 'removeRoom'
+                'click .btn.remove-room' : 'removeRoom'
             },
             render : function(){
                 this.$el.html(this.template(this));
