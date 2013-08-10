@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Rooms Backbone test</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/css/bootstrap.min.css">
+	
+
+<style>
+video {
+  border:5px solid black;
+}
+
+/* Large desktop */
+      @media (min-width: 980px) { 
+	  video{
+	  width:40%;
+      }
+	  }
+
+      /* Landscape phones and down */
+      @media (max-width: 650px) { 
+       video{
+	   width:100%;
+	   }
+      }
+
+button {
+  font: 18px sans-serif;
+  padding: 8px;
+}
+textarea {
+  font-family: monospace;
+  margin: 2px;
+  width:480px;
+  height:640px;
+}
+</style>
+</head>
+<body>
+<div class="navbar">
+  <div class="container">
+
+    <!-- .navbar-toggle is used as the toggle for collapsed navbar content -->
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+
+    <!-- Be sure to leave the brand out there if you want it shown -->
+    <a class="navbar-brand" href="#">Title</a>
+
+    <!-- Place everything within .navbar-collapse to hide it until above 768px -->
+    <div class="nav-collapse collapse navbar-responsive-collapse">
+      <ul class="nav navbar-nav">
+	  <li class="active"><a href="#home">Home</a></li>
+	  <li><a href="#About">About</a></li>
+	  <li><a href="#Rooms">Rooms</a></li>
+	</ul>
+
+      
+    </div><!-- /.nav-collapse -->
+  </div><!-- /.container -->
+</div><!-- /.navbar -->
+<div id="main" class="container">
+Loading...
+</div>
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<!-- Load the polyfill to switch-hit between Chrome and Firefox -->
+<script src="js/adapter.js"></script>
+<script src="js/lib/mustache.js"></script>
+
+<script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
+<!-- <script src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.0.0/backbone-min.js"></script> -->
+
+<script src="js/lib/backbone.js"></script>
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/js/bootstrap.min.js"></script>
+
+<script src="js/templateLoader.js"></script>
+<script src="js/lib/backbone-localstorage.js"></script>
+<script src="js/backbones/rooms.js"></script>
+</body>
+</html>
+
+

@@ -1,5 +1,5 @@
-var ROOM = "whiteboard.html";
-var ROOMS = "rooms.html";
+var ROOM = "html/whiteboard.html";
+var ROOMS = "html/rooms.html";
 var MAX_ROOM_SIZE = 1;
 var PORT = 8080;
 var static = require('node-static');
@@ -10,9 +10,15 @@ var express = require('express');
 var app = express();
 
  app.use("/js", express.static(__dirname + '/js'));
+ app.use("/tpl", express.static(__dirname + '/tpl'));
  app.all('/rooms', function(req, res){
  	res.sendfile(ROOMS);
  });
+ 
+ app.all('/whiteboard.html', function(req, res){
+	 	res.sendfile("whiteboard.html");
+ });
+ 
  app.all('/room/:roomId', function(req, res){
 	 	console.log("Get room: "+req.params.roomId);
 	 	res.sendfile(ROOM);
