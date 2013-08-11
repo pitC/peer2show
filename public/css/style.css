@@ -1,0 +1,28 @@
+video {
+  border:5px solid black;
+}
+
+/* Large desktop */
+      @media (min-width: 980px) { 
+	  video{
+	  width:40%;
+      }
+	  }
+
+      /* Landscape phones and down */
+      @media (max-width: 650px) { 
+       video{
+	   width:100%;
+	   }
+      }
+
+button {
+  font: 18px sans-serif;
+  padding: 8px;
+}
+textarea {
+  font-family: monospace;
+  margin: 2px;
+  width:480px;
+  height:640px;
+}
