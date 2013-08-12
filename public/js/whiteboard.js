@@ -9,7 +9,7 @@ var urlPath=window.location.pathname;
 var room = urlPath.split('/').pop();
 var webrtcClient = new WebRTCClient(room);
 webrtcClient.onDataChStateChangeCb = function(data){ alert(data);};
-webrtcClient.startUserMedia(null,document.getElementById('localVideo'),document.getElementById('remoteVideo'));
+//webrtcClient.startUserMedia(null,document.getElementById('localVideo'),document.getElementById('remoteVideo'));
 //webrtcClient.startData();
 
 $(".videoContainer").draggable().resizable({
@@ -107,7 +107,7 @@ window.addEventListener('load', function () {
   }
   function getPos(canvas, evt) {
       var coordinates = {};
-	  if(evt.type.contains("touch")) {
+	  if(evt.type.indexOf("touch") != -1) {
 		  coordinates = 
 			  {
 				  x: evt.targetTouches[0].pageX - canvas.offsetLeft,
@@ -129,7 +129,7 @@ window.addEventListener('load', function () {
   // position relative to the canvas element.
   function ev_canvas (ev) {
 	
-    
+    console.log(ev);
 	 var mousePos = getPos(canvas, ev);
     // Call the event handler of the tool.
     var func = tool[ev.type];
