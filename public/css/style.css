@@ -8,7 +8,13 @@ background-image: -o-radial-gradient(center center, farthest-side circle, #fffff
 background-image: radial-gradient(farthest-side circle at center center, #ffffff 0%, #D5D5D5 100%);
 
 }
+.whiteboard-container{
+width:100%;
+}
 
+#whiteboard-canvas{
+background-color:black;
+}
 
 video{
     width:100%;

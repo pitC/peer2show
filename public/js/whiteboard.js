@@ -48,6 +48,9 @@ window.addEventListener('load', function () {
     canvas.addEventListener('mousedown', ev_canvas, false);
     canvas.addEventListener('mousemove', ev_canvas, false);
     canvas.addEventListener('mouseup',   ev_canvas, false);
+    canvas.addEventListener('touchstart', ev_canvas, false);
+    canvas.addEventListener('touchmove', ev_canvas, false);
+    canvas.addEventListener('touchend',   ev_canvas, false);
     
     webrtcClient.onDataRcvCb = function(data){
     	var splits = data.split("#");
@@ -81,12 +84,18 @@ window.addEventListener('load', function () {
     // This function is called every time you move the mouse. Obviously, it only 
     // draws if the tool.started state is set to true (when you are holding down 
     // the mouse button).
-    this.mousemove = function (x,y) {
+    
+    this.touchmove = function (x,y) {
+    
       if (tool.started) {
         context.lineTo(x,y);
+        context.strokeStyle = '#FFFFFF';
         context.stroke();
+        console.log("draw!");
       }
     };
+    
+    this.mousemove = this.touchmove;
 
     // This is called when you release the mouse button.
     this.mouseup = function (x,y) {
@@ -96,28 +105,41 @@ window.addEventListener('load', function () {
       }
     };
   }
-
+  function getPos(canvas, evt) {
+      var coordinates = {};
+	  if(evt.type.contains("touch")) {
+		  coordinates = 
+			  {
+				  x: evt.targetTouches[0].pageX - canvas.offsetLeft,
+				  y: evt.targetTouches[0].pagey - offsetTop
+			  }
+		  
+		  
+	  }
+	  else{
+		  coordinates = 
+       {
+    	  x: evt.pageX - canvas.offsetLeft,
+    	  y: evt.pageY - canvas.offsetTop
+      };
+	  }
+	  return coordinates;
+  }
   // The general-purpose event handler. This function just determines the mouse 
   // position relative to the canvas element.
   function ev_canvas (ev) {
-	console.log("Canvas event: "+ev._x+" "+ev._y+" "+ev.layerX+" "+ev.layerY);
-    if (ev.layerX || ev.layerX == 0) { // Firefox
-      ev._x = ev.layerX;
-      ev._y = ev.layerY;
-    } else if (ev.offsetX || ev.offsetX == 0) { // Opera
-      ev._x = ev.offsetX;
-      ev._y = ev.offsetY;
-    }
-
+	
+    
+	 var mousePos = getPos(canvas, ev);
     // Call the event handler of the tool.
     var func = tool[ev.type];
     if (func) {
-      func(ev._x,ev._y);
+      func(mousePos.x,mousePos.y);
       
     }
-    
+    console.log(ev.type+" "+mousePos.x+" "+mousePos.y);
     //send data to remote peer
-    webrtcClient.sendData(ev.type+"#"+ev._x+"#"+ev._y);
+    webrtcClient.sendData(ev.type+"#"+mousePos.x+"#"+mousePos.y);
     
   }
 

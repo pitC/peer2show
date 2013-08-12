@@ -42,15 +42,17 @@
   </div><!-- /.container -->
 </div><!-- /.navbar -->
 <div class="whiteboard-container row-fluid">
-<canvas id="whiteboard-canvas">
+<canvas id="whiteboard-canvas" width="500" height="375">
 </canvas>
 </div>
+
 	<div class="videoContainer">
     	<video id='localVideo' autoplay muted ></video>
     </div>
     <div class="videoContainer">
     	<video id='remoteVideo' autoplay></video>
     </div>
+
 <br>
 <script src='/socket.io/socket.io.js'></script>
 <script src='/js/webrtc/adapter.js'></script>
