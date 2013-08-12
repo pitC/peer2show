@@ -81,6 +81,7 @@ window.addEventListener('load', function () {
         tool.started = true;
     };
 
+    this.touchstart = this.mousedown;
     // This function is called every time you move the mouse. Obviously, it only 
     // draws if the tool.started state is set to true (when you are holding down 
     // the mouse button).
@@ -104,6 +105,8 @@ window.addEventListener('load', function () {
         tool.started = false;
       }
     };
+    
+    this.touchend = this.mouseup;
   }
   function getPos(canvas, evt) {
       var coordinates = {};
