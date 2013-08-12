@@ -114,8 +114,8 @@ window.addEventListener('load', function () {
 		  coordinates = 
 			  {
 				  x: evt.targetTouches[0].pageX - canvas.offsetLeft,
-				  y: evt.targetTouches[0].pagey - offsetTop
-			  }
+				  y: evt.targetTouches[0].pagey - canvas.offsetTop
+			  };
 		  
 		  
 	  }
