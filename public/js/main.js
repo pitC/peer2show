@@ -8,9 +8,9 @@ require.config({
 	paths: {
 		
 		jquery: 'http://code.jquery.com/jquery-1.10.1.min', 
+		jqueryui: 'http://code.jquery.com/ui/1.10.3/jquery-ui',
 		underscore: 'http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min', 
 		backbone:'http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.0.0/backbone-min',
-		backbone_local_storage:'lib/backbone-localstorage',
 		bootstrap: 'http://netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/js/bootstrap.min'
 	},
 	shim: {
@@ -20,6 +20,9 @@ require.config({
     },
     'underscore': {
         exports: '_'
+    },
+    'jqueryui': {
+    	deps: ['jquery']
     }
 }
 }); 

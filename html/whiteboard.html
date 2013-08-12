@@ -7,36 +7,12 @@
 <!-- Load the polyfill to switch-hit between Chrome and Firefox -->
 
 <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/css/bootstrap.min.css">
+
 <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/js/bootstrap.min.js"></script>
-
-<style>
-
-.whiteboard-container{
-position:relative;
-}
-
-#whiteboard-canvas {
-width:400px;
-height:300px;
-border: solid 1px black;
-}
-
-/* Large desktop */
-      @media (min-width: 980px) { 
-	  video{
-	  width:40%;
-      }
-	  }
-
-      /* Landscape phones and down */
-      @media (max-width: 650px) { 
-       video{
-	   width:100%;
-	   }
-      }
-
-</style>
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 <body>
 <div class="navbar">
@@ -68,9 +44,12 @@ border: solid 1px black;
 <canvas id="whiteboard-canvas">
 </canvas>
 </div>
-
-    <video id='localVideo' autoplay muted ></video>
-    <video id='remoteVideo' autoplay></video>
+	<div class="videoContainer">
+    	<video id='localVideo' autoplay muted ></video>
+    </div>
+    <div class="videoContainer">
+    	<video id='remoteVideo' autoplay></video>
+    </div>
 <br>
 <script src='/socket.io/socket.io.js'></script>
 <script src='/js/webrtc/adapter.js'></script>

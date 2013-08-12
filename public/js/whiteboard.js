@@ -12,6 +12,11 @@ webrtcClient.onDataChStateChangeCb = function(data){ alert(data);};
 webrtcClient.startUserMedia(null,document.getElementById('localVideo'),document.getElementById('remoteVideo'));
 //webrtcClient.startData();
 
+$(".videoContainer").draggable().resizable({
+aspectRatio: 4 / 3
+});
+
+
 if(window.addEventListener) {
 window.addEventListener('load', function () {
   
