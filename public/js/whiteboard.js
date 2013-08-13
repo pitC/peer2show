@@ -50,7 +50,7 @@ window.addEventListener('load', function () {
     canvas.addEventListener('mouseup',   ev_canvas, false);
     canvas.addEventListener('touchstart', ev_canvas, false);
     canvas.addEventListener('touchmove', ev_canvas, false);
-    canvas.addEventListener('touchend',   ev_canvas, false);
+//    canvas.addEventListener('touchend',   ev_canvas, false);
     
     webrtcClient.onDataRcvCb = function(data){
     	var splits = data.split("#");
@@ -140,6 +140,7 @@ window.addEventListener('load', function () {
       func(mousePos.x,mousePos.y);
       
     }
+    ev.preventDefault();
     console.log(ev.type+" "+mousePos.x+" "+mousePos.y);
     //send data to remote peer
     webrtcClient.sendData(ev.type+"#"+mousePos.x+"#"+mousePos.y);
