@@ -42,8 +42,35 @@
   </div><!-- /.container -->
 </div><!-- /.navbar -->
 <div class="whiteboard-container row-fluid">
-<canvas id="whiteboard-canvas" width="500" height="375">
-</canvas>
+<canvas id="whiteboard-canvas" width="500" height="375"></canvas>
+ <div class="btn-group">
+ 	<button type="button" class="btn btn-default" onclick="tool.clearCanvas()">Clear</button>
+ 	<div class="btn-group">
+	    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+	      Brush colour
+	      <span class="caret"></span>
+	    </button>
+	    <ul class="dropdown-menu">
+	      <li><a onclick="tool.setPenColour('#FFFFFF')">White</a></li>
+	      <li><a onclick="tool.setPenColour('#03a507')">Green</a></li>
+	      <li><a onclick="tool.setPenColour('#fadd00')">Yellow</a></li>
+	      <li><a onclick="tool.setPenColour('#d60007')">Red</a></li>
+	    </ul>
+    </div>
+    <div class="btn-group">
+	    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+	      Brush size
+	      <span class="caret"></span>
+	    </button>
+	    <ul class="dropdown-menu">
+	      <li><a onclick="tool.setPenSize(1)">Small</a></li>
+	      <li><a onclick="tool.setPenSize(5)">Normal</a></li>
+	      <li><a onclick="tool.setPenSize(10)">Big</a></li>
+	      <li><a onclick="tool.setPenSize(20)">Huge</a></li>
+	    </ul>
+	</div>
+  </div>
+
 </div>
 
 	<div class="videoContainer">

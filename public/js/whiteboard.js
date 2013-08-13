@@ -9,7 +9,7 @@ var urlPath=window.location.pathname;
 var room = urlPath.split('/').pop();
 var webrtcClient = new WebRTCClient(room);
 webrtcClient.onDataChStateChangeCb = function(data){ alert(data);};
-//webrtcClient.startUserMedia(null,document.getElementById('localVideo'),document.getElementById('remoteVideo'));
+webrtcClient.startUserMedia(null,document.getElementById('localVideo'),document.getElementById('remoteVideo'));
 //webrtcClient.startData();
 
 $(".videoContainer").draggable().resizable({
@@ -19,7 +19,6 @@ aspectRatio: 4 / 3
 
 if(window.addEventListener) {
 window.addEventListener('load', function () {
-  
 
   function init () {
     // Find the canvas element.
@@ -43,7 +42,7 @@ window.addEventListener('load', function () {
 
     // Pencil tool instance.
     tool = new tool_pencil();
-
+    tool.setPenColour('#FFFFFF');
     // Attach the mousedown, mousemove and mouseup event listeners.
     canvas.addEventListener('mousedown', ev_canvas, false);
     canvas.addEventListener('mousemove', ev_canvas, false);
@@ -67,18 +66,36 @@ window.addEventListener('load', function () {
     };
   }
 
+  
+  
   // This painting tool works like a drawing pencil which tracks the mouse 
   // movements.
   function tool_pencil () {
     var tool = this;
     this.started = false;
-
+    context.lineJoin = "round";
+    this.setPenColour = function(colour){
+    	context.strokeStyle = colour;
+    };
+    
+    this.setPenSize = function(size){
+    	
+    	context.lineWidth = size;
+    };
+    
+    this.clearCanvas = function(){
+//  	  canvas.width = canvas.width;
+  	  // alternative:
+  	  context.clearRect(0, 0, canvas.width, canvas.height);
+    };
+    
     // This is called when you start holding down the mouse button.
     // This starts the pencil drawing.
     this.mousedown = function (x, y) {
         context.beginPath();
         context.moveTo(x,y);
         tool.started = true;
+        drawPoint(x, y);
     };
 
     this.touchstart = this.mousedown;
@@ -90,11 +107,23 @@ window.addEventListener('load', function () {
     
       if (tool.started) {
         context.lineTo(x,y);
-        context.strokeStyle = '#FFFFFF';
+        
         context.stroke();
         console.log("draw!");
       }
     };
+    
+    function drawPoint(x,y){
+    	if (tool.started) {
+            
+            console.log("draw point!");
+            context.beginPath();
+            var radius = context.lineWidth/16;
+            context.arc(x, y, radius, 0, Math.PI*2, true); 
+            context.closePath();
+            context.fill();
+         }
+    }
     
     this.mousemove = this.touchmove;
 
@@ -151,5 +180,4 @@ window.addEventListener('load', function () {
 
 }, false); }
 
-// vim:set spell spl=en fo=wan1croql tw=80 ts=2 sw=2 sts=2 sta et ai cin fenc=utf-8 ff=unix:
 
