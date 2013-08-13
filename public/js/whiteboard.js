@@ -52,14 +52,16 @@ window.addEventListener('load', function () {
 //    canvas.addEventListener('touchend',   ev_canvas, false);
     
     webrtcClient.onDataRcvCb = function(data){
-    	var splits = data.split("#");
+    	var splits = data.split("&");
     	  
     	  var evType = splits[0];
     	  var x = splits[1];
     	  var y = splits[2];
     	  
+    	  
     	  var func = tool[evType];
     	  if (func) {
+    		
     	    func(x,y);
     	    
     	  }
@@ -74,19 +76,26 @@ window.addEventListener('load', function () {
     var tool = this;
     this.started = false;
     context.lineJoin = "round";
-    this.setPenColour = function(colour){
+    this.setPenColour = function(colour, remote){
     	context.strokeStyle = colour;
+    	if (remote == null)  
+    		webrtcClient.sendData("setPenColour"+"&"+colour+"&"+1);
     };
     
-    this.setPenSize = function(size){
+    this.setPenSize = function(size, remote){
     	
     	context.lineWidth = size;
+    	if (remote == null)  	
+    		webrtcClient.sendData("setPenSize"+"&"+size+"&"+1);
     };
     
-    this.clearCanvas = function(){
+    this.clearCanvas = function(placeholder,remote){
 //  	  canvas.width = canvas.width;
   	  // alternative:
+    
   	  context.clearRect(0, 0, canvas.width, canvas.height);
+  	if (remote == null)  
+  		webrtcClient.sendData("clearCanvas"+"&"+0+"&"+1);
     };
     
     // This is called when you start holding down the mouse button.
@@ -172,7 +181,7 @@ window.addEventListener('load', function () {
     ev.preventDefault();
     console.log(ev.type+" "+mousePos.x+" "+mousePos.y);
     //send data to remote peer
-    webrtcClient.sendData(ev.type+"#"+mousePos.x+"#"+mousePos.y);
+    webrtcClient.sendData(ev.type+"&"+mousePos.x+"&"+mousePos.y);
     
   }
 
