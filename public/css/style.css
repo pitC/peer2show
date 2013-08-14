@@ -10,10 +10,15 @@ background-image: radial-gradient(farthest-side circle at center center, #ffffff
 }
 .whiteboard-container{
 width:100%;
+position:relative;
 }
 
-#whiteboard-canvas{
+.whiteboard-canvas{
 background-color:black;
+width:100%;
+position: absolute; 
+left: 0; 
+top: 0;
 }
 
 video{
@@ -27,15 +32,13 @@ video{
 
 /* Large desktop */
       @media (min-width: 980px) { 
-	  .videoContainer{
-      width:40%;
-      }
+
 	  }
 
       /* Landscape phones and down */
       @media (max-width: 650px) { 
        .videoContainer{
-     		width:100%;
+    
       	}
       }
 

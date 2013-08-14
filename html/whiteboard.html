@@ -12,13 +12,10 @@
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/js/bootstrap.min.js"></script>
 <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
-<link rel="stylesheet" href="/js/lib/jquery.ui.touch-punch.min.js">
 <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 <body>
 <div class="navbar">
-  <div class="container">
-
     <!-- .navbar-toggle is used as the toggle for collapsed navbar content -->
     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
       <span class="icon-bar"></span>
@@ -39,52 +36,53 @@
 
       
     </div><!-- /.nav-collapse -->
-  </div><!-- /.container -->
 </div><!-- /.navbar -->
-<div class="whiteboard-container row-fluid">
-<canvas id="whiteboard-canvas" width="500" height="375"></canvas>
- <div class="btn-group">
- 	<button type="button" class="btn btn-default" onclick="tool.clearCanvas()">Clear</button>
- 	<div class="btn-group">
-	    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-	      Brush colour
-	      <span class="caret"></span>
-	    </button>
-	    <ul class="dropdown-menu">
-	      <li><a onclick="tool.setPenColour('#FFFFFF')">White</a></li>
-	      <li><a onclick="tool.setPenColour('#03a507')">Green</a></li>
-	      <li><a onclick="tool.setPenColour('#fadd00')">Yellow</a></li>
-	      <li><a onclick="tool.setPenColour('#d60007')">Red</a></li>
-	    </ul>
-    </div>
-    <div class="btn-group">
-	    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-	      Brush size
-	      <span class="caret"></span>
-	    </button>
-	    <ul class="dropdown-menu">
-	      <li><a onclick="tool.setPenSize(1)">Small</a></li>
-	      <li><a onclick="tool.setPenSize(5)">Normal</a></li>
-	      <li><a onclick="tool.setPenSize(10)">Big</a></li>
-	      <li><a onclick="tool.setPenSize(20)">Huge</a></li>
-	    </ul>
-	</div>
-  </div>
-
+<div class="container">
+<div class="row">
+    <div id="main" class="col-md-8 col-lg-8">
+<div class="whiteboard-container">
+<canvas class="whiteboard-canvas" id="layer0" style='z-index: 0'></canvas>
+<canvas class="whiteboard-canvas" id="layer1" style='z-index: 1'></canvas>
 </div>
 
-	<div class="videoContainer">
-    	<video id='localVideo' autoplay muted ></video>
-    </div>
-    <div class="videoContainer">
-    	<video id='remoteVideo' autoplay></video>
-    </div>
 
-<br>
+    </div>
+    <div id="sidebar" class="col-md-4 col-lg-4">
+	<div class="videoContainer">
+	    	<video id='localVideo' autoplay muted ></video>
+	</div>
+    	<div class="videoContainer">
+	    	<video id='remoteVideo' autoplay></video>
+    	</div>
+
+	<ul class="nav nav-stacked">
+	  <li class="active"><a href="#home">Call</a></li>
+	  <li><a href="#About">Whiteboard</a></li>
+	  <li><a href="#Rooms">Desktop sharing</a></li>
+	</ul>
+    </div>
+</div> <!-- row -->
+</div> <!-- container -->
 <script src='/socket.io/socket.io.js'></script>
 <script src='/js/webrtc/adapter.js'></script>
 <script src='/js/webrtc/webrtc_client.js'></script>
-<script type="text/javascript" src="/js/whiteboard.js"></script>
+<script src='/js/responsive-sketchpad.js'></script>
+<script type="text/javascript" src="/js/app/whiteboard/main.js"></script>
+<script type="text/javascript" src="/js/app/whiteboard/responsive-sketchpad.js"></script>
+<script>
+var sketchpadLocal = $('#layer0').sketchpad({
+        aspectRatio: 1,
+        backgroundColor: '#000'
+    });
+
+var sketchpadRemote = $('#layer1').sketchpad({
+        aspectRatio: 1,
+        backgroundColor: '#AAA'
+    });
+
+sketchpadRemote.setLineColor('#fadd00');
+
+</script>
 </body>
 </html>
 
