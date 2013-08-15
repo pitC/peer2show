@@ -9,8 +9,9 @@
 <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/css/bootstrap.min.css">
 
 <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/js/bootstrap.min.js"></script>
 <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/js/bootstrap.min.js"></script>
+
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
 <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
@@ -41,7 +42,7 @@
 <div class="row">
     <div id="main" class="col-md-8 col-lg-8">
     <div class="btn-group">
-  <button type="button" class="btn btn-default">Clear</button>
+  <button onclick="clearLocal()" type="button" class="btn btn-default">Clear</button>
 
   <div class="btn-group">
     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
@@ -54,8 +55,10 @@
       <li><a onclick="sketchpadLocal.setLineColor('#00B23E')">Green</a></li>
       <li><a onclick="sketchpadLocal.setLineColor('#08177C')">Blue</a></li>
     </ul>
-  </div>
-</div>
+  </div> <! --color dropdown -->
+  <button type="button" class="btn btn-default active" data-toggle="button" onclick="toggleLocal(this)">Local layer</button>
+  <button type="button" class="btn btn-default active" data-toggle="button" onclick="toggleRemote(this)">Remote layer</button>
+</div> <!-- button group -->
     
     
 <div class="whiteboard-container">

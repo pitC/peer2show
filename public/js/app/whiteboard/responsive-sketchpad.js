@@ -47,6 +47,7 @@ $.fn.sketchpad = function(options) {
             cur.y = event.pageY;
         }
         return {
+        	// TODO: optimize, the floats are loooong!
             x: (cur.x - $(element).offset().left) / $(element).width(),
             y: (cur.y - $(element).offset().top) / $(element).height()
         };
@@ -192,8 +193,8 @@ $.fn.sketchpad = function(options) {
         redraw();
     };
     this.addStroke = function(json){
-    	var array = JSON.parse(json);
-    	var stroke = array.stroke;
+    	
+    	var stroke = json.stroke;
     	strokes.push(stroke);
     	redraw();
     };
