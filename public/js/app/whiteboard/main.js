@@ -12,37 +12,46 @@ webrtcClient.onDataChStateChangeCb = function(data){ alert(data);};
 webrtcClient.startUserMedia(null,document.getElementById('localVideo'),document.getElementById('remoteVideo'));
 //webrtcClient.startData();
 
-var sketchpadLocal = $('#layer0').sketchpad({
+var sketchpadLocal = $('#layer1').sketchpad({
     aspectRatio: 1,
-    backgroundColor: '#000'
+    canvasColor: 'rgba(255, 0, 0, 0)'
 });
 
-var sketchpadRemote = $('#layer1').sketchpad({
+var sketchpadRemote = $('#layer0').sketchpad({
     aspectRatio: 1,
-    backgroundColor: '#AAA'
+    canvasColor: '#FFF'
 });
 
 sketchpadRemote.setLineColor('#fadd00');
+sketchpadLocal.endEventCb = function(){
+	var strokeJson = sketchpadLocal.getLastStrokeJson();
+	strokeJson += "!";
+	var chunks = strokeJson.match(/.{1,500}/g);
+	
+	
+	for (var i = 0; i < chunks.length; i++){
+		window.setTimeout(webrtcClient.sendData(chunks[i]),100);
+		
+	}
+};
 
+var totalRcv = ""; 
+webrtcClient.onDataRcvCb = function(json){
+	totalRcv += json;
+	if (totalRcv[totalRcv.length-1] == "!"){
+		try{
+		var finalStroke = totalRcv.substring(0, totalRcv.length-1);
+		console.log("Stroke: "+finalStroke);
+		sketchpadRemote.addStroke(finalStroke);
+		}
+		catch(err){
+			console.log(err);
+			totalRcv = "";
+		}
+		totalRcv = "";
+	}
+};
+    
 
-    /*
-    webrtcClient.onDataRcvCb = function(data){
-    	var splits = data.split("&");
-    	  
-    	  var evType = splits[0];
-    	  var x = splits[1];
-    	  var y = splits[2];
-    	  
-    	  
-    	  var func = tool[evType];
-    	  if (func) {
-    		
-    	    func(x,y);
-    	    
-    	  }
-    };
-    //send data to remote peer
-    webrtcClient.sendData(ev.type+"&"+mousePos.x+"&"+mousePos.y);
-*/
 
 

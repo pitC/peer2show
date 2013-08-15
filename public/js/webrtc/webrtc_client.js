@@ -223,13 +223,14 @@ function WebRTCClient(roomId){
 	  }
 	}
 	
-	this.sendData = function (data) {
-	  if (isChannelReady && dataChannel != null){
-		  dataChannel.send(data);
-		  console.log('Sent data: ' + data);
+	this.sendData = function (message) {
+	console.log("About to send data "+dataChannel.readyState+" "+message.length);
+	  if (isChannelReady && dataChannel){
+		  dataChannel.send(message);
+		  console.log('Sent data: ' + message);
 	  }
 	  else{
-		  console.log('Data not sent!' + data);
+		  console.log('Data not sent!' + message);
 	  }
 	};
 	

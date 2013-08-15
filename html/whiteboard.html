@@ -40,6 +40,24 @@
 <div class="container">
 <div class="row">
     <div id="main" class="col-md-8 col-lg-8">
+    <div class="btn-group">
+  <button type="button" class="btn btn-default">Clear</button>
+
+  <div class="btn-group">
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+      Pen colour
+      <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu">
+      <li><a onclick="sketchpadLocal.setLineColor('#000')">Black</a></li>
+      <li><a onclick="sketchpadLocal.setLineColor('#CC1710')">Red</a></li>
+      <li><a onclick="sketchpadLocal.setLineColor('#00B23E')">Green</a></li>
+      <li><a onclick="sketchpadLocal.setLineColor('#08177C')">Blue</a></li>
+    </ul>
+  </div>
+</div>
+    
+    
 <div class="whiteboard-container">
 <canvas class="whiteboard-canvas" id="layer0" style='z-index: 0'></canvas>
 <canvas class="whiteboard-canvas" id="layer1" style='z-index: 1'></canvas>
@@ -66,23 +84,8 @@
 <script src='/socket.io/socket.io.js'></script>
 <script src='/js/webrtc/adapter.js'></script>
 <script src='/js/webrtc/webrtc_client.js'></script>
-<script src='/js/responsive-sketchpad.js'></script>
-<script type="text/javascript" src="/js/app/whiteboard/main.js"></script>
 <script type="text/javascript" src="/js/app/whiteboard/responsive-sketchpad.js"></script>
-<script>
-var sketchpadLocal = $('#layer0').sketchpad({
-        aspectRatio: 1,
-        backgroundColor: '#000'
-    });
-
-var sketchpadRemote = $('#layer1').sketchpad({
-        aspectRatio: 1,
-        backgroundColor: '#AAA'
-    });
-
-sketchpadRemote.setLineColor('#fadd00');
-
-</script>
+<script type="text/javascript" src="/js/app/whiteboard/main.js"></script>
 </body>
 </html>
 

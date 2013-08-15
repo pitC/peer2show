@@ -31,7 +31,11 @@ $.fn.sketchpad = function(options) {
         setSize(width, height);
         redraw();
     });
-
+    
+    this.startEventCb;
+    this.moveEventCb;
+    this.endEventCb;
+    var that = this;
     // Return the mouse/touch location
     function getCursor(element, event) {
         var cur = {x: 0, y: 0};
@@ -45,7 +49,7 @@ $.fn.sketchpad = function(options) {
         return {
             x: (cur.x - $(element).offset().left) / $(element).width(),
             y: (cur.y - $(element).offset().top) / $(element).height()
-        }
+        };
     }
 
     // Set the canvas size
@@ -105,8 +109,14 @@ $.fn.sketchpad = function(options) {
     // On mouse up, end stroke
     var endEvent = 'mouseup mouseleave touchend ';
     canvas.on(endEvent, function(e) {
-        sketching = false;
+    	var wasSketching = sketching;
+    	sketching = false;
+    	if (that.endEventCb && wasSketching){
+        	that.endEventCb();
+        } 
     });
+    
+    
 
     function redraw() {
         var width = $(canvas).width();
@@ -168,12 +178,24 @@ $.fn.sketchpad = function(options) {
             strokes: strokes
         });
     };
+    
+    this.getLastStrokeJson = function(){
+    	return JSON.stringify({
+            stroke: strokes[strokes.length - 1]
+        });
+    };
 
     this.jsonLoad = function(json) {
         var array = JSON.parse(json);
         aspectRatio = array.aspectRatio;
         strokes = array.strokes;
-        redraw()
+        redraw();
+    };
+    this.addStroke = function(json){
+    	var array = JSON.parse(json);
+    	var stroke = array.stroke;
+    	strokes.push(stroke);
+    	redraw();
     };
 
     this.getImage = function() {
@@ -214,6 +236,10 @@ $.fn.sketchpad = function(options) {
         strokes = [];
         redraw();
     };
+    
+    
+    
+   
 
     return this;
 };
