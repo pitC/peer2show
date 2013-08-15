@@ -71,6 +71,7 @@ sketchpadLocal.endEventCb = function(){
 			window.setTimeout(sendNextChunk,TIME_INTERVAL);
 		else{
 			sending = false;
+			chunks = [];
 		}
 	}
 	if (!sending){
