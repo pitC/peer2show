@@ -46,11 +46,25 @@ $.fn.sketchpad = function(options) {
             cur.x = event.pageX ;
             cur.y = event.pageY;
         }
-        return {
-        	// TODO: optimize, the floats are loooong!
-            x: (cur.x - $(element).offset().left) / $(element).width(),
-            y: (cur.y - $(element).offset().top) / $(element).height()
-        };
+        
+        var retCur = {
+                x: (cur.x - $(element).offset().left),
+                y: (cur.y - $(element).offset().top)
+            };
+        
+        return retCur;
+    }
+    
+    function normalizeCursor(cur,width,height){
+		var retCur = {
+			x: normalize(cur.x,width),
+			y: normalize(cur.y,height)
+		};
+		
+		return retCur;
+	}
+    function normalize(value,dimension){
+    	return value/dimension;
     }
 
     // Set the canvas size
@@ -73,14 +87,17 @@ $.fn.sketchpad = function(options) {
 
         sketching = true;
         undo = []; // Clear undo strokes
-
+        
+        
         strokes.push({
             stroke: [],
-            color: lineColor,
-            size: lineSize / $(this).width(),
-            cap: lineCap,
-            join: lineJoin,
-            miterLimit: lineMiterLimit
+            c: lineColor,
+            s: lineSize,
+            cp: lineCap,
+            j: lineJoin, 
+            m: lineMiterLimit, //miter Limit
+    	    w:  $(this).width(), // canvas width
+    	    h:  $(this).height(), // canvas height
         });
 
         var canvas = getCursor(this, e);
@@ -130,18 +147,22 @@ $.fn.sketchpad = function(options) {
 
             ctx.beginPath();
             for (var j = 0; j < stroke.length - 1; j++) {
-                ctx.moveTo(stroke[j].x * width, stroke[j].y * height);
-                ctx.lineTo(stroke[j + 1].x * width, stroke[j + 1].y * height);
+            	var pointA = normalizeCursor(stroke[j], strokes[i].w, strokes[i].h);
+        		var pointZ = normalizeCursor(stroke[j+1], strokes[i].w, strokes[i].h);
+                ctx.moveTo(pointA.x * width, pointA.y * height);
+                ctx.lineTo(pointZ.x * width, pointZ.y * height);
             }
             ctx.closePath();
 
-            ctx.strokeStyle = strokes[i].color;
-            ctx.lineWidth = strokes[i].size * width;
-            ctx.lineJoin = strokes[i].join;
-            ctx.lineCap = strokes[i].cap;
-            ctx.miterLimit = strokes[i].miterLimit;
+            ctx.strokeStyle = strokes[i].c;
+            
+            ctx.lineWidth = normalize(strokes[i].s,strokes[i].w) * width;
+            console.log("Line width: "+ctx.lineWidth);
+            ctx.lineJoin = strokes[i].j;
+            ctx.lineCap = strokes[i].cp;
+            ctx.miterLimit = strokes[i].m;
 
-            ctx.stroke()
+            ctx.stroke();
         }
     }
 
