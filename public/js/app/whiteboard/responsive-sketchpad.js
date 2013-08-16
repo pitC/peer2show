@@ -155,9 +155,7 @@ $.fn.sketchpad = function(options) {
             ctx.closePath();
 
             ctx.strokeStyle = strokes[i].c;
-            
             ctx.lineWidth = normalize(strokes[i].s,strokes[i].w) * width;
-            console.log("Line width: "+ctx.lineWidth);
             ctx.lineJoin = strokes[i].j;
             ctx.lineCap = strokes[i].cp;
             ctx.miterLimit = strokes[i].m;
