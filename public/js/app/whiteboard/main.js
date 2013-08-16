@@ -11,6 +11,18 @@ var webrtcClient = new WebRTCClient(room);
 webrtcClient.onDataChStateChangeCb = function(data){ alert(data);};
 webrtcClient.startUserMedia(null,document.getElementById('localVideo'),document.getElementById('remoteVideo'));
 //webrtcClient.startData();
+$(".pick-a-color").pickAColor({
+	showHexInput: false
+});
+
+$(".slider").slider({
+	min: 1,
+	max: 100,
+	step: 1,
+	value: 20
+}).on('slide', function(ev){
+	sketchpadLocal.setLineSize(ev.value);
+});
 
 var sketchpadLocal = $('#layer1').sketchpad({
     aspectRatio: 1,
@@ -28,7 +40,7 @@ function clearLocal(){
 	sketchpadLocal.clear();
 	var obj = new Object();
 	obj.remoteCall = "clear";
-	var json = JSON.stringify(obj)+"!";
+	var json = JSON.stringify(obj);
 	webrtcClient.sendData(json);
 }
 
@@ -36,6 +48,7 @@ function toggleLocal(bt){
 	var layer = $('#layer1');
 	if ($(bt).hasClass("active")){
 		layer.hide();
+		
 	}
 	else{
 		
@@ -47,45 +60,26 @@ function toggleRemote(bt){
 	var layer = $('#layer0');
 	if ($(bt).hasClass("active")){
 		layer.hide();
+		sketchpadLocal.setBackground("#FFF");
 	}
 	else{
 		
 		layer.show();
+		sketchpadLocal.setBackground('rgba(255, 0, 0, 0)');
 	}
 }
 var chunks = [], sending;
 sketchpadRemote.setLineColor('#fadd00');
 sketchpadLocal.endEventCb = function(){
 	var strokeJson = sketchpadLocal.getLastStrokeJson();
-	strokeJson += "!";
-	chunks = chunks.concat(strokeJson.match(/.{1,1000}/g));
-	var chunkId = 0;
-	var TIME_INTERVAL = 500;
-	console.log("Sending stroke...");
-	function sendNextChunk(){
-		sending = true;
-		webrtcClient.sendData(chunks[chunkId]);
-		console.log("Send chunk "+chunkId);
-		chunkId++;
-		if (chunkId < chunks.length)
-			window.setTimeout(sendNextChunk,TIME_INTERVAL);
-		else{
-			sending = false;
-			chunks = [];
-		}
-	}
-	if (!sending){
-		sendNextChunk();
-	}
+	webrtcClient.sendData(strokeJson);
 };
 
 var totalRcv = ""; 
 webrtcClient.onDataRcvCb = function(json){
-	totalRcv += json;
-	console.log("Total rcv: "+totalRcv);
-	if (totalRcv[totalRcv.length-1] == "!"){
+	
 		try{
-		var finalMsg = JSON.parse(totalRcv.substring(0, totalRcv.length-1));
+		var finalMsg = JSON.parse(json);
 		console.log("Final msg: "+finalMsg);
 		if (finalMsg.remoteCall){
 			console.log("Remote call: "+finalMsg.remoteCall);
@@ -93,20 +87,13 @@ webrtcClient.onDataRcvCb = function(json){
 			func();
 		}
 		else if (finalMsg.stroke){
-		
-		
-			
 				sketchpadRemote.addStroke(finalMsg);
 			}
 		
-			
-			
 		}catch(err){
 			console.log(err);
-			totalRcv = "";
+			
 		}
-		totalRcv = "";
-	}
 };
     
 

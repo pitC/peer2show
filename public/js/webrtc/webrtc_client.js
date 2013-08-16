@@ -223,21 +223,71 @@ function WebRTCClient(roomId){
 	  }
 	}
 	
+	var chunks = [];
+	var chunkId = 0;
+	var TIME_INTERVAL = 500;
+	var sending = false;
+	function sendNextChunk(){
+		sending = true;
+		dataChannel.send(chunks[chunkId]);
+		console.log("Send chunk "+chunkId+": "+chunks[chunkId]);
+		chunkId++;
+		if (chunkId < chunks.length)
+			window.setTimeout(sendNextChunk,TIME_INTERVAL);
+		else{
+			sending = false;
+			chunks = [];
+			chunkId = 0;
+		}
+	}
+	
+	function getChunks(data){
+		data += "!";
+		var chunkedData = data.match(/.{1,1000}/g);
+		return chunkedData;
+	}
+	
+	function addChunk(totalBuffer,chunk){
+		totalBuffer += chunk;
+		return totalBuffer;
+	}
+	
+	function getFinalChunk(buffer){
+		if (buffer[buffer.length-1] == "!"){
+			return buffer.substring(0, buffer.length-1);
+		}
+		else{
+			return null;
+		}
+	}
+	
+	
 	this.sendData = function (message) {
 	console.log("About to send data "+dataChannel.readyState+" "+message.length);
 	  if (isChannelReady && dataChannel){
-		  dataChannel.send(message);
-		  console.log('Sent data: ' + message);
+		    // ! as indicator the message is complete
+		  	chunks = chunks.concat(getChunks(message));
+			if (!sending){
+				sendNextChunk();
+			}
 	  }
 	  else{
 		  console.log('Data not sent!' + message);
 	  }
 	};
 	
+	var receivedBuffer = [];
 	
 	function handleMessage(event) {
 	  console.log('Received message: ' + event.data);
-	  launchCallback(that.onDataRcvCb, event.data);
+	  
+	  receivedBuffer = addChunk(receivedBuffer, event.data);
+	  var completeChunk = getFinalChunk(receivedBuffer);
+	  if (completeChunk != null){
+		  launchCallback(that.onDataRcvCb, completeChunk);
+		  receivedBuffer = [];
+	  }
+
 	}
 	
 	function attachDataEvents(){

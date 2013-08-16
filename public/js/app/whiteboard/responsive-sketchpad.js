@@ -233,6 +233,10 @@ $.fn.sketchpad = function(options) {
     this.getLineSize = function() {
         return lineSize;
     };
+    
+    this.setBackground = function(color){
+    	canvas.css('background-color', color);
+    };
 
     this.setLineSize = function(size) {
         lineSize = size;
