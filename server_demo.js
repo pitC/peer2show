@@ -1,6 +1,6 @@
 var ROOM = "html/whiteboard.html";
 var ROOMS = "public/index.html";
-var DEMO = "html/demo.html";
+var DEMO = "html/All-in-One.html";
 var MAX_ROOM_SIZE = 1;
 var PORT = 8080;
 var static = require('node-static');
@@ -43,43 +43,43 @@ app.configure(function(){
 var server = http.createServer(app).listen(PORT);
 
 var io = require('socket.io').listen(server);
-io.sockets.on('connection', function (socket){
+var channels = {};
 
-	function log(){
-		var array = [">>> "];
-	  for (var i = 0; i < arguments.length; i++) {
-		  
-		  
-	  	array.push(arguments[i]);
-	  }
-	    socket.emit('log', array);
-	}
+io.sockets.on('connection', function (socket) {
+    var initiatorChannel = '';
+    if (!io.isConnected)
+        io.isConnected = true;
 
-	socket.on('message', function (message) {
-		log('Got message: ', message);
-		socket.broadcast.emit('message', message); // should be room only
-	});
+    socket.on('new-channel', function (data) {
+    	console.log("*NEW CHANNEL*"+JSON.stringify(data));
+        channels[data.channel] = data.channel;
+        onNewNamespace(data.channel, data.sender);
+    });
 
-	socket.on('create or join', function (room) {
-		var numClients = io.sockets.clients(room).length;
+    socket.on('presence', function (channel) {
+        var isChannelPresent = !! channels[channel];
+        socket.emit('presence', isChannelPresent);
+        if (!isChannelPresent)
+            initiatorChannel = channel;
+    });
 
-		log('Room ' + room + ' has ' + numClients + ' client(s)');
-		log('Request to create or join room', room);
-
-		if (numClients == 0){
-			socket.join(room);
-			socket.emit('created', room);
-		} else if (numClients <= MAX_ROOM_SIZE) {
-			io.sockets.in(room).emit('join', room);
-			socket.join(room);
-			socket.emit('joined', room);
-		} else { // max two clients
-			socket.emit('full', room);
-		}
-		socket.emit('emit(): client ' + socket.id + ' joined room ' + room);
-		socket.broadcast.emit('broadcast(): client ' + socket.id + ' joined room ' + room);
-
-	});
-
+    socket.on('disconnect', function (channel) {
+        if (initiatorChannel)
+            channels[initiatorChannel] = null;
+    });
 });
+
+function onNewNamespace(channel, sender) {
+    io.of('/' + channel).on('connection', function (socket) {
+        if (io.isConnected) {
+            io.isConnected = false;
+            socket.emit('connect', true);
+        }
+
+        socket.on('message', function (data) {
+            if (data.sender == sender)
+                socket.broadcast.emit('message', data.data);
+        });
+    });
+};
 

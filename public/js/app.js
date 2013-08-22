@@ -2,8 +2,9 @@ define([
          'jquery', 
          'underscore', 
          'backbone',
-         'backbones/views/rooms/roomsView'
-], function($, _, Backbone,RoomsView){ 
+         'backbones/views/rooms/roomsView',
+         'backbones/views/room/roomView'
+], function($, _, Backbone,RoomsView, RoomView){ 
 	
 	var AppRouter = Backbone.Router.extend({
         initialize : function(options){
@@ -11,11 +12,20 @@ define([
         },
         routes : {
             "Rooms" : "rooms",
+            "Room/:roomId" : "room"
         },
         rooms : function(){
             var roomsView = new RoomsView();          
             this.el.empty();
             this.el.append(roomsView.render().el);
+        },
+        room : function(roomId){
+            var roomView = new RoomView({
+            	room:roomId
+            });          
+            this.el.empty();
+            this.el.append(roomView.render().el);
+            roomView.onShow();
         }
     });
 	
