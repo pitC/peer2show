@@ -1,49 +1,85 @@
-var BUFFER_LENGTH = 300;
-var INDEX_HTML = "rooms.html";
+var ROOM = "html/whiteboard.html";
+var ROOMS = "public/index.html";
+var DEMO = "html/All-in-One.html";
+var MAX_ROOM_SIZE = 1;
+var PORT = 8080;
+var static = require('node-static');
+var http = require('http');
+var file = new(static.Server)();
 
-var ADAPTER_JS = "js/adapter.js";
-
-var express = require('express'); 
+var express = require('express');
+var rooms = require('./routes/rooms');
 var app = express();
-var server = require('http').createServer(app);
-var webRTC = require('webrtc.io');
+app.configure(function(){
+	  app.use(express.bodyParser());
+	  app.use(app.router);
+});
+ app.use("/js", express.static(__dirname + '/public/js'));
+ app.use("/css", express.static(__dirname + '/public/css'));
+ app.all('/', function(req, res){
+	 	res.sendfile(ROOMS);
+	 });
+ app.all('/rooms', function(req, res){
+ 	res.sendfile(ROOMS);
+ });
+ app.all('/demo', function(req, res){
+	 	res.sendfile(DEMO);
+	 });
+ 
+ app.all('/whiteboard.html', function(req, res){
+	 	res.sendfile("whiteboard.html");
+ });
 
-webRTC.listen(8001, function(){
-	console.log("Webrtc listening");
-	
+ app.all('/room/:roomId', function(req, res){
+	 	console.log("Get room: "+req.params.roomId);
+	 	res.sendfile(ROOM);
+ });
+ 
+ app.get('/api/rooms', rooms.findAll);
+ app.post('/api/rooms', rooms.addRoom);
+ app.put('/api/rooms/:id', rooms.addRoom);
+ app.delete('/api/rooms/:id', rooms.deleteRoom);
+
+var server = http.createServer(app).listen(PORT);
+
+var io = require('socket.io').listen(server);
+var channels = {};
+
+io.sockets.on('connection', function (socket) {
+    var initiatorChannel = '';
+    if (!io.isConnected)
+        io.isConnected = true;
+
+    socket.on('new-channel', function (data) {
+    	console.log("*NEW CHANNEL*"+JSON.stringify(data));
+        channels[data.channel] = data.channel;
+        onNewNamespace(data.channel, data.sender);
+    });
+
+    socket.on('presence', function (channel) {
+        var isChannelPresent = !! channels[channel];
+        socket.emit('presence', isChannelPresent);
+        if (!isChannelPresent)
+            initiatorChannel = channel;
+    });
+
+    socket.on('disconnect', function (channel) {
+        if (initiatorChannel)
+            channels[initiatorChannel] = null;
+    });
 });
 
-webRTC.rtc.on("connection",function(){
-	console.log("Connection!");
-});
+function onNewNamespace(channel, sender) {
+    io.of('/' + channel).on('connection', function (socket) {
+        if (io.isConnected) {
+            io.isConnected = false;
+            socket.emit('connect', true);
+        }
 
-var fs = require('fs');
-
-
-
-function printFile(fileName,response){
-    response.writeHeader(200, {"Content-Type": "text/html"});
-    var text = fs.readFileSync(fileName);
-    response.write(text);
-    response.end();
-}
-
-app.use("/js", express.static(__dirname + '/js'));
-
-app.get('/', function(request, response) {
-
-    printFile(INDEX_HTML,response);
-});
-
-app.get('/room', function(request, response) {
-
-    printFile("room.html",response);
-});
-
-
-var port = process.env.PORT || 8080;
-app.listen(port, function() {
-  console.log("Listening on " + port);
-});
-
+        socket.on('message', function (data) {
+            if (data.sender == sender)
+                socket.broadcast.emit('message', data.data);
+        });
+    });
+};
 
