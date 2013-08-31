@@ -2,6 +2,7 @@ $.fn.sketchpad = function(options) {
 
     // Canvas info
     var canvas = this;
+    
     var ctx = $(this)[0].getContext('2d');
 
     // Default aspect ratio
@@ -205,12 +206,19 @@ $.fn.sketchpad = function(options) {
         });
     };
 
+
+    
     this.jsonLoad = function(json) {
-        var array = JSON.parse(json);
-        aspectRatio = array.aspectRatio;
-        strokes = array.strokes;
+        
+        aspectRatio = json.aspectRatio;
+        strokes = json.strokes;
         redraw();
     };
+    
+    this.addStrokes = function(json){
+    	strokes = strokes.concat(json.strokes);
+    };
+    
     this.addStroke = function(json){
     	
     	var stroke = json.stroke;

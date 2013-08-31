@@ -5,10 +5,9 @@ define([
          'text!templates/room/room.html',
          'text!templates/room/sidebarBasic.html',
          'backbones/views/subapps/whiteboard/whiteboardView',
-         'webrtc/webRTCClient',
-         'backbones/collections/peerCollection'
+         'webrtc/webRTCClient'
          
-], function($, _, Backbone, roomTmpl,sidebarTmpl, WhiteboardView,WebRTCClient,PeerCollection){
+], function($, _, Backbone, roomTmpl,sidebarTmpl, WhiteboardView,WebRTCClient){
 
 	
 		var DEFAULT_ROOM_NAME = "test";
@@ -54,6 +53,13 @@ define([
 					self.sidebar.renderVideoContainer(e.mediaElement);
 				};
 				
+				this.webRTCClient.onopen = function(e){
+					for (var i = 0; i<self.subviews.length;i++){
+						if(self.subviews[i].onNewPeer)
+							self.subviews[i].onNewPeer(e);
+					}
+				};
+				
 			},
 	
             render : function(){
@@ -73,7 +79,7 @@ define([
             },
             
             startWhiteboard : function(){
-            	var whiteboard = new WhiteboardView();
+            	whiteboard = new WhiteboardView(this.webRTCClient);
             	//this.$el.find("#sidebar").prepend(whiteboard.renderSidebarExtension());
             	this.$el.find("#main").append(whiteboard.render().el);
             	this.subviews.push(whiteboard);

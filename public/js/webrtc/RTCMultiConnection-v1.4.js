@@ -3,9 +3,8 @@
 // Documentation - https://github.com/muaz-khan/WebRTC-Experiment/tree/master/RTCMultiConnection
 // =======================
 // RTCMultiConnection-v1.4
-define(
-function(){
-    var RTCMultiConnection = function(channel) {
+(function() {
+    window.RTCMultiConnection = function(channel) {
         this.channel = channel || location.href.replace( /\/|:|#|%|\.|\[|\]/g , '');
 
         this.open = function(_channel) {
@@ -1169,7 +1168,7 @@ function(){
             var channel = config.channel,
                 _channel = config._channel,
                 initialText = config.text,
-                packetSize = 800,
+                packetSize = 1000,
                 textToTransfer = '',
                 isobject = false;
 
@@ -1845,5 +1844,5 @@ function(){
         return mergein;
     }
     
-  return RTCMultiConnection;  
-});
+ 
+})();

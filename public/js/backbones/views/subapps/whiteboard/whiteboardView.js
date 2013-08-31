@@ -8,13 +8,18 @@ define([
          'tiny_color',
          'jquery_pick_a_color',
          'lib/bootstrap-slider',
-         'app/whiteboard/responsive-sketchpad'
+         'app/whiteboard/whiteboardApp'
          
-], function($, _, Backbone, BasicSubappView, CanvasTmpl, ToolbarTmpl,TinyColor,ColorPicker,bs,Sketchpad){
+         
+], function($, _, Backbone, BasicSubappView, CanvasTmpl, ToolbarTmpl,TinyColor,ColorPicker,bs,WhiteboardApp){
 
 	ToolbarView = Backbone.View.extend({
-    	initialize:function () {
+		
+			
+		
+    	initialize:function (app) {
             this.template = _.template(ToolbarTmpl);
+            this.whiteboardApp = app;
         },
         		
         render : function(){
@@ -22,7 +27,27 @@ define([
             
             return this;
         },
+        events : {
+			"slide .slider": "slideEvent",
+			"click button#canvas-clear": "clearBtEvent",
+			"change .pick-a-color": "colorChangeEvent"
+		},
+		
+		slideEvent : function(event){
+			this.whiteboardApp.sketchpadLocal.setLineSize($(event.target).val());
+		},
+		
+		clearBtEvent : function(event){
+			this.whiteboardApp.clearLocal();
+		},
+		
+		colorChangeEvent : function(event){
+			console.log("Color pick! ");
+			this.whiteboardApp.sketchpadLocal.setLineColor($(event.target).val());
+		},
+		
         onShow : function(){
+        	       	
         	$(".pick-a-color").pickAColor({
             	showHexInput: false
             });
@@ -37,8 +62,10 @@ define([
     });
 	
 	CanvasView = Backbone.View.extend({
-    	initialize:function () {
+    	initialize:function (app) {
             this.template = _.template(CanvasTmpl);
+            this.whiteboardApp = app;
+            
         },
 		
         render : function(){
@@ -47,17 +74,18 @@ define([
         },
         
         onShow : function(){
-        	var sketchpadLocal = $('#layer1').sketchpad({
-        	    aspectRatio: 1,
-        	    canvasColor: 'rgba(255, 0, 0, 0)'
-        	});
-
-        	var sketchpadRemote = $('#layer0').sketchpad({
-        	    aspectRatio: 1,
-        	    canvasColor: '#FFF',
-        	    locked: true
-        	});
+        	this.whiteboardApp.initLocalSketpchad($('#layer1'));
+        	this.addRemoteLayer();
+        },
+        
+        addRemoteLayer : function(id){
+        	this.whiteboardApp.initRemoteSketchpad($('#layer0'));
+        },
+        
+        onNewPeer : function(e){
+        	this.addRemoteLayer(e.userid);
         }
+        
     });
 	
 	WhiteboardView = BasicSubappView.extend({
@@ -67,8 +95,10 @@ define([
 			return ;
 		},*/
 		initialize:function (webRTCClient) {
-            this.webRTCClient = webRTCClient;
+            this.whiteboardApp = new WhiteboardApp(webRTCClient);
+            
             this.subviews = [];
+            
         },
         
         addRemoteLayer: function(){
@@ -77,8 +107,9 @@ define([
 		
 		render : function(){
             this.$el.html('');
-            var toolbar= new ToolbarView();
-			var canvas = new CanvasView();
+            
+            var toolbar= new ToolbarView(this.whiteboardApp);
+			var canvas = new CanvasView(this.whiteboardApp);
             this.$el.append(toolbar.render().el);
             this.$el.append(canvas.render().el);
             
@@ -86,6 +117,14 @@ define([
             this.subviews.push(canvas);
             
             return this;
+        },
+        
+        onNewPeer : function(e){
+        	console.log("New peer! "+e);
+        	for (var i = 0; i<this.subviews.length;i++){
+				if(this.subviews[i].onNewPeer)
+					this.subviews[i].onNewPeer(e);
+			}
         }
 	});
 	
