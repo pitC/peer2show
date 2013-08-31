@@ -57,6 +57,7 @@ io.sockets.on('connection', function (socket) {
     });
 
     socket.on('presence', function (channel) {
+    	console.log("*Check presence* "+channel);
         var isChannelPresent = !! channels[channel];
         socket.emit('presence', isChannelPresent);
         if (!isChannelPresent)

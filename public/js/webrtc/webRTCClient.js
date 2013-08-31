@@ -87,6 +87,28 @@
 	    socket.emit('presence', session);
 	};
 	
+	connection.joinOrCreate = function(options){
+		var roomName = options.roomName || DEFAULT_SESSION_NAME;
+		
+		connection.testSessionPresence(roomName,function(isPresent){
+			if (isPresent){
+				console.log("Room exists!");
+				
+				connection.onNewSession = function(session) {
+					console.log("On new session join!");
+					connection.join(session);
+				};
+				console.log("connecting...");
+				connection.connect(roomName);
+			}
+			else{
+				connection.connect(roomName);
+				console.log("Create new room");
+				connection.setupNewSession({sessionName:roomName});
+			};
+		});
+	};
+	
 	
 	return connection;
 });

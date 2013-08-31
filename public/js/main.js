@@ -29,7 +29,9 @@ require.config({
 	    'jqueryui': {
 	    	deps: ['jquery']
 	    },
-	    "jquery_pick_a_color" : ["jquery","tiny_color"],
+	    "jquery_pick_a_color" :{
+	    	deps: ["jquery","tiny_color"]
+	    },
 	    'RTCMulticonnector': {
 	    	deps: ['socketio']
 	    }

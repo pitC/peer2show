@@ -5,9 +5,10 @@ define([
          'text!templates/room/room.html',
          'text!templates/room/sidebarBasic.html',
          'backbones/views/subapps/whiteboard/whiteboardView',
-         'webrtc/webRTCClient'
+         'webrtc/webRTCClient',
+         'backbones/collections/peerCollection'
          
-], function($, _, Backbone, roomTmpl,sidebarTmpl, WhiteboardView,WebRTCClient){
+], function($, _, Backbone, roomTmpl,sidebarTmpl, WhiteboardView,WebRTCClient,PeerCollection){
 
 	
 		var DEFAULT_ROOM_NAME = "test";
@@ -15,13 +16,21 @@ define([
 		SidebarView = Backbone.View.extend({
         	initialize:function () {
                 this.template = _.template(sidebarTmpl);
+                
             },
 			
 			
             render : function(){
                 this.$el.html(this.template());
+                
                 return this;
+            },
+            
+            renderVideoContainer : function(video){
+            	this.$el.prepend(video);
             }
+            
+            
         });
 
 		RoomView = Backbone.View.extend({
@@ -33,29 +42,25 @@ define([
 				this.subviews = [];
 				this.roomName = options.room || DEFAULT_ROOM_NAME;
 				this.webRTCClient = WebRTCClient;
+				
+				this.sidebar = new SidebarView();
+				
+				this.webRTCClient.joinOrCreate({roomName:this.roomName});
+				
 				var self = this;
-				this.webRTCClient.testSessionPresence(self.roomName,function(isPresent){
-					if (isPresent){
-						console.log("Room exists, let's join!");
-						
-						self.webRTCClient.onNewSession = function(session) {
-							self.webRTCClient.join(session);
-						};
-						self.webRTCClient.connect(self.roomName);
-					}
-					else{
-						console.log("Create new room");
-						self.webRTCClient.setupNewSession({sessionName:self.roomName});
-					}
-				});
+				
+				this.webRTCClient.onstream = function(e){
+					console.log(e);
+					self.sidebar.renderVideoContainer(e.mediaElement);
+				};
 				
 			},
- 
+	
             render : function(){
             	this.$el.html(this.template());
-                var sidebar = new SidebarView();
+                
 				
-                this.$el.find("#sidebar").append(sidebar.render().el);
+                this.$el.find("#sidebar").append(this.sidebar.render().el);
                 this.startWhiteboard();	
                 return this;
             },
@@ -64,12 +69,12 @@ define([
             	for (var i = 0; i<this.subviews.length;i++){
             		if(this.subviews[i].onShow)
             			this.subviews[i].onShow();
-            	} 	
+            	}
             },
             
             startWhiteboard : function(){
             	var whiteboard = new WhiteboardView();
-            	this.$el.find("#sidebar").prepend(whiteboard.renderSidebarExtension());
+            	//this.$el.find("#sidebar").prepend(whiteboard.renderSidebarExtension());
             	this.$el.find("#main").append(whiteboard.render().el);
             	this.subviews.push(whiteboard);
             }

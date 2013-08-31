@@ -7,8 +7,10 @@ define([
          'text!templates/whiteboardApp/toolbar.html',
          'tiny_color',
          'jquery_pick_a_color',
+         'lib/bootstrap-slider',
          'app/whiteboard/responsive-sketchpad'
-], function($, _, Backbone, BasicSubappView, CanvasTmpl, ToolbarTmpl,TinyColor,ColorPicker,Sketchpad){
+         
+], function($, _, Backbone, BasicSubappView, CanvasTmpl, ToolbarTmpl,TinyColor,ColorPicker,bs,Sketchpad){
 
 	ToolbarView = Backbone.View.extend({
     	initialize:function () {
@@ -24,6 +26,13 @@ define([
         	$(".pick-a-color").pickAColor({
             	showHexInput: false
             });
+        	
+        	$(".slider").slider({
+        		min: 1,
+        		max: 100,
+        		step: 1,
+        		value: 20
+        	});
         }
     });
 	
@@ -57,7 +66,14 @@ define([
 			
 			return ;
 		},*/
-		
+		initialize:function (webRTCClient) {
+            this.webRTCClient = webRTCClient;
+            this.subviews = [];
+        },
+        
+        addRemoteLayer: function(){
+        	
+        },
 		
 		render : function(){
             this.$el.html('');
