@@ -1,4 +1,3 @@
-var ROOM = "html/whiteboard.html";
 var ROOMS = "public/index.html";
 var DEMO = "html/All-in-One.html";
 var MAX_ROOM_SIZE = 1;
@@ -28,11 +27,6 @@ app.configure(function(){
  
  app.all('/whiteboard.html', function(req, res){
 	 	res.sendfile("whiteboard.html");
- });
-
- app.all('/room/:roomId', function(req, res){
-	 	console.log("Get room: "+req.params.roomId);
-	 	res.sendfile(ROOM);
  });
  
  app.get('/api/rooms', rooms.findAll);

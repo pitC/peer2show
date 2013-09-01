@@ -14,6 +14,7 @@
 	var MAX_PARTICIPANTS_ALLOWED = 256;
 	var DEFAULT_SESSION_NAME = "Anonymous";
 	var SIGNALING_SERVER = '/';
+	
 	// connection.setupNewSession
 	// connection.onNewSession = function(session) {}
 	// connection.join(session)
@@ -108,7 +109,6 @@
 			};
 		});
 	};
-	
 	
 	return connection;
 });

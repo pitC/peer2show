@@ -60,6 +60,10 @@ function(){
                 });
         };
 
+        this.createMediaElement = function(session,stream){
+        	return getMediaElement(stream, session);
+        };
+        
         var self = this,
             rtcSession, fileReceiver, textReceiver;
 

@@ -38,6 +38,10 @@ margin-top:5px;
 width:50%;
 }
 
+#chat-output-container{
+min-height:30%;
+}
+
 .videoContainer{
 	border: 5px solid #9e9e9e;
 	height:100%;

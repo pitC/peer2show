@@ -56,6 +56,7 @@ define([
             
             
             renderVideoContainer : function(video){
+            	video.controls = false;
             	this.$el.prepend(video);
             }
             
@@ -86,10 +87,12 @@ define([
 				
 				this.webRTCClient.onstream = function(e){
 					console.log(e);
+					
 					self.sidebar.renderVideoContainer(e.mediaElement);
 				};
 				
 				this.webRTCClient.onopen = function(e){
+					
 					for (var index in self.roomAppViews){
 						if(self.roomAppViews[index].onNewPeer)
 							self.roomAppViews[index].onNewPeer(e);
