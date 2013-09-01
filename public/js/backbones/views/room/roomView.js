@@ -4,10 +4,14 @@ define([
          'backbone',
          'text!templates/room/room.html',
          'text!templates/room/sidebarBasic.html',
-         'backbones/views/subapps/whiteboard/whiteboardView',
-         'webrtc/webRTCClient'
+         'text!templates/room/sidebarRoomAppLink.html',
+         'webrtc/webRTCClient',
+         'backbones/views/roomapps/whiteboard/whiteboardView',
+         'backbones/views/roomapps/chat/chatView',
+         'backbones/views/roomapps/call/callView'
          
-], function($, _, Backbone, roomTmpl,sidebarTmpl, WhiteboardView,WebRTCClient){
+], function($, _, Backbone, roomTmpl,sidebarTmpl,sidebarRoomAppLinkTmpl, WebRTCClient,
+		WhiteboardView,ChatView, CallView){
 
 	
 		var DEFAULT_ROOM_NAME = "test";
@@ -15,15 +19,41 @@ define([
 		SidebarView = Backbone.View.extend({
         	initialize:function () {
                 this.template = _.template(sidebarTmpl);
-                
+                this.roomLinkTmpl = _.template(sidebarRoomAppLinkTmpl);
+                this.roomAppTitles = [];
+                this.appSwitch = null;
             },
+            
+            events : {
+				
+				"click button": "onRoomAppLinkClick",
+				
+			},
 			
+			onRoomAppLinkClick : function(event){
+				
+				if(this.appSwitch){
+					var title = $(event.target).text();
+					this.appSwitch(title);
+				}
+			},
 			
             render : function(){
                 this.$el.html(this.template());
                 
+                for (var index in this.roomAppTitles){
+                	var roomAppTitle = this.roomAppTitles[index];
+                	this.$el.find("#room-app-links").append(this.roomLinkTmpl({title:roomAppTitle}));
+                }
+                
                 return this;
             },
+            
+            addRoomAppLink : function(title){
+            	console.log("Sidebar: add link "+title);
+            	this.roomAppTitles.push(title);
+            },
+            
             
             renderVideoContainer : function(video){
             	this.$el.prepend(video);
@@ -38,15 +68,21 @@ define([
 			
 			initialize : function(options){
 				this.template = _.template(roomTmpl);
-				this.subviews = [];
+				this.roomAppViews = {};
+				this.activeAppView = null;
 				this.roomName = options.room || DEFAULT_ROOM_NAME;
 				this.webRTCClient = WebRTCClient;
+				var self = this;
+				
 				
 				this.sidebar = new SidebarView();
+				this.sidebar.appSwitch = function(title){
+					self.activateRoomApp(title);
+				};
 				
 				this.webRTCClient.joinOrCreate({roomName:this.roomName});
 				
-				var self = this;
+				
 				
 				this.webRTCClient.onstream = function(e){
 					console.log(e);
@@ -54,35 +90,74 @@ define([
 				};
 				
 				this.webRTCClient.onopen = function(e){
-					for (var i = 0; i<self.subviews.length;i++){
-						if(self.subviews[i].onNewPeer)
-							self.subviews[i].onNewPeer(e);
+					for (var index in self.roomAppViews){
+						if(self.roomAppViews[index].onNewPeer)
+							self.roomAppViews[index].onNewPeer(e);
 					}
 				};
 				
 			},
+			
+			
 	
             render : function(){
             	this.$el.html(this.template());
-                
-				
+            	
+            	this.initRoomApps();
                 this.$el.find("#sidebar").append(this.sidebar.render().el);
-                this.startWhiteboard();	
+                
                 return this;
             },
             
             onShow : function(){
-            	for (var i = 0; i<this.subviews.length;i++){
-            		if(this.subviews[i].onShow)
-            			this.subviews[i].onShow();
+            	// either all 
+            	/*
+            	for (var key in this.roomAppViews) {
+            		if (this.roomAppViews[key].onShow)
+            			this.roomAppViews[key].onShow();
             	}
+            	*/
+            	
+            	// or only the active one - tbd
+//            	if (this.activeAppView.onShow)
+//            		this.activeAppView.onShow();
+            	
+            	// or just activate app view where on show will be called as well
+            	this.activateRoomApp("Whiteboard");
+            	
             },
             
-            startWhiteboard : function(){
-            	whiteboard = new WhiteboardView(this.webRTCClient);
-            	//this.$el.find("#sidebar").prepend(whiteboard.renderSidebarExtension());
-            	this.$el.find("#main").append(whiteboard.render().el);
-            	this.subviews.push(whiteboard);
+            initRoomApps : function(){
+            	var whiteboard = new WhiteboardView(this.webRTCClient);
+            	this.roomAppViews[whiteboard.title] = whiteboard;
+            	
+            	var chat = new ChatView(this.webRTCClient);
+            	this.roomAppViews[chat.title] = chat;
+            	
+            	var call = new CallView(this.webRTCClient);
+            	this.roomAppViews[call.title] = call;
+            	
+            	// fill links in sidebar
+            	for (var key in this.roomAppViews) {
+            		var title = this.roomAppViews[key].title;
+            		this.sidebar.addRoomAppLink(title);
+            	}
+            	
+            	
+            },
+            
+            activateRoomApp : function(title){
+            	var roomAppToActivate = this.roomAppViews[title];
+            	var roomAppToDeactivate = this.activeAppView;
+            	
+            	if (roomAppToActivate){
+            		this.$el.find("#main").empty();
+                	this.$el.find("#main").append(roomAppToActivate.render().el);
+                	this.activeAppView = roomAppToActivate;
+                	this.activeAppView.onActivate();
+                	if (roomAppToDeactivate) 	
+                		roomAppToDeactivate.onDeactivate();
+            	}
             }
 			
         });

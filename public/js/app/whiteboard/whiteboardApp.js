@@ -11,43 +11,49 @@ function (sketchpad) {
 		
 		var DEFAULT_REMOTE_ID = "remote";
 		
-		this.webrtc.onmessage = function(e){
-			
-			var sketchpadRemote = self.sketchpadRemotes[e.userid] ||self.sketchpadRemotes[DEFAULT_REMOTE_ID];
-			try{
-				console.log(e.data);
-				var finalMsg = JSON.parse(e.data);
-				console.log("Reveived data: "+finalMsg);
-				if (finalMsg.remoteCall){
-					console.log("Remote call: "+finalMsg.remoteCall);
-					var func = sketchpadRemote[finalMsg.remoteCall];
-					func();
-				}
-				else if (finalMsg.stroke){
-						sketchpadRemote.addStroke(finalMsg);
-				}
-				else if (finalMsg.strokes){
-					
-					sketchpadRemote.addStrokes(finalMsg);
-				}
-			}catch(err){
-				console.log(err);
+		this.bindCommunicationEvents = function(){
+			this.webrtc.onmessage = function(e){
 				
-			}
+				var sketchpadRemote = self.sketchpadRemotes[e.userid] ||self.sketchpadRemotes[DEFAULT_REMOTE_ID];
+				try{
+					console.log(e.data);
+					var finalMsg = JSON.parse(e.data);
+					console.log("Reveived data: "+finalMsg);
+					if (finalMsg.remoteCall){
+						console.log("Remote call: "+finalMsg.remoteCall);
+						var func = sketchpadRemote[finalMsg.remoteCall];
+						func();
+					}
+					else if (finalMsg.stroke){
+							sketchpadRemote.addStroke(finalMsg);
+					}
+					else if (finalMsg.strokes){
+						
+						sketchpadRemote.addStrokes(finalMsg);
+					}
+				}catch(err){
+					console.log(err);
+					
+				}
+			};
 		};
 		
-		this.initLocalSketpchad = function(canvas){
-			
-			this.sketchpadLocal = $(canvas).sketchpad({
-			    aspectRatio: 1,
-			    canvasColor: 'rgba(255, 0,0,0)'
-			});
 		
-			this.sketchpadLocal.endEventCb = function(){
-				var strokeJson = self.sketchpadLocal.getLastStrokeJson();
-				
-				self.webrtc.send(strokeJson);
-			};
+		
+		this.initLocalSketpchad = function(canvas){
+			// init only if not initiated already
+			if (this.sketchpadLocal == null){
+				this.sketchpadLocal = $(canvas).sketchpad({
+				    aspectRatio: 1,
+				    canvasColor: 'rgba(255, 0,0,0)'
+				});
+			
+				this.sketchpadLocal.endEventCb = function(){
+					var strokeJson = self.sketchpadLocal.getLastStrokeJson();
+					
+					self.webrtc.send(strokeJson);
+				};
+			}
 		};
 		
 		this.initRemoteSketchpad = function(canvas,userid){
@@ -96,6 +102,16 @@ function (sketchpad) {
 			else{
 				layer.show();
 			}
+		};
+		
+		this.resetSketchpads = function(){
+			this.sketchpadLocal = null;
+			this.sketchpadRemotes = {};
+		};
+		
+		this.saveSketchpadStates = function(){
+			// TODO: saving strokes before resetting them
+			
 		};
 	};
 		

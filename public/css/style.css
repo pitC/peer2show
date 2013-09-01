@@ -21,8 +21,21 @@ left: 0;
 top: 0;
 }
 
-video{
+#sidebar video{
     width:100%;
+}
+
+#sidebar button{
+    width:100%;
+}
+
+#call-video-container{
+padding-top:5px;
+}
+
+#call-video-container video{
+margin-top:5px;
+width:50%;
 }
 
 .videoContainer{
