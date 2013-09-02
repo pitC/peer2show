@@ -1,7 +1,7 @@
 var ROOMS = "public/index.html";
 var DEMO = "html/All-in-One.html";
 var MAX_ROOM_SIZE = 1;
-var PORT = 8080;
+var LOCAL_PORT = 8080;
 var static = require('node-static');
 var http = require('http');
 var file = new(static.Server)();
@@ -34,7 +34,7 @@ app.configure(function(){
  app.put('/api/rooms/:id', rooms.addRoom);
  app.delete('/api/rooms/:id', rooms.deleteRoom);
 
-var server = http.createServer(app).listen(PORT);
+var server = http.createServer(app).listen(process.env.PORT || LOCAL_PORT);
 
 var io = require('socket.io').listen(server);
 var channels = {};
