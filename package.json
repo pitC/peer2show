@@ -6,7 +6,7 @@
       "express": "~3.4.4",
       "socket.io": "~0.9.16",
       "webrtc.io": "0.0.4",
-      "node-static": "0.7.0",
+      "node-static": "0.7.0"
       
   },
   "engines": {
