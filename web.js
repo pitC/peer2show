@@ -38,7 +38,8 @@ var server = http.createServer(app).listen(process.env.PORT || LOCAL_PORT);
 
 var io = require('socket.io').listen(server);
 var channels = {};
-
+// set logging to WARN	 0 - error 1 - warn 2 - info 3 - debug
+io.set('log level', 1);
 io.sockets.on('connection', function (socket) {
     var initiatorChannel = '';
     if (!io.isConnected)
@@ -59,6 +60,7 @@ io.sockets.on('connection', function (socket) {
     });
 
     socket.on('disconnect', function (channel) {
+    	console.log("Disconnect! "+initiatorChannel);
         if (initiatorChannel)
             channels[initiatorChannel] = null;
     });
@@ -66,12 +68,14 @@ io.sockets.on('connection', function (socket) {
 
 function onNewNamespace(channel, sender) {
     io.of('/' + channel).on('connection', function (socket) {
+    	console.log("On new namespace "+io.isConnected);
         if (io.isConnected) {
             io.isConnected = false;
             socket.emit('connect', true);
         }
 
         socket.on('message', function (data) {
+        	console.log("Broadcast message "+data+" of sender "+sender);
             if (data.sender == sender)
                 socket.broadcast.emit('message', data.data);
         });
