@@ -48,10 +48,10 @@ io.sockets.on('connection', function (socket) {
     socket.on('new-channel', function (data) {
     	console.log("*NEW CHANNEL*"+JSON.stringify(data));
     	var isChannelPresent = !! channels[data.channel];
-    	//if (!isChannelPresent){
+    	if (!isChannelPresent){
 	        channels[data.channel] = data.channel;
 	        onNewNamespace(data.channel, data.sender);
-    	//};
+    	};
     });
 
     socket.on('presence', function (channel) {
@@ -65,8 +65,8 @@ io.sockets.on('connection', function (socket) {
 
     socket.on('disconnect', function (channel) {
     	console.log("Disconnect! "+initiatorChannel);
-        if (initiatorChannel)
-            channels[initiatorChannel] = null;
+//        if (initiatorChannel)
+//            channels[initiatorChannel] = null;
     });
 });
 
