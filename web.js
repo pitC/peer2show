@@ -52,9 +52,10 @@ io.sockets.on('connection', function (socket) {
     });
 
     socket.on('presence', function (channel) {
-    	console.log("*Check presence* "+channel);
+    	
         var isChannelPresent = !! channels[channel];
         socket.emit('presence', isChannelPresent);
+        console.log("*Check presence* "+channel+":"+isChannelPresent);
         if (!isChannelPresent)
             initiatorChannel = channel;
     });
@@ -75,7 +76,7 @@ function onNewNamespace(channel, sender) {
         }
 
         socket.on('message', function (data) {
-        	console.log("Broadcast message "+data+" of sender "+sender);
+        	//console.log("Broadcast message "+data+" of sender "+sender);
             if (data.sender == sender)
                 socket.broadcast.emit('message', data.data);
         });
