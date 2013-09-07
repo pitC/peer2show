@@ -89,7 +89,13 @@ define([
 					console.log(e);
 					
 					self.sidebar.renderVideoContainer(e.mediaElement);
+					for (var index in self.roomAppViews){
+						if(self.roomAppViews[index].onStream)
+							self.roomAppViews[index].onStream(e);
+					}
 				};
+				
+				
 				
 				this.webRTCClient.onopen = function(e){
 					
@@ -98,6 +104,21 @@ define([
 							self.roomAppViews[index].onNewPeer(e);
 					}
 				};
+				
+				this.webRTCClient.onstreamended = function(e) {
+					//TODO: remove stream from webRTC registry(streams)
+					if (e.mediaElement.parentNode) {
+                        e.mediaElement.parentNode.removeChild(e.mediaElement);
+                    }
+					for (var index in self.roomAppViews){
+						if(self.roomAppViews[index].onStreamEnd)
+							self.roomAppViews[index].onStreamEnd(e);
+						if(self.roomAppViews[index].onPeerLeave)
+							self.roomAppViews[index].onPeerLeave(e);
+						
+					}
+				};
+				
 				
 			},
 			

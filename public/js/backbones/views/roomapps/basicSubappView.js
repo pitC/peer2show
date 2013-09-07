@@ -39,6 +39,22 @@ define([
 			}
         },
         
+        onStream : function(e){
+        	
+        	for (var i = 0; i<this.subviews.length;i++){
+				if(this.subviews[i].onStream)
+					this.subviews[i].onStream(e);
+			}
+        },
+        
+        onStreamEnd : function(e){
+        	
+        	for (var i = 0; i<this.subviews.length;i++){
+				if(this.subviews[i].onStreamEnd)
+					this.subviews[i].onStreamEnd(e);
+			}
+        },
+        
         onActivate : function(e){
         	
         },
@@ -46,10 +62,7 @@ define([
         onDeactivate : function(e){
         	
         }
-        
-        
-        
-        
+
 	});
 	
 	return BasicSubappView;

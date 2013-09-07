@@ -17,7 +17,7 @@ define([
             this.template = _.template(VideoContainerTmpl);
                    
             this.title = "Call";
-            
+            this.streamMediaElements = {};
         },
 		
 		render : function(){
@@ -28,6 +28,14 @@ define([
             return this;
         },
         
+        addVideoElement : function(stream){
+        	var session = {audio:false,video:true};
+        	var element = this.webrtcClient.createMediaElement(session, stream);
+			
+			$("#call-video-container").append(element);
+			$(element).attr('id',stream.id);
+        },
+        
         onActivate : function(){
         	var streams = this.webrtcClient.streams;
         	
@@ -36,35 +44,26 @@ define([
         		var streamInfo = streams[index];
         		if (streamInfo.stream){
         			console.log(streamInfo);
-        			session = {audio:false,video:true};
-        			
-        			
-//        			var element = document.getElementById("remote-video");
         			var stream = streamInfo.stream;
-        			var element = this.webrtcClient.createMediaElement(session, stream);
-        			$("#call-video-container").append(element);
-//       			 	if (typeof element.srcObject !== 'undefined') {
-//       			      element.srcObject = stream;
-//       			    } else if (typeof element.mozSrcObject !== 'undefined') {
-//       			      element.mozSrcObject = stream;
-//       			    } else if (typeof element.src !== 'undefined') {
-//       			      element.src = URL.createObjectURL(stream);
-//       			    } else {
-//       			      console.log('Error attaching stream to element.');
-//       			    }
-        			
-        			
+        			this.addVideoElement(stream);
         			
         		}
-        		
-        			
-    			
-    			
-    			
-        		
-        		
+	
         	}
         	
+        },
+        
+        onStream : function(e){
+        	console.log("On new stream!");
+        	console.log(e);
+        	if (e.stream)
+        		this.addVideoElement(e.stream);
+        },
+        onStreamEnd : function(e){
+        	console.log("On stream end!");
+        	console.log(e);
+        	var elementId = e.stream.id;
+        	$("#"+elementId).remove();
         }
         
 	});

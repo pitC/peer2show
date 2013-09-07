@@ -64,11 +64,34 @@ io.sockets.on('connection', function (socket) {
     });
 
     socket.on('disconnect', function (channel) {
-    	console.log("Disconnect! "+initiatorChannel);
-//        if (initiatorChannel)
-//            channels[initiatorChannel] = null;
+    	console.log("Disconnect on main ns "+initiatorChannel+" "+channel);
+    	if (initiatorChannel){
+    		var roomEmpty = isRoomEmpty(initiatorChannel);
+    		if (roomEmpty){
+    			console.log("Room empty, close channel!");
+        		channels[initiatorChannel] = null;
+    		};
+    	};
     });
 });
+
+function getNamespace(channel){
+	return "/"+channel;
+}
+
+function getChannelId(namespace){
+	var channelId = namespace.substr(1,namespace.length);
+	return channelId;
+}
+
+function isRoomEmpty(channel){
+	var clients = io.of('/' + channel).clients();
+	console.log(clients.length);
+	var roomEmpty = !clients || (clients.length==1);
+	return roomEmpty;
+}
+
+
 
 function onNewNamespace(channel, sender) {
     io.of('/' + channel).on('connection', function (socket) {
@@ -80,13 +103,23 @@ function onNewNamespace(channel, sender) {
         }
 
         socket.on('message', function (data) {
-        	console.log("Broadcast message in namespace "+socket.namespace.name+"\n"+JSON.stringify(data)+" of sender "+sender);
+        	//console.log("Broadcast message in namespace "+socket.namespace.name+"\n"+JSON.stringify(data)+" of sender "+sender);
         	
             
             //if (data.sender == sender){
                 socket.broadcast.emit('message', data.data);
             //}
     	});
+        
+        socket.on('disconnect', function (channel) {
+        	console.log("Disconnect! namespace "+socket.namespace.name+" "+channel);
+        	var channel = getChannelId(socket.namespace.name);
+        	var roomEmpty = isRoomEmpty(channel);
+        	if (roomEmpty){
+        		console.log("Room empty, close channel!");
+        		channels[channel] = null;
+        	};
+        });
     });
 };
 
