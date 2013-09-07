@@ -47,11 +47,11 @@ io.sockets.on('connection', function (socket) {
 
     socket.on('new-channel', function (data) {
     	console.log("*NEW CHANNEL*"+JSON.stringify(data));
-    	var isChannelPresent = !! channels[channel];
-    	if (!isChannelPresent){
+    	var isChannelPresent = !! channels[data.channel];
+    	//if (!isChannelPresent){
 	        channels[data.channel] = data.channel;
 	        onNewNamespace(data.channel, data.sender);
-    	};
+    	//};
     });
 
     socket.on('presence', function (channel) {
@@ -72,16 +72,21 @@ io.sockets.on('connection', function (socket) {
 
 function onNewNamespace(channel, sender) {
     io.of('/' + channel).on('connection', function (socket) {
-    	console.log("On new namespace "+io.isConnected);
+    	console.log("On connection in namespace "+socket.namespace.name+" "+io.isConnected);
+    	
         if (io.isConnected) {
             io.isConnected = false;
             socket.emit('connect', true);
         }
 
         socket.on('message', function (data) {
-        	console.log("Broadcast message "+JSON.stringify(data)+" of sender "+sender);
-            if (data.sender == sender)
+
+        	//console.log("Broadcast message "+JSON.stringify(data)+" of sender "+sender);
+        	//console.log("Broadcast message "+data+" of sender "+sender);
+            if (data.sender == sender){
+            	//console.log("Broadcast to namespace "+socket.namespace.name);
                 socket.broadcast.emit('message', data.data);
+            }
         });
     });
 };
