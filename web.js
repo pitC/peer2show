@@ -80,12 +80,12 @@ function onNewNamespace(channel, sender) {
         }
 
         socket.on('message', function (data) {
-        	//console.log("Broadcast message "+JSON.stringify(data)+" of sender "+sender);
-        	//console.log("Broadcast message "+data+" of sender "+sender);
+        	console.log("Broadcast message in namespace "+socket.namespace.name+"\n"+JSON.stringify(data)+" of sender "+sender);
+        	
             
-            if (data.sender == sender){
+            //if (data.sender == sender){
                 socket.broadcast.emit('message', data.data);
-            }
+            //}
     	});
     });
 };
