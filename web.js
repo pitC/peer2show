@@ -47,14 +47,18 @@ io.sockets.on('connection', function (socket) {
 
     socket.on('new-channel', function (data) {
     	console.log("*NEW CHANNEL*"+JSON.stringify(data));
-        channels[data.channel] = data.channel;
-        onNewNamespace(data.channel, data.sender);
+    	var isChannelPresent = !! channels[channel];
+    	if (!isChannelPresent){
+	        channels[data.channel] = data.channel;
+	        onNewNamespace(data.channel, data.sender);
+    	};
     });
 
     socket.on('presence', function (channel) {
-    	console.log("*Check presence* "+channel);
+    	
         var isChannelPresent = !! channels[channel];
         socket.emit('presence', isChannelPresent);
+        console.log("*Check presence* "+channel+":"+isChannelPresent);
         if (!isChannelPresent)
             initiatorChannel = channel;
     });
@@ -75,7 +79,7 @@ function onNewNamespace(channel, sender) {
         }
 
         socket.on('message', function (data) {
-        	console.log("Broadcast message "+data+" of sender "+sender);
+        	console.log("Broadcast message "+JSON.stringify(data)+" of sender "+sender);
             if (data.sender == sender)
                 socket.broadcast.emit('message', data.data);
         });
