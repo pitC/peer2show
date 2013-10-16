@@ -21,6 +21,11 @@ left: 0;
 top: 0;
 }
 
+#drop-area {
+	width:100%;
+	height:500px;
+}
+
 #sidebar video{
     width:100%;
 }

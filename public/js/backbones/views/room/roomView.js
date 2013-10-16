@@ -8,10 +8,11 @@ define([
          'webrtc/webRTCClient',
          'backbones/views/roomapps/whiteboard/whiteboardView',
          'backbones/views/roomapps/chat/chatView',
-         'backbones/views/roomapps/call/callView'
+         'backbones/views/roomapps/call/callView',
+         'backbones/views/roomapps/slideshow/slideshowView'
          
 ], function($, _, Backbone, roomTmpl,sidebarTmpl,sidebarRoomAppLinkTmpl, WebRTCClient,
-		WhiteboardView,ChatView, CallView){
+		WhiteboardView,ChatView, CallView, SlideshowView){
 
 	
 		var DEFAULT_ROOM_NAME = "test";
@@ -160,6 +161,9 @@ define([
             	
             	var call = new CallView(this.webRTCClient);
             	this.roomAppViews[call.title] = call;
+            	
+            	var slideshow = new SlideshowView(this.webRTCClient);
+            	this.roomAppViews[slideshow.title] = slideshow;
             	
             	// fill links in sidebar
             	for (var key in this.roomAppViews) {

@@ -1022,10 +1022,11 @@ function(){
                 _channel = config._channel,
                 file = config.file;
 
-            var packetSize = 1000,
+            var packetSize = 1000, // suggested size: 1000
                 textToTransfer = '',
                 numberOfPackets = 0,
-                packets = 0;
+                packets = 0,
+                DELAY = 0;
 
             // uuid to uniquely identify sending instance
             file.uuid = getRandomString();
@@ -1066,9 +1067,10 @@ function(){
 
                 textToTransfer = text.slice(data.message.length);
                 if (textToTransfer.length) {
-                    setTimeout(function() {
-                        onReadAsDataURL(null, textToTransfer);
-                    }, moz ? 1 : 500);
+//                    setTimeout(function() {
+//                        onReadAsDataURL(null, textToTransfer);
+//                    }, moz ? 1 : DELAY);
+                    onReadAsDataURL(null, textToTransfer);
                     // bug: what's the best method to speedup data transferring on chrome?
                 }
             }
@@ -1108,8 +1110,8 @@ function(){
 
                 // if you don't want to auto-save to disk:
                 // connection.autoSaveToDisk=false;
-                if (root.autoSaveToDisk)
-                    FileSaver.SaveToDisk(dataURL, data.name);
+//                if (root.autoSaveToDisk)
+//                    FileSaver.SaveToDisk(dataURL, data.name);
 
                 // connection.onFileReceived = function(fileName, file) {}
                 // file.blob || file.dataURL || file.url || file.uuid
@@ -1270,8 +1272,10 @@ function(){
         };
 
         var TURN = {
-            url: 'turn:homeo@turn.bistri.com:80',
-            credential: 'homeo'
+            //url: 'turn:homeo@turn.bistri.com:80',
+        	//credential: 'homeo'
+        	url: 'turn:41784574@computeengineondemand.appspot.com/turn',
+            credential: '4080218913'
         };
 
         var iceServers = {
@@ -1281,9 +1285,12 @@ function(){
         if (!moz && !options.iceServers) {
             if (parseInt(navigator.userAgent.match( /Chrom(e|ium)\/([0-9]+)\./ )[2]) >= 28)
                 TURN = {
-                    url: 'turn:turn.bistri.com:80',
-                    credential: 'homeo',
-                    username: 'homeo'
+//                    url: 'turn:turn.bistri.com:80',
+//                    credential: 'homeo',
+//                    username: 'homeo'
+            		url: 'turn:https://computeengineondemand.appspot.com/turn',
+                    credential: '4080218913',
+                    username: '41784574'
                 };
 
             iceServers.iceServers = [STUN, TURN];
