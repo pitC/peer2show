@@ -9,11 +9,12 @@ define([
          'text!templates/slideshowApp/slidePreviewArea.html',
          'text!templates/slideshowApp/slideFullArea.html',
          'text!templates/slideshowApp/slidePreview.html',
+         'text!templates/slideshowApp/activeSlidePreview.html',
          'text!templates/slideshowApp/slideFull.html'
          
          
 ], function($, _, Backbone, SlideshowApp, BasicSubappView, SlideCollection, SlideModel,
-		SlidePreviewAreaTmpl, SlideFullAreaTmpl, SlidePreviewTmpl, SlideFullTmpl
+		SlidePreviewAreaTmpl, SlideFullAreaTmpl, SlidePreviewTmpl,ActiveSlidePreviewTmpl, SlideFullTmpl
 ){
 	
 	SlideShowView = Backbone.View.extend({
@@ -38,7 +39,9 @@ define([
         	if (slide!= null){
         	var slidePreview = new SlidePreviewView({model : slide});
         	$("#slide-show-area").empty();
-		    $("#slide-show-area").append(slidePreview.render().el);
+        	var element = slidePreview.render().el;
+        	$(element).hide().appendTo("#slide-show-area").fadeIn(500);
+//		    $().append(element);
         	}
 		}
         ,
@@ -59,17 +62,19 @@ define([
 	});
 	
 	SlidePreviewView = Backbone.View.extend({
-		initialize:function () {
-            this.template = _.template(SlidePreviewTmpl);
+		initialize:function (options,isCurrent) {
+			this.model = options.model;
+			
+			console.log("Is current? "+this.isCurrent);
+			if (isCurrent)
+				this.template = _.template(ActiveSlidePreviewTmpl);
+			else
+				this.template = _.template(SlidePreviewTmpl);
         },
         
         render : function(){
             this.$el.html(this.template(this.model.toJSON()));
             return this;
-        },
-
-        dataURL : function(){
-            return this.model.get('dataURL');
         }
 	});
 	
@@ -91,7 +96,12 @@ define([
         },
 
 		renderSlidePreview : function(slide){
-			var slidePreview = new SlidePreviewView({model : slide});
+			
+			var isCurrent = this.slideCollection.isCurrent(slide);
+			console.log("Render slide preview! is current? "+isCurrent);
+		
+			
+			var slidePreview = new SlidePreviewView({model : slide},isCurrent);
 			
 	        $("#slide-preview-area").append(slidePreview.render().el);
 		},
@@ -100,8 +110,9 @@ define([
         },
 		jumpTo : function(event){
 			var dataUrl = $(event.target).attr("src");
-			
-			this.app.jumpToByURL({dataURL:dataUrl});
+			var index = this.app.getIndexFromURL(dataUrl);
+			//this.app.jumpToByURL({dataURL:dataUrl});
+			this.app.jumpToByIndex({index:index});
 		},
 		onShow : function(){
 			this.app.addDropArea("slide-preview-area");

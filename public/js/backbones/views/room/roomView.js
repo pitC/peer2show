@@ -148,30 +148,27 @@ define([
 //            		this.activeAppView.onShow();
             	
             	// or just activate app view where on show will be called as well
-            	this.activateRoomApp("Whiteboard");
+            	this.activateRoomApp("Slideshow");
             	
             },
             
             initRoomApps : function(){
-            	var whiteboard = new WhiteboardView(this.webRTCClient);
-            	this.roomAppViews[whiteboard.title] = whiteboard;
-            	
-            	var chat = new ChatView(this.webRTCClient);
-            	this.roomAppViews[chat.title] = chat;
-            	
-            	var call = new CallView(this.webRTCClient);
-            	this.roomAppViews[call.title] = call;
-            	
-            	var slideshow = new SlideshowView(this.webRTCClient);
-            	this.roomAppViews[slideshow.title] = slideshow;
-            	
+            	//TODO: refactor
+            	this.createAppView(WhiteboardView);
+            	this.createAppView(ChatView);
+            	this.createAppView(CallView);
+            	this.createAppView(SlideshowView);
+            	           	
             	// fill links in sidebar
             	for (var key in this.roomAppViews) {
             		var title = this.roomAppViews[key].title;
             		this.sidebar.addRoomAppLink(title);
             	}
-            	
-            	
+            },
+            
+            createAppView : function(ViewConstructor){
+            	var app = new ViewConstructor(this.webRTCClient);
+            	this.roomAppViews[app.title] = app;
             },
             
             activateRoomApp : function(title){

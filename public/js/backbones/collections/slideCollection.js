@@ -14,7 +14,9 @@ define([
 			if (this.currentSlideIndex >= this.length){
 				this.currentSlideIndex = this.length-1;
 			}
-			this.trigger('all');
+			else{
+				this.trigger('all');
+			}
 		},
 		
 		prev : function(){
@@ -22,13 +24,18 @@ define([
 			this.currentSlideIndex -= 1;
 			if (this.currentSlideIndex < 0){
 				this.currentSlideIndex = 0;
+				return;
 			}
-			this.trigger('all');
+			else{
+				this.trigger('all');
+			}
 		},
 		
 		jumpTo : function(index){
-			if (index >= 0 && index < this.length){
+			if (index >= 0 && index < this.length && index != this.currentSlideIndex){
+				
 				this.currentSlideIndex = index;
+				this.trigger('all');
 			}
 			return this.at(index);
 		},
@@ -36,10 +43,10 @@ define([
 		jumpToByURL : function(url){
 			var slide = this.findWhere({dataURL:url});
 			if (slide != null){
-				this.currentSlideIndex = this.indexOf(slide);
-				this.trigger('all');
+				var index = this.indexOf(slide);
+				if (this.currentSlideIndex != index)
+					this.trigger('all');
 			}
-			
 		},
 		
 		getCurrentSlide : function(){
@@ -54,6 +61,16 @@ define([
 			
 			console.log("Get current slide! "+slideIndex);
 			return this.at(slideIndex);
+		},
+		
+		isCurrent : function(slide){
+			var slideIndex = this.indexOf(slide);
+			if (this.currentSlideIndex == slideIndex){
+				return true;
+			}
+			else{
+				return false;
+			}
 		}
 	});
 	return SlideCollection;
