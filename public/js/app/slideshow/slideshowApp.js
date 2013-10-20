@@ -7,10 +7,10 @@ define([
 ],function ($, _, Backbone,SlideCollection,SlideModel) {
  
 
-	var app = function(webRTCClient, slideCollection){
+	var app = function(webRTCClient){
 		
 		this.webrtc = webRTCClient;
-		this.slideCollection = slideCollection;
+		this.slideCollection = new SlideCollection();
 		var self = this;	
 		this.RESIZE_IMG = true;
 		

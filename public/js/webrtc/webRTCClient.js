@@ -5,8 +5,8 @@
 
 	var connection = new RTCMultiConnection();
 	connection.session = {
-	    audio: true,
-	    video: true,
+	    audio: false,
+	    video: false,
 	    data: true,
 	    // Screensharing needs https so comment out for now
 	    // screen : true 

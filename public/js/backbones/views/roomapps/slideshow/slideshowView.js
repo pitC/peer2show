@@ -40,7 +40,7 @@ define([
         	var slidePreview = new SlidePreviewView({model : slide});
         	$("#slide-show-area").empty();
         	var element = slidePreview.render().el;
-        	$(element).hide().appendTo("#slide-show-area").fadeIn(500);
+        	$(element).hide().appendTo("#slide-show-area").fadeIn();
 //		    $().append(element);
         	}
 		}

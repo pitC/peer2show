@@ -2,38 +2,43 @@ define([
          'jquery', 
          'underscore', 
          'backbone',
-         'backbones/views/rooms/roomsView',
-         'backbones/views/room/roomView',
-         'backbones/views/homepage/homepageView'
-], function($, _, Backbone,RoomsView, RoomView){ 
+         'backbones/views/roomView',
+
+], function($, _, Backbone, RoomView){ 
 	
 	var AppRouter = Backbone.Router.extend({
         initialize : function(options){
             this.el = options.el;
         },
         routes : {
-            "Rooms" : "rooms",
-            "Room/:roomId" : "room",
-            "": "homepage"
+        	"":"room",
+            ":roomId": "room"
         },
-        rooms : function(){
-            var roomsView = new RoomsView();          
-            this.el.empty();
-            this.el.append(roomsView.render().el);
-        },
-        room : function(roomId){
+        room : function(inpRoomId){
+        	var roomId;
+        	if (inpRoomId){
+        		roomId = inpRoomId;
+        	}
+        	else{
+        		roomId = this.generateRoomId();
+        		window.location.hash = roomId;
+        		
+        	}
+        	
+        	console.log("Room id is "+roomId);
             var roomView = new RoomView({
             	room:roomId
-            });          
+            });
             this.el.empty();
             this.el.append(roomView.render().el);
             roomView.onShow();
         },
-        homepage : function(){
-            var homepageView = new HomepageView();          
-            this.el.empty();
-            this.el.append(homepageView.render().el);
-        }
+        generateRoomId : function(){
+    		var rand = function() {
+    		    return Math.random().toString(36).substr(2); // remove `0.`
+    		};
+    		return rand();
+    	}
     });
 	
 	var initialize = function(){
@@ -44,5 +49,7 @@ define([
 	return {
 		initialize : initialize
 	};
+	
+	
 
 });

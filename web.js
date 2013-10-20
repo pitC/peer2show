@@ -1,4 +1,4 @@
-var ROOMS = "public/index.html";
+var INDEX = "public/index.html";
 var DEMO = "html/All-in-One.html";
 var MAX_ROOM_SIZE = 1;
 var LOCAL_PORT = 8080;
@@ -7,7 +7,6 @@ var http = require('http');
 var file = new(static.Server)();
 
 var express = require('express');
-var rooms = require('./routes/rooms');
 var app = express();
 app.configure(function(){
 	  app.use(express.bodyParser());
@@ -16,24 +15,12 @@ app.configure(function(){
  app.use("/js", express.static(__dirname + '/public/js'));
  app.use("/css", express.static(__dirname + '/public/css'));
  app.all('/', function(req, res){
-	 	res.sendfile(ROOMS);
+	 	res.sendfile(INDEX);
 	 });
- app.all('/rooms', function(req, res){
- 	res.sendfile(ROOMS);
- });
  app.all('/demo', function(req, res){
 	 	res.sendfile(DEMO);
 	 });
  
- app.all('/whiteboard.html', function(req, res){
-	 	res.sendfile("whiteboard.html");
- });
- 
- app.get('/api/rooms', rooms.findAll);
- app.post('/api/rooms', rooms.addRoom);
- app.put('/api/rooms/:id', rooms.addRoom);
- app.delete('/api/rooms/:id', rooms.deleteRoom);
-
 var server = http.createServer(app).listen(process.env.PORT || LOCAL_PORT);
 
 var io = require('socket.io').listen(server);
