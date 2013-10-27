@@ -11,6 +11,7 @@ define([
             this.el = options.el;
         },
         routes : {
+        	"New":"room",
         	"":"room",
             ":roomId": "room"
         },

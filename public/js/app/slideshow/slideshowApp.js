@@ -11,8 +11,10 @@ define([
 		
 		this.webrtc = webRTCClient;
 		this.slideCollection = new SlideCollection();
-		var self = this;	
+		var self = this;
+		// for debugging purposes
 		this.RESIZE_IMG = true;
+		this.SEND_IMG = true;
 		
 		// ON EVENT CALLBACKS
 		this.webrtc.onFileSent = function (e){
@@ -137,32 +139,98 @@ define([
 		// PRIVATE METHODS
 		
 		function previewfile(file) {
-			  
+			
 		    var reader = new FileReader();
 		    reader.onload = function (event){
-		      addNewSlide(event.target.result);
+		    	var destUrl;
+		    	if (self.RESIZE_IMG){
+		    		
+		    		destUrl = preprocessImage(event.target.result);
+		    	}
+		    	// or don not use resize:
+		    	else{
+		    		destUrl = event.target.result;
+		    	}
+		    	console.log(event.target);
+		    	addNewSlide(destUrl);
 		    };
-
+//		    console.log(file); // file.type - image/jpeg, image/png etc. file.size - size in Bytes
 		    reader.readAsDataURL(file);
 		    // execute async
-		    self.webrtc.send(file);
+		    
+		    if (self.SEND_IMG){
+		    	self.webrtc.send(file);
+		    }
 		}
 
 		function readfiles(files) {
 		   
 		    for (var i = 0; i < files.length; i++) {
-		      
-		      previewfile(files[i]);
+		      var file = files[i];
+		      if (isImage(file)){
+		    	  previewfile(file);
+		      }
 		    }
 		}
-		
+ 
 		//TODO: resizing. Currently not working
-		function resizeImage(srcUrl){
+		function preprocessImage(srcUrl){
+			var options = {};
+			var format = getFormat(srcUrl);
+			options.format = getOutputFormat(format);
+			var destUrl = resizeImage(srcUrl, options);
+			return destUrl;
+		};
+		
+		function isImage(file){
+			var isImage = false;
+			if (file.type){
+				if (file.type.indexOf("image") != -1){
+					isImage = true;
+				}
+			}
+			return isImage;
+		}
+		
+		function getFormat(url){
+			
+			// function assumes url has following format: data:image/png;base64,iVBORw0KG...
+			// fetch format 
+			console.log(url);
+			var str = url.toString() || "";
+			
+			var patt = /image.*;/;
+			var output = str.match(patt)[0]; // match returns array, first object is output
+			var format = output.substr(0,output.length-1); //remove ; at the end
+			return format;
+		};
+		
+		function getOutputFormat(inputFormat){
+			var outputFormat = inputFormat;
+			var FORMAT_MATRIX = {"image/jpeg":"image/jpeg","image/png":"image/png","image/gif":"image/png"};
+			var DEFAULT_FORMAT = "image/jpeg";
+			
+			if (inputFormat){
+				if (inputFormat in FORMAT_MATRIX){
+					outputFormat = FORMAT_MATRIX[inputFormat];
+				}
+				else{
+					outputFormat = DEFAULT_FORMAT;
+				}	
+				
+			}
+			return outputFormat;
+		};
+		
+		function resizeImage(srcUrl,options){
 			var image = document.createElement('img');
 	        image.src = srcUrl;
 			
-			var MAX_WIDTH = 400;
-			var MAX_HEIGHT = 300;
+			var MAX_WIDTH = options.maxWidth || 800;
+			var MAX_HEIGHT = options.maxHeight || 600;
+			var JPEG_QUALITY = options.quality || 0.9;
+			var DEST_FORMAT = options.format || "image/jpeg";
+			
 			var width = image.width;
 			var height = image.height;
 			 
@@ -184,7 +252,7 @@ define([
 			canvas.height = height;
 	        var ctx = canvas.getContext('2d');
 	        ctx.drawImage(image, 0, 0, width, height);
-	        var destUrl = canvas.toDataUrl('image/jpeg');
+	        var destUrl = canvas.toDataURL(DEST_FORMAT,JPEG_QUALITY);
 	        return destUrl;
 		}
 		
