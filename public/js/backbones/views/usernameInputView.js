@@ -14,7 +14,12 @@ define([
 			this.template = _.template(UserInputTmpl);
         },
         events: {
-            "click #apply-bt": "setUserName"
+            "click #apply-bt": "setUserName",
+            "keypress input[type=text]": "onEnter"
+        },
+        onEnter : function(event){
+        	if (event.keyCode != 13) return;
+			this.setUserName(event);
         },
         setUserName : function(event){
         	var roomId = window.location.hash;
