@@ -35,8 +35,9 @@ define([
             roomView.onShow();
         },
         generateRoomId : function(){
+        	var LENGTH = 5;
     		var rand = function() {
-    		    return Math.random().toString(36).substr(2); // remove `0.`
+    		    return Math.random().toString(36).substr(2, LENGTH); // remove `0.`
     		};
     		return rand();
     	}

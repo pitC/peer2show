@@ -5,7 +5,6 @@ define([
         'backbones/collections/slideCollection',
         'backbones/models/slideModel'
 ],function ($, _, Backbone,SlideCollection,SlideModel) {
- 
 
 	var app = function(webRTCClient){
 		
@@ -30,6 +29,10 @@ define([
 		this.webrtc.onFileProgress = function(packets,uuid){
 			// TODO: present progress in GUI
 			console.log(packets,uuid);
+			var slide = self.slideCollection.get(uuid);
+			var progress = parseInt((1-packets.remaining/packets.length)*100);
+			slide.set("upload",progress);
+			console.log(packets,uuid);
 		};
 		
 		
@@ -43,6 +46,7 @@ define([
 				dropArea.ondrop = function(event){
 					event.preventDefault();
 					setTimeout(readfiles(event.dataTransfer.files),0);
+					console.log("dropped");
 				};
 			}
 		};
@@ -152,15 +156,16 @@ define([
 		    		destUrl = event.target.result;
 		    	}
 		    	console.log(event.target);
-		    	addNewSlide(destUrl);
+		    	var fileId = addNewSlide(destUrl);
+		    	if (self.SEND_IMG){
+		    		console.log("Send file "+fileId);
+			    	self.webrtc.send(file, fileId);
+			    }
 		    };
 //		    console.log(file); // file.type - image/jpeg, image/png etc. file.size - size in Bytes
 		    reader.readAsDataURL(file);
-		    // execute async
+
 		    
-		    if (self.SEND_IMG){
-		    	self.webrtc.send(file);
-		    }
 		}
 
 		function readfiles(files) {
@@ -173,7 +178,7 @@ define([
 		    }
 		}
  
-		//TODO: resizing. Currently not working
+		
 		function preprocessImage(srcUrl){
 			var options = {};
 			var format = getFormat(srcUrl);
@@ -245,8 +250,7 @@ define([
 			    height = MAX_HEIGHT;
 			  }
 			}
-			
-		
+
 			var canvas = document.createElement('canvas');
 			canvas.width = width;
 			canvas.height = height;
@@ -256,10 +260,16 @@ define([
 	        return destUrl;
 		}
 		
-		function addNewSlide(url){
-			var slide = new SlideModel({dataURL:url});
+		function addNewSlide(url,_fileId){
+			var fileId = _fileId || generateFileId();
+			var slide = new SlideModel({dataURL:url,id:fileId,upload:0});
 		    self.slideCollection.add(slide);
+		    return fileId;
 		};
+		
+		function generateFileId() {
+	        return (Math.random() * new Date().getTime()).toString(36).toUpperCase().replace( /\./g , '-');
+	    };
 		
 		
 	};

@@ -38,14 +38,15 @@ function(){
         this.join = joinSession;
 
         // send file/data or /text
-        this.send = function(data, _channel) {
+        this.send = function(data,fileId,_channel) {
             if (!data)
                 throw 'No file, data or text message to share.';
 
             if (data.size) {
-                // console.log(file.uuid);
+                console.log("WebRTC send:"+fileId);
                 FileSender.send({
                     file: data,
+                    fileId: fileId,
                     channel: rtcSession,
                     onFileSent: self.onFileSent,
                     onFileProgress: self.onFileProgress,
@@ -1029,7 +1030,7 @@ function(){
                 DELAY = 0;
 
             // uuid to uniquely identify sending instance
-            file.uuid = getRandomString();
+            file.uuid = config.fileId || getRandomString();
 
             var reader = new window.FileReader();
             reader.readAsDataURL(file);
