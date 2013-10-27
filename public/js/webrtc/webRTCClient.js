@@ -29,8 +29,9 @@
 	// connection.send(data/file)
 	
 	connection.openSignalingChannel = function(config) {
-		console.log("open sginaling channel!"+config.channel+" or "+" or "+location.hash.substr(1))+this.channel;
-	    var channel = config.channel ||  location.hash.substr(1) || this.channel || 'RTCMultiConnection-v1.4-Demos';
+		console.log("select sginaling channel!"+config.channel+" or "+location.hash.substr(1))+" or "+this.channel;
+	    var channel = config.channel ||  location.hash || this.channel || 'RTCMultiConnection-v1.4-Demos';
+	    console.log("open "+channel);
 	    
 	    var sender = Math.round(Math.random() * 999999999) + 999999999;
 	

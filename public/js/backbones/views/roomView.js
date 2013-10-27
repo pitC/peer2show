@@ -21,7 +21,7 @@ define([
 	
 			initialize : function(options){
 				this.template = _.template(roomTmpl);
-				this.roomName = options.room || DEFAULT_ROOM_NAME;
+				this.roomName = options.roomId || DEFAULT_ROOM_NAME;
 				this.username = options.user || DEFAULT_USER_NAME;  
 				this.webRTCClient = WebRTCClient;
 				
