@@ -13,6 +13,7 @@
 	};
 	var MAX_PARTICIPANTS_ALLOWED = 256;
 	var DEFAULT_SESSION_NAME = "Anonymous";
+	var DEFAULT_USER_NAME = "Guest";
 	var SIGNALING_SERVER = '/';
 	
 	// connection.setupNewSession
@@ -70,7 +71,8 @@
 	    
 	    
 	    connection.extra = {
-	        'session-name': sessionName
+	        'session-name': sessionName,
+	        'user-name':options.userName
 	    };
 	
 	    connection.maxParticipantsAllowed = maxParticipantsAllowed;
@@ -91,13 +93,15 @@
 	
 	connection.joinOrCreate = function(options){
 		var roomName = options.roomName || DEFAULT_SESSION_NAME;
-		
+		var userName = options.userName || DEFAULT_USER_NAME;
 		connection.testSessionPresence(roomName,function(isPresent){
 			if (isPresent){
 				console.log("Room exists!");
 				
 				connection.onNewSession = function(session) {
 					console.log("On new session join!");
+					connection.extra = {'user-name':userName};
+					console.log(session);
 					connection.join(session);
 				};
 				console.log("connecting...");
@@ -106,7 +110,7 @@
 			else{
 				connection.connect(roomName);
 				console.log("Create new room");
-				connection.setupNewSession({sessionName:roomName});
+				connection.setupNewSession({sessionName:roomName,userName:userName});
 			};
 		});
 	};

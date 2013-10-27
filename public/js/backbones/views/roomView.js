@@ -15,12 +15,14 @@ define([
 
 	
 		var DEFAULT_ROOM_NAME = "test";
+		var DEFAULT_USER_NAME = "user";
 
 		RoomView = Backbone.View.extend({
 	
 			initialize : function(options){
 				this.template = _.template(roomTmpl);
 				this.roomName = options.room || DEFAULT_ROOM_NAME;
+				this.username = options.user || DEFAULT_USER_NAME;  
 				this.webRTCClient = WebRTCClient;
 				
 
@@ -29,12 +31,12 @@ define([
 				this.initWebRTC();
 				
 				this.userCollection = new UserCollection();
-				this.userCollection.add({username:"me"});
+				this.userCollection.add({username:this.username+"(me)"});
 			},
 			
 			initWebRTC : function(){
 				var self = this;
-				this.webRTCClient.joinOrCreate({roomName:this.roomName});
+				this.webRTCClient.joinOrCreate({roomName:this.roomName,userName:this.username});
 				
 				this.webRTCClient.onstream = function(e){
 					console.log("Join!");
@@ -44,7 +46,8 @@ define([
 				this.webRTCClient.onopen = function(e){
 					console.log("Open!");
 					console.log(e);
-					self.userCollection.add({username:e.userid});
+					var username = e.extra['user-name'] || e.userid; 
+					self.userCollection.add({username:username});
 				};
 				
 				this.webRTCClient.onstreamended = function(e) {

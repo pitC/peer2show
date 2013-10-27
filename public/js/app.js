@@ -3,12 +3,14 @@ define([
          'underscore', 
          'backbone',
          'backbones/views/roomView',
+         'backbones/views/usernameInputView'
 
-], function($, _, Backbone, RoomView){ 
+], function($, _, Backbone, RoomView, UsernameInputView){ 
 	
 	var AppRouter = Backbone.Router.extend({
         initialize : function(options){
             this.el = options.el;
+            this.username = null;
         },
         routes : {
         	"New":"room",
@@ -16,24 +18,43 @@ define([
             ":roomId": "room"
         },
         room : function(inpRoomId){
-        	var roomId;
+        	
+        	// init room id
         	if (inpRoomId){
-        		roomId = inpRoomId;
         	}
         	else{
-        		roomId = this.generateRoomId();
-        		window.location.hash = roomId;
         		
+        		window.location.hash =  this.generateRoomId();
         	}
         	
-        	console.log("Room id is "+roomId);
-            var roomView = new RoomView({
-            	room:roomId
-            });
-            this.el.empty();
-            this.el.append(roomView.render().el);
-            roomView.onShow();
+        	// init user name
+        	if (!this.username){
+	        	this.el.empty();
+	        	var options = {callback:this.initRoomCallback};
+	        	var userInputView = new UsernameInputView(options);
+	            this.el.empty();
+	            this.el.append(userInputView.render().el);
+        	}
+        	// if already exists
+        	else{
+        		var options = {roomId:window.location.hash,user:this.username};
+        		this.initRoomCallback(options);
+        	}
         },
+        
+        initRoomCallback : function(options){
+        	// init room view
+        	console.log("init room "+options.user+" "+options.roomId);
+            
+        	this.$el.empty();
+            var roomView = new RoomView(options);
+            this.$el.html(roomView.render().el);
+            roomView.onShow();
+
+            this.username = options.user;
+        },
+        
+       
         generateRoomId : function(){
         	var LENGTH = 5;
     		var rand = function() {

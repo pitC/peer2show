@@ -30,9 +30,11 @@ define([
 			// TODO: present progress in GUI
 			console.log(packets,uuid);
 			var slide = self.slideCollection.get(uuid);
-			var progress = parseInt((1-packets.remaining/packets.length)*100);
-			slide.set("upload",progress);
-			console.log(packets,uuid);
+			if (slide){
+				var progress = parseInt((1-packets.remaining/packets.length)*100);
+				slide.set("upload",progress);
+				console.log(packets,uuid);
+			}
 		};
 		
 		
