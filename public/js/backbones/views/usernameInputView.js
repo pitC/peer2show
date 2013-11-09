@@ -22,7 +22,7 @@ define([
 			this.setUserName(event);
         },
         setUserName : function(event){
-        	var roomId = window.location.hash;
+        	var roomId =  location.href.replace( /\/|:|#|%|\.|\[|\]/g , '');
         	
         	var userName = $("#username-inp").val();
         	var options = {roomId : roomId, user : userName};

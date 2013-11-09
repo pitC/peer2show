@@ -6,7 +6,7 @@
 define(
 function(){
     var RTCMultiConnection = function(channel) {
-        this.channel = channel || location.href.replace( /\/|:|#|%|\.|\[|\]/g , '');
+        this.channel = channel ||  location.href.replace( /\/|:|#|%|\.|\[|\]/g , '');
 
         this.open = function(_channel) {
             self.joinedARoom = true;
