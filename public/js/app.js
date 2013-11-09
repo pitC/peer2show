@@ -37,7 +37,7 @@ define([
         	}
         	// if already exists
         	else{
-        		var options = {roomId:window.location.hash,user:this.username};
+        		var options = {roomId: location.href.replace( /\/|:|#|%|\.|\[|\]/g , ''),user:this.username};
         		this.initRoomCallback(options);
         	}
         },
