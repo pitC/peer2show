@@ -2,7 +2,7 @@ define([
          'jquery', 
          'underscore', 
          'backbone',
-         'app/slideshow/slideshowApp',
+         'app/slideshowApp',
          'text!templates/slideshowApp/slidePreviewArea.html',
          'text!templates/slideshowApp/slidePreview.html',
          'text!templates/slideshowApp/activeSlidePreview.html'

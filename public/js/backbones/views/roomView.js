@@ -5,7 +5,7 @@ define([
          'text!templates/room/room.html',
 
          'webrtc/webRTCClient',
-         'app/slideshow/slideshowApp',
+         'app/slideshowApp',
          'backbones/collections/userCollection',
          'backbones/views/showArea',
          'backbones/views/previewArea',
