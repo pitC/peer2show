@@ -25,13 +25,17 @@ define([
 				this.username = options.user || DEFAULT_USER_NAME;  
 				this.webRTCClient = WebRTCClient;
 				
+				var appOptions = {webRTC:this.webRTCClient};
 
-				this.app = new SlideshowApp(this.webRTCClient);
+				this.app = new SlideshowApp(appOptions);
 				this.app.bindCommunicationEvents();
 				this.initWebRTC();
 				
 				this.userCollection = new UserCollection();
 				this.userCollection.add({username:this.username+"(me)"});
+				
+				this.app.on('all',this.render,this);
+				
 			},
 			
 			initWebRTC : function(){
@@ -51,13 +55,15 @@ define([
 				};
 				
 				this.webRTCClient.onstreamended = function(e) {
-					
+					console.log("User left!");
+					console.log(e);
 				};
 			},
 			
 			
 	
             render : function(){
+            	console.log("Room view rerender!");
             	this.$el.html(this.template());
             	this.showArea  = new ShowArea(this.app);
             	this.previewArea = new PreviewArea(this.app);

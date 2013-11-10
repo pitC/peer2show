@@ -16,7 +16,6 @@ define([
 		initialize:function (options,isCurrent) {
 			this.model = options.model;
 			
-			console.log("Is current? "+this.isCurrent);
 			if (isCurrent)
 				this.template = _.template(ActiveSlidePreviewTmpl);
 			else
@@ -49,7 +48,7 @@ define([
 		renderSlidePreview : function(slide){
 			
 			var isCurrent = this.slideCollection.isCurrent(slide);
-			console.log("Render slide preview! is current? "+isCurrent);
+//			console.log("Render slide preview! is current? "+isCurrent);
 		
 			
 			var slidePreview = new SlidePreviewView({model : slide},isCurrent);

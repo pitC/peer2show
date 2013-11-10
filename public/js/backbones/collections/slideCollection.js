@@ -9,7 +9,7 @@ define([
 		},
 		
 		next : function(){
-			console.log("next!");
+//			console.log("next!");
 			this.currentSlideIndex += 1;
 			if (this.currentSlideIndex >= this.length){
 				this.currentSlideIndex = this.length-1;
@@ -20,7 +20,7 @@ define([
 		},
 		
 		prev : function(){
-			console.log("prev!");
+//			console.log("prev!");
 			this.currentSlideIndex -= 1;
 			if (this.currentSlideIndex < 0){
 				this.currentSlideIndex = 0;
@@ -50,7 +50,7 @@ define([
 		},
 		
 		getCurrentSlide : function(){
-			console.log("Current slide index? "+this.currentSlideIndex);
+//			console.log("Current slide index? "+this.currentSlideIndex);
 			var slideIndex = this.length-1;
 			if (this.currentSlideIndex >= 0 && this.currentSlideIndex < this.length){
 				slideIndex = this.currentSlideIndex;
@@ -59,7 +59,7 @@ define([
 				this.currentSlideIndex = slideIndex;
 			}
 			
-			console.log("Get current slide! "+slideIndex);
+//			console.log("Get current slide! "+slideIndex);
 			return this.at(slideIndex);
 		},
 		
