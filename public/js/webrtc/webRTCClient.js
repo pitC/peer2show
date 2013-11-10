@@ -1,7 +1,8 @@
 ﻿define([ 
 	'RTCMulticonnector',
-	'socketio'
-], function(RTCMultiConnection, io){
+	'socketio',
+	'webrtc/roomStatus'
+], function(RTCMultiConnection, io, RoomStatus){
 
 	var connection = new RTCMultiConnection();
 	connection.session = {
@@ -93,7 +94,7 @@
 	    socket.emit('presence', session);
 	};
 	
-	connection.joinOrCreate = function(options){
+	connection.joinOrCreate = function(options, callback,caller){
 		var roomName = options.roomName || DEFAULT_SESSION_NAME;
 		var userName = options.userName || DEFAULT_USER_NAME;
 		connection.testSessionPresence(roomName,function(isPresent){
@@ -105,14 +106,23 @@
 					connection.extra = {'user-name':userName};
 					console.log(session);
 					connection.join(session);
+					if(callback){
+						callback(caller,RoomStatus.JOINED);
+					}
 				};
 				console.log("connecting...");
 				connection.connect(roomName);
+				if(callback){
+					callback(caller,RoomStatus.JOINING);
+				}
 			}
 			else{
 				connection.connect(roomName);
 				console.log("Create new room");
 				connection.setupNewSession({sessionName:roomName,userName:userName});
+				if(callback){
+					callback(caller,RoomStatus.NEW_ROOM);
+				}
 			};
 		});
 	};

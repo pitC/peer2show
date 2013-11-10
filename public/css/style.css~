@@ -8,40 +8,7 @@ background-image: -o-radial-gradient(center center, farthest-side circle, #fffff
 background-image: radial-gradient(farthest-side circle at center center, #ffffff 0%, #D5D5D5 100%);
 
 }
-.whiteboard-container{
-width:100%;
-position:relative;
-}
 
-.whiteboard-canvas{
-background-color:black;
-width:100%;
-position: absolute; 
-left: 0; 
-top: 0;
-}
-
-#sidebar video{
-    width:100%;
-}
-
-#sidebar button{
-    width:100%;
-}
-
-#call-video-container{
-padding-top:5px;
-}
-
-#call-video-container video{
-margin-top:5px;
-width:50%;
-}
-
-.videoContainer{
-	border: 5px solid #9e9e9e;
-	height:100%;
-}
 
 /* Large desktop */
       @media (min-width: 980px) { 
@@ -59,9 +26,4 @@ button {
   font: 18px sans-serif;
   padding: 8px;
 }
-textarea {
-  font-family: monospace;
-  margin: 2px;
-  width:480px;
-  height:640px;
-}
+

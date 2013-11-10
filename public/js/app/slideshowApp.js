@@ -22,10 +22,25 @@ define([
 			this.RESIZE_IMG = true;
 			this.SEND_IMG = true;
 			
-			this.currentStatus = AppStatus.READY;
+			this.status = AppStatus.READY;
 			
 			this.initEventCallbacks();
+			
+			this.queueLength = 0;
 		},
+		
+	    setStatus : function(status){
+	    	if (AppStatus.isValid(status)){
+	    		if (this.status != status){
+	    			console.log("Switch status from "+this.status+" to "+status);
+	    			this.status = status;
+	    			this.trigger('change_status');	
+	    		}
+	    	}
+	    	else{
+	    		console.log("Wrong status "+status);
+	    	}
+	    },
 		
 		initEventCallbacks : function(){
 			
@@ -33,13 +48,19 @@ define([
 			
 			// ON EVENT CALLBACKS
 			this.webrtc.onFileSent = function (e){
-				console.log("File sent");
+				
+				self.queueLength -= 1;
+				console.log("File sent "+self.queueLength);
+				if (self.queueLength <= 0){
+					self.setStatus(AppStatus.READY);
+				}
 			};
 			
 			this.webrtc.onFileReceived = function(fileName, data){
 				console.log("Received! "+fileName);
 				console.log(data);
 				self.addNewSlide(data.dataURL);
+				self.setStatus(AppStatus.READY);
 			};
 			
 			this.webrtc.onFileProgress = function(packets,uuid){
@@ -51,6 +72,7 @@ define([
 					slide.set("upload",progress);
 //					console.log(packets,uuid);
 				};
+				self.setStatus(AppStatus.UPLOADING_PHOTOS);
 			};
 		},
 		
@@ -67,6 +89,7 @@ define([
 				dropArea.ondrop = function(event){
 					event.preventDefault();
 					setTimeout(self.readfiles(event.dataTransfer.files),0);
+//					self.readfiles(event.dataTransfer.files);
 					console.log("dropped");
 				};
 			};
@@ -196,13 +219,18 @@ define([
 		},
 
 		readfiles : function (files) {
-		   
+			this.setStatus(AppStatus.UPLOADING_PHOTOS);
+			this.queueLength = files.length;
 		    for (var i = 0; i < files.length; i++) {
 		      var file = files[i];
 		      if (this.imageProcessor.isImage(file)){
 		    	  this.previewfile(file);
 		      }
+		      else{
+		    	  this.queueLength -= 1;
+		      }
 		    }
+//		    this.setStatus(AppStatus.READY);
 		},
 		
 		addNewSlide : function (url,_fileId){
@@ -214,7 +242,8 @@ define([
 		
 		generateFileId : function () {
 	        return (Math.random() * new Date().getTime()).toString(36).toUpperCase().replace( /\./g , '-');
-	    },
+	    }
+	    
 	});
 		
 	return App;
