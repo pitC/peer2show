@@ -4,39 +4,40 @@
 <meta charset="utf-8">
 <title>Adhoc P2P Image presenter</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/css/bootstrap.min.css">
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="/css/style.css">
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
 <script data-main="js/main" src="js/lib/require.js"></script>
 </head>
 <body>
-<div id="container">
-	<div id="menu" class="navbar">
-	  <div class="nav-container">
-	
-	    <!-- .navbar-toggle is used as the toggle for collapsed navbar content -->
-	    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
-	      <span class="icon-bar"></span>
-	      <span class="icon-bar"></span>
-	      <span class="icon-bar"></span>
-	    </button>
-	
-	    <!-- Be sure to leave the brand out there if you want it shown -->
-	    <a class="navbar-brand" href="/">AdhocShow</a>
-	
-	    <!-- Place everything within .navbar-collapse to hide it until above 768px -->
-	    <div class="nav-collapse collapse navbar-responsive-collapse">
-	      <ul class="nav navbar-nav">
-		  <li><a href="#New">New session</a></li>
-		  <li><a href="#About">About</a></li>
-		</ul>
-	
-	      
-	    </div><!-- /.nav-collapse -->
-	  </div><!-- /.container -->
-	</div><!-- /.navbar -->
-	<div id="content">
-		Loading...
+<div class="container-full">
+	<div id="container">
+		<nav class="navbar navbar-default" role="navigation">
+		  <div class="nav-container">
+				<div class="navbar-header">
+				    <button type="button" class="navbar-toggle" data-toggle="collapse">
+				      <span class="icon-bar"></span>
+		     		 	<span class="icon-bar"></span>
+		      			<span class="icon-bar"></span>
+				    </button>
+				     <a class="navbar-brand" href="/">AdhocShow</a>
+			 	</div>
+		
+		    <!-- Place everything within .navbar-collapse to hide it until above 768px -->
+		    <div class="collapse navbar-collapse">
+		    <ul class="nav navbar-nav">
+		      <li class="active"><a href="#New">New session</a></li>
+		      <li><a href="#About">About</a></li>
+			      
+			</ul>
+		
+		      
+		    </div><!-- /.nav-collapse -->
+		  </div><!-- /.container -->
+		</div><!-- /.navbar -->
+		<div id="content">
+			Loading...
+		</div>
 	</div>
 </div>
 </body>

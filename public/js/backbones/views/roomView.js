@@ -93,12 +93,48 @@ define([
 	            	this.showArea  = new ShowArea(this.app);
 	            	this.previewArea = new PreviewArea(this.app);
 	                this.userArea = new UserArea({collection:this.userCollection});
-	            	this.$el.find("#container").append(this.showArea.render().el);
-	            	this.$el.find("#container").append(this.previewArea.render().el);
-	            	this.$el.find("#container").append(this.userArea.render().el);
+	            	this.$el.find("#show-area").append(this.showArea.render().el);
+	            	this.$el.find("#preview-area").append(this.previewArea.render().el);
+	            	this.$el.find("#users-area").append(this.userArea.render().el);
 	            	this.renderOverlay();
             	}
                 return this;
+            },
+            events: {
+                "click #prev": "prev",
+                "click #next": "next",
+//                "keypress ": "onKeypress"
+            },
+            
+            
+            
+            prev : function(e){
+            	this.app.prevSlide();
+            },
+            next : function(e){
+            	this.app.nextSlide();
+            },
+            
+            onKeypressInit : function(){
+            	var self = this;
+            	$(document).bind('keyup', function(e){
+            		switch(e.keyCode){
+                	case 37:
+                	case 38:
+                		self.app.prevSlide();
+                		e.preventDefault();
+                		break;
+                	case 39:
+                	case 40:
+                	case 32:	
+                		self.app.nextSlide();
+                		e.preventDefault();
+                		break;
+                		
+                	}
+
+            	});
+            	
             },
             
             renderOverlay : function(){
@@ -130,6 +166,7 @@ define([
             	this.showArea.onShow();
             	this.previewArea.onShow();
             	this.renderOverlay();
+            	this.onKeypressInit();
             }
 			
         });

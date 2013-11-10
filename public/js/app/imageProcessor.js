@@ -68,7 +68,7 @@ define([],function () {
 	        image.src = srcUrl;
 			
 			var MAX_WIDTH = options.maxWidth || 800;
-			var MAX_HEIGHT = options.maxHeight || 600;
+			var MAX_HEIGHT = options.maxHeight || 500;
 			var JPEG_QUALITY = options.quality || 0.9;
 			var DEST_FORMAT = options.format || "image/jpeg";
 			

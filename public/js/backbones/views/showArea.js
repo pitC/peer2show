@@ -55,17 +55,7 @@ define([
         	}
 		}
         ,
-		events: {
-            "click #prev": "prev",
-            "click #next": "next"
-        },
-        
-        prev : function(e){
-        	this.app.prevSlide();
-        },
-        next : function(e){
-        	this.app.nextSlide();
-        },
+		
         onShow : function(){
         	this.app.addDropArea("slide-show-area");
 		}

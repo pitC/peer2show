@@ -36,10 +36,7 @@ define([
             this.template = _.template(SlidePreviewAreaTmpl);
         },
         render : function(){
-			this.$el.html('');
-	        
-	        
-			this.$el.append("<div id='slide-preview-area' />");
+			this.$el.html(this.template());
 			this.slideCollection.each(this.renderSlidePreview,this);
 			this.onShow();
 			return this;

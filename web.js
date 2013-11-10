@@ -14,6 +14,7 @@ app.configure(function(){
 });
  app.use("/js", express.static(__dirname + '/public/js'));
  app.use("/css", express.static(__dirname + '/public/css'));
+ app.use("/fonts", express.static(__dirname + '/public/fonts'));
  app.all('/', function(req, res){
 	 	res.sendfile(INDEX);
 	 });
