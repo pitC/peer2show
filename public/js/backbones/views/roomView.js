@@ -8,12 +8,13 @@ define([
          'webrtc/roomStatus',
          'app/slideshowApp',
          'app/appStatus',
+         'app/settings',
          'backbones/collections/userCollection',
          'backbones/views/showArea',
          'backbones/views/previewArea',
          'backbones/views/userArea'
          
-], function($, _, Backbone, roomTmpl,overlayTmpl, WebRTCClient,RoomStatus, SlideshowApp, AppStatus, UserCollection, ShowArea, PreviewArea, UserArea){
+], function($, _, Backbone, roomTmpl,overlayTmpl, WebRTCClient,RoomStatus, SlideshowApp, AppStatus, Settings, UserCollection, ShowArea, PreviewArea, UserArea){
 
 	
 		var DEFAULT_ROOM_NAME = "test";
@@ -22,6 +23,8 @@ define([
 		RoomView = Backbone.View.extend({
 	
 			initialize : function(options){
+				console.log("Settings: "+Settings.maxHeight);
+				Settings.calculateMaxDimensions();
 				this.template = _.template(roomTmpl);
 				this.overlay = _.template(overlayTmpl);
 				this.roomName = options.roomId || DEFAULT_ROOM_NAME;
@@ -144,7 +147,8 @@ define([
         		}
         		else{
         			var options = {msg:this.app.status};
-        			this.addOverlay(options);
+//        			Temporarily commented out
+//        			this.addOverlay(options);
         		}
             },
             

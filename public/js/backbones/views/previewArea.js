@@ -38,7 +38,9 @@ define([
         render : function(){
 			this.$el.html(this.template());
 			this.slideCollection.each(this.renderSlidePreview,this);
+			
 			this.onShow();
+			this.scrollTo(this.slideCollection.currentSlideIndex);
 			return this;
         },
 
@@ -52,6 +54,12 @@ define([
 			
 	        $("#slide-preview-area").append(slidePreview.render().el);
 		},
+		
+		scrollTo : function scrollto(index){
+			var topOffset = (index-1)*100;
+			$('#slide-preview-area').scrollTop(topOffset);
+		},
+		
 		events: {
             "click img": "jumpTo"
         },

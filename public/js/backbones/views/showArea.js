@@ -58,6 +58,8 @@ define([
 		
         onShow : function(){
         	this.app.addDropArea("slide-show-area");
+        	this.app.addDropArea("prev-area");
+        	this.app.addDropArea("next-area");
 		}
 	});
 	

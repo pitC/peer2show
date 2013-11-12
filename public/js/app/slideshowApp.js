@@ -5,8 +5,9 @@ define([
         'backbones/collections/slideCollection',
         'backbones/models/slideModel',
         'app/imageProcessor',
-        'app/appStatus'
-],function ($, _, Backbone,SlideCollection,SlideModel,ImageProcessor, AppStatus) {
+        'app/appStatus',
+        'app/settings'
+],function ($, _, Backbone,SlideCollection,SlideModel,ImageProcessor, AppStatus, Settings) {
 
 	App = Backbone.Model.extend({
 		
@@ -17,7 +18,7 @@ define([
 			this.webrtc = options.webRTC;
 			this.slideCollection = new SlideCollection();
 			this.imageProcessor = new ImageProcessor();
-			
+			console.log("Settings after init: "+Settings.maxHeight);
 			// for debugging purposes
 			this.RESIZE_IMG = true;
 			this.SEND_IMG = true;
