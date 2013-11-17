@@ -37,11 +37,11 @@ require.config({
 	    'RTCMulticonnector': {
 	    	deps: ['socketio']
 	    }
-//	    ,
-//	    'bootrstrap' : {
-//	        deps: ['jquery','jqueryui'],
-//	        exports: 'Bootrstrap'
-//	    }
+	    ,
+	    'bootrstrap' : {
+	        deps: ['jquery','jqueryui'],
+	        exports: 'Bootrstrap'
+	    }
 	}
 }); 
 
