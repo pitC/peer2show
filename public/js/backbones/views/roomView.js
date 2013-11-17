@@ -148,7 +148,7 @@ define([
         		else{
         			var options = {msg:this.app.status};
 //        			Temporarily commented out
-//        			this.addOverlay(options);
+\        			this.addOverlay(options);
         		}
             },
             
@@ -172,8 +172,6 @@ define([
             	this.previewArea.onShow();
             	this.renderOverlay();
             	this.onKeypressInit();
-            	this.userCollection.add({username:"test1"});
-            	this.userCollection.add({username:"test2"});
             }
 			
         });
