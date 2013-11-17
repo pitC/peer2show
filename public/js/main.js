@@ -20,8 +20,9 @@ require.config({
 		
 	},
 	shim: {
+		
 	    'backbone': {
-	        deps: ['underscore', 'jquery','bootstrap'],
+	        deps: ['underscore', 'jquery', 'jqueryui','bootstrap'],
 	        exports: 'Backbone'
 	    },
 	    'underscore': {
@@ -35,6 +36,10 @@ require.config({
 	    },
 	    'RTCMulticonnector': {
 	    	deps: ['socketio']
+	    },
+	    'bootrstrap' : {
+	        deps: ['jquery','jqueryui'],
+	        exports: 'Bootrstrap'
 	    }
 	}
 }); 

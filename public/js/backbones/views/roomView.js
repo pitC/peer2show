@@ -104,8 +104,8 @@ define([
                 return this;
             },
             events: {
-                "click #prev": "prev",
-                "click #next": "next",
+                "click .btn-prev": "prev",
+                "click .btn-next": "next",
 //                "keypress ": "onKeypress"
             },
             
@@ -167,10 +167,13 @@ define([
             },
             
             onShow : function(){
+            	
             	this.showArea.onShow();
             	this.previewArea.onShow();
             	this.renderOverlay();
             	this.onKeypressInit();
+            	this.userCollection.add({username:"test1"});
+            	this.userCollection.add({username:"test2"});
             }
 			
         });
