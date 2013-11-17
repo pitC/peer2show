@@ -148,7 +148,7 @@ define([
         		else{
         			var options = {msg:this.app.status};
 //        			Temporarily commented out
-//        			this.addOverlay(options);
+        			this.addOverlay(options);
         		}
             },
             
