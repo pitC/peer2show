@@ -20,7 +20,7 @@ define([
 			this.imageProcessor = new ImageProcessor();
 			console.log("Settings after init: "+Settings.maxHeight);
 			// for debugging purposes
-			this.RESIZE_IMG = true;
+			this.RESIZE_IMG = false;
 			this.SEND_IMG = true;
 			
 			this.status = AppStatus.READY;
@@ -28,6 +28,8 @@ define([
 			this.initEventCallbacks();
 			
 			this.queueLength = 0;
+			
+			this.webrtc.preferSCTP = false;
 		},
 		
 	    setStatus : function(status){
@@ -48,31 +50,36 @@ define([
 			var self = this;
 			
 			// ON EVENT CALLBACKS
-			this.webrtc.onFileSent = function (e){
+			this.webrtc.onFileStart = function (file){
 				
-				self.queueLength -= 1;
-				console.log("File sent "+self.queueLength);
-				if (self.queueLength <= 0){
-					self.setStatus(AppStatus.READY);
-				}
+//				self.queueLength -= 1;
+//				console.log("File sent "+self.queueLength);
+//				if (self.queueLength <= 0){
+//					self.setStatus(AppStatus.READY);
+//				}
+				console.log("File start!");
+				console.log(file)
+				self.setStatus(AppStatus.UPLOADING_PHOTOS);
 			};
 			
-			this.webrtc.onFileReceived = function(fileName, data){
-				console.log("Received! "+fileName);
-				console.log(data);
-				self.addNewSlide(data.dataURL);
+			this.webrtc.onFileEnd = function(file){
+				console.log("File End!");
+				console.log(file);
+			
+				self.addNewSlide(file.url);
+				
 				self.setStatus(AppStatus.READY);
 			};
 			
-			this.webrtc.onFileProgress = function(packets,uuid){
+			this.webrtc.onFileProgress = function(chunk,uuid){
 				// TODO: present progress in GUI
-//				console.log(packets,uuid);
-				var slide = self.slideCollection.get(uuid);
-				if (slide){
-					var progress = parseInt((1-packets.remaining/packets.length)*100);
-					slide.set("upload",progress);
+				console.log(chunk,uuid);
+//				var slide = self.slideCollection.get(uuid);
+//				if (slide){
+//					var progress = parseInt((1-packets.remaining/packets.length)*100);
+//					slide.set("upload",progress);
 //					console.log(packets,uuid);
-				};
+//				};
 				self.setStatus(AppStatus.UPLOADING_PHOTOS);
 			};
 		},
@@ -136,19 +143,19 @@ define([
 		// REMOTE CALLS
 		bindCommunicationEvents : function(){
 			var self = this;
-			this.webrtc.onmessage = function(e){
-				var finalMsg = JSON.parse(e.data);
-				if (finalMsg.remoteCall){
-					console.log("Slideshow remote call: "+finalMsg.remoteCall);
-//					var func = self[finalMsg.remoteCall];
-					var options = new Object();
-					if (finalMsg.options){
-						options = finalMsg.options;
-					}
-					options.remote = true;
-					self[finalMsg.remoteCall](options);
-				};
-			};
+//			this.webrtc.onmessage = function(e){
+//				var finalMsg = JSON.parse(e.data);
+//				if (finalMsg.remoteCall){
+//					console.log("Slideshow remote call: "+finalMsg.remoteCall);
+////					var func = self[finalMsg.remoteCall];
+//					var options = new Object();
+//					if (finalMsg.options){
+//						options = finalMsg.options;
+//					}
+//					options.remote = true;
+//					self[finalMsg.remoteCall](options);
+//				};
+//			};
 		},
 		
 		rpcNext : function (){
@@ -205,12 +212,14 @@ define([
 		    		destUrl = event.target.result;
 		    		destFile = file;
 		    	}
+		    	console.log("File reader on load");
 		    	console.log(event.target);
 		    	console.log(file);
-		    	var fileId = self.addNewSlide(destUrl);
+		    	console.log(destFile);
+//		    	var fileId = self.addNewSlide(destUrl);
 		    	if (self.SEND_IMG){
-		    		console.log("Send file "+fileId);
-			    	self.webrtc.send(destFile, fileId);
+		    		console.log("Send file!");
+			    	self.webrtc.send(destFile);
 			    }
 		    };
 //		    console.log(file); // file.type - image/jpeg, image/png etc. file.size - size in Bytes
@@ -222,8 +231,11 @@ define([
 		readfiles : function (files) {
 			this.setStatus(AppStatus.UPLOADING_PHOTOS);
 			this.queueLength = files.length;
+			
 		    for (var i = 0; i < files.length; i++) {
 		      var file = files[i];
+		      console.log("Read file!");
+		      console.log(file);
 		      if (this.imageProcessor.isImage(file)){
 		    	  this.previewfile(file);
 		      }
@@ -237,7 +249,8 @@ define([
 		addNewSlide : function (url,_fileId){
 			var fileId = _fileId || this.generateFileId();
 			var slide = new SlideModel({dataURL:url,id:fileId,upload:0});
-		    this.slideCollection.add(slide);
+			if (!this.slideCollection.urlExists(url))
+				this.slideCollection.add(slide);
 		    return fileId;
 		},
 		

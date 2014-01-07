@@ -18,7 +18,9 @@ define([],function () {
 		this.preprocessImage = function(srcUrl){
 			var options = {};
 			var format = self.getFormat(srcUrl);
+			console.log("Format: "+format);
 			options.format = self.getOutputFormat(format);
+			console.log("Outout format: "+options.format);
 			var destUrl = self.resizeImage(srcUrl, options);
 			return destUrl;
 		};
@@ -30,6 +32,7 @@ define([],function () {
 					isImage = true;
 				}
 			}
+			console.log("Is image? "+isImage);
 			return isImage;
 		};
 		
@@ -86,13 +89,16 @@ define([],function () {
 			    height = MAX_HEIGHT;
 			  }
 			}
-
+			console.log("Create canvas");
 			var canvas = document.createElement('canvas');
 			canvas.width = width;
 			canvas.height = height;
 	        var ctx = canvas.getContext('2d');
+	        console.log("draw image");
 	        ctx.drawImage(image, 0, 0, width, height);
+	        console.log("get data url");
 	        var destUrl = canvas.toDataURL(DEST_FORMAT,JPEG_QUALITY);
+	        console.log("url: "+destUrl);
 	        return destUrl;
 		};
 		
