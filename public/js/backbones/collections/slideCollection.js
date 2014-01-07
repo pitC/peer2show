@@ -49,6 +49,15 @@ define([
 			}
 		},
 		
+		urlExists : function (url){
+			var slide = this.findWhere({dataURL:url});
+			console.log("url exists? "+url);
+			if (slide != null)
+				return true;
+			else
+				return false;
+		},
+		
 		getCurrentSlide : function(){
 //			console.log("Current slide index? "+this.currentSlideIndex);
 			var slideIndex = this.length-1;

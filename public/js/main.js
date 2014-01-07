@@ -16,7 +16,7 @@ require.config({
 		tiny_color : 'lib/tinycolor-0.9.15.min',
 		jquery_pick_a_color: 'lib/pick-a-color-1.1.7.min',
 		socketio: '/socket.io/socket.io',
-		RTCMulticonnector: 'webrtc/RTCMultiConnection-v1.4_AMD'
+		RTCMulticonnector: 'webrtc/RTCMultiConnection-v1.5_AMD'
 		
 	},
 	shim: {
