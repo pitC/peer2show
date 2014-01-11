@@ -25,11 +25,10 @@ define([
 			
 			this.status = AppStatus.READY;
 			
-			this.initEventCallbacks();
+			//this.initEventCallbacks();
 			
 			this.queueLength = 0;
-			
-			this.webrtc.preferSCTP = false;
+		
 		},
 		
 	    setStatus : function(status){
@@ -58,7 +57,7 @@ define([
 //					self.setStatus(AppStatus.READY);
 //				}
 				console.log("File start!");
-				console.log(file)
+				console.log(file);
 				self.setStatus(AppStatus.UPLOADING_PHOTOS);
 			};
 			

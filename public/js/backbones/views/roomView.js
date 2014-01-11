@@ -28,8 +28,8 @@ define([
 				this.template = _.template(roomTmpl);
 				this.overlay = _.template(overlayTmpl);
 				this.roomName = options.roomId || DEFAULT_ROOM_NAME;
-				this.username = options.user || DEFAULT_USER_NAME;  
-				this.webRTCClient = WebRTCClient;
+				this.username = options.user || DEFAULT_USER_NAME;
+				this.owner = options.owner || false;
 				
 				var appOptions = {webRTC:this.webRTCClient};
 
@@ -47,15 +47,14 @@ define([
 			initWebRTC : function(){
 				var self = this;
 				this.app.setStatus(AppStatus.OPENING_CHANNEL);
-				// TODO: callback on connection
-				this.webRTCClient.joinOrCreate({roomName:this.roomName,userName:this.username},this.onRoomInitChange,this);
+				this.webRTCClient = new WebRTCClient();
 				
-				
-				this.webRTCClient.onstream = function(e){
-					console.log("Join!");
-					console.log(e);
-					
-				};
+				if (this.owner){
+					this.webRTCClient.create({roomName:this.roomName,userName:this.username},this.onRoomInitChange,this);
+				}
+				else{
+					this.webRTCClient.join({roomName:this.roomName,userName:this.username},this.onRoomInitChange, this);
+				}
 
 				this.webRTCClient.onopen = function(e){
 					console.log("Open!");
@@ -65,7 +64,7 @@ define([
 					self.app.setStatus(AppStatus.READY);
 				};
 				
-				this.webRTCClient.onstreamended = function(e) {
+				this.webRTCClient.onend = function(e) {
 					console.log("User left!");
 					console.log(e);
 				};

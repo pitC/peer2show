@@ -11,6 +11,7 @@ define([
         initialize : function(options){
             this.el = options.el;
             this.username = null;
+            this.owner = null;
         },
         routes : {
         	"New":"room",
@@ -19,32 +20,41 @@ define([
         },
         room : function(inpRoomId){
         	
+        	
         	// init room id
+        	
+        	console.log("Inp room ID "+inpRoomId);
+        	
         	if (inpRoomId){
+        		if (this.owner == null){
+        			this.owner = false;
+        		}
         	}
         	else{
-        		
+        		if(this.owner == null){
+        			this.owner = true;
+        		}
         		window.location.hash =  this.generateRoomId();
         	}
         	
         	// init user name
         	if (!this.username){
 	        	this.el.empty();
-	        	var options = {callback:this.initRoomCallback};
+	        	var options = {callback:this.initRoomCallback,owner:this.owner};
 	        	var userInputView = new UsernameInputView(options);
 	            this.el.empty();
 	            this.el.append(userInputView.render().el);
         	}
         	// if already exists
         	else{
-        		var options = {roomId: location.href.replace( /\/|:|#|%|\.|\[|\]/g , ''),user:this.username};
+        		var options = {roomId: location.href.replace( /\/|:|#|%|\.|\[|\]/g , ''),user:this.username,owner:this.owner};
         		this.initRoomCallback(options);
         	}
         },
         
         initRoomCallback : function(options){
         	// init room view
-        	console.log("init room "+options.user+" "+options.roomId);
+        	console.log("init room "+options.user+" "+options.roomId+" is owner?"+options.owner);
             
         	this.$el.empty();
             var roomView = new RoomView(options);

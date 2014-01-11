@@ -10,7 +10,8 @@ define([
 	
 	UsernameInputView = Backbone.View.extend({
 		initialize:function (options) {
-			this.callback = options.callback; 
+			this.callback = options.callback;
+			this.owner = options.owner;
 			this.template = _.template(UserInputTmpl);
         },
         events: {
@@ -25,7 +26,7 @@ define([
         	var roomId =  location.href.replace( /\/|:|#|%|\.|\[|\]/g , '');
         	
         	var userName = $("#username-inp").val();
-        	var options = {roomId : roomId, user : userName};
+        	var options = {roomId : roomId, user : userName,owner:this.owner};
         	this.callback(options);
         },
         render : function(){
