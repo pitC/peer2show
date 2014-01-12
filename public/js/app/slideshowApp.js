@@ -21,7 +21,7 @@ define([
 			console.log("Settings after init: "+Settings.maxHeight);
 			// for debugging purposes
 			
-			this.RESIZE_IMG = false;
+			this.RESIZE_IMG = true;
 			this.SEND_IMG = true;
 			
 			this.status = AppStatus.READY;
@@ -193,23 +193,31 @@ define([
 		    	var destFile;
 		    	if (self.RESIZE_IMG){
 		    		
-		    		destUrl = self.imageProcessor.preprocessImage(event.target.result);
-		    		destFile = self.imageProcessor.dataURLtoFile(destUrl);
+		    		destUrl = self.imageProcessor.preprocessImage(event.target.result, function(destUrl){
+		    			var destFile = self.imageProcessor.dataURLtoFile(destUrl);
+		    			self.addNewSlide(destUrl);
+				    	if (self.SEND_IMG){
+				    		console.log("Send file!");
+					    	self.webrtc.send(destFile);
+					    }
+		    		});
+		    		
 		    	}
 		    	// or don not use resize:
 		    	else{
 		    		destUrl = event.target.result;
 		    		destFile = file;
+		    		console.log("File reader on load");
+//			    	console.log(event.target);
+			    	console.log(file);
+			    	console.log(destFile);
+			    	self.addNewSlide(destUrl);
+			    	if (self.SEND_IMG){
+			    		console.log("Send file!");
+				    	self.webrtc.send(destFile);
+				    }
 		    	}
-		    	console.log("File reader on load");
-//		    	console.log(event.target);
-		    	console.log(file);
-		    	console.log(destFile);
-		    	self.addNewSlide(destUrl);
-		    	if (self.SEND_IMG){
-		    		console.log("Send file!");
-			    	self.webrtc.send(destFile);
-			    }
+		    	
 		    };
 //		    console.log(file); // file.type - image/jpeg, image/png etc. file.size - size in Bytes
 		    reader.readAsDataURL(file);
