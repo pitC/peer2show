@@ -110,9 +110,7 @@ define([
                 "click .btn-next": "next",
 //                "keypress ": "onKeypress"
             },
-            
-            
-            
+          
             prev : function(e){
             	this.app.prevSlide();
             },
@@ -149,6 +147,9 @@ define([
         		}
         		else{
         			var options = {msg:this.app.status};
+        			if (this.app.status == AppStatus.WAITING_FOR_USERS){
+        				options.msg += ".<br>Share this link with your peers:<br><strong>"+location.href+"</strong><br>";
+        			}
 //        			Temporarily commented out
         			this.addOverlay(options);
         		}

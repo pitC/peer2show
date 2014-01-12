@@ -39,7 +39,7 @@ define([
 		
 			var userElement = new UserElementView({model : user});
 			
-			$("#userList").append(userElement.render().el);
+			$("#user-list").append(userElement.render().el);
 		}
 	});
 	

@@ -23,6 +23,7 @@
 		
 		this.ownerConnection = null;
 		this.peerConnections = {};
+		this.ongoingTransfers = {};
 		
 		var self = this;
 		
@@ -31,6 +32,7 @@
 		
 		this.onrpc;
 		this.onfile;
+		this.onTransferFinish;
 		
 		this.rpc = function(funcName, parameters){
 			var obj = new Object();
@@ -68,7 +70,6 @@
 			console.log("Received data!");
 			console.log(data);
 			if (data.constructor === ArrayBuffer){
-				console.log("It's a file!");
 				  var dataView = new Uint8Array(data);
 			      var dataBlob = new Blob([dataView]);
 			      var url = window.URL.createObjectURL(dataBlob);
@@ -79,6 +80,7 @@
 			}
 			else{
 				var finalMsg = JSON.parse(data);
+				// remote call
 				if (finalMsg.remoteCall){
 					var options = finalMsg.parameters || {};
 					
@@ -87,7 +89,32 @@
 						self.onrpc(finalMsg.remoteCall,options);
 					}
 				}
+				// internal
+				else{
+					
+				}
 			}
+		};
+		
+		
+		
+		this._onPeerConnection = function(conn) {
+			console.log("Peer connection!");
+			console.log(conn);
+			
+			// Add event callbacks
+			conn.on('data', self._onData);
+			conn.on('close',self._onPeerConnectionClose);
+			
+			// Add peer to associated array
+			self.peerConnections[conn.peer] = conn;
+			
+			// Propagate event
+			if(self.onopen){
+				// TODO: transmit usernames
+				var eventData = {username:conn.metadata.username||"Guest"};
+				self.onopen(eventData);
+			};
 		};
 		
 		this._onPeerConnectionClose = function(){
@@ -102,29 +129,7 @@
 				var eventData = {};
 				self.onclose(eventData);
 			}
-			
-			
 		};
-		
-		this._onConnection = function(conn) {
-			console.log("Peer connection!");
-			console.log(conn);
-			
-			// Add event callbacks
-			conn.on('data', self._onData);
-			conn.on('close',self._onPeerConnectionClose);
-			
-			// Add peer to associated array
-			self.peerConnections[conn.peer] = conn;
-			
-			// Propagate event
-			if(self.onopen){
-				// TODO: transmit usernames
-				var eventData = {};
-				self.onopen(eventData);
-			}
-		};
-		
 		
 
 		this.create = function(options,callback, caller){
@@ -132,7 +137,7 @@
 			
 			this.ownPeer = new Peer(this.ownerPeerId,this.peerJSOptions);
 			
-			this.ownPeer.on('connection',this._onConnection);
+			this.ownPeer.on('connection',this._onPeerConnection);
 			this.ownPeer.on('open', function(id) {
 				  console.log('My peer ID is: ' + id);
 				 
@@ -146,6 +151,9 @@
 			console.log("Join!");
 			this.ownPeer = new Peer(this.peerJSOptions);
 			var self = this;
+			
+			var metadata = {username:options.userName};
+			this.dataChannelOptions.metadata = metadata;
 			
 			this.ownPeer.on('open', function(id) {
 				// on connection to broker
@@ -163,7 +171,7 @@
 				 // 3. Add callback on connection open
 				 self.ownerConnection.on('open', function() {
 					 console.log("Connection to owner establiished!");
-					 
+					 console.log(self.ownerConnection);
 					 // Propagate event
 					 if(self.onopen){
 						 	// TODO transmit real usernames

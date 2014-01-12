@@ -57,7 +57,7 @@ define([
 		
 		scrollTo : function scrollto(index){
 			var topOffset = (index-1)*100;
-			$('#slide-preview-area').scrollTop(topOffset);
+			$('#sidebar-panel').scrollTop(topOffset);
 		},
 		
 		events: {
@@ -70,7 +70,7 @@ define([
 			this.app.jumpToByIndex({index:index});
 		},
 		onShow : function(){
-			this.app.addDropArea("slide-preview-area");
+			
 		}
 	});
 	

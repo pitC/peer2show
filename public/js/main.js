@@ -37,9 +37,9 @@ require.config({
 	    	deps: ['socketio']
 	    }
 	    ,
-	    'bootrstrap' : {
+	    'bootstrap' : {
 	        deps: ['jquery','jqueryui'],
-	        exports: 'Bootrstrap'
+	        exports: 'Bootstrap'
 	    }
 	}
 }); 

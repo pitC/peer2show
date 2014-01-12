@@ -53,49 +53,8 @@ define([
 				console.log("On file receive");
 				self.addNewSlide(url);
 			};
-			/*
-			// ON EVENT CALLBACKS
-			this.webrtc.onFileStart = function (file){
-				
-//				self.queueLength -= 1;
-//				console.log("File sent "+self.queueLength);
-//				if (self.queueLength <= 0){
-//					self.setStatus(AppStatus.READY);
-//				}
-				console.log("File start!");
-				console.log(file);
-				self.setStatus(AppStatus.UPLOADING_PHOTOS);
-			};
-			
-			
-			
-			this.webrtc.onFileEnd = function(file){
-				console.log("File End!");
-				console.log(file);
-			
-				self.addNewSlide(file.url);
-				
-				self.setStatus(AppStatus.READY);
-			};
-			
-			this.webrtc.onFileProgress = function(chunk,uuid){
-				// TODO: present progress in GUI
-				console.log(chunk,uuid);
-//				var slide = self.slideCollection.get(uuid);
-//				if (slide){
-//					var progress = parseInt((1-packets.remaining/packets.length)*100);
-//					slide.set("upload",progress);
-//					console.log(packets,uuid);
-//				};
-				self.setStatus(AppStatus.UPLOADING_PHOTOS);
-			};
-			*/
 		},
-		
-		
-		
-		
-		
+	
 		addDropArea : function(dropAreaId){
 			var dropArea = document.getElementById(dropAreaId);
 			var self = this;
@@ -105,7 +64,6 @@ define([
 				dropArea.ondrop = function(event){
 					event.preventDefault();
 					setTimeout(self.readfiles(event.dataTransfer.files),0);
-//					self.readfiles(event.dataTransfer.files);
 					console.log("dropped");
 				};
 			};
@@ -197,7 +155,6 @@ define([
 		    			var destFile = self.imageProcessor.dataURLtoFile(destUrl);
 		    			self.addNewSlide(destUrl);
 				    	if (self.SEND_IMG){
-				    		console.log("Send file!");
 					    	self.webrtc.send(destFile);
 					    }
 		    		});
@@ -207,19 +164,13 @@ define([
 		    	else{
 		    		destUrl = event.target.result;
 		    		destFile = file;
-		    		console.log("File reader on load");
-//			    	console.log(event.target);
-			    	console.log(file);
-			    	console.log(destFile);
 			    	self.addNewSlide(destUrl);
 			    	if (self.SEND_IMG){
-			    		console.log("Send file!");
 				    	self.webrtc.send(destFile);
 				    }
 		    	}
 		    	
 		    };
-//		    console.log(file); // file.type - image/jpeg, image/png etc. file.size - size in Bytes
 		    reader.readAsDataURL(file);
 			
 		    

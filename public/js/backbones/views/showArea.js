@@ -51,7 +51,6 @@ define([
         	$("#slide-show-area").empty();
         	var element = slidePreview.render().el;
         	$(element).hide().appendTo("#slide-show-area").fadeIn();
-//		    $().append(element);
         	}
 		}
         ,

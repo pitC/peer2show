@@ -12,11 +12,18 @@ define([
             this.el = options.el;
             this.username = null;
             this.owner = null;
+            console.log("App Router init!");
         },
         routes : {
-        	"New":"room",
+        	"New":"newRoom",
         	"":"room",
             ":roomId": "room"
+        },
+        newRoom : function(id){
+//        	this.username = null;
+        	this.owner = true;
+        	this.room(id);
+        	
         },
         room : function(inpRoomId){
         	
@@ -55,13 +62,12 @@ define([
         initRoomCallback : function(options){
         	// init room view
         	console.log("init room "+options.user+" "+options.roomId+" is owner?"+options.owner);
-            
         	this.$el.empty();
             var roomView = new RoomView(options);
             this.$el.html(roomView.render().el);
             roomView.onShow();
 
-            this.username = options.user;
+            
         },
         
        
