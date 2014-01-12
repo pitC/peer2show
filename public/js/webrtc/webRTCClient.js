@@ -10,9 +10,13 @@
 		
 		this.peerJSOptions = {
 			key: '7673s5yzjupzxgvi',
-			debug: 3 // all logs
+			debug: 3, // all logs
 			// host - for now use peer.js host
 			// port
+			config: {'iceServers': [
+			                        { url: 'stun:stun.l.google.com:19302' },
+			                        { url: 'turn:homeo@turn.bistri.com:80', credential: 'homeo' }
+			                      ]}
 		};
 		
 		this.dataChannelOptions = {
