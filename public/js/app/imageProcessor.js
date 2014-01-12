@@ -15,14 +15,12 @@ define([],function () {
 		};
  
 		
-		this.preprocessImage = function(srcUrl){
+		this.preprocessImage = function(srcUrl, callback){
 			var options = {};
 			var format = self.getFormat(srcUrl);
 			console.log("Format: "+format);
 			options.format = self.getOutputFormat(format);
-			console.log("Outout format: "+options.format);
-			var destUrl = self.resizeImage(srcUrl, options);
-			return destUrl;
+			self.resizeImage(srcUrl, options,callback);
 		};
 		
 		this.isImage = function(file){
@@ -66,40 +64,44 @@ define([],function () {
 			return outputFormat;
 		};
 		
-		this.resizeImage = function(srcUrl,options){
-			var image = document.createElement('img');
-	        image.src = srcUrl;
-			
+		this.resizeImage = function(srcUrl,options, callback){
+//			var image = document.createElement('img');
+			var image = new Image();
 			var MAX_WIDTH = options.maxWidth || 800;
 			var MAX_HEIGHT = options.maxHeight || 500;
 			var JPEG_QUALITY = options.quality || 0.9;
 			var DEST_FORMAT = options.format || "image/jpeg";
 			
-			var width = image.width;
-			var height = image.height;
-			 
-			if (width > height) {
-			  if (width > MAX_WIDTH) {
-			    height *= MAX_WIDTH / width;
-			    width = MAX_WIDTH;
-			  }
-			} else {
-			  if (height > MAX_HEIGHT) {
-			    width *= MAX_HEIGHT / height;
-			    height = MAX_HEIGHT;
-			  }
-			}
-			console.log("Create canvas");
-			var canvas = document.createElement('canvas');
-			canvas.width = width;
-			canvas.height = height;
-	        var ctx = canvas.getContext('2d');
-	        console.log("draw image");
-	        ctx.drawImage(image, 0, 0, width, height);
-	        console.log("get data url");
-	        var destUrl = canvas.toDataURL(DEST_FORMAT,JPEG_QUALITY);
-	        console.log("url: "+destUrl);
-	        return destUrl;
+			image.onload = function(evt){
+				var width = image.width;
+				var height = image.height;
+				 
+				if (width > height) {
+				  if (width > MAX_WIDTH) {
+				    height *= MAX_WIDTH / width;
+				    width = MAX_WIDTH;
+				  }
+				} else {
+				  if (height > MAX_HEIGHT) {
+				    width *= MAX_HEIGHT / height;
+				    height = MAX_HEIGHT;
+				  }
+				}
+				console.log("Create canvas");
+				var canvas = document.createElement('canvas');
+				canvas.width = width;
+				canvas.height = height;
+		        var ctx = canvas.getContext('2d');
+		        console.log("draw image");
+		        ctx.drawImage(image, 0, 0, width, height);
+		        console.log("get data url");
+		        var destUrl = canvas.toDataURL(DEST_FORMAT,JPEG_QUALITY);
+		        console.log("url: "+destUrl);
+		        callback(destUrl);
+			};
+			
+	        image.src = srcUrl;
+
 		};
 		
 		this.generateFileId = function() {

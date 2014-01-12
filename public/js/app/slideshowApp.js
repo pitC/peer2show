@@ -20,12 +20,13 @@ define([
 			this.imageProcessor = new ImageProcessor();
 			console.log("Settings after init: "+Settings.maxHeight);
 			// for debugging purposes
+			
 			this.RESIZE_IMG = false;
 			this.SEND_IMG = true;
 			
 			this.status = AppStatus.READY;
 			
-			//this.initEventCallbacks();
+			this.initEventCallbacks();
 			
 			this.queueLength = 0;
 		
@@ -47,7 +48,12 @@ define([
 		initEventCallbacks : function(){
 			
 			var self = this;
-			
+			this.webrtc.onfile = function(url){
+				
+				console.log("On file receive");
+				self.addNewSlide(url);
+			};
+			/*
 			// ON EVENT CALLBACKS
 			this.webrtc.onFileStart = function (file){
 				
@@ -60,6 +66,8 @@ define([
 				console.log(file);
 				self.setStatus(AppStatus.UPLOADING_PHOTOS);
 			};
+			
+			
 			
 			this.webrtc.onFileEnd = function(file){
 				console.log("File End!");
@@ -81,6 +89,7 @@ define([
 //				};
 				self.setStatus(AppStatus.UPLOADING_PHOTOS);
 			};
+			*/
 		},
 		
 		
@@ -142,60 +151,41 @@ define([
 		// REMOTE CALLS
 		bindCommunicationEvents : function(){
 			var self = this;
-//			this.webrtc.onmessage = function(e){
-//				var finalMsg = JSON.parse(e.data);
-//				if (finalMsg.remoteCall){
-//					console.log("Slideshow remote call: "+finalMsg.remoteCall);
-////					var func = self[finalMsg.remoteCall];
-//					var options = new Object();
-//					if (finalMsg.options){
-//						options = finalMsg.options;
-//					}
-//					options.remote = true;
-//					self[finalMsg.remoteCall](options);
-//				};
-//			};
+			this.webrtc.onrpc = function(remoteCall, parameters){
+				
+				self[remoteCall](parameters);
+			
+			};
 		},
 		
 		rpcNext : function (){
-			var obj = new Object();
-			obj.remoteCall = "nextSlide";
-			var json = JSON.stringify(obj);
-			this.webrtc.send(json);
+			this.webrtc.rpc("nextSlide");
 		},
 		
 		rpcPrev:function() {
-			var obj = new Object();
-			obj.remoteCall = "prevSlide";
-			var json = JSON.stringify(obj);
-			this.webrtc.send(json);
+			this.webrtc.rpc("prevSlide");
 		},
 		
 		rpcJumpToURL:function (url){
-			var obj = new Object();
-			obj.remoteCall = "jumpToByURL";
+			var remoteCall = "jumpToByURL";
 			var options = new Object();
 			options.dataURL = url;
-			obj.options = options;
-			var json = JSON.stringify(obj);
-			this.webrtc.send(json);
+			this.webrtc.rpc(remoteCall,options);
 		},
 		
 		rpcJumpToIndex : function(index){
-			var obj = new Object();
-			obj.remoteCall = "jumpToByIndex";
+			var remoteCall = "jumpToByIndex";
 			var options = new Object();
 			options.index = index;
-			obj.options = options;
-			var json = JSON.stringify(obj);
-			this.webrtc.send(json);
+			this.webrtc.rpc(remoteCall,options);
 		},
 		
 		
 		// PRIVATE METHODS
 		
 		previewfile : function(file) {
-			
+			//this.webrtc.send(file);
+						
 		    var reader = new FileReader();
 		    var self = this;
 		    reader.onload = function (event){
@@ -212,10 +202,10 @@ define([
 		    		destFile = file;
 		    	}
 		    	console.log("File reader on load");
-		    	console.log(event.target);
+//		    	console.log(event.target);
 		    	console.log(file);
 		    	console.log(destFile);
-//		    	var fileId = self.addNewSlide(destUrl);
+		    	self.addNewSlide(destUrl);
 		    	if (self.SEND_IMG){
 		    		console.log("Send file!");
 			    	self.webrtc.send(destFile);
@@ -223,12 +213,12 @@ define([
 		    };
 //		    console.log(file); // file.type - image/jpeg, image/png etc. file.size - size in Bytes
 		    reader.readAsDataURL(file);
-
+			
 		    
 		},
 
 		readfiles : function (files) {
-			this.setStatus(AppStatus.UPLOADING_PHOTOS);
+//			this.setStatus(AppStatus.UPLOADING_PHOTOS);
 			this.queueLength = files.length;
 			
 		    for (var i = 0; i < files.length; i++) {

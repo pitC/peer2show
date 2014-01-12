@@ -31,10 +31,7 @@ define([
 				this.username = options.user || DEFAULT_USER_NAME;
 				this.owner = options.owner || false;
 				
-				var appOptions = {webRTC:this.webRTCClient};
-
-				this.app = new SlideshowApp(appOptions);
-				this.app.bindCommunicationEvents();
+				this.initApp();
 				this.initWebRTC();
 				
 				this.userCollection = new UserCollection();
@@ -44,10 +41,17 @@ define([
 				
 			},
 			
+			initApp : function(){
+				this.webRTCClient = new WebRTCClient();
+				var appOptions = {webRTC:this.webRTCClient};
+				this.app = new SlideshowApp(appOptions);
+				this.app.bindCommunicationEvents();
+			},
+			
 			initWebRTC : function(){
 				var self = this;
 				this.app.setStatus(AppStatus.OPENING_CHANNEL);
-				this.webRTCClient = new WebRTCClient();
+				
 				
 				if (this.owner){
 					this.webRTCClient.create({roomName:this.roomName,userName:this.username},this.onRoomInitChange,this);
@@ -58,13 +62,12 @@ define([
 
 				this.webRTCClient.onopen = function(e){
 					console.log("Open!");
-					console.log(e);
-					var username = e.extra['user-name'] || e.userid; 
+					var username = e.username || "Guest"; 
 					self.userCollection.add({username:username});
 					self.app.setStatus(AppStatus.READY);
 				};
 				
-				this.webRTCClient.onend = function(e) {
+				this.webRTCClient.onclose = function(e) {
 					console.log("User left!");
 					console.log(e);
 				};
