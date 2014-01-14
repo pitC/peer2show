@@ -48,11 +48,16 @@ define([
 		initEventCallbacks : function(){
 			
 			var self = this;
-			this.webrtc.onfile = function(url){
+			
+			this.webrtc.onfile = function(url,metadata){
 				
 				console.log("On file receive");
-				self.addNewSlide(url);
+				console.log(metadata);
+				var index = metadata.index || null;
+				self.addNewSlide(url,index);
+//				self.addNewSlide(url);
 			};
+		
 		},
 	
 		addDropArea : function(dropAreaId){
@@ -114,6 +119,8 @@ define([
 				self[remoteCall](parameters);
 			
 			};
+			
+			
 		},
 		
 		rpcNext : function (){
@@ -151,11 +158,15 @@ define([
 		    	var destFile;
 		    	if (self.RESIZE_IMG){
 		    		
-		    		destUrl = self.imageProcessor.preprocessImage(event.target.result, function(destUrl){
+		    			destUrl = self.imageProcessor.preprocessImage(event.target.result, function(destUrl){
 		    			var destFile = self.imageProcessor.dataURLtoFile(destUrl);
-		    			self.addNewSlide(destUrl);
+		    			var index = self.addNewSlide(destUrl);
 				    	if (self.SEND_IMG){
-					    	self.webrtc.send(destFile);
+				    		var metadata = {
+				    				
+				    				index: index
+				    		};
+					    	self.webrtc.sendFile(destFile,metadata);
 					    }
 		    		});
 		    		
@@ -194,12 +205,22 @@ define([
 //		    this.setStatus(AppStatus.READY);
 		},
 		
-		addNewSlide : function (url,_fileId){
-			var fileId = _fileId || this.generateFileId();
+		addNewSlide : function (url,index, fileId){
+			var fileId = fileId || this.generateFileId();
 			var slide = new SlideModel({dataURL:url,id:fileId,upload:0});
-			if (!this.slideCollection.urlExists(url))
+			var assignedIndex = -1;
+			
+			
+			if (index)
+				this.slideCollection.add(slide,{at:index});
+			else{
 				this.slideCollection.add(slide);
-		    return fileId;
+				
+			}
+			assignedIndex = this.slideCollection.indexOf(slide);
+		
+			console.log("Assigned index is "+assignedIndex);
+		    return assignedIndex;
 		},
 		
 		generateFileId : function () {

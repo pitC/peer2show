@@ -46,6 +46,12 @@
 			this.send(json);
 		};
 		
+		this.sendFile = function(file,metadata){
+			var data =metadata || {};
+			data.file = file;
+			this.send(data);
+		};
+		
 		this.send = function(data){
 			console.log("Send data");
 			console.log(data);
@@ -73,13 +79,16 @@
 		this._onData = function(data){
 			console.log("Received data!");
 			console.log(data);
-			if (data.constructor === ArrayBuffer){
-				  var dataView = new Uint8Array(data);
+			if (data.file != null){
+				  var file = data.file;
+				  delete data.file;
+				  var metadata = data;
+				  var dataView = new Uint8Array(file);
 			      var dataBlob = new Blob([dataView]);
 			      var url = window.URL.createObjectURL(dataBlob);
 			      console.log(url);
 			      if(self.onfile){
-			    	  self.onfile(url);
+			    	  self.onfile(url,metadata);
 			      }
 			}
 			else{
@@ -99,8 +108,6 @@
 				}
 			}
 		};
-		
-		
 		
 		this._onPeerConnection = function(conn) {
 			console.log("Peer connection!");

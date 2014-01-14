@@ -16,6 +16,8 @@ define([
 		initialize:function (options,isCurrent) {
 			this.model = options.model;
 			
+			
+			
 			if (isCurrent)
 				this.template = _.template(ActiveSlidePreviewTmpl);
 			else
@@ -23,6 +25,7 @@ define([
         },
         
         render : function(){
+        	console.log(this.model.toJSON());
             this.$el.html(this.template(this.model.toJSON()));
             return this;
         }
@@ -48,9 +51,14 @@ define([
 			
 			var isCurrent = this.slideCollection.isCurrent(slide);
 //			console.log("Render slide preview! is current? "+isCurrent);
-		
+			var index = this.slideCollection.indexOf(slide);
 			
-			var slidePreview = new SlidePreviewView({model : slide},isCurrent);
+			var indexedModel = slide;
+			indexedModel.attributes.index = index;
+			console.log("Render model");
+			console.log(indexedModel);
+			
+			var slidePreview = new SlidePreviewView({model : indexedModel},isCurrent);
 			
 	        $("#slide-preview-area").append(slidePreview.render().el);
 		},
@@ -64,8 +72,8 @@ define([
             "click img": "jumpTo"
         },
 		jumpTo : function(event){
-			var dataUrl = $(event.target).attr("src");
-			var index = this.app.getIndexFromURL(dataUrl);
+			var index = $(event.target).attr("data-index");
+		
 			//this.app.jumpToByURL({dataURL:dataUrl});
 			this.app.jumpToByIndex({index:index});
 		},

@@ -11,7 +11,7 @@ define([
 ], function($, _, Backbone, SlideshowApp, SlideFullAreaTmpl, SlideFullTmpl
 ){
 	
-	SlidePreviewView = Backbone.View.extend({
+	SlideShowView = Backbone.View.extend({
 	        initialize:function () {
 	    this.template = _.template(SlideFullTmpl);
 	},
@@ -47,7 +47,7 @@ define([
         
         renderSlide : function(slide){
         	if (slide!= null){
-        	var slidePreview = new SlidePreviewView({model : slide});
+        	var slidePreview = new SlideShowView({model : slide});
         	$("#slide-show-area").empty();
         	var element = slidePreview.render().el;
         	$(element).hide().appendTo("#slide-show-area").fadeIn();
