@@ -131,9 +131,15 @@ background-color: #1F1F1F;
 .next{
     right:15px;
 }
+
+#intro {
+	/* margin-left:10%; */
+	/* color:white; */
+}
+
 #new-user-form{
 	margin-left:10%;
-	margin-top:10%;
+	/* margin-top:10%; */
 	margin-right:10%;
 	color:white;
 }
@@ -153,6 +159,18 @@ background-color: #1F1F1F;
 	color:grey;
 	font-size:2em;
 	border:dashed 5px grey;
+}
+
+#slide-show-area #img-metadata{
+	font-style:italic;
+	text-align:center;
+
+	
+	background-color:white;
+/* 	opacity:0.7
+	z-index:2;
+	position:absolute; */
+	
 }
 
 #slide-show-area img {

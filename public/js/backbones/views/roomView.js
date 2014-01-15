@@ -66,6 +66,7 @@ define([
 					self.userCollection.add({username:username});
 					self.app.setStatus(AppStatus.READY);
 					
+					// must be delayed, otherwise receiver is not yet prepared
 					setTimeout(function(){
 						self.app.retransmitFiles(e.peerId||null);
 					},2000);

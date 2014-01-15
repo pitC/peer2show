@@ -2,16 +2,23 @@ define([
          'jquery', 
          'underscore', 
          'backbone',
-         'text!templates/slideshowApp/usernameInput.html'
+         'text!templates/slideshowApp/usernameInput.html',
+         'text!templates/slideshowApp/introHost.html',
+         'text!templates/slideshowApp/introGuest.html',
          
-         
-], function($, _, Backbone, UserInputTmpl){
+], function($, _, Backbone, UserInputTmpl,IntroHostTmpl,IntroGuestTmpl){
 	
 	
 	UsernameInputView = Backbone.View.extend({
 		initialize:function (options) {
 			this.callback = options.callback;
 			this.owner = options.owner;
+			if(this.owner){
+				this.introTemplate = _.template(IntroHostTmpl);
+			}
+			else{
+				this.introTemplate = _.template(IntroGuestTmpl);
+			}
 			this.template = _.template(UserInputTmpl);
         },
         events: {
@@ -30,7 +37,11 @@ define([
         	this.callback(options);
         },
         render : function(){
-        	this.$el.html(this.template());
+        	
+        	var intro = this.introTemplate();
+        	var usernameInput = this.template();
+        	this.$el.html(intro);
+        	this.$el.append(usernameInput);
 			return this;
         }
 	});

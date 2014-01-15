@@ -12,12 +12,18 @@ define([
 ){
 	
 	SlideShowView = Backbone.View.extend({
-	        initialize:function () {
+	        initialize:function (options) {
+	        	this.model = options.model;
+	        	this.metadata = options.metadata;
 	    this.template = _.template(SlideFullTmpl);
 	},
 	
 	render : function(){
-	    this.$el.html(this.template(this.model.toJSON()));
+		
+		console.log("Render image");
+		var data = $.extend({}, this.model.toJSON(), this.metadata);
+		console.log(data);
+	    this.$el.html(this.template(data));
 	    return this;
 	},
 	
@@ -47,10 +53,15 @@ define([
         
         renderSlide : function(slide){
         	if (slide!= null){
-        	var slidePreview = new SlideShowView({model : slide});
-        	$("#slide-show-area").empty();
-        	var element = slidePreview.render().el;
-        	$(element).hide().appendTo("#slide-show-area").fadeIn();
+        		
+        		var metadata = {
+        				collectionSize : this.slideCollection.length,
+        				index : this.slideCollection.indexOf(slide)+1
+        		};
+	        	var slidePreview = new SlideShowView({model : slide,metadata:metadata});
+	        	$("#slide-show-area").empty();
+	        	var element = slidePreview.render().el;
+	        	$(element).hide().appendTo("#slide-show-area").fadeIn();
         	}
 		}
         ,
