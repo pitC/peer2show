@@ -32,6 +32,8 @@ define([
 		
 		},
 		
+		
+		
 	    setStatus : function(status){
 	    	if (AppStatus.isValid(status)){
 	    		if (this.status != status){
@@ -58,6 +60,18 @@ define([
 //				self.addNewSlide(url);
 			};
 		
+		},
+		
+		// REMOTE CALLS
+		bindCommunicationEvents : function(){
+			var self = this;
+			this.webrtc.onrpc = function(remoteCall, parameters){
+				
+				self[remoteCall](parameters);
+			
+			};
+			
+			
 		},
 	
 		addDropArea : function(dropAreaId){
@@ -111,17 +125,7 @@ define([
 			}
 		},
 		
-		// REMOTE CALLS
-		bindCommunicationEvents : function(){
-			var self = this;
-			this.webrtc.onrpc = function(remoteCall, parameters){
-				
-				self[remoteCall](parameters);
-			
-			};
-			
-			
-		},
+		
 		
 		rpcNext : function (){
 			this.webrtc.rpc("nextSlide");
@@ -143,6 +147,24 @@ define([
 			var options = new Object();
 			options.index = index;
 			this.webrtc.rpc(remoteCall,options);
+		},
+		
+		retransmitFiles : function(destPeer){
+			if(destPeer){
+				var self = this;
+				console.log("Retransmit files!");
+				 this.slideCollection.each(function(slide){
+					 var index = self.slideCollection.indexOf(slide); 
+					 var metadata = {
+							 index:index
+					 };
+					 console.log(slide);
+					 var dataUrl = slide.get("dataURL");
+					 var file = self.imageProcessor.dataURLtoFile(dataUrl);
+					 self.webrtc.sendFile(file,metadata,destPeer);
+					 
+				 }, this);
+			}
 		},
 		
 		

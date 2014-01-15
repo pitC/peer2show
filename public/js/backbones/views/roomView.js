@@ -62,9 +62,13 @@ define([
 
 				this.webRTCClient.onopen = function(e){
 					console.log("Open!");
-					var username = e.username || "Guest"; 
+					var username = e.username || e.peerId || "Guest"; 
 					self.userCollection.add({username:username});
 					self.app.setStatus(AppStatus.READY);
+					
+					setTimeout(function(){
+						self.app.retransmitFiles(e.peerId||null);
+					},2000);
 				};
 				
 				this.webRTCClient.onclose = function(e) {

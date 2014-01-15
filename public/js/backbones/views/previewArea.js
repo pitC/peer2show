@@ -25,7 +25,6 @@ define([
         },
         
         render : function(){
-        	console.log(this.model.toJSON());
             this.$el.html(this.template(this.model.toJSON()));
             return this;
         }
@@ -55,8 +54,6 @@ define([
 			
 			var indexedModel = slide;
 			indexedModel.attributes.index = index;
-			console.log("Render model");
-			console.log(indexedModel);
 			
 			var slidePreview = new SlidePreviewView({model : indexedModel},isCurrent);
 			

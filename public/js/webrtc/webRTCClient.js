@@ -46,24 +46,41 @@
 			this.send(json);
 		};
 		
-		this.sendFile = function(file,metadata){
+		this.sendFile = function(file,metadata, destPeer){
 			var data =metadata || {};
 			data.file = file;
-			this.send(data);
+			this.send(data, destPeer);
 		};
 		
-		this.send = function(data){
+		this.send = function(data, destPeer){
 			console.log("Send data");
 			console.log(data);
 			// For now only broadcast!
-			for (var peerId in self.peerConnections){
-				console.log("Send to "+peerId);
-				var peerConnection= self.peerConnections[peerId];
-				peerConnection.send(data);
+			if (destPeer){
+				console.log("Unicast "+destPeer);
+				var peerConnection;
+				
+				if(destPeer == self.ownerPeerId){
+					peerConnection = self.ownerConnection;
+				}
+				else{
+					peerConnection = self.peerConnections[destPeer];
+				}
+				if (peerConnection){
+					console.log("Peer found, send now!");
+					peerConnection.send(data);
+				}
 			}
-			if (this.ownerConnection){
-				console.log("Send to session owner");
-				this.ownerConnection.send(data);
+			else{
+				for (var peerId in self.peerConnections){
+					console.log("Send to "+peerId);
+					var peerConnection= self.peerConnections[peerId];
+					peerConnection.send(data);
+				}
+				if (this.ownerConnection){
+					console.log("Send to session owner");
+					this.ownerConnection.send(data);
+				}
 			}
 		};
 		
@@ -123,7 +140,10 @@
 			// Propagate event
 			if(self.onopen){
 				// TODO: transmit usernames
-				var eventData = {username:conn.metadata.username||"Guest"};
+				var eventData = {
+						username:conn.metadata.username||"Guest",
+						peerId: conn.peer
+				};
 				self.onopen(eventData);
 			};
 		};
@@ -179,6 +199,9 @@
 				 var ownerId = location.href.replace( /\/|:|#|%|\.|\[|\]/g , '');
 				 self.ownerConnection = self.ownPeer.connect(ownerId, self.dataChannelOptions);
 				 
+				 self.ownerConnection.on('data',self._onData);
+				 self.ownerConnection.on('close',self._onPeerConnectionClose);
+				 
 				 // 3. Add callback on connection open
 				 self.ownerConnection.on('open', function() {
 					 console.log("Connection to owner establiished!");
@@ -192,8 +215,7 @@
 					 }
 				 });
 				 
-				 self.ownerConnection.on('data',self._onData);
-				 self.ownerConnection.on('close',self._onPeerConnectionClose);
+				 
 			});
 	
 		};
