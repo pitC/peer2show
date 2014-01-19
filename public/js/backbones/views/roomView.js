@@ -82,7 +82,7 @@ define([
 				console.log("Room status change! "+status);
 				switch(status){
 				case RoomStatus.NEW_ROOM: 
-					caller.app.setStatus(AppStatus.WAITING_FOR_USERS);
+					caller.app.setStatus(AppStatus.READY);
 					break;
 				case RoomStatus.JOINING:
 					caller.app.setStatus(AppStatus.JOINING_ROOM);
