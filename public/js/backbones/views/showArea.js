@@ -33,6 +33,12 @@ define([
 	});
 	
 	SlideShowAreaView = Backbone.View.extend({
+		
+		tagName: "div",
+		id: "slide-show-area",
+		className: "well",
+	
+		
 		initialize:function (app) {
 			this.app = app;
 			this.slideCollection = app.slideCollection;

@@ -4,6 +4,8 @@ define([
          'backbone',
          'text!templates/room/room.html',
          'text!templates/room/overlay.html',
+         'text!templates/modals/linkShareModal.html',
+         'text!templates/modals/userJoinModal.html',
          'webrtc/webRTCClient',
          'webrtc/roomStatus',
          'app/slideshowApp',
@@ -14,7 +16,7 @@ define([
          'backbones/views/previewArea',
          'backbones/views/userArea'
          
-], function($, _, Backbone, roomTmpl,overlayTmpl, WebRTCClient,RoomStatus, SlideshowApp, AppStatus, Settings, UserCollection, ShowArea, PreviewArea, UserArea){
+], function($, _, Backbone, roomTmpl,overlayTmpl,linkShareModalTmpl,userJoinModalTmpl, WebRTCClient,RoomStatus, SlideshowApp, AppStatus, Settings, UserCollection, ShowArea, PreviewArea, UserArea){
 
 	
 		var DEFAULT_ROOM_NAME = "test";
@@ -25,11 +27,15 @@ define([
 			initialize : function(options){
 				console.log("Settings: "+Settings.maxHeight);
 				Settings.calculateMaxDimensions();
-				this.template = _.template(roomTmpl);
-				this.overlay = _.template(overlayTmpl);
+				
 				this.roomName = options.roomId || DEFAULT_ROOM_NAME;
 				this.username = options.user || DEFAULT_USER_NAME;
 				this.owner = options.owner || false;
+			
+				this.template = _.template(roomTmpl);
+				this.overlay = _.template(overlayTmpl);
+				this.linkShare = _.template(linkShareModalTmpl);
+				this.userJoinModal = _.template(userJoinModalTmpl);
 				
 				this.initApp();
 				this.initWebRTC();
@@ -70,6 +76,7 @@ define([
 					setTimeout(function(){
 						self.app.retransmitFiles(e.peerId||null);
 					},2000);
+					
 				};
 				
 				this.webRTCClient.onclose = function(e) {
@@ -107,6 +114,7 @@ define([
 	            	this.$el.find("#preview-area").append(this.previewArea.render().el);
 	            	this.$el.find("#users-area").append(this.userArea.render().el);
 	            	this.renderOverlay();
+	            	this.renderModals();
             	}
                 return this;
             },
@@ -145,6 +153,11 @@ define([
             	
             },
             
+            renderModals : function(){
+            	this.$el.append(this.linkShare({link:location.href}));
+//            	this.$el.append(this.userJoinModal());
+            },
+                       
             renderOverlay : function(){
             	console.log("Not rerendering everything...");
         		if (this.app.status == AppStatus.READY){
@@ -152,10 +165,6 @@ define([
         		}
         		else{
         			var options = {msg:this.app.status};
-        			if (this.app.status == AppStatus.WAITING_FOR_USERS){
-        				options.msg += ".<br>Share this link with your peers:<br><strong>"+location.href+"</strong><br>";
-        			}
-//        			Temporarily commented out
         			this.addOverlay(options);
         		}
             },

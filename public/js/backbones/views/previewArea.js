@@ -4,12 +4,11 @@ define([
          'backbone',
          'app/slideshowApp',
          'text!templates/slideshowApp/slidePreviewArea.html',
-         'text!templates/slideshowApp/slidePreview.html',
-         'text!templates/slideshowApp/activeSlidePreview.html'
+         'text!templates/slideshowApp/slidePreview.html'
          
          
 ], function($, _, Backbone, SlideshowApp,
-		SlidePreviewAreaTmpl, SlidePreviewTmpl,ActiveSlidePreviewTmpl
+		SlidePreviewAreaTmpl, SlidePreviewTmpl
 ){
 	
 	SlidePreviewView = Backbone.View.extend({

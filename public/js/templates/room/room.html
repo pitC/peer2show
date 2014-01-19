@@ -3,8 +3,8 @@
 
 	<div class="row">
 		<div class = "col-md-1">
-		<button id="btn-share" class="btn btn-default btn-sm" >
-			<span class="glyphicon glyphicon-share"></span>
+		<button id="btn-link" class="btn btn-default btn-sm" data-toggle="modal" data-target="#link-share-modal">
+			<span class="glyphicon glyphicon-link highlighted-text"></span>
 		</button>
 		</div>
 		<div id="topbar" class = "col-md-4 col-md-offset-3">
@@ -12,15 +12,19 @@
 				<a type="button" class="btn btn-default btn-sm btn-prev">
 				    <span class="glyphicon glyphicon-chevron-left"></span>
 				</a>
+				<!-- Not implemented yet
 				<a type="button" class="btn btn-default btn-sm" disabled="disabled" title="Auto slideshow not supported yet">
 				    <span class="glyphicon glyphicon-play"></span>
 				</a>
+				-->
 				<a type="button" class="btn btn-default btn-sm btn-next">
 				    <span class="glyphicon glyphicon-chevron-right"></span>
 				</a>
+				<!-- Not implemented yet
 				<a type="button" class="btn btn-default btn-sm" disabled="disabled" title="Fullscreen not supported yet">
 				    <span class="glyphicon glyphicon-fullscreen"></span>
 				</a>
+				-->
 			</div>
 		</div>
 		<div class = "col-md-1 col-md-offset-3">
@@ -88,5 +92,10 @@ $('#sidebar-toggle').on('click', function () {
 	
 	disp = !disp;
 });
+
+window.onbeforeunload = function(){
+  return 'This action will end your session!';
+  
+};
 
 </script>

@@ -20,7 +20,7 @@ define([
 			else{
 				this.introTemplate = _.template(IntroGuestTmpl);
 			}
-			this.template = _.template(UserInputTmpl);
+			
         },
         events: {
             "click #apply-bt": "setUserName",
@@ -39,9 +39,9 @@ define([
         render : function(){
         	
         	var intro = this.introTemplate();
-        	var usernameInput = this.template();
+        	
         	this.$el.html(intro);
-        	this.$el.append(usernameInput);
+        	
 			return this;
         }
 	});
