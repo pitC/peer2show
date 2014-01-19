@@ -13,19 +13,26 @@ define([
 ){
 	
 	SlidePreviewView = Backbone.View.extend({
+		
+		tagName: 'div',
+		className: 'slide-preview',
+		
 		initialize:function (options,isCurrent) {
 			this.model = options.model;
 			
+			this.isActive = isCurrent;
 			
-			
-			if (isCurrent)
-				this.template = _.template(ActiveSlidePreviewTmpl);
-			else
-				this.template = _.template(SlidePreviewTmpl);
-        },
+			this.template = _.template(SlidePreviewTmpl);
+        },	
         
         render : function(){
             this.$el.html(this.template(this.model.toJSON()));
+        	if (this.isActive){
+        		this.$el.addClass('active-slide');
+        	}
+        	else{
+        		this.$el.addClass('inactive-slide');
+        	}
             return this;
         }
 	});
@@ -66,14 +73,42 @@ define([
 		},
 		
 		events: {
-            "click img": "jumpTo"
+            "click img": "jumpTo",
+            "click .btn-remove": "removeImg",
+            "mouseover .slide-preview": "onHover",
+            "mouseleave .slide-preview": "onLeave"
+            
         },
+        
+        onLeave:function(event){
+        	$(event.currentTarget).children("button").hide(100);
+        },
+        
+        onHover : function(event){
+        	console.log("Hover!");
+        	console.log(event);
+        	// show buttons
+        	$(event.currentTarget).children("button").show(100);
+        	
+        },
+        
+        removeImg : function(event){
+        	console.log("Remove!");
+        	console.log(event);
+        	var index = $(event.currentTarget).attr("data-index");
+        	this.app.removeImage({index:index});
+        },
+        
 		jumpTo : function(event){
+			console.log("Jump to!");	
+			console.log(event);
+			
 			var index = $(event.target).attr("data-index");
 		
 			//this.app.jumpToByURL({dataURL:dataUrl});
 			this.app.jumpToByIndex({index:index});
 		},
+				
 		onShow : function(){
 			
 		}

@@ -125,7 +125,15 @@ define([
 			}
 		},
 		
-		
+		removeImage : function(options){
+			console.log("remove image at "+options.index);
+			var slide = this.slideCollection.at(options.index);
+			console.log(slide);
+			this.slideCollection.remove(slide);
+			if (!options || !options.remote){
+				this.rpcRemoveImage(options.index);
+			}
+		},
 		
 		rpcNext : function (){
 			this.webrtc.rpc("nextSlide");
@@ -144,6 +152,13 @@ define([
 		
 		rpcJumpToIndex : function(index){
 			var remoteCall = "jumpToByIndex";
+			var options = new Object();
+			options.index = index;
+			this.webrtc.rpc(remoteCall,options);
+		},
+		
+		rpcRemoveImage : function(index){
+			var remoteCall = "removeImage";
 			var options = new Object();
 			options.index = index;
 			this.webrtc.rpc(remoteCall,options);

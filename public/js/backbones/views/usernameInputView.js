@@ -13,6 +13,7 @@ define([
 		initialize:function (options) {
 			this.callback = options.callback;
 			this.owner = options.owner;
+			this.appRef = options.app;
 			if(this.owner){
 				this.introTemplate = _.template(IntroHostTmpl);
 			}
@@ -30,10 +31,9 @@ define([
 			this.setUserName(event);
         },
         setUserName : function(event){
-        	var roomId =  location.href.replace( /\/|:|#|%|\.|\[|\]/g , '');
         	
         	var userName = $("#username-inp").val();
-        	var options = {roomId : roomId, user : userName,owner:this.owner};
+        	var options = {user : userName,owner:this.owner, app:this.appRef};
         	this.callback(options);
         },
         render : function(){
