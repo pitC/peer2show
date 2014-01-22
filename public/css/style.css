@@ -28,6 +28,22 @@ background-color: #1F1F1F;
     transition: width 5s ease, margin 5s ease;
 }
 */
+
+#navbar-logo{
+    height: 50px;
+	
+    background: url("/img/navbar_logo.png") no-repeat  center center;
+    width: 88px;
+    margin-left: 5%;
+}
+
+
+#navbar-logo:hover{
+
+    background: url("/img/navbar_logo_hover.png") no-repeat  center center;
+    
+}
+
 .slide-preview{
 	height: 100px;
 	width: 100%;
@@ -176,13 +192,60 @@ background-color: #1F1F1F;
 	padding-left: 0px;
 	padding-right: 0px;
 	background-color: #585858;
+	
 
+	/* padding-bottom: inherit; */
+
+}
+
+#pitch {
+	margin-bottom:5%;
+}
+
+#pitch h2{
+	/* z-index:1; */
+}
+
+#pitch #logo{
+	margin-top:-40px;
+	margin-bottom: -30px;
+	display:inline;
+}
+
+#pitch p{
+	/* z-index:1; */
 }
 
 #intro .row{
 	margin-right: 0px;
 	margin-left:0px;	
+	/* margin-bottom: 5%; */
 }
+
+#three-steps{
+    /* vertical-align: middle; */	
+    /* height: 150px; */
+    margin-bottom: 1%;
+}
+
+#step-one{
+	background: url("/img/step_one.png") no-repeat center center;
+	
+	height: 150px;
+}
+
+#step-two{
+	background: url("/img/step_two.png") no-repeat center center;
+	
+	height: 150px;
+}
+
+#step-three{
+	background: url("/img/step_three.png") no-repeat center center;
+	
+	height: 150px;
+}
+
 #intro-guest {
 	text-align: center;
 	background-color: #585858;
@@ -198,6 +261,8 @@ background-color: #1F1F1F;
 	/* margin-top:10%; */
 	margin-right:10%;
 	/* color:white; */
+	padding-top: 2%;
+	padding-bottom: 5%;
 }
 
 #slide-show-area {
