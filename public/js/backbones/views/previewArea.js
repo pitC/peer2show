@@ -75,12 +75,17 @@ define([
             "click img": "jumpTo",
             "click .btn-remove": "removeImg",
             "mouseover .slide-preview": "onHover",
-            "mouseleave .slide-preview": "onLeave"
-            
+            "mouseleave .slide-preview": "onLeave",
+            "click .slide-preview":"onClick"
         },
         
         onLeave:function(event){
         	$(event.currentTarget).children("button").hide(100);
+        },
+        
+        onClick : function(event){
+        	console.log("Click!");
+        	$(event.currentTarget).children("button").toggle(100);
         },
         
         onHover : function(event){
