@@ -88,6 +88,12 @@ define([
 			};
 		},
 		
+		addClickArea : function(clickAreaId){
+			var clickArea = document.getElementById(clickAreaId);
+			$(clickArea).attr("onclick","$('#file-input').click();");
+			$(clickArea).addClass("click-area");
+		},
+		
 		// PUBLIC NAVIGATION METHODS
 		nextSlide : function(options){
 			this.slideCollection.next();

@@ -121,14 +121,22 @@ define([
             events: {
                 "click .btn-prev": "prev",
                 "click .btn-next": "next",
+                "change #file-input" : "onFileInput"
 //                "keypress ": "onKeypress"
             },
-          
+        
             prev : function(e){
             	this.app.prevSlide();
             },
             next : function(e){
             	this.app.nextSlide();
+            },
+            
+            onFileInput : function(event){
+            	console.log("File input!");
+            	console.log(event);
+            	var files = event.target.files;
+            	this.app.readfiles(files);
             },
             
             onKeypressInit : function(){

@@ -16,6 +16,10 @@ background-color: #1F1F1F;
 	color: rgb(255, 202, 66);
 }
 
+.click-area{
+	cursor:pointer;
+}
+
 .row.highlighted{
 
 }

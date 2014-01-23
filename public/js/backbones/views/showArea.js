@@ -69,13 +69,14 @@ define([
 	        	var element = slidePreview.render().el;
 	        	$(element).hide().appendTo("#slide-show-area").fadeIn();
         	}
-		}
-        ,
+		},
+		
 		
         onShow : function(){
         	this.app.addDropArea("slide-show-area");
         	this.app.addDropArea("prev-area");
         	this.app.addDropArea("next-area");
+        	this.app.addClickArea("slide-show-area");
 		}
 	});
 	
