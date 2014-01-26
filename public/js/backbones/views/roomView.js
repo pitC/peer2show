@@ -183,10 +183,19 @@ define([
             
             renderNotification : function(options){
             	var notification = this.notificationModal(options);
-            	var stack = $('.notification').length + 1;
-            	$(notification).css('z-index',stack);
+            	
+            	var maxz = 0;    
+            	$('.notification').each(function(){
+            	    var z = parseInt($(this).css('z-index'), 10);
+            	    if (maxz<z) {
+            	        
+            	        maxz = z;
+            	    }
+            	});
+            	var topZ = maxz +1;
+            	
             	var self = this;
-            	$(notification).hide().prependTo(self.$el).fadeIn();
+            	$(notification).hide().prependTo(self.$el).fadeIn().css('z-index',topZ);
             	
             	
             },
