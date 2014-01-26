@@ -79,7 +79,8 @@ define([
 					
 					var options = {
 							'alert_class':'alert-info',
-							'alert_message':username+' joined the session!'
+							'alert_message':username+' joined',
+							appendMode : true
 					};
 					self.renderNotification(options);
 				};
@@ -183,20 +184,29 @@ define([
             
             renderNotification : function(options){
             	var notification = this.notificationModal(options);
-            	
-            	var maxz = 0;    
-            	$('.notification').each(function(){
-            	    var z = parseInt($(this).css('z-index'), 10);
-            	    if (maxz<z) {
-            	        
-            	        maxz = z;
-            	    }
-            	});
-            	var topZ = maxz +1;
-            	
             	var self = this;
-            	$(notification).hide().prependTo(self.$el).fadeIn().css('z-index',topZ);
-            	
+            	if (options.appendMode){
+            		if ($('.notification.alert-info').length > 0){
+            			
+            			$("<p>"+options.alert_message+"</p>").hide().appendTo($('.notification.alert-info')).fadeIn();
+            			
+            		}
+            		else{
+            			$(notification).hide().prependTo(self.$el).fadeIn().css('z-index',1);
+            		}
+            	}
+            	else{            	
+	            	var maxz = 0;    
+	            	$('.notification.alert-info').each(function(){
+	            	    var z = parseInt($(this).css('z-index'), 10);
+	            	    if (maxz<z) {
+	            	        
+	            	        maxz = z;
+	            	    }
+	            	});
+	            	var topZ = maxz +1;
+	            	$(notification).hide().prependTo(self.$el).fadeIn().css('z-index',topZ);
+            	}
             	
             },
             
