@@ -5,7 +5,7 @@ define([
          'text!templates/room/room.html',
          'text!templates/room/overlay.html',
          'text!templates/modals/linkShareModal.html',
-         'text!templates/modals/userJoinModal.html',
+         'text!templates/modals/notificationModal.html',
          'webrtc/webRTCClient',
          'webrtc/roomStatus',
          'app/slideshowApp',
@@ -16,7 +16,7 @@ define([
          'backbones/views/previewArea',
          'backbones/views/userArea'
          
-], function($, _, Backbone, roomTmpl,overlayTmpl,linkShareModalTmpl,userJoinModalTmpl, WebRTCClient,RoomStatus, SlideshowApp, AppStatus, Settings, UserCollection, ShowArea, PreviewArea, UserArea){
+], function($, _, Backbone, roomTmpl,overlayTmpl,linkShareModalTmpl,notificationModalTmpl, WebRTCClient,RoomStatus, SlideshowApp, AppStatus, Settings, UserCollection, ShowArea, PreviewArea, UserArea){
 
 	
 		var DEFAULT_ROOM_NAME = "test";
@@ -35,7 +35,7 @@ define([
 				this.template = _.template(roomTmpl);
 				this.overlay = _.template(overlayTmpl);
 				this.linkShare = _.template(linkShareModalTmpl);
-				this.userJoinModal = _.template(userJoinModalTmpl);
+				this.notificationModal = _.template(notificationModalTmpl);
 				
 				this.initApp();
 				this.initWebRTC();
@@ -77,6 +77,11 @@ define([
 						self.app.retransmitFiles(e.peerId||null);
 					},2000);
 					
+					var options = {
+							'alert_class':'alert-info',
+							'alert_message':username+' joined the session!'
+					};
+					self.renderNotification(options);
 				};
 				
 				this.webRTCClient.onclose = function(e) {
@@ -121,12 +126,14 @@ define([
             events: {
                 "click .btn-prev": "prev",
                 "click .btn-next": "next",
-                "change #file-input" : "onFileInput"
+                "change #file-input" : "onFileInput",
+                "click #sidebar-toggle":"sidebarToggle"
 //                "keypress ": "onKeypress"
             },
         
             prev : function(e){
             	this.app.prevSlide();
+//            	this.renderNotification({});
             },
             next : function(e){
             	this.app.nextSlide();
@@ -137,6 +144,19 @@ define([
             	console.log(event);
             	var files = event.target.files;
             	this.app.readfiles(files);
+            },
+            
+            sidebarToggle : function(event){
+            	var displayed = $("#sidebar").is(":visible");
+            	if (displayed){
+            		$('#sidebar').toggle();
+            		$('#show-area').toggleClass('col-md-10 col-md-12',300).promise().done(function(){});
+            	}
+            	else{
+            		$('#show-area').toggleClass('col-md-10 col-md-12',300).promise().done(function(){
+            			$('#sidebar').toggle();
+            		});
+            	}
             },
             
             onKeypressInit : function(){
@@ -161,9 +181,19 @@ define([
             	
             },
             
+            renderNotification : function(options){
+            	var notification = this.notificationModal(options);
+            	var stack = $('.notification').length + 1;
+            	$(notification).css('z-index',stack);
+            	var self = this;
+            	$(notification).hide().prependTo(self.$el).fadeIn();
+            	
+            	
+            },
+            
             renderModals : function(){
             	this.$el.append(this.linkShare({link:location.href}));
-//            	this.$el.append(this.userJoinModal());
+
             },
                        
             renderOverlay : function(){
@@ -197,7 +227,15 @@ define([
             	this.previewArea.onShow();
             	this.renderOverlay();
             	this.onKeypressInit();
+            	this.setHeight();
+            },
+            
+            setHeight :function(){
+            	var height = "500px";
+            	$('#sidebar-panel').css("max-height",height);
+            	
             }
+            
 			
         });
 		return RoomView;

@@ -48,9 +48,23 @@ background-color: #1F1F1F;
     
 }
 
+.notification{
+	position: absolute;
+	
+	top: 5px;
+	/* left:50%; */
+	
+	/* width: 100%; */
+	z-index: 1;
+	right: 5px;
+}
+
 .slide-preview{
 	height: 100px;
 	width: 100%;
+	padding: 1px 1px 1px 1px;
+	background-color: #f5f5f5;
+	/* text-align: center; */
 }
 
 .slide-preview button{
@@ -59,9 +73,11 @@ background-color: #1F1F1F;
 }
 
 .slide-preview.active-slide{
+    /* padding: 0px 0px 0px 0px; */
 }
 
 .slide-preview.inactive-slide{
+    /* padding: 1px 1px 1px 1px; */
 }
 
 
@@ -170,7 +186,7 @@ background-color: #1F1F1F;
     position:absolute;
     z-index:1;
     width:40%;
-    height:500px;
+    height: 100%;
 	border-style:none;
     
 }
@@ -269,10 +285,17 @@ background-color: #1F1F1F;
 	padding-bottom: 5%;
 }
 
+#show-area{
+	margin-bottom:5%;
+}
 #slide-show-area {
-	width:100%;
-    	padding: 0px 0px 0px 0px;
-   height: 500px;
+	width: auto;
+    	
+	padding: 0px 0px 0px 0px;
+   
+	/* background-color: #1F1F1F; */
+	margin-bottom: 0px;
+	height: 100%;
 }
 
 #slide-show-area p {
@@ -284,6 +307,7 @@ background-color: #1F1F1F;
 	color:grey;
 	font-size:2em;
 	border:dashed 5px grey;
+	padding-bottom: 20%;
 }
 #slide-show-area div{
 	height:100%;
@@ -291,20 +315,24 @@ background-color: #1F1F1F;
 
 #slide-show-area #img-metadata{
 	font-style:italic;
-	text-align:center;
+	text-align: left;
 
 	
-	background-color:white;
 /* 	opacity:0.7
 	z-index:2;
 	position:absolute; */
 	
 	height: 5%;
+	position: absolute;
+	background-color: #f5f5f5;
+	opacity: 0.6;
+	padding-left: 2%;
+	padding-right: 2%;
 }
 
 #slide-show-area img {
 	width:auto;
-	max-height: 95%;
+	max-height: 100%;
 	max-width: 100%;
 	display:block;
 	margin-left:auto;
@@ -313,9 +341,17 @@ background-color: #1F1F1F;
 
 
 #sidebar-panel{
-    max-height: 500px;
+    /* max-height: 500px; */
     overflow-y:auto;
     overflow-x:hidden;
+}
+
+#sidebar-panel a{
+	color:grey;
+}
+
+#sidebar-panel a:hover{
+	color: rgb(255, 202, 66);
 }
 
 #slide-preview-area {
@@ -334,7 +370,7 @@ background-color: #1F1F1F;
 }
 
 #slide-preview-area img {
-	width:auto;
+	width: auto;
 	height: 100%;
 	/* float:left; */
 	cursor:pointer;

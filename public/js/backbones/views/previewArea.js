@@ -13,8 +13,8 @@ define([
 	
 	SlidePreviewView = Backbone.View.extend({
 		
-		tagName: 'div',
-		className: 'slide-preview',
+		tagName: 'li',
+		className: 'slide-preview list-group-item',
 		
 		initialize:function (options,isCurrent) {
 			this.model = options.model;

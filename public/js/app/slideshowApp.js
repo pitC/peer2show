@@ -211,6 +211,7 @@ define([
 				    		};
 					    	self.webrtc.sendFile(destFile,metadata);
 					    }
+				    	
 		    		});
 		    		
 		    	}
@@ -231,7 +232,7 @@ define([
 		},
 
 		readfiles : function (files) {
-//			this.setStatus(AppStatus.UPLOADING_PHOTOS);
+			this.setStatus(AppStatus.LOADING_PHOTO);
 			this.queueLength = files.length;
 			
 		    for (var i = 0; i < files.length; i++) {
@@ -245,7 +246,7 @@ define([
 		    	  this.queueLength -= 1;
 		      }
 		    }
-//		    this.setStatus(AppStatus.READY);
+		    
 		},
 		
 		addNewSlide : function (url,index, fileId){
@@ -263,6 +264,10 @@ define([
 			assignedIndex = this.slideCollection.indexOf(slide);
 		
 			console.log("Assigned index is "+assignedIndex);
+			this.queueLength -= 1;
+			if (this.queueLength <= 0){
+				this.setStatus(AppStatus.READY);
+			}
 		    return assignedIndex;
 		},
 		

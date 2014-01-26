@@ -28,7 +28,7 @@
 			</div>
 		</div>
 		<div class = "col-md-1 col-md-offset-3">
-		<button id="sidebar-toggle" class="btn btn-default btn-sm" >
+		<button id="sidebar-toggle" class="btn btn-default btn-sm" data-toggle="button">
 			<span class="glyphicon glyphicon-list"></span>
 		</button>
 		</div>
@@ -53,13 +53,13 @@
 			<div id="sidebar-panel" class="panel panel-default">
 		 		<div class="panel-heading" >
 		 			<a data-toggle="collapse" data-parent="#accordion" href="#users-area">
-		 				Viewers
+		 				<span class="glyphicon glyphicon-user"></span> Viewers
 		 			</a>
 		 		</div>
 		  		<div id="users-area" class="panel-collapse collapse"></div>
 		  		<div class="panel-heading">
 		  			<a data-toggle="collapse" data-parent="#accordion" href="#preview-area">
-		  				Preview
+		  				<span class="glyphicon glyphicon-picture"></span> Preview
 		  			</a>
 		  		</div>
 		  		<div id="preview-area" class="panel-collapse collapse in"></div>
@@ -72,26 +72,6 @@
 </div> <!-- container -->
 
 <script>
-var disp = true;
-$('#sidebar-toggle').on('click', function () {
-
-	if (disp){
-		$('#sidebar').toggle();
-		$('#show-area').toggleClass('col-md-10 col-md-12',300).promise().done(function(){
-		
-	    
-		});
-	}
-	else{
-		
-		$('#show-area').toggleClass('col-md-10 col-md-12',300).promise().done(function(){
-			$('#sidebar').toggle();
-	    
-		});
-	}
-	
-	disp = !disp;
-});
 
 window.onbeforeunload = function(){
   return 'This action will end your session!';

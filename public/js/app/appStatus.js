@@ -6,7 +6,7 @@ define([],function () {
 		OPENING_CHANNEL : "opening channel...",
 		WAITING_FOR_USERS : "waiting for someone to join",
 		JOINING_ROOM : "joining room...",
-		LOADING_PHOTO : "loading photo",
+		LOADING_PHOTO : "loading photos",
 		isValid : function(status){
 			var keys = Object.keys(this);
 			for (i in keys){
