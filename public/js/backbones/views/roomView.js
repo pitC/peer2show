@@ -58,6 +58,9 @@ define([
 				var self = this;
 				this.app.setStatus(AppStatus.OPENING_CHANNEL);
 				
+				this.webRTCClient.onerror = function(e){
+					alert(e.message);
+				};
 				
 				if (this.owner){
 					this.webRTCClient.create({roomName:this.roomName,userName:this.username},this.onRoomInitChange,this);
@@ -65,6 +68,8 @@ define([
 				else{
 					this.webRTCClient.join({roomName:this.roomName,userName:this.username},this.onRoomInitChange, this);
 				}
+				
+				
 
 				this.webRTCClient.onopen = function(e){
 					console.log("Open!");

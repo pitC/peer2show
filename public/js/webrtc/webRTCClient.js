@@ -38,6 +38,10 @@
 		this.onfile;
 		this.onTransferFinish;
 		
+		this.onerror;
+		
+		
+		
 		this.rpc = function(funcName, parameters){
 			var obj = new Object();
 			obj.remoteCall = funcName;
@@ -168,6 +172,7 @@
 			
 			this.ownPeer = new Peer(this.ownerPeerId,this.peerJSOptions);
 			
+			this.ownPeer.on('error',this.onerror);
 			this.ownPeer.on('connection',this._onPeerConnection);
 			this.ownPeer.on('open', function(id) {
 				  console.log('My peer ID is: ' + id);
@@ -186,6 +191,7 @@
 			var metadata = {username:options.userName};
 			this.dataChannelOptions.metadata = metadata;
 			
+			this.ownPeer.on('error',this.onerror);
 			this.ownPeer.on('open', function(id) {
 				// on connection to broker
 				// 1. set ID
