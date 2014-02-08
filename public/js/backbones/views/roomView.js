@@ -82,6 +82,8 @@ define([
 					
 					// must be delayed, otherwise receiver is not yet prepared
 					setTimeout(function(){
+						self.webRTCClient.sendOtherPeers(e.peerId);
+						
 						self.app.retransmitFiles(e.peerId||null);
 					},2000);
 					

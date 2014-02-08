@@ -350,6 +350,11 @@ background-color: #1F1F1F;
 	color: rgb(255, 202, 66);
 }
 
+#chat-area {
+	max-height:200px;
+	overflow-y: auto;
+}
+
 #slide-preview-area {
 	padding: 0px 0px 0px 0px;
 	width: 100%;

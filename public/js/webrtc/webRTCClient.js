@@ -146,7 +146,22 @@
 				}
 				// internal
 				else{
-					
+					console.log("Internal!");
+					console.log(finalMsg);
+					self._handleInternalData(finalMsg);
+				}
+			}
+		};
+		
+		this._handleInternalData = function(data){
+			if (data.peers){
+				for (var index in data.peers){
+					var peer = data.peers[index];
+					// for now peer == peerId, later also name 
+					var peerId = peer.peerId;
+					var peerName = peer.peerName;
+					console.log("Open connection to "+peerId);
+					this.joinOtherPeer(peerId,peerName);
 				}
 			}
 		};
@@ -187,6 +202,47 @@
 			}
 		};
 		
+		// function to propagate 
+		this.sendOtherPeers = function(destPeer){
+			if (this._isOwner()){
+				var peers = [];
+				for (var peerId in this.peerConnections){
+					console.log("Send to "+peerId);
+					if (peerId != destPeer){
+						var peerConnection= self.peerConnections[peerId];
+						var peername = peerConnection.metadata.username;
+						peers.push({peerId:peerId,peerName:peername});
+					}
+					
+					
+				}
+				
+				var data = {peers:peers};
+				var json = JSON.stringify(data);
+				this.send(json, destPeer);
+			}
+		};
+		// TODO:refactor
+		this.joinOtherPeer = function(peerId, peerName){
+			 var newPeerConnection = this.ownPeer.connect(peerId, this.dataChannelOptions);
+			 var self = this;
+			 newPeerConnection.on('data',this._onData);
+			 newPeerConnection.on('close',this._onPeerConnectionClose);
+			 
+			 // 3. Add callback on connection open
+			 newPeerConnection.on('open', function() {
+				 console.log("Connection to peer establiished!");
+				 console.log(self.newPeerConnection);
+				 // Propagate event
+				 if(self.onopen){
+					 	// TODO transmit real usernames
+						var eventData = {username:peerName||"Peer"};
+						// Add peer to associated array
+						self.peerConnections[peerId] = newPeerConnection;
+						self.onopen(eventData);
+				 }
+			 });
+		};
 
 		this.create = function(options,callback, caller){
 			console.log("Create!");
@@ -216,6 +272,7 @@
 			this.dataChannelOptions.metadata = metadata;
 			
 			this.ownPeer.on('error',this.onerror);
+			this.ownPeer.on('connection',this._onPeerConnection);
 			this.ownPeer.on('open', function(id) {
 				// on connection to broker
 				// 1. set ID
@@ -238,8 +295,8 @@
 					 console.log(self.ownerConnection);
 					 // Propagate event
 					 if(self.onopen){
-						 	// TODO transmit real usernames
-							var eventData = {username:"Presenter"};
+						 	// TODO transmit real username
+							var eventData = {username:"Host"};
 							
 							self.onopen(eventData);
 					 }
