@@ -283,6 +283,7 @@ background-color: #1F1F1F;
 
 #show-area{
 	margin-bottom:5%;
+	/* padding-right: 0px; */
 }
 #slide-show-area {
 	width: auto;
@@ -353,6 +354,8 @@ background-color: #1F1F1F;
 #chat-area {
 	max-height:200px;
 	overflow-y: auto;
+	overflow-x:hidden;
+	word-wrap: break-word;
 }
 
 #slide-preview-area {
