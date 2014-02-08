@@ -24,7 +24,7 @@ define([
         },
         events: {
             "click #apply-bt": "setUserName",
-            "keypress input[type=text]": "onEnter"
+            "keypress #username-inp": "onEnter"
         },
         onEnter : function(event){
         	if (event.keyCode != 13) return;

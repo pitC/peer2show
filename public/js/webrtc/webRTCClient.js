@@ -7,6 +7,7 @@
 	var connection = function(){
 		
 		this.ownerPeerId = location.href.replace( /\/|:|#|%|\.|\[|\]/g , '');
+		this.ownUsername = "?";
 		
 		this.peerJSOptions = {
 			key: '7673s5yzjupzxgvi',
@@ -36,6 +37,7 @@
 		
 		this.onrpc;
 		this.onfile;
+		this.onmessage;
 		this.onTransferFinish;
 		
 		this.onerror;
@@ -56,10 +58,18 @@
 			this.send(data, destPeer);
 		};
 		
+		this.sendMessage = function(message, metadata, destPeer){
+			var data = metadata || {};
+			data.message = message;
+			data.sender = this.ownUsername;
+			var json = JSON.stringify(data);
+			this.send(json, destPeer);
+		};
+		
 		this.send = function(data, destPeer){
 			console.log("Send data");
 			console.log(data);
-			// For now only broadcast!
+			
 			if (destPeer){
 				console.log("Unicast "+destPeer);
 				var peerConnection;
@@ -100,6 +110,8 @@
 		this._onData = function(data){
 			console.log("Received data!");
 			console.log(data);
+			console.log(this);
+			
 			if (data.file != null){
 				  var file = data.file;
 				  delete data.file;
@@ -121,6 +133,15 @@
 					options.remote = true;
 					if (self.onrpc){
 						self.onrpc(finalMsg.remoteCall,options);
+					}
+				}
+				else if (finalMsg.message){
+					if(self.onmessage){
+						var message = finalMsg.message;
+						delete finalMsg.file;
+						var metadata = finalMsg;
+						
+						self.onmessage(message,metadata);
 					}
 				}
 				// internal
@@ -170,6 +191,8 @@
 		this.create = function(options,callback, caller){
 			console.log("Create!");
 			
+			this.ownUsername = options.username;
+			
 			this.ownPeer = new Peer(this.ownerPeerId,this.peerJSOptions);
 			
 			this.ownPeer.on('error',this.onerror);
@@ -188,7 +211,8 @@
 			this.ownPeer = new Peer(this.peerJSOptions);
 			var self = this;
 			
-			var metadata = {username:options.userName};
+			var metadata = {username:options.username};
+			this.ownUsername = options.username;
 			this.dataChannelOptions.metadata = metadata;
 			
 			this.ownPeer.on('error',this.onerror);

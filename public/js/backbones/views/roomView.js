@@ -14,9 +14,10 @@ define([
          'backbones/collections/userCollection',
          'backbones/views/showArea',
          'backbones/views/previewArea',
-         'backbones/views/userArea'
+         'backbones/views/userArea',
+         'backbones/views/chatArea'
          
-], function($, _, Backbone, roomTmpl,overlayTmpl,linkShareModalTmpl,notificationModalTmpl, WebRTCClient,RoomStatus, SlideshowApp, AppStatus, Settings, UserCollection, ShowArea, PreviewArea, UserArea){
+], function($, _, Backbone, roomTmpl,overlayTmpl,linkShareModalTmpl,notificationModalTmpl, WebRTCClient,RoomStatus, SlideshowApp, AppStatus, Settings, UserCollection, ShowArea, PreviewArea, UserArea, ChatArea){
 
 	
 		var DEFAULT_ROOM_NAME = "test";
@@ -43,6 +44,8 @@ define([
 				this.userCollection = new UserCollection();
 				this.userCollection.add({username:this.username+"(me)"});
 				
+				
+				
 				this.app.on('change_status',this.render,this);
 				
 			},
@@ -63,10 +66,10 @@ define([
 				};
 				
 				if (this.owner){
-					this.webRTCClient.create({roomName:this.roomName,userName:this.username},this.onRoomInitChange,this);
+					this.webRTCClient.create({roomName:this.roomName,username:this.username},this.onRoomInitChange,this);
 				}
 				else{
-					this.webRTCClient.join({roomName:this.roomName,userName:this.username},this.onRoomInitChange, this);
+					this.webRTCClient.join({roomName:this.roomName,username:this.username},this.onRoomInitChange, this);
 				}
 				
 				
@@ -121,9 +124,11 @@ define([
 	            	this.showArea  = new ShowArea(this.app);
 	            	this.previewArea = new PreviewArea(this.app);
 	                this.userArea = new UserArea({collection:this.userCollection});
+	                this.chatArea = new ChatArea(this.app);
 	            	this.$el.find("#show-area").append(this.showArea.render().el);
 	            	this.$el.find("#preview-area").append(this.previewArea.render().el);
 	            	this.$el.find("#users-area").append(this.userArea.render().el);
+	            	this.$el.find("#chat-area").append(this.chatArea.render().el);
 	            	this.renderOverlay();
 	            	this.renderModals();
             	}

@@ -4,10 +4,11 @@ define([
         'backbone',
         'backbones/collections/slideCollection',
         'backbones/models/slideModel',
+        'backbones/collections/messageCollection',
         'app/imageProcessor',
         'app/appStatus',
         'app/settings'
-],function ($, _, Backbone,SlideCollection,SlideModel,ImageProcessor, AppStatus, Settings) {
+],function ($, _, Backbone,SlideCollection, SlideModel,MessageCollection,ImageProcessor, AppStatus, Settings) {
 
 	App = Backbone.Model.extend({
 		
@@ -17,6 +18,7 @@ define([
 			
 			this.webrtc = options.webRTC;
 			this.slideCollection = new SlideCollection();
+			this.messageCollection = new MessageCollection();
 			this.imageProcessor = new ImageProcessor();
 			console.log("Settings after init: "+Settings.maxHeight);
 			// for debugging purposes
@@ -59,7 +61,18 @@ define([
 				self.addNewSlide(url,index);
 //				self.addNewSlide(url);
 			};
+			
+			this.webrtc.onmessage = function(message, metadata){
+				var sender = metadata.sender ||"?";
+				self.messageCollection.add({sender:sender,message:message});
+			};
 		
+		},
+		
+		// CHAT
+		sendMessage : function(message, destPeer){
+			this.webrtc.sendMessage(message,{},destPeer);
+			this.messageCollection.add({sender:'me',message:message});
 		},
 		
 		// REMOTE CALLS
