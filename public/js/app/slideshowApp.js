@@ -245,21 +245,29 @@ define([
 		},
 
 		readfiles : function (files) {
-			this.setStatus(AppStatus.LOADING_PHOTO);
+			
 			this.queueLength = files.length;
 			
+			var noImages = true;
+			
+			if (this.queueLength > 0){
+				this.setStatus(AppStatus.LOADING_PHOTO);
+			}
 		    for (var i = 0; i < files.length; i++) {
 		      var file = files[i];
 		      console.log("Read file!");
 		      console.log(file);
 		      if (this.imageProcessor.isImage(file)){
+		    	  noImages = false;
 		    	  this.previewfile(file);
 		      }
 		      else{
 		    	  this.queueLength -= 1;
 		      }
 		    }
-		    
+		    if (noImages){
+		    	this.setStatus(AppStatus.READY);
+		    }
 		},
 		
 		addNewSlide : function (url,index, fileId){
