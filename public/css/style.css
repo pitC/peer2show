@@ -339,8 +339,8 @@ background-color: #1F1F1F;
 }
 
 #sidebar{
-	padding-left:0px
-}
+	/* padding-left:0px
+ */}
 
 #sidebar-panel{
     /* max-height: 500px; */
