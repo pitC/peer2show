@@ -197,7 +197,7 @@
 			
 			// propagate event
 			if(self.onclose){
-				var eventData = {};
+				var eventData = {username:this.metadata.username};
 				self.onclose(eventData);
 			}
 		};

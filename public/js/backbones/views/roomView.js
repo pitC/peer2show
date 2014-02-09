@@ -98,6 +98,15 @@ define([
 				this.webRTCClient.onclose = function(e) {
 					console.log("User left!");
 					console.log(e);
+					var success = self.userCollection.removeUser(e.username);
+					if (success){
+						var options = {
+								'alert_class':'alert-info',
+								'alert_message':e.username+' left!',
+								appendMode : true
+						};
+						self.renderNotification(options);
+					}
 				};
 			},
 			
