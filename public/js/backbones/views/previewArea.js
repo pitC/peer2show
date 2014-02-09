@@ -44,11 +44,13 @@ define([
             this.template = _.template(SlidePreviewAreaTmpl);
         },
         render : function(){
+        	var focused = $(':focus');
 			this.$el.html(this.template());
 			this.slideCollection.each(this.renderSlidePreview,this);
 			
 			this.onShow();
 			this.scrollTo(this.slideCollection.currentSlideIndex);
+			focused.focus();
 			return this;
         },
 

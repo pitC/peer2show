@@ -31,8 +31,14 @@ define([
             this.template = _.template(MessageListTmpl);
         },
         render : function(){
+        	
         	this.$el.html(this.template());
 			this.collection.each(this.renderMessage,this);
+			
+			// temporary solution for issue #27
+			$('#message-inp').focus();
+			
+			
 			return this;
         },
         
