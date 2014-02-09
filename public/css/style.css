@@ -338,6 +338,9 @@ background-color: #1F1F1F;
 	margin-right:auto;
 }
 
+#sidebar{
+	padding-left:0px
+}
 
 #sidebar-panel{
     /* max-height: 500px; */
@@ -349,8 +352,22 @@ background-color: #1F1F1F;
 	color:grey;
 }
 
+.panel-btn{
+	float:right;
+	font-size:1.2em;
+	cursor:pointer;
+}
+
 #sidebar-panel a:hover{
 	color: rgb(255, 202, 66);
+}
+
+#user-invite{
+ 	cursor:pointer;
+	font-style:italic;	
+ 	/* height: 3em; */
+ 	font-size: 0.9em;
+ 	color: grey;
 }
 
 #chat-area {

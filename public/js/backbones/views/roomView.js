@@ -256,6 +256,7 @@ define([
             	
             	this.showArea.onShow();
             	this.previewArea.onShow();
+            	this.userArea.onShow();
             	this.renderOverlay();
             	this.onKeypressInit();
             	this.setHeight();

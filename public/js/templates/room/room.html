@@ -2,12 +2,8 @@
 <input id="file-input" type="file" style="visibility:hidden" multiple="">
 
 	<div class="row">
-		<div class = "col-md-1">
-		<button id="btn-link" class="btn btn-default btn-sm" data-toggle="modal" data-target="#link-share-modal">
-			<span class="glyphicon glyphicon-link highlighted-text"></span>
-		</button>
-		</div>
-		<div id="topbar" class = "col-md-4 col-md-offset-3">
+		
+		<div id="topbar" class = "col-md-4 col-md-offset-4">
 			<div class="btn-group  btn-group-justified ">
 				<a type="button" class="btn btn-default btn-sm btn-prev">
 				    <span class="glyphicon glyphicon-chevron-left"></span>
@@ -55,8 +51,13 @@
 		 			<a data-toggle="collapse" data-parent="#accordion" href="#users-area">
 		 				<span class="glyphicon glyphicon-user"></span> Viewers
 		 			</a>
+		 			<a class="panel-btn" id="invite-btn" data-toggle="modal" data-target="#link-share-modal"	>
+		  				<span class="glyphicon glyphicon-plus-sign highlighted-text" title="Invite friends"></span>
+		  			</a>
 		 		</div>
-		  		<div id="users-area" class="panel-collapse collapse"></div>
+		  		<div id="users-area" class="panel-collapse collapse in">
+		  	
+		  		</div>
 		  		<div class="panel-heading">
 		  			<a data-toggle="collapse" data-parent="#accordion" href="#chat-area">
 		  				<span class="glyphicon glyphicon-comment"></span> Chat
@@ -65,7 +66,10 @@
 		  		<div id="chat-area" class="panel-collapse collapse in"></div>
 		  		<div class="panel-heading">
 		  			<a data-toggle="collapse" data-parent="#accordion" href="#preview-area">
-		  				<span class="glyphicon glyphicon-picture"></span> Preview
+		  				<span class="glyphicon glyphicon-picture"></span> Images
+		  			</a>
+		  			<a class="panel-btn" id="upload-more-btn">
+		  				<span class="glyphicon glyphicon-upload" title="Upload images"></span>
 		  			</a>
 		  		</div>
 		  		<div id="preview-area" class="panel-collapse collapse in"></div>

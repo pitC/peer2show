@@ -3,11 +3,12 @@ define([
          'underscore', 
          'backbone',
          'text!templates/slideshowApp/userList.html',
-         'text!templates/slideshowApp/userElement.html'
+         'text!templates/slideshowApp/userElement.html',
+         'text!templates/slideshowApp/userInvite.html'
          
          
 ], function($, _, Backbone,
-		UserListTmpl, UserElementTmpl
+		UserListTmpl, UserElementTmpl,UserInviteTmpl
 ){
 	
 	UserElementView = Backbone.View.extend({
@@ -31,8 +32,19 @@ define([
         },
         render : function(){
         	this.$el.html(this.template());
-			this.collection.each(this.renderUser,this);
+        	if (this.collection.length > 0){
+        		this.collection.each(this.renderUser,this);
+        	}
+        	else{
+        		this.renderUserInvite();
+        	}
 			return this;
+        },
+        
+        renderUserInvite : function(){
+        	
+        	var userInvite = _.template(UserInviteTmpl);
+        	$("#user-list").append(userInvite());
         },
 
 		renderUser : function(user){
@@ -40,6 +52,14 @@ define([
 			var userElement = new UserElementView({model : user});
 			
 			$("#user-list").append(userElement.render().el);
+		},
+		
+		onShow : function(){
+			this.collection.each(this.renderUser,this);
+			if (this.collection.length <= 1){
+				this.renderUserInvite();
+        	}
+        	
 		}
 	});
 	

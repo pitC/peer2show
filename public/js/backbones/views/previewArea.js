@@ -116,7 +116,7 @@ define([
 		},
 				
 		onShow : function(){
-			
+			this.app.addClickArea('upload-more-btn');
 		}
 	});
 	
