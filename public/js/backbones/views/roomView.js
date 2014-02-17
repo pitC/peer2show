@@ -149,8 +149,23 @@ define([
                 "click .btn-prev": "prev",
                 "click .btn-next": "next",
                 "change #file-input" : "onFileInput",
-                "click #sidebar-toggle":"sidebarToggle"
+                "click #sidebar-toggle":"sidebarToggle",
+                "click #btn-fullscr": "fullscreen"
 //                "keypress ": "onKeypress"
+            },
+            
+            fullscreen : function(e){
+            	var element = document.getElementById("slide-show-area");
+            	if (element.webkitRequestFullScreen)
+            		{
+            		element.webkitRequestFullScreen();
+            		}
+            	else if(element.mozRequestFullScreen) {
+            		element.mozRequestFullScreen();
+            	}
+            	else{
+            		element.requestFullScreen();
+            	};
             },
         
             prev : function(e){

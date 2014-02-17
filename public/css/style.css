@@ -2,6 +2,11 @@ body{
 background-color: #1F1F1F;
 }
 
+:-webkit-full-screen{
+	width:auto;
+	height:auto;
+}
+
  {
   -webkit-border-radius: 0 !important;
      -moz-border-radius: 0 !important;
@@ -336,6 +341,11 @@ background-color: #1F1F1F;
 	display:block;
 	margin-left:auto;
 	margin-right:auto;
+}
+
+#slide-show-area:-webkit-full-screen {
+	width:auto;
+	height:auto;
 }
 
 #sidebar{
