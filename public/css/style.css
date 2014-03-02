@@ -2,6 +2,11 @@ body{
 background-color: #1F1F1F;
 }
 
+#container {
+	padding-left:0px;
+	padding-right:0px;
+}
+
 :-webkit-full-screen{
 	width:auto;
 	height:auto;
@@ -171,6 +176,11 @@ background-color: #1F1F1F;
 
 #topbar {
 	text-align:center;
+	padding-right: 0px;
+}
+
+#sidebar-toggle-div{
+	padding-right:0px;
 }
 
 #sidebar-toggle{
@@ -290,7 +300,8 @@ background-color: #1F1F1F;
 
 #show-area{
 	margin-bottom:5%;
-	/* padding-right: 0px; */
+	padding-left: 0px;
+	padding-right: 0px;
 }
 #slide-show-area {
 	width: auto;
@@ -349,8 +360,9 @@ background-color: #1F1F1F;
 }
 
 #sidebar{
-	/* padding-left:0px
- */}
+	/* padding-left: 1px; */
+	padding-right: 0px;
+}
 
 #sidebar-panel{
     /* max-height: 500px; */
@@ -410,6 +422,10 @@ background-color: #1F1F1F;
 	
 }
 
+
+#about-modal-dialog{
+	width: 85%;
+}
 
 
 
