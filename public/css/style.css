@@ -390,6 +390,16 @@ background-color: #1F1F1F;
  	/* height: 3em; */
  	font-size: 0.9em;
  	color: grey;
+ 	background-color: rgb(255, 236, 158);
+}
+
+#user-invite:hover{
+ 	cursor:pointer;
+	font-style:italic;	
+ 	/* height: 3em; */
+ 	font-size: 0.9em;
+ 	color: grey;
+ 	background-color: rgb(255, 202, 66);
 }
 
 #chat-area {
