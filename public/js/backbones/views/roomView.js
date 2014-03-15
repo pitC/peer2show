@@ -170,7 +170,6 @@ define([
         
             prev : function(e){
             	this.app.prevSlide();
-//            	this.renderNotification({});
             },
             next : function(e){
             	this.app.nextSlide();
@@ -186,12 +185,19 @@ define([
             sidebarToggle : function(event){
             	var displayed = $("#sidebar").is(":visible");
             	if (displayed){
+            		// if displayed, then hide
             		$('#sidebar').toggle();
             		$('#show-area').toggleClass('col-md-10 col-md-12',300).promise().done(function(){});
+            		$('#topbar').toggleClass('col-md-offset-3 col-md-offset-4',300).promise().done(function(){});
+            		$('#sidebar-toggle-div').toggleClass('col-md-offset-3 col-md-offset-4',300);
             	}
             	else{
+            		// if hidden, then display
+            		$('#topbar').toggleClass('col-md-offset-3 col-md-offset-4',300);
+        			$('#sidebar-toggle-div').toggleClass('col-md-offset-3 col-md-offset-4',300);
             		$('#show-area').toggleClass('col-md-10 col-md-12',300).promise().done(function(){
             			$('#sidebar').toggle();
+            			
             		});
             	}
             },
@@ -256,10 +262,11 @@ define([
         		if (this.app.status == AppStatus.READY){
         			this.removeOverlay();
         		}
-        		else{
-        			var options = {msg:this.app.status};
-        			this.addOverlay(options);
-        		}
+        		// temporarily block overlay
+//        		else{
+//        			var options = {msg:this.app.status};
+//        			this.addOverlay(options);
+//        		}
             },
             
             addOverlay : function(options){
