@@ -2,6 +2,7 @@ body{
 background-color: #1F1F1F;
 }
 
+
 #container {
 	padding-left:0px;
 	padding-right:0px;
@@ -11,6 +12,7 @@ background-color: #1F1F1F;
 	width:auto;
 	height:auto;
 }
+
 
  {
   -webkit-border-radius: 0 !important;
@@ -211,11 +213,11 @@ background-color: #1F1F1F;
 }
 
 .prev{
-    left:15px;   
+    left: 0px;   
 }
 
 .next{
-    right:15px;
+    right: 0px;
 }
 
 #intro {

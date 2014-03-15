@@ -155,7 +155,7 @@ define([
             },
             
             fullscreen : function(e){
-            	var element = document.getElementById("slide-show-area");
+            	var element = document.getElementById("show-area");
             	if (element.webkitRequestFullScreen)
             		{
             		element.webkitRequestFullScreen();
@@ -186,19 +186,23 @@ define([
             	var displayed = $("#sidebar").is(":visible");
             	if (displayed){
             		// if displayed, then hide
-            		$('#sidebar').toggle();
+            		$('#sidebar').toggleClass('hidden');
             		$('#show-area').toggleClass('col-md-10 col-md-12',300).promise().done(function(){});
             		$('#topbar').toggleClass('col-md-offset-3 col-md-offset-4',300).promise().done(function(){});
             		$('#sidebar-toggle-div').toggleClass('col-md-offset-3 col-md-offset-4',300);
+            		
             	}
             	else{
             		// if hidden, then display
             		$('#topbar').toggleClass('col-md-offset-3 col-md-offset-4',300);
         			$('#sidebar-toggle-div').toggleClass('col-md-offset-3 col-md-offset-4',300);
+        			
+        			// side bar must be toggled after,
+        			// otherwise it's shown shortly at the bottom of the page for small pictures
             		$('#show-area').toggleClass('col-md-10 col-md-12',300).promise().done(function(){
-            			$('#sidebar').toggle();
-            			
+            			$('#sidebar').toggleClass('hidden');	
             		});
+            		
             	}
             },
             
