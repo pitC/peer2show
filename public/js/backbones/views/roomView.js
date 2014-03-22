@@ -13,12 +13,10 @@ define([
          'app/settings',
          'app/notificationManager',
          'backbones/collections/userCollection',
-         'backbones/views/showArea',
-         'backbones/views/previewArea',
-         'backbones/views/userArea',
-         'backbones/views/chatArea'
+         'backbones/views/components/userArea',
+         'backbones/views/roomSubviews',
          
-], function($, _, Backbone, roomTmpl,overlayTmpl,linkShareModalTmpl,notificationModalTmpl, bugreportModalTmpl, WebRTCClient,RoomStatus, SlideshowApp, AppStatus, Settings, NotificationManager, UserCollection, ShowArea, PreviewArea, UserArea, ChatArea){
+], function($, _, Backbone, roomTmpl,overlayTmpl,linkShareModalTmpl, bugreportModalTmpl, WebRTCClient,RoomStatus, SlideshowApp, AppStatus, Settings, NotificationManager, UserCollection, UserArea, RoomSubviews){
 
 	
 		var DEFAULT_ROOM_NAME = "test";
@@ -39,8 +37,9 @@ define([
 				this.template = _.template(roomTmpl);
 				this.overlay = _.template(overlayTmpl);
 				this.linkShare = _.template(linkShareModalTmpl);
-				this.notificationModal = _.template(notificationModalTmpl);
 				this.bugreportModal = _.template(bugreportModalTmpl);
+				
+				
 				
 				this.initApp();
 				this.initWebRTC();
@@ -48,9 +47,10 @@ define([
 				this.userCollection = new UserCollection();
 				this.userCollection.add({username:this.username+"(me)"});
 				
-				
+				this.roomSubviews = new RoomSubviews(this.$el,this.app);
 				
 				this.app.on('change_status',this.render,this);
+				
 				
 			},
 			
@@ -62,7 +62,7 @@ define([
 			},
 			
 			initWebRTC : function(){
-				var self = this;
+				var self = this;	
 				this.app.setStatus(AppStatus.OPENING_CHANNEL);
 				
 				this.webRTCClient.onerror = function(e){
@@ -128,20 +128,16 @@ define([
             render : function(){
             	console.log("Room view rerender! "+this.app.status);
             	
-            	if(this.showArea != null && this.previewArea != null){
+            	if (this.roomSubviews.isInitialized()){
             		this.renderOverlay();
             	}
             	else{
             		console.log("Rerender all!");
             		this.$el.html(this.template());
-	            	this.showArea  = new ShowArea(this.app);
-	            	this.previewArea = new PreviewArea(this.app);
+            		// TODO: refactor - keep userCollection as peer Ids in app object. Move UserArea to roomSubviews
 	                this.userArea = new UserArea({collection:this.userCollection});
-	                this.chatArea = new ChatArea(this.app);
-	            	this.$el.find("#show-area").append(this.showArea.render().el);
-	            	this.$el.find("#preview-area").append(this.previewArea.render().el);
 	            	this.$el.find("#users-area").append(this.userArea.render().el);
-	            	this.$el.find("#chat-area").append(this.chatArea.render().el);
+	            	this.roomSubviews.render();
 	            	this.renderOverlay();
 	            	this.renderModals();
             	}
@@ -280,8 +276,7 @@ define([
             
             onShow : function(){
             	
-            	this.showArea.onShow();
-            	this.previewArea.onShow();
+            	this.roomSubviews.onShow();
             	this.userArea.onShow();
             	this.renderOverlay();
             	this.onKeypressInit();
