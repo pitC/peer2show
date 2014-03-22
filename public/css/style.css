@@ -269,6 +269,10 @@ background-color: #1F1F1F;
 	height: 150px;
 }
 
+#step-one h3:hover{
+	cursor:pointer;
+}
+
 #step-two{
 	background: url("/img/step_two.png") no-repeat center center;
 	

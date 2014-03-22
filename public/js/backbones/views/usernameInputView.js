@@ -24,8 +24,15 @@ define([
         },
         events: {
             "click #apply-bt": "setUserName",
-            "keypress #username-inp": "onEnter"
+            "keypress #username-inp": "onEnter",
+            "click #step-one": "focusCreate"
         },
+        
+        focusCreate : function(event){
+        	
+        	$("#username-inp").focus();
+        },
+        
         onEnter : function(event){
         	if (event.keyCode != 13) return;
 			this.setUserName(event);
