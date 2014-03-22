@@ -5,7 +5,7 @@ define([
          'text!templates/room/room.html',
          'text!templates/room/overlay.html',
          'text!templates/modals/linkShareModal.html',
-         'text!templates/modals/bugreportModal.html',
+         'backbones/views/components/bugreportModalView',
          'webrtc/webRTCClient',
          'webrtc/roomStatus',
          'app/slideshowApp',
@@ -14,9 +14,8 @@ define([
          'app/notificationManager',
          'backbones/collections/userCollection',
          'backbones/views/components/userArea',
-         'backbones/views/roomSubviews',
-         
-], function($, _, Backbone, roomTmpl,overlayTmpl,linkShareModalTmpl, bugreportModalTmpl, WebRTCClient,RoomStatus, SlideshowApp, AppStatus, Settings, NotificationManager, UserCollection, UserArea, RoomSubviews){
+         'backbones/views/roomSubviews'
+], function($, _, Backbone, roomTmpl,overlayTmpl,linkShareModalTmpl, BugreportModalView, WebRTCClient,RoomStatus, SlideshowApp, AppStatus, Settings, NotificationManager, UserCollection, UserArea, RoomSubviews){
 
 	
 		var DEFAULT_ROOM_NAME = "test";
@@ -37,7 +36,7 @@ define([
 				this.template = _.template(roomTmpl);
 				this.overlay = _.template(overlayTmpl);
 				this.linkShare = _.template(linkShareModalTmpl);
-				this.bugreportModal = _.template(bugreportModalTmpl);
+				this.bugreportModal = new BugreportModalView();
 				
 				
 				
@@ -149,20 +148,11 @@ define([
                 "change #file-input" : "onFileInput",
                 "click #sidebar-toggle":"sidebarToggle",
                 "click #btn-fullscr": "fullscreen",
-                "click #bugreport-save-btn": "reportIssue"
+                
 //                "keypress ": "onKeypress"
             },
             
-            
-            // TODO: refactor
-            reportIssue : function(e){
-            	console.log("Report bug!");
-            	var IssueModel = Backbone.Model.extend({"urlRoot":"issues"});
-            	var issue = new IssueModel({"title":"test"});
-            	issue.save();
-            	
-            },
-            
+                     
             fullscreen : function(e){
             	var element = document.getElementById("show-area");
             	if (element.webkitRequestFullScreen)
@@ -244,7 +234,8 @@ define([
             
             renderModals : function(){
             	this.$el.append(this.linkShare({link:location.href}));
-            	this.$el.append(this.bugreportModal);
+            	
+            	this.$el.append(this.bugreportModal.render().el);
 
             },
                        
