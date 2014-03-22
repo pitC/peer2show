@@ -22,7 +22,7 @@ require.config({
 		//bootstrap: 'bootstrap.min',
 		tiny_color : 'lib/tinycolor-0.9.15.min',
 		jquery_pick_a_color: 'lib/pick-a-color-1.1.7.min',
-		socketio: '/socket.io/socket.io',
+//		socketio: '/socket.io/socket.io',
 		peerjs: 'webrtc/peer'
 	},
 	shim: {
@@ -40,10 +40,6 @@ require.config({
 	    "jquery_pick_a_color" :{
 	    	deps: ["jquery","tiny_color"]
 	    },
-	    'RTCMulticonnector': {
-	    	deps: ['socketio']
-	    }
-	    ,
 	    'bootstrap' : {
 	        deps: ['jquery','jqueryui'],
 	        exports: 'Bootstrap'

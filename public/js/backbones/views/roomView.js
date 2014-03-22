@@ -6,6 +6,7 @@ define([
          'text!templates/room/overlay.html',
          'text!templates/modals/linkShareModal.html',
          'text!templates/modals/notificationModal.html',
+         'text!templates/modals/bugreportModal.html',
          'webrtc/webRTCClient',
          'webrtc/roomStatus',
          'app/slideshowApp',
@@ -17,7 +18,7 @@ define([
          'backbones/views/userArea',
          'backbones/views/chatArea'
          
-], function($, _, Backbone, roomTmpl,overlayTmpl,linkShareModalTmpl,notificationModalTmpl, WebRTCClient,RoomStatus, SlideshowApp, AppStatus, Settings, UserCollection, ShowArea, PreviewArea, UserArea, ChatArea){
+], function($, _, Backbone, roomTmpl,overlayTmpl,linkShareModalTmpl,notificationModalTmpl, bugreportModalTmpl, WebRTCClient,RoomStatus, SlideshowApp, AppStatus, Settings, UserCollection, ShowArea, PreviewArea, UserArea, ChatArea){
 
 	
 		var DEFAULT_ROOM_NAME = "test";
@@ -37,6 +38,7 @@ define([
 				this.overlay = _.template(overlayTmpl);
 				this.linkShare = _.template(linkShareModalTmpl);
 				this.notificationModal = _.template(notificationModalTmpl);
+				this.bugreportModal = _.template(bugreportModalTmpl);
 				
 				this.initApp();
 				this.initWebRTC();
@@ -72,8 +74,6 @@ define([
 					this.webRTCClient.join({roomName:this.roomName,username:this.username},this.onRoomInitChange, this);
 				}
 				
-				
-
 				this.webRTCClient.onopen = function(e){
 					console.log("Open!");
 					var username = e.username || e.peerId || "Guest"; 
@@ -150,8 +150,19 @@ define([
                 "click .btn-next": "next",
                 "change #file-input" : "onFileInput",
                 "click #sidebar-toggle":"sidebarToggle",
-                "click #btn-fullscr": "fullscreen"
+                "click #btn-fullscr": "fullscreen",
+                "click #bugreport-save-btn": "reportIssue"
 //                "keypress ": "onKeypress"
+            },
+            
+            
+            // TODO: refactor
+            reportIssue : function(e){
+            	console.log("Report bug!");
+            	var IssueModel = Backbone.Model.extend({"urlRoot":"issues"});
+            	var issue = new IssueModel({"title":"test"});
+            	issue.save();
+            	
             },
             
             fullscreen : function(e){
@@ -187,14 +198,19 @@ define([
             	if (displayed){
             		// if displayed, then hide
             		$('#sidebar').toggleClass('hidden');
+            		
             		$('#show-area').toggleClass('col-md-10 col-md-12',300).promise().done(function(){});
+            		// slide topbar to the left
             		$('#topbar').toggleClass('col-md-offset-3 col-md-offset-4',300).promise().done(function(){});
+            		
             		$('#sidebar-toggle-div').toggleClass('col-md-offset-3 col-md-offset-4',300);
             		
             	}
             	else{
             		// if hidden, then display
+            		// slide topbar to the right
             		$('#topbar').toggleClass('col-md-offset-3 col-md-offset-4',300);
+            		// slide toggle button right-most
         			$('#sidebar-toggle-div').toggleClass('col-md-offset-3 col-md-offset-4',300);
         			
         			// side bar must be toggled after,
@@ -258,6 +274,7 @@ define([
             
             renderModals : function(){
             	this.$el.append(this.linkShare({link:location.href}));
+            	this.$el.append(this.bugreportModal);
 
             },
                        

@@ -1,8 +1,7 @@
 ﻿define([ 
 	'peerjs',
-	'socketio',
 	'webrtc/roomStatus'
-], function(PeerJS, io, RoomStatus){
+], function(PeerJS, RoomStatus){
 
 	var connection = function(){
 		
@@ -10,10 +9,11 @@
 		this.ownUsername = "?";
 		
 		this.peerJSOptions = {
-			key: '7673s5yzjupzxgvi',
+//			key: '7673s5yzjupzxgvi',
 			debug: 3, // all logs
-			// host - for now use peer.js host
-			// port
+//			host: 'pit-Aspire-5742G', 
+//			port: 9000, 
+//			path: '/myapp',
 			config: {'iceServers': [
 			                        { url: 'stun:stun.l.google.com:19302' }
 //			                        ,{ url: 'turn:homeo@turn.bistri.com:80', credential: 'homeo' }
