@@ -5,20 +5,20 @@ define([
          'text!templates/room/room.html',
          'text!templates/room/overlay.html',
          'text!templates/modals/linkShareModal.html',
-         'text!templates/modals/notificationModal.html',
          'text!templates/modals/bugreportModal.html',
          'webrtc/webRTCClient',
          'webrtc/roomStatus',
          'app/slideshowApp',
          'app/appStatus',
          'app/settings',
+         'app/notificationManager',
          'backbones/collections/userCollection',
          'backbones/views/showArea',
          'backbones/views/previewArea',
          'backbones/views/userArea',
          'backbones/views/chatArea'
          
-], function($, _, Backbone, roomTmpl,overlayTmpl,linkShareModalTmpl,notificationModalTmpl, bugreportModalTmpl, WebRTCClient,RoomStatus, SlideshowApp, AppStatus, Settings, UserCollection, ShowArea, PreviewArea, UserArea, ChatArea){
+], function($, _, Backbone, roomTmpl,overlayTmpl,linkShareModalTmpl,notificationModalTmpl, bugreportModalTmpl, WebRTCClient,RoomStatus, SlideshowApp, AppStatus, Settings, NotificationManager, UserCollection, ShowArea, PreviewArea, UserArea, ChatArea){
 
 	
 		var DEFAULT_ROOM_NAME = "test";
@@ -33,6 +33,8 @@ define([
 				this.roomName = options.roomId || DEFAULT_ROOM_NAME;
 				this.username = options.user || DEFAULT_USER_NAME;
 				this.owner = options.owner || false;
+				
+				this.notificationManager = new NotificationManager(this.$el);
 			
 				this.template = _.template(roomTmpl);
 				this.overlay = _.template(overlayTmpl);
@@ -92,7 +94,7 @@ define([
 							'alert_message':username+' joined',
 							appendMode : true
 					};
-					self.renderNotification(options);
+					self.notificationManager.render(options);
 				};
 				
 				this.webRTCClient.onclose = function(e) {
@@ -105,7 +107,7 @@ define([
 								'alert_message':e.username+' left!',
 								appendMode : true
 						};
-						self.renderNotification(options);
+						self.notificationManager.render(options);
 					}
 				};
 			},
@@ -241,34 +243,6 @@ define([
                 	}
 
             	});
-            	
-            },
-            
-            renderNotification : function(options){
-            	var notification = this.notificationModal(options);
-            	var self = this;
-            	if (options.appendMode){
-            		if ($('.notification.alert-info').length > 0){
-            			
-            			$("<p>"+options.alert_message+"</p>").hide().appendTo($('.notification.alert-info')).fadeIn();
-            			
-            		}
-            		else{
-            			$(notification).hide().prependTo(self.$el).fadeIn().css('z-index',1);
-            		}
-            	}
-            	else{            	
-	            	var maxz = 0;    
-	            	$('.notification.alert-info').each(function(){
-	            	    var z = parseInt($(this).css('z-index'), 10);
-	            	    if (maxz<z) {
-	            	        
-	            	        maxz = z;
-	            	    }
-	            	});
-	            	var topZ = maxz +1;
-	            	$(notification).hide().prependTo(self.$el).fadeIn().css('z-index',topZ);
-            	}
             	
             },
             
