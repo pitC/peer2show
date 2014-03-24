@@ -16,6 +16,7 @@
 //			path: '/myapp',
 			config: {'iceServers': [
 			                        { url: 'stun:stun.l.google.com:19302' }
+			                        ,{ url: 'turn:homeo@turn.bistri.com:80', credential: 'homeo' }
 //			                        ,
 //			                        {
 //			                            'url': 'turn:192.158.29.39:3478?transport=udp',
