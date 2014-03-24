@@ -9,7 +9,7 @@
 		this.ownUsername = "?";
 		
 		this.peerJSOptions = {
-//			key: '7673s5yzjupzxgvi',
+			key: '7673s5yzjupzxgvi',
 			debug: 3, // all logs
 //			host: 'pit-Aspire-5742G', 
 //			port: 9000, 
