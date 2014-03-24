@@ -16,7 +16,9 @@
 //			path: '/myapp',
 			config: {'iceServers': [
 			                        { url: 'stun:stun.l.google.com:19302' }
-			                        ,{ url: 'turn:homeo@turn.bistri.com:80', credential: 'homeo' }
+			                        // for firefox do not use notation username@hostname! 
+			                        // Use username as separate attribute instead
+			                        ,{ url: 'turn:turn.bistri.com:80', credential: 'homeo', username: 'homeo'  }
 //			                        ,
 //			                        {
 //			                            'url': 'turn:192.158.29.39:3478?transport=udp',
