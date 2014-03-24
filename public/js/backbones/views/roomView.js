@@ -245,10 +245,10 @@ define([
         			this.removeOverlay();
         		}
         		// temporarily block overlay
-//        		else{
-//        			var options = {msg:this.app.status};
-//        			this.addOverlay(options);
-//        		}
+        		else{
+        			var options = {msg:this.app.status};
+        			this.addOverlay(options);
+        		}
             },
             
             addOverlay : function(options){
