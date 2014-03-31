@@ -35,7 +35,9 @@ define([
 
         	this.model.set("title","test");
         	
-        	this.model.save();
+        	this.model.save({success:function(){
+        		console.log("Server saved!");
+        	}});
         	
         	
         }
