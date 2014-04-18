@@ -11,9 +11,11 @@ var file = new(static.Server)();
 
 var express = require('express');
 var app = express();
+var bodyParser = require('body-parser');
+app.use(bodyParser());
 
 var bugReporter = require('./backend/bugReporter');
-//app.use(express.bodyParser());
+
 
  app.use("/js", express.static(__dirname + '/public/js'));
  app.use("/css", express.static(__dirname + '/public/css'));
@@ -25,7 +27,9 @@ var bugReporter = require('./backend/bugReporter');
 	 });
  
  app.post('/issues', bugReporter.addIssue);
+ app.post('/event',bugReporter.logEvent);
 
  app.listen(process.env.PORT || LOCAL_PORT);
  
  console.log("App started!");
+ 

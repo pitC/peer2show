@@ -26,7 +26,8 @@ require.config({
 		            ],
 		tiny_color : 'lib/tinycolor-0.9.15.min',
 		jquery_pick_a_color: 'lib/pick-a-color-1.1.7.min',
-		peerjs: 'webrtc/peer'
+		peerjs: 'webrtc/peer',
+		keen:'lib/keen'
 	},
 	shim: {
 		
