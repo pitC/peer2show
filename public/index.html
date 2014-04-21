@@ -5,7 +5,6 @@
 <title>Peershow - p2p slideshows</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="blitz" content="mu-ce951e5b-fbe1686f-0f4aa073-dc002a0e">
-
 <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="/css/style.css">
@@ -32,8 +31,10 @@
 			      <li	><a href="#New">New session</a></li>
 			      
 			      <li><a data-toggle="modal" href="site/about.html" data-target="#about-modal">About</a></li> 
+			      
+			      <li><a id="feedback" href="">Feedback</a></li>
 			      <!--
-			      <li><a data-toggle="modal" href="" data-target="#bugreport-modal">Report a bug</a></li> 
+			      <li><a data-toggle="modal" href="site/feedback.html" data-target="#bugreport-modal">Feedback 2</a></li>
 			      -->
 				      
 				</ul>
@@ -43,6 +44,7 @@
 		  </div><!-- /.container -->
 		</div><!-- /.navbar -->
 		<div id="content">
+				
 			<div id="circleG">
 				<div id="circleG_1" class="circleG">
 				</div>
@@ -60,9 +62,8 @@
 </div>
 <div class="modal fade" id="bugreport-modal" tabindex="-1" role="dialog" aria-labelledby="bugreportModal" aria-hidden="true">
 </div>
-
 <!-- end of Modals -->
-
+<!-- google analytics -->
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -71,6 +72,26 @@
 
   ga('create', 'UA-47476195-1', 'peershow.herokuapp.com');
   ga('send', 'pageview');
+</script>
+
+<!-- UserVoice -->
+<script>
+// Include the UserVoice JavaScript SDK (only needed once on a page)
+UserVoice=window.UserVoice||[];(function(){var uv=document.createElement('script');uv.type='text/javascript';uv.async=true;uv.src='//widget.uservoice.com/q5zj42yXy00EO0J7VDw.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(uv,s)})();
+
+// Set colors
+UserVoice.push(['set', {
+  accent_color: '#FFCA42',
+  trigger_color: 'white',
+  trigger_background_color: '#FFCA42',
+  menu_enabled:'true'
+}]);
+
+// use own custom trigger:
+UserVoice.push(['addTrigger', '#feedback', { mode: 'smartvote' }]);
+
+// Autoprompt for Satisfaction and SmartVote (only displayed under certain conditions)
+UserVoice.push(['autoprompt', {}]);
 </script>
 </body>
 </html>
