@@ -2,7 +2,6 @@ define([
          'jquery', 
          'underscore', 
          'backbone',
-         'keen',
          'text!templates/room/room.html',
          'text!templates/room/overlay.html',
          'text!templates/modals/linkShareModal.html',
@@ -12,11 +11,12 @@ define([
          'app/slideshowApp',
          'app/appStatus',
          'app/settings',
+         'app/logManager',
          'app/notificationManager',
          'backbones/collections/userCollection',
          'backbones/views/components/userArea',
          'backbones/views/roomSubviews'
-], function($, _, Backbone, Keen, roomTmpl,overlayTmpl,linkShareModalTmpl, BugreportModalView, WebRTCClient,RoomStatus, SlideshowApp, AppStatus, Settings, NotificationManager, UserCollection, UserArea, RoomSubviews){
+], function($, _, Backbone, roomTmpl,overlayTmpl,linkShareModalTmpl, BugreportModalView, WebRTCClient,RoomStatus, SlideshowApp, AppStatus, Settings, LogManager,  NotificationManager, UserCollection, UserArea, RoomSubviews){
 
 	
 		var DEFAULT_ROOM_NAME = "test";
@@ -51,7 +51,9 @@ define([
 				
 				this.app.on('change_status',this.render,this);
 				
+				window.onerror = LogManager.handleError;
 				
+				var test = this.tescior();
 			},
 			
 			initApp : function(){
@@ -71,6 +73,8 @@ define([
 				
 				this.webRTCClient.onerror = function(e){
 					alert(e.message);
+					
+					LogManager.logEvent(e,LogManager.ERROR);
 				};
 				
 				if (this.owner){
@@ -174,7 +178,7 @@ define([
         
             prev : function(e){
             	this.app.prevSlide();
-            	$.post("event",{test : "dupa"});
+            	
             },
             next : function(e){
             	this.app.nextSlide();
