@@ -84,6 +84,10 @@ define([
 			
 			};
 			
+			this.webrtc.onOwnerClose = function(event){
+				self.setStatus(AppStatus.SESSION_ENDED);
+			};
+			
 			
 		},
 	

@@ -48,6 +48,8 @@
 		this.onopen;
 		this.onclose;
 		
+		this.onOwnerClose;
+		
 		this.onrpc;
 		this.onfile;
 		this.onmessage;
@@ -215,6 +217,15 @@
 			}
 		};
 		
+		this._onOwnerConnectionClose = function(){
+			// remove peer from associated array
+			delete self.peerConnections[this.peer];
+			if (self.onOwnerClose){
+				var eventData = {};
+				self.onOwnerClose(eventData);
+			}
+		};
+		
 		// function to propagate 
 		this.sendOtherPeers = function(destPeer){
 			if (this._isOwner()){
@@ -300,7 +311,7 @@
 				 self.ownerConnection = self.ownPeer.connect(ownerId, self.dataChannelOptions);
 				 
 				 self.ownerConnection.on('data',self._onData);
-				 self.ownerConnection.on('close',self._onPeerConnectionClose);
+				 self.ownerConnection.on('close',self._onOwnerConnectionClose);
 				 
 				 // 3. Add callback on connection open
 				 self.ownerConnection.on('open', function() {

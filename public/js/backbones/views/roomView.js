@@ -15,8 +15,9 @@ define([
          'app/notificationManager',
          'backbones/collections/userCollection',
          'backbones/views/components/userArea',
-         'backbones/views/roomSubviews'
-], function($, _, Backbone, roomTmpl,overlayTmpl,linkShareModalTmpl, BugreportModalView, WebRTCClient,RoomStatus, SlideshowApp, AppStatus, Settings, LogManager,  NotificationManager, UserCollection, UserArea, RoomSubviews){
+         'backbones/views/roomSubviews',
+         'backbones/views/sessionEndView'
+], function($, _, Backbone, roomTmpl,overlayTmpl,linkShareModalTmpl, BugreportModalView, WebRTCClient,RoomStatus, SlideshowApp, AppStatus, Settings, LogManager,  NotificationManager, UserCollection, UserArea, RoomSubviews, SessionEndView){
 
 	
 		var DEFAULT_ROOM_NAME = "test";
@@ -35,6 +36,8 @@ define([
 				this.notificationManager = new NotificationManager(this.$el);
 			
 				this.template = _.template(roomTmpl);
+			
+				
 				this.overlay = _.template(overlayTmpl);
 				this.linkShare = _.template(linkShareModalTmpl);
 				this.bugreportModal = new BugreportModalView();
@@ -53,7 +56,6 @@ define([
 				
 				window.onerror = LogManager.handleError;
 				
-				var test = this.tescior();
 			},
 			
 			initApp : function(){
@@ -135,10 +137,14 @@ define([
 			
             render : function(){
             	console.log("Room view rerender! "+this.app.status);
-            	
-            	if (this.roomSubviews.isInitialized()){
-            		this.renderOverlay();
+            	if (this.app.status == AppStatus.SESSION_ENDED){
+            		console.log("Render session end");
+            		this.sessionEnd = new SessionEndView();
+            		this.$el.html(this.sessionEnd.render().el);
             	}
+            	else if(this.roomSubviews.isInitialized()){
+            		this.renderOverlay();
+            	}            	
             	else{
             		console.log("Rerender all!");
             		this.$el.html(this.template());
