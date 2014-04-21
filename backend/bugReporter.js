@@ -56,7 +56,11 @@ exports.logEvent = function(req, res){
 	
 	console.log("Log event: "+event);
 	console.log(event);
-	if (event){
+	console.log("Origin: "+req.headers.host);
+	var hostName = req.headers.host;
+	
+	// only if event is not null and no localhost - do not propagate dev errors to keen 
+	if (event && hostName.indexOf("localhost") == -1){
 		keen.addEvent(KEEN_CLIENT_COLLECTION, event, function(err, res) {
 		    if (err) {
 		        console.log("Oh no, an error!");

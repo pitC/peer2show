@@ -88,7 +88,4 @@ define([
 	return {
 		initialize : initialize
 	};
-	
-	
-
 });
