@@ -13,7 +13,7 @@ define([
         },
         render : function(){
         	
-        	var event = {messageExtended:"Test"};
+        	var event = {messageExtended:""};
         	
         	this.$el.html(this.template(event));
         	
