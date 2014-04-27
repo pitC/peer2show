@@ -142,6 +142,9 @@ define([
             		this.sessionEnd = new SessionEndView();
             		this.$el.html(this.sessionEnd.render().el);
             	}
+            	else if (this.app.status == AppStatus.FATAL_ERROR){
+            		// TODO: handle fatal errors in nice way
+            	}
             	else if(this.roomSubviews.isInitialized()){
             		this.renderOverlay();
             	}            	
@@ -163,8 +166,13 @@ define([
                 "change #file-input" : "onFileInput",
                 "click #sidebar-toggle":"sidebarToggle",
                 "click #btn-fullscr": "fullscreen",
-                
+                "click #switch-off-btn": "switchOff",
 //                "keypress ": "onKeypress"
+            },
+            
+            switchOff : function(e){
+            	//TODO: get confirmation
+            	this.app.close();
             },
             
                      
@@ -205,7 +213,7 @@ define([
             		
             		$('#show-area').toggleClass('col-md-10 col-md-12',300).promise().done(function(){});
             		// slide topbar to the left
-            		$('#topbar').toggleClass('col-md-offset-3 col-md-offset-4',300).promise().done(function(){});
+            		$('#topbar').toggleClass('col-md-offset-2 col-md-offset-3',300).promise().done(function(){});
             		
             		$('#sidebar-toggle-div').toggleClass('col-md-offset-3 col-md-offset-4',300);
             		
@@ -213,7 +221,7 @@ define([
             	else{
             		// if hidden, then display
             		// slide topbar to the right
-            		$('#topbar').toggleClass('col-md-offset-3 col-md-offset-4',300);
+            		$('#topbar').toggleClass('col-md-offset-2 col-md-offset-3',300);
             		// slide toggle button right-most
         			$('#sidebar-toggle-div').toggleClass('col-md-offset-3 col-md-offset-4',300);
         			

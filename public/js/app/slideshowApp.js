@@ -298,7 +298,17 @@ define([
 		
 		generateFileId : function () {
 	        return (Math.random() * new Date().getTime()).toString(36).toUpperCase().replace( /\./g , '-');
+	    },
+	    
+	    close : function(){
+	    	var self = this;
+	    	this.webrtc.close(function(ev){
+	    		self.setStatus(AppStatus.SESSION_ENDED);
+	    	});
+	    	
 	    }
+		
+		
 	    
 	});
 		

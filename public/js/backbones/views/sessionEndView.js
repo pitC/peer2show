@@ -13,8 +13,9 @@ define([
         },
         render : function(){
         	
+        	var event = {messageExtended:"Test"};
         	
-        	this.$el.html(this.template());
+        	this.$el.html(this.template(event));
         	
 			return this;
         }

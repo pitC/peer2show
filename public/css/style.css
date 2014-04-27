@@ -28,6 +28,11 @@ background-color: #1F1F1F;
 	color: rgb(255, 202, 66);
 }
 
+.highlighted-red-text {
+	color: rgb(168, 10, 10);
+}
+
+
 .click-area{
 	cursor:pointer;
 }
@@ -231,6 +236,25 @@ background-color: #1F1F1F;
 
 	/* padding-bottom: inherit; */
 
+}
+
+#session-end {
+	color: rgb(233, 233, 233);
+	text-align: center;
+	padding-left: 0px;
+	padding-right: 0px;
+	background-color: #585858;
+}
+
+#session-end a {
+	color:rgb(255, 202, 66);
+	border-bottom: 1px dashed rgb(255, 202, 66);
+}
+
+#session-end a:hover {
+	color: rgb(241, 177, 9);
+	text-decoration: none;
+	border-bottom: 1px dashed rgb(241, 177, 9);
 }
 
 #pitch {

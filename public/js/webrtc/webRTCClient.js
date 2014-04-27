@@ -331,6 +331,23 @@
 	
 		};
 		
+		this.close = function(callback){
+			if (this.ownerConnection != null){
+				this.ownerConnection.close();
+			}
+			for (var peerId in self.peerConnections){
+				console.log("Send to "+peerId);
+				var peerConnection= self.peerConnections[peerId];
+				peerConnection.close();
+			}
+			this.ownPeer.disconnect();
+			// for now empty event object
+			var ev = {};
+			if (callback){
+				callback(ev);
+			}
+		};
+		
 	};
 	
 	return connection;
