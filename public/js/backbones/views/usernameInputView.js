@@ -2,11 +2,13 @@ define([
          'jquery', 
          'underscore', 
          'backbone',
+         'app/settings',
          'text!templates/slideshowApp/usernameInput.html',
          'text!templates/slideshowApp/introHost.html',
          'text!templates/slideshowApp/introGuest.html',
+         'backbones/views/components/newSessionModal',
          
-], function($, _, Backbone, UserInputTmpl,IntroHostTmpl,IntroGuestTmpl){
+], function($, _, Backbone, Settings, UserInputTmpl,IntroHostTmpl,IntroGuestTmpl,NewSessionModal){
 	
 	
 	UsernameInputView = Backbone.View.extend({
@@ -21,6 +23,8 @@ define([
 				this.introTemplate = _.template(IntroGuestTmpl);
 			}
 			
+			this.newSessionModal = new NewSessionModal();
+			
         },
         events: {
             "click #apply-bt": "setUserName",
@@ -32,7 +36,7 @@ define([
         	
         	$("#username-inp").focus();
         },
-        
+                
         onEnter : function(event){
         	if (event.keyCode != 13) return;
 			this.setUserName(event);
@@ -41,6 +45,11 @@ define([
         	
         	var userName = $("#username-inp").val();
         	var options = {user : userName,owner:this.owner, app:this.appRef};
+        	
+        	Settings.userName = userName;
+        	Settings.owner = this.owner;
+        	
+        	
         	this.callback(options);
         },
         render : function(){
@@ -48,6 +57,8 @@ define([
         	var intro = this.introTemplate();
         	
         	this.$el.html(intro);
+        	
+        	this.$el.append(this.newSessionModal.render().el);
         	
 			return this;
         }

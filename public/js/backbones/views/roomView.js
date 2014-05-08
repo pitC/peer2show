@@ -15,8 +15,9 @@ define([
          'backbones/collections/userCollection',
          'backbones/views/components/userArea',
          'backbones/views/roomSubviews',
-         'backbones/views/sessionEndView'
-], function($, _, Backbone, roomTmpl,overlayTmpl,linkShareModalTmpl,WebRTCClient,RoomStatus, SlideshowApp, AppStatus, Settings, LogManager,  NotificationManager, UserCollection, UserArea, RoomSubviews, SessionEndView){
+         'backbones/views/sessionEndView',
+         'backbones/views/components/newSessionModal'
+], function($, _, Backbone, roomTmpl,overlayTmpl,linkShareModalTmpl,WebRTCClient,RoomStatus, SlideshowApp, AppStatus, Settings, LogManager,  NotificationManager, UserCollection, UserArea, RoomSubviews, SessionEndView, NewSessionModal){
 
 	
 		var DEFAULT_ROOM_NAME = "test";
@@ -25,7 +26,8 @@ define([
 		RoomView = Backbone.View.extend({
 	
 			initialize : function(options){
-				console.log("Settings: "+Settings.maxHeight);
+				console.log("Settings: ");
+				console.log(Settings);
 				Settings.calculateMaxDimensions();
 				
 				this.roomName = options.roomId || DEFAULT_ROOM_NAME;
@@ -40,7 +42,7 @@ define([
 				this.overlay = _.template(overlayTmpl);
 				this.linkShare = _.template(linkShareModalTmpl);
 				
-				
+				this.newSessionModal = new NewSessionModal();
 				
 				
 				this.initApp();
@@ -50,6 +52,8 @@ define([
 				this.userCollection.add({username:this.username+"(me)"});
 				
 				this.roomSubviews = new RoomSubviews(this.$el,this.app);
+				
+				
 				
 				this.app.on('change_status',this.render,this);
 				
@@ -156,6 +160,7 @@ define([
 	            	this.roomSubviews.render();
 	            	this.renderOverlay();
 	            	this.renderModals();
+	            	this.$el.append(this.newSessionModal.render().el);
             	}
                 return this;
             },
@@ -205,7 +210,7 @@ define([
             },
             
             sidebarToggle : function(event){
-            	var displayed = $("#sidebar").is(":visible");
+            	var displayed = $("#sidebarthis.$el.append(this.newSessionModal.render().el);").is(":visible");
             	if (displayed){
             		// if displayed, then hide
             		$('#sidebar').toggleClass('hidden');
@@ -268,10 +273,10 @@ define([
         			this.removeOverlay();
         		}
         		// temporarily block overlay
-        		else{
-        			var options = {msg:this.app.status};
-        			this.addOverlay(options);
-        		}
+//        		else{
+//        			var options = {msg:this.app.status};
+//        			this.addOverlay(options);
+//        		}
             },
             
             addOverlay : function(options){
