@@ -5,7 +5,6 @@ define([
          'text!templates/room/room.html',
          'text!templates/room/overlay.html',
          'text!templates/modals/linkShareModal.html',
-         'backbones/views/components/bugreportModalView',
          'webrtc/webRTCClient',
          'webrtc/roomStatus',
          'app/slideshowApp',
@@ -17,7 +16,7 @@ define([
          'backbones/views/components/userArea',
          'backbones/views/roomSubviews',
          'backbones/views/sessionEndView'
-], function($, _, Backbone, roomTmpl,overlayTmpl,linkShareModalTmpl, BugreportModalView, WebRTCClient,RoomStatus, SlideshowApp, AppStatus, Settings, LogManager,  NotificationManager, UserCollection, UserArea, RoomSubviews, SessionEndView){
+], function($, _, Backbone, roomTmpl,overlayTmpl,linkShareModalTmpl,WebRTCClient,RoomStatus, SlideshowApp, AppStatus, Settings, LogManager,  NotificationManager, UserCollection, UserArea, RoomSubviews, SessionEndView){
 
 	
 		var DEFAULT_ROOM_NAME = "test";
@@ -40,7 +39,7 @@ define([
 				
 				this.overlay = _.template(overlayTmpl);
 				this.linkShare = _.template(linkShareModalTmpl);
-				this.bugreportModal = new BugreportModalView();
+				
 				
 				
 				
@@ -259,7 +258,7 @@ define([
             renderModals : function(){
             	this.$el.append(this.linkShare({link:location.href}));
             	
-            	this.$el.append(this.bugreportModal.render().el);
+            	
 
             },
                        
