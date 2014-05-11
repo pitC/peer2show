@@ -366,9 +366,17 @@ background-color: #1F1F1F;
 	font-style:italic;
 	color:grey;
 	font-size:2em;
-	border:dashed 5px grey;
+	border:dashed 5px rgba(0,0,0,0);
 	padding-bottom: 20%;
+	opacity: 0.7;
+	transition: 0.3s;
+	
 }
+#slide-show-area p:hover{
+	opacity: 1;
+	border:dashed 5px grey;
+}
+
 #slide-show-area div{
 	height:100%;
 }
@@ -436,6 +444,7 @@ background-color: #1F1F1F;
  	font-size: 0.9em;
  	color: grey;
  	background-color: rgb(255, 236, 158);
+	transition: 0.5s;
 }
 
 #user-invite:hover{
