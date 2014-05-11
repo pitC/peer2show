@@ -7,8 +7,8 @@ define([],function () {
 		WAITING_FOR_USERS : "waiting for someone to join",
 		JOINING_ROOM : "joining room...",
 		LOADING_PHOTO : "loading photos",
-		SESSION_ENDED : "session ended",
-		FATAL_ERROR : "error occured",
+		SESSION_ENDED : "Session ended!",
+		FATAL_ERROR : "Error occured!",
 		isValid : function(status){
 			var keys = Object.keys(this);
 			for (i in keys){

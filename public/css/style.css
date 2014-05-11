@@ -24,6 +24,9 @@ background-color: #1F1F1F;
 	background-color: rgb(255, 202, 66);
 	color: #585858;
 }
+
+
+
 .highlighted-text {
 	color: rgb(255, 202, 66);
 }
@@ -319,7 +322,7 @@ background-color: #1F1F1F;
 	text-align: left;
 }
 
-#new-user-form{
+#next-action-field{
 	margin-left:10%;
 	/* margin-top:10%; */
 	margin-right:10%;
@@ -327,6 +330,18 @@ background-color: #1F1F1F;
 	padding-top: 2%;
 	padding-bottom: 5%;
 }
+
+#next-action-field a {
+	color:rgb(255, 202, 66);
+	border-bottom: 1px dashed rgb(255, 202, 66);
+}
+
+#next-action-field a:hover {
+	color: rgb(241, 177, 9);
+	text-decoration: none;
+	border-bottom: 1px dashed rgb(241, 177, 9);
+}
+
 
 #show-area{
 	margin-bottom:5%;

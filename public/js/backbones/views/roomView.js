@@ -77,9 +77,11 @@ define([
 				
 				
 				this.webRTCClient.onerror = function(e){
-					alert(e.message);
+//					alert(e.message);
 					
 					LogManager.logEvent(e,LogManager.ERROR);
+					
+					self.app.setStatus(AppStatus.FATAL_ERROR);
 				};
 				
 				if (this.owner){
@@ -140,14 +142,15 @@ define([
 			
             render : function(){
             	console.log("Room view rerender! "+this.app.status);
-            	if (this.app.status == AppStatus.SESSION_ENDED){
+            	if (this.app.status == AppStatus.SESSION_ENDED || this.app.status == AppStatus.FATAL_ERROR){
             		console.log("Render session end");
+            		
+            		options = {message:LogManager.getLastMessage(),status:this.app.status};
             		this.sessionEnd = new SessionEndView();
-            		this.$el.html(this.sessionEnd.render().el);
+            		this.$el.find("#container").html(this.sessionEnd.render().el);
+            		
             	}
-            	else if (this.app.status == AppStatus.FATAL_ERROR){
-            		// TODO: handle fatal errors in nice way
-            	}
+            	
             	else if(this.roomSubviews.isInitialized()){
             		this.renderOverlay();
             	}            	
@@ -160,7 +163,7 @@ define([
 	            	this.roomSubviews.render();
 	            	this.renderOverlay();
 	            	this.renderModals();
-	            	this.$el.append(this.newSessionModal.render().el);
+	            	
             	}
                 return this;
             },
@@ -210,7 +213,7 @@ define([
             },
             
             sidebarToggle : function(event){
-            	var displayed = $("#sidebarthis.$el.append(this.newSessionModal.render().el);").is(":visible");
+            	var displayed = $("#sidebar").is(":visible");
             	if (displayed){
             		// if displayed, then hide
             		$('#sidebar').toggleClass('hidden');
@@ -261,8 +264,9 @@ define([
             },
             
             renderModals : function(){
-            	this.$el.append(this.linkShare({link:location.href}));
             	
+            	this.$el.find("#modal-container").append(this.linkShare({link:location.href}));
+            	this.$el.find("#modal-container").append(this.newSessionModal.render().el);
             	
 
             },
@@ -300,6 +304,7 @@ define([
             	this.renderOverlay();
             	this.onKeypressInit();
             	this.setHeight();
+            	this.newSessionModal.onRender();
             },
             
             setHeight :function(){

@@ -11,47 +11,51 @@ define([
 ], function($, _, Backbone, Settings, UserInputTmpl,IntroHostTmpl,IntroGuestTmpl,NewSessionModal){
 	
 	
-	UsernameInputView = Backbone.View.extend({
+	HomepageView = Backbone.View.extend({
 		initialize:function (options) {
+			
+			options = options || {};
+			
+			this.guest = options.guest || false;
 			this.callback = options.callback;
-			this.owner = options.owner;
-			this.appRef = options.app;
-			if(this.owner){
-				this.introTemplate = _.template(IntroHostTmpl);
-			}
-			else{
+			
+			if(this.guest){
 				this.introTemplate = _.template(IntroGuestTmpl);
 			}
+			else{
+				this.introTemplate = _.template(IntroHostTmpl);
+				
+			}
 			
-			this.newSessionModal = new NewSessionModal();
+			this.newSessionModal = new NewSessionModal(options);
 			
         },
         events: {
-            "click #apply-bt": "setUserName",
+            "click #apply-bt": "joinSession",
             "keypress #username-inp": "onEnter",
             "click #step-one": "focusCreate"
         },
         
         focusCreate : function(event){
-        	
-        	$("#username-inp").focus();
+        	$('#new-session-modal').modal('show');
         },
                 
         onEnter : function(event){
         	if (event.keyCode != 13) return;
-			this.setUserName(event);
+			this.joinSession(event);
         },
-        setUserName : function(event){
+        joinSession : function(event){
         	
         	var userName = $("#username-inp").val();
-        	var options = {user : userName,owner:this.owner, app:this.appRef};
+        	var options = {user : userName,owner:false};
         	
         	Settings.userName = userName;
-        	Settings.owner = this.owner;
+        	Settings.owner = false;
         	
         	
         	this.callback(options);
         },
+        
         render : function(){
         	
         	var intro = this.introTemplate();
@@ -61,8 +65,12 @@ define([
         	this.$el.append(this.newSessionModal.render().el);
         	
 			return this;
+        },
+        
+        onShow : function(){
+        	this.newSessionModal.onRender();
         }
 	});
 	
-	return UsernameInputView;
+	return HomepageView;
 });
