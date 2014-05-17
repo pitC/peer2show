@@ -7,8 +7,9 @@ define([
         'backbones/collections/messageCollection',
         'app/imageProcessor',
         'app/appStatus',
-        'app/settings'
-],function ($, _, Backbone,SlideCollection, SlideModel,MessageCollection,ImageProcessor, AppStatus, Settings) {
+        'app/settings',
+        'app/logManager'
+],function ($, _, Backbone,SlideCollection, SlideModel,MessageCollection,ImageProcessor, AppStatus, Settings,Logger) {
 
 	App = Backbone.Model.extend({
 		
@@ -85,6 +86,8 @@ define([
 			};
 			
 			this.webrtc.onOwnerClose = function(event){
+				var event = {message:"Host closed the session"};
+				Logger.logEvent(event,Logger.DEBUG);
 				self.setStatus(AppStatus.SESSION_ENDED);
 			};
 			

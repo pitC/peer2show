@@ -36,6 +36,9 @@ define([],function () {
 		return Logger.lastMessage;
 	};
 	
+	Logger.init = function(){
+		Logger.lastMessage = "";
+	};
 	
 	
 	return Logger;

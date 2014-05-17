@@ -5,6 +5,7 @@ define([
          'text!templates/room/room.html',
          'text!templates/room/overlay.html',
          'text!templates/modals/linkShareModal.html',
+         'text!templates/modals/confirmCloseModal.html',
          'webrtc/webRTCClient',
          'webrtc/roomStatus',
          'app/slideshowApp',
@@ -17,7 +18,7 @@ define([
          'backbones/views/roomSubviews',
          'backbones/views/sessionEndView',
          'backbones/views/components/newSessionModal'
-], function($, _, Backbone, roomTmpl,overlayTmpl,linkShareModalTmpl,WebRTCClient,RoomStatus, SlideshowApp, AppStatus, Settings, LogManager,  NotificationManager, UserCollection, UserArea, RoomSubviews, SessionEndView, NewSessionModal){
+], function($, _, Backbone, roomTmpl,overlayTmpl,linkShareModalTmpl,confirmCloseModalTmpl,WebRTCClient,RoomStatus, SlideshowApp, AppStatus, Settings, LogManager,  NotificationManager, UserCollection, UserArea, RoomSubviews, SessionEndView, NewSessionModal){
 
 	
 		var DEFAULT_ROOM_NAME = "test";
@@ -26,6 +27,7 @@ define([
 		RoomView = Backbone.View.extend({
 	
 			initialize : function(options){
+				LogManager.init();
 				console.log("Settings: ");
 				console.log(Settings);
 				Settings.calculateMaxDimensions();
@@ -41,6 +43,7 @@ define([
 				
 				this.overlay = _.template(overlayTmpl);
 				this.linkShare = _.template(linkShareModalTmpl);
+				this.confirmClose = _.template(confirmCloseModalTmpl);
 				
 				this.newSessionModal = new NewSessionModal();
 				
@@ -176,12 +179,13 @@ define([
                 "change #file-input" : "onFileInput",
                 "click #sidebar-toggle":"sidebarToggle",
                 "click #btn-fullscr": "fullscreen",
-                "click #switch-off-btn": "switchOff",
+               
+                "click #confirm-close": "switchOffConfirmed",
 //                "keypress ": "onKeypress"
             },
-            
-            switchOff : function(e){
-            	//TODO: get confirmation
+                       
+            switchOffConfirmed : function(e){
+            	
             	this.app.close();
             },
             
@@ -270,7 +274,7 @@ define([
             	
             	this.$el.find("#modal-container").append(this.linkShare({link:location.href}));
             	this.$el.find("#modal-container").append(this.newSessionModal.render().el);
-            	
+            	this.$el.find("#modal-container").append(this.confirmClose());
 
             },
                        
