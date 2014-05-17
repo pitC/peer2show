@@ -509,7 +509,14 @@ button {
   font: 18px sans-serif;
   padding: 8px;
 }
+
+#no-js-error{
+	text-align:center;
+}
+
 /* busy animation */
+
+
 #circleG{
 width:149.33333333333334px;
 filter:alpha(opacity = 0);
