@@ -142,7 +142,9 @@ define([
 			
             render : function(){
             	console.log("Room view rerender! "+this.app.status);
+        
             	if (this.app.status == AppStatus.SESSION_ENDED || this.app.status == AppStatus.FATAL_ERROR){
+            		this.removeOverlay();
             		console.log("Render session end");
             		
             		options = {message:LogManager.getLastMessage(),status:this.app.status};
@@ -152,6 +154,7 @@ define([
             	}
             	
             	else if(this.roomSubviews.isInitialized()){
+            
             		this.renderOverlay();
             	}            	
             	else{
@@ -161,12 +164,12 @@ define([
 	                this.userArea = new UserArea({collection:this.userCollection});
 	            	this.$el.find("#users-area").append(this.userArea.render().el);
 	            	this.roomSubviews.render();
-	            	this.renderOverlay();
 	            	this.renderModals();
 	            	
             	}
                 return this;
             },
+            
             events: {
                 "click .btn-prev": "prev",
                 "click .btn-next": "next",
