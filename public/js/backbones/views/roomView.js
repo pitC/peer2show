@@ -254,13 +254,19 @@ define([
             		switch(e.keyCode){
                 	case 37:
                 	case 38:
-                		self.app.prevSlide();
+                		// do it only if message chat has no focus
+                		if (!$("#message-inp").is(":focus")){
+                			self.app.prevSlide();
+                		}
                 		e.preventDefault();
                 		break;
                 	case 39:
                 	case 40:
-                	case 32:	
-                		self.app.nextSlide();
+                	case 32:
+                		// do it only if message chat has no focus
+                		if (!$("#message-inp").is(":focus")){
+                			self.app.nextSlide();
+                		}
                 		e.preventDefault();
                 		break;
                 		
@@ -271,8 +277,9 @@ define([
             },
             
             renderModals : function(){
-            	
-            	this.$el.find("#modal-container").append(this.linkShare({link:location.href}));
+            	var encodedUri = "http://peershow.herokuapp.com/"+ window.location.hash;
+            	//encodeURIComponent(location.href);
+            	this.$el.find("#modal-container").append(this.linkShare({link:location.href, encodedUri:encodedUri}));
             	this.$el.find("#modal-container").append(this.newSessionModal.render().el);
             	this.$el.find("#modal-container").append(this.confirmClose());
 

@@ -41,7 +41,7 @@ define([
         	Settings.roomName = Settings.generateRoomId();
 //        	$('#new-session-modal').modal('hide');
         	window.location.hash = Settings.roomName;
-        		
+//        	window.location = window.location+Settings.roomName;
         },
         
         render : function(){
