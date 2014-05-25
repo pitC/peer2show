@@ -57,10 +57,10 @@ exports.logEvent = function(req, res){
 	console.log("Log event: "+event);
 	console.log(event);
 	console.log("Origin: "+req.headers.host);
-	var hostName = req.headers.host;
 	
-	// only if event is not null and no localhost - do not propagate dev errors to keen 
-	if (event && hostName.indexOf("localhost") == -1){
+	
+	 
+	if (forwardEvent(event, req)){
 		keen.addEvent(KEEN_CLIENT_COLLECTION, event, function(err, res) {
 		    if (err) {
 		        console.log("Oh no, an error!");
@@ -71,4 +71,24 @@ exports.logEvent = function(req, res){
 	}
 	res.send(200);
 
+	
 };
+
+//only if event is not null and no localhost - do not propagate dev errors to keen
+var forwardEvent = function(event,req){
+	var hostName = req.headers.host;
+	if (
+			event 
+			&& hostName.indexOf("localhost") == -1 
+			&& event.type != 'browser-incompatible'
+		)
+	{
+		console.log("Forward event!");
+		return true;
+	}
+	else{
+		console.log("Supress event!");
+		return false;
+	}
+};
+

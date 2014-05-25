@@ -8,10 +8,18 @@ define([],function () {
 		this.lastMessage = "";
 
 	};
+	
+	Logger.ERROR = 'error';
+	Logger.WARNING = 'warning';
+	Logger.DEBUG = 'debug';
+
+	
 	Logger.logEvent = function(event,lvl){
 		console.log(event);
+		console.log(lvl);
 		Logger.lastMessage = event.message || "";
 		
+		lvl = lvl || Logger.DEBUG;
 
 		if (lvl === Logger.ERROR){
 			$.post("event",event);
@@ -24,11 +32,8 @@ define([],function () {
 				url:url,
 				lineNumber:lineNumber
 		};
-		
-		
-		
 				
-		Logger.logEvent(event);
+		Logger.logEvent(event, Logger.ERROR);
 	};
 	
 	Logger.getLastMessage = function(){
