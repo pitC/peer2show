@@ -58,7 +58,6 @@ exports.logEvent = function(req, res){
 	console.log(event);
 	console.log("Origin: "+req.headers.host);
 	
-	
 	 
 	if (forwardEvent(event, req)){
 		keen.addEvent(KEEN_CLIENT_COLLECTION, event, function(err, res) {

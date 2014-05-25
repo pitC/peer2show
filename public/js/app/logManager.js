@@ -1,4 +1,6 @@
-define([],function () {
+define([
+'lib/stacktrace',
+        ],function (printStackTrace) {
 	
 	function Logger()  {
 		
@@ -22,15 +24,25 @@ define([],function () {
 		lvl = lvl || Logger.DEBUG;
 
 		if (lvl === Logger.ERROR){
+			
+			
+						
+			var trace = printStackTrace();
+			console.log(trace);
+			event.stack = trace;
+			
 			$.post("event",event);
 		}
 	};
 	
 	Logger.handleError = function(error, url, lineNumber){
+		
+		  
 		var event = {
 				msg:error,
 				url:url,
-				lineNumber:lineNumber
+				lineNumber:lineNumber,
+				stack:stack
 		};
 				
 		Logger.logEvent(event, Logger.ERROR);
