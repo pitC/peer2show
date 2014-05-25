@@ -21,6 +21,16 @@ define([
         
         events: {
             "click #new-session-bt": "createClick",
+            "keypress #username-modal-inp": "onEnter"
+        },
+        
+        onEnter : function(event){
+        	if (event.keyCode != 13) return;
+        	// set flag
+        	this.createEvent = true;
+        	// close modal manually
+        	//  handle the new session in hide event - otherwise page incorrectly reloaded
+        	$('#new-session-modal').modal('hide');
         },
         
         createClick : function(event){
