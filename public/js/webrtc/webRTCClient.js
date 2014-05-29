@@ -9,11 +9,18 @@
 		this.ownUsername = "?";
 		
 		this.peerJSOptions = {
-			key: '7673s5yzjupzxgvi',
+			// Cloud peerjs
+//			key: '7673s5yzjupzxgvi',
 			debug: 3, // all logs
-//			host: 'pit-Aspire-5742G', 
-//			port: 9000, 
-//			path: '/myapp',
+			// Local server
+//			host: 'localhost', 
+//			port: 9000,
+			// Own server on Heroku
+			host:'peershowserver.herokuapp.com',
+			secure:true, 
+			port:443,
+			key:'peerjs',
+//			path: '/',
 			config: {'iceServers': [
 			                        { url: 'stun:stun.l.google.com:19302' }
 			                        // for firefox do not use notation username@hostname! 
