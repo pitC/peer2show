@@ -9,6 +9,12 @@ define([],function () {
 		userName : null,
 		owner : false, // flag if the user is owner of the session
 		
+		imageSettings : {
+			processImage : true,
+			maxWidth: 800, // value in pixels
+			maxHeight:500, // value in pixels
+			quality: 0.9 // value from range 0-1
+		},
 		
 		
 		previewMaxHeight:100,

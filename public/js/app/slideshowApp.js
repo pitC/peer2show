@@ -219,9 +219,9 @@ define([
 		    reader.onload = function (event){
 		    	var destUrl;
 		    	var destFile;
-		    	if (self.RESIZE_IMG){
-		    		
-		    			destUrl = self.imageProcessor.preprocessImage(event.target.result, function(destUrl){
+		    	if (Settings.imageSettings.processImage){
+		    			var options = Settings.imageSettings;
+		    			destUrl = self.imageProcessor.preprocessImage(event.target.result, options, function(destUrl){
 		    			var destFile = self.imageProcessor.dataURLtoFile(destUrl);
 		    			var index = self.addNewSlide(destUrl);
 				    	if (self.SEND_IMG){

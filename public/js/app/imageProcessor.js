@@ -15,8 +15,8 @@ define([],function () {
 		};
  
 		
-		this.preprocessImage = function(srcUrl, callback){
-			var options = {};
+		this.preprocessImage = function(srcUrl, options, callback){
+			options = options || {};
 			var format = self.getFormat(srcUrl);
 			console.log("Format: "+format);
 			options.format = self.getOutputFormat(format);
