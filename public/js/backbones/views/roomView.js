@@ -152,7 +152,7 @@ define([
             		
             		options = {message:LogManager.getLastMessage(),status:this.app.status};
             		this.sessionEnd = new SessionEndView();
-            		this.$el.find("#container").html(this.sessionEnd.render().el);
+            		this.$el.find("#room-container").html(this.sessionEnd.render().el);
             		
             	}
             	

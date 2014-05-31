@@ -3,7 +3,7 @@ background-color: #1F1F1F;
 }
 
 #navbar{
-	background-color: #424141;
+	background-color: #1F1F1F;
 	border-radius: 2px;
 	margin-bottom: 0px;
 }
@@ -255,6 +255,8 @@ background-color: #1F1F1F;
 	padding-left: 0px;
 	padding-right: 0px;
 	background-color: #585858;
+	margin-top: 5%;
+	margin-bottom: 5%;
 }
 
 #session-end a {
