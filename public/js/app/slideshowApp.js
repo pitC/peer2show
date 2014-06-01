@@ -59,8 +59,7 @@ define([
 				console.log("On file receive");
 				console.log(metadata);
 				var index = metadata.index || null;
-				self.addNewSlide(url,index);
-//				self.addNewSlide(url);
+				self.addNewSlide(url,index, metadata);
 			};
 			
 			this.webrtc.onmessage = function(message, metadata){
@@ -211,13 +210,21 @@ define([
 				var self = this;
 				console.log("Retransmit files!");
 				 this.slideCollection.each(function(slide){
-					 var index = self.slideCollection.indexOf(slide); 
+					 var index = self.slideCollection.indexOf(slide);
+					 var src = slide.get("src");
 					 var metadata = {
-							 index:index
+							 index:index,
+							 src:src
 					 };
 					 console.log(slide);
 					 var dataUrl = slide.get("dataURL");
-					 var file = self.imageProcessor.dataURLtoFile(dataUrl);
+					 var file = null;
+					 if (src === 'local'){
+						 file = self.imageProcessor.dataURLtoFile(dataUrl);
+					 }
+					 else if (src === 'web'){
+						 file = dataUrl;
+					 }
 					 self.webrtc.sendFile(file,metadata,destPeer);
 					 
 				 }, this);
@@ -239,12 +246,11 @@ define([
 		    			var url = event.target.result;
 		    			destUrl = self.imageProcessor.preprocessImage(url, options, function(destUrl){
 		    			var destFile = self.imageProcessor.dataURLtoFile(destUrl);
-		    			var index = self.addNewSlide(destUrl);
+		    			
+		    			var index = self.addNewSlide(destUrl,null,metadata);
+		    			metadata.index = index;
 				    	if (self.SEND_IMG){
-				    		var metadata = {
-				    				src:'local',
-				    				index: index
-				    		};
+				    		
 					    	self.webrtc.sendFile(destFile,metadata);
 					    }
 				    	
@@ -255,9 +261,13 @@ define([
 		    	else{
 		    		destUrl = event.target.result;
 		    		destFile = file;
-			    	self.addNewSlide(destUrl);
+		    		var metadata = {
+		    				src:'local'
+		    		};
+		    		var index = self.addNewSlide(destUrl,null,metadata);
+	    			metadata.index = index;
 			    	if (self.SEND_IMG){
-				    	self.webrtc.send(destFile);
+				    	self.webrtc.send(destFile,metadata);
 				    }
 		    	}
 		    	
@@ -276,12 +286,13 @@ define([
 			        error: function() { alert('Not a valid image! url: '+url); },
 			        load: function() { 
 			        	// on success, add the slide and send to peers
-			        	var index = self.addNewSlide(url);
+			        	var metadata = {
+			    				src: 'web'
+			    		};
+			        	var index = self.addNewSlide(url,null,metadata);
+			        	metadata.index = index;
 				    	if (self.SEND_IMG){
-				    		var metadata = {
-				    				src: 'web',
-				    				index: index
-				    		};
+				    		
 					    	self.webrtc.sendFile(url,metadata);
 					    }
 			        }
@@ -316,9 +327,13 @@ define([
 		    }
 		},
 		
-		addNewSlide : function (url,index, fileId){
-			fileId = fileId || this.generateFileId();
-			var slide = new SlideModel({dataURL:url,id:fileId,upload:0});
+		addNewSlide : function (url,index, metadata){
+			fileId = this.generateFileId();
+			var modelData =  metadata||{};
+			modelData.dataURL = url;
+			modelData.id = fileId;
+			modelData.upload = 0;
+			var slide = new SlideModel(modelData);
 			var assignedIndex = -1;
 			
 			console.log("Add slide url "+url);
