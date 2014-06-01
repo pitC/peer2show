@@ -129,6 +129,8 @@
 			}
 		};
 		
+		
+		
 		this._onData = function(data){
 			console.log("Received data!");
 			console.log(data);
@@ -138,13 +140,12 @@
 				  var file = data.file;
 				  delete data.file;
 				  var metadata = data;
-				  var dataView = new Uint8Array(file);
-			      var dataBlob = new Blob([dataView]);
-			      var url = window.URL.createObjectURL(dataBlob);
-			      console.log(url);
-			      if(self.onfile){
-			    	  self.onfile(url,metadata);
-			      }
+				  if (metadata.src === 'local'){
+					  self._handleFile(file, metadata);
+				  }
+				  else if (metadata.src === 'web'){
+					  self._handleWebUrl(file, metadata);
+				  }
 			}
 			else{
 				var finalMsg = JSON.parse(data);
@@ -173,6 +174,23 @@
 					self._handleInternalData(finalMsg);
 				}
 			}
+		};
+		
+		this._handleFile = function(file,metadata){
+			var dataView = new Uint8Array(file);
+		    var dataBlob = new Blob([dataView]);
+		    var url = window.URL.createObjectURL(dataBlob);
+		    console.log(url);
+		    if(self.onfile){
+		    	self.onfile(url,metadata);
+		    }
+		};
+		
+		this._handleWebUrl = function(url,metadata){
+		    console.log(url);
+		    if(self.onfile){
+		    	self.onfile(url,metadata);
+		    }
 		};
 		
 		this._handleInternalData = function(data){

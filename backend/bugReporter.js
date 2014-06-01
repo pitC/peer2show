@@ -52,7 +52,7 @@ exports.logEvent = function(req, res){
 	
 	var event = req.body;
 	
-	console.log(req);
+//	console.log(req);
 	
 	console.log("Log event: "+event);
 	console.log(event);

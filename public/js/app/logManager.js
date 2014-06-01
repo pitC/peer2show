@@ -42,7 +42,6 @@ define([
 				msg:error,
 				url:url,
 				lineNumber:lineNumber,
-				stack:stack
 		};
 				
 		Logger.logEvent(event, Logger.ERROR);

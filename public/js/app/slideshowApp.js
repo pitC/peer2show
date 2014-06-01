@@ -102,7 +102,23 @@ define([
 				dropArea.ondragend = function () {  return false; };
 				dropArea.ondrop = function(event){
 					event.preventDefault();
-					setTimeout(self.readfiles(event.dataTransfer.files),0);
+					console.log(event);
+					console.log(event.dataTransfer);
+					
+					
+					// read files
+					if(event.dataTransfer.files.length > 0){;
+					
+						setTimeout(self.readfiles(event.dataTransfer.files),0);
+					}
+					// try to read url
+					else{
+						event.dataTransfer.items[0].getAsString(function(url){
+							if(url!=null){
+								self.readurl(url);
+							}
+						});	
+					}
 					console.log("dropped");
 				};
 			};
@@ -212,7 +228,6 @@ define([
 		// PRIVATE METHODS
 		
 		previewfile : function(file) {
-			//this.webrtc.send(file);
 						
 		    var reader = new FileReader();
 		    var self = this;
@@ -221,12 +236,13 @@ define([
 		    	var destFile;
 		    	if (Settings.imageSettings.processImage){
 		    			var options = Settings.imageSettings;
-		    			destUrl = self.imageProcessor.preprocessImage(event.target.result, options, function(destUrl){
+		    			var url = event.target.result;
+		    			destUrl = self.imageProcessor.preprocessImage(url, options, function(destUrl){
 		    			var destFile = self.imageProcessor.dataURLtoFile(destUrl);
 		    			var index = self.addNewSlide(destUrl);
 				    	if (self.SEND_IMG){
 				    		var metadata = {
-				    				
+				    				src:'local',
 				    				index: index
 				    		};
 					    	self.webrtc.sendFile(destFile,metadata);
@@ -249,6 +265,29 @@ define([
 		    reader.readAsDataURL(file);
 			
 		    
+		},
+		
+		readurl : function(url){
+			console.log("Read url "+url);
+			var self = this;
+			// first check if under url a valid image is available
+			$("<img>", {
+			        src: url,
+			        error: function() { alert('Not a valid image! url: '+url); },
+			        load: function() { 
+			        	// on success, add the slide and send to peers
+			        	var index = self.addNewSlide(url);
+				    	if (self.SEND_IMG){
+				    		var metadata = {
+				    				src: 'web',
+				    				index: index
+				    		};
+					    	self.webrtc.sendFile(url,metadata);
+					    }
+			        }
+			 });
+			
+	    	
 		},
 
 		readfiles : function (files) {
@@ -278,16 +317,16 @@ define([
 		},
 		
 		addNewSlide : function (url,index, fileId){
-			var fileId = fileId || this.generateFileId();
+			fileId = fileId || this.generateFileId();
 			var slide = new SlideModel({dataURL:url,id:fileId,upload:0});
 			var assignedIndex = -1;
 			
+			console.log("Add slide url "+url);
 			
 			if (index)
 				this.slideCollection.add(slide,{at:index});
 			else{
 				this.slideCollection.add(slide);
-				
 			}
 			assignedIndex = this.slideCollection.indexOf(slide);
 		
