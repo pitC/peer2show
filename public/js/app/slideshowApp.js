@@ -246,7 +246,9 @@ define([
 		    			var url = event.target.result;
 		    			destUrl = self.imageProcessor.preprocessImage(url, options, function(destUrl){
 		    			var destFile = self.imageProcessor.dataURLtoFile(destUrl);
-		    			
+		    			var metadata = {
+			    				src:'local'
+			    		};
 		    			var index = self.addNewSlide(destUrl,null,metadata);
 		    			metadata.index = index;
 				    	if (self.SEND_IMG){
