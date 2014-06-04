@@ -31,6 +31,9 @@ background-color: #1F1F1F;
 	color: #585858;
 }
 
+a.modal-remote{
+	cursor:pointer;
+}
 
 
 .highlighted-text {
