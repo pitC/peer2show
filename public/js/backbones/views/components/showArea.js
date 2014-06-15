@@ -3,15 +3,16 @@ define([
          'underscore', 
          'backbone',
          'app/slideshowApp',
-
+         
          'text!templates/slideshowApp/slideFullArea.html',
-         'text!templates/slideshowApp/slideFull.html'
+         'text!templates/slideshowApp/slideFull.html',
+         'lib/hammer.min'
          
-         
-], function($, _, Backbone, SlideshowApp, SlideFullAreaTmpl, SlideFullTmpl
+], function($, _, Backbone, SlideshowApp, SlideFullAreaTmpl, SlideFullTmpl, Hammer
 ){
 	
 	SlideShowView = Backbone.View.extend({
+		id: "slide-show-img",
 	        initialize:function (options) {
 	        	this.model = options.model;
 	        	this.metadata = options.metadata;
@@ -66,17 +67,82 @@ define([
         		};
 	        	var slidePreview = new SlideShowView({model : slide,metadata:metadata});
 	        	$("#slide-show-area").empty();
+	        	
 	        	var element = slidePreview.render().el;
 	        	$(element).hide().appendTo("#slide-show-area").fadeIn();
+	        	this.setupMultitouch();
         	}
 		},
 		
+		setupMultitouch : function(){
+			var self = this;
+			this.lastPosX = 0;
+			this.lastPosY = 0;
+			this.lastScale = 1;
+			this.multitouchElement = document.getElementById('slide-show-img');
+			var zoomIn = function(event){
+				var lstScale = self.lastScale || 1;
+				console.log("Zoom in! "+lstScale);
+				console.log(event);
+				var scale = lstScale;
+				if (event.type == 'doubletap'){
+					scale = lstScale + 0.2;
+					self.lastScale = scale;
+				}
+				else{
+					scale = Math.max(1, Math.min(lstScale * event.gesture.scale, 10));
+				};
+				var transform = "scale3d("+scale+","+scale+", 0)";
+				self.transformImage(transform);
+				
+			};
+			if (this.multitouchElement != null){
+				var multitouch = Hammer(this.multitouchElement);
+		
+				
+				multitouch.on("doubletap pinchin", zoomIn);
+				multitouch.on("pinchout", self.zoomOut);
+				multitouch.on("drag dragend",self.pan);
+			}
+			
+		},
+		
+		transformImage : function(transform){
+			var elemRect = this.multitouchElement;
+			console.log(elemRect);
+			elemRect.style.transform = transform;
+	        elemRect.style.oTransform = transform;
+	        elemRect.style.msTransform = transform;
+	        elemRect.style.mozTransform = transform;
+	        elemRect.style.webkitTransform = transform;
+		},
+		
+		
+		
+		
+		
+		zoomOut : function(event){
+			console.log("Zoom out!");
+			console.log(event);
+		},
+		
+		pan : function(event){
+			console.log("Pan");
+			console.log(event);
+			if (event.type = "drag") {
+				
+			}
+			else if (event.type = "dragend"){
+				
+			}
+		},
 		
         onShow : function(){
         	this.app.addDropArea("slide-show-area");
         	this.app.addDropArea("prev-area");
         	this.app.addDropArea("next-area");
-        	this.app.addClickArea("slide-show-area");
+//        	this.app.addClickArea("slide-show-area");
+        	this.setupMultitouch();
 		}
 	});
 	
