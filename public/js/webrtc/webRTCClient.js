@@ -16,11 +16,11 @@
 //			host: 'localhost', 
 //			port: 9000,
 			// Own server on Heroku
-//			host:'peershowserver.herokuapp.com',
-//			secure:true, 
-//			port:443,
-//			key:'peerjs',
-//			path: '/',
+			host:'peershowserver.herokuapp.com',
+			secure:true, 
+			port:443,
+			key:'peerjs',
+			path: '/',
 			config: {'iceServers': [
 			                        { url: 'stun:stun.l.google.com:19302' }
 			                        // for firefox do not use notation username@hostname! 

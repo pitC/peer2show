@@ -2449,6 +2449,7 @@ Socket.prototype._startWebSocket = function(id) {
 
   // Take care of the queue of connections if necessary and make sure Peer knows
   // socket is open.
+  var self = this;
   this._socket.onopen = function() {
     if (self._timeout) {
       clearTimeout(self._timeout);
@@ -2457,6 +2458,15 @@ Socket.prototype._startWebSocket = function(id) {
         self._http = null;
       }, 5000);
     }
+    setInterval(function() {
+	    	if (self._socket != null){
+	    		var message = JSON.stringify({type:"KEEPALIVE"});
+	          self._socket.send(message);
+	          console.log("Keep alive!");
+	    	}
+    }, 30000 );
+    	
+    
     self._sendQueuedMessages();
     util.log('Socket open');
   };
