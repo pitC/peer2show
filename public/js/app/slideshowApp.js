@@ -8,8 +8,9 @@ define([
         'app/imageProcessor',
         'app/appStatus',
         'app/settings',
-        'app/logManager'
-],function ($, _, Backbone,SlideCollection, SlideModel,MessageCollection,ImageProcessor, AppStatus, Settings,Logger) {
+        'app/logManager',
+        'zoomer'
+],function ($, _, Backbone,SlideCollection, SlideModel,MessageCollection,ImageProcessor, AppStatus, Settings,Logger, SmartZoom) {
 
 	App = Backbone.Model.extend({
 		
@@ -32,7 +33,7 @@ define([
 			this.initEventCallbacks();
 			
 			this.queueLength = 0;
-		
+			this.zoomableArea = null;
 		},
 		
 		
@@ -129,6 +130,25 @@ define([
 			$(clickArea).addClass("click-area");
 		},
 		
+		setZoomableArea : function(zoomableAreaId){
+			var elemRect = $(zoomableAreaId);
+			var self = this;
+			if (elemRect.length > 0){
+				$(elemRect).smartZoom();
+				$(elemRect).off('SmartZoom_ZOOM_END SmartZoom_PAN_END').on('SmartZoom_ZOOM_END SmartZoom_PAN_END',function(event){
+//					console.log('caught event!');
+//					console.log(event);	
+					var webkitTransform = elemRect.css('-webkit-transform');
+					var transform = elemRect.css('transform');
+					var finalTransform = webkitTransform || transform;
+					
+					self.rpcTransformImage(null,finalTransform);
+				});
+			}
+			
+			this.zoomableArea = elemRect;
+		},
+		
 		// PUBLIC NAVIGATION METHODS
 		nextSlide : function(options){
 			this.slideCollection.next();
@@ -176,6 +196,13 @@ define([
 			}
 		},
 		
+		transformImage : function(options){
+
+			this.zoomableArea.css('-webkit-transform',options.transform);
+			this.zoomableArea.css('transform',options.transform);
+			
+		},
+		
 		rpcNext : function (){
 			this.webrtc.rpc("nextSlide");
 		},
@@ -202,6 +229,14 @@ define([
 			var remoteCall = "removeImage";
 			var options = new Object();
 			options.index = index;
+			this.webrtc.rpc(remoteCall,options);
+		},
+		
+		rpcTransformImage : function(index, transform){
+			var remoteCall = "transformImage";
+			var options = new Object();
+			options.index = index;
+			options.transform = transform;
 			this.webrtc.rpc(remoteCall,options);
 		},
 		

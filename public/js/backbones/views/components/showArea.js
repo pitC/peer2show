@@ -3,15 +3,14 @@ define([
          'underscore', 
          'backbone',
          'app/slideshowApp',
-
          'text!templates/slideshowApp/slideFullArea.html',
          'text!templates/slideshowApp/slideFull.html'
-         
          
 ], function($, _, Backbone, SlideshowApp, SlideFullAreaTmpl, SlideFullTmpl
 ){
 	
 	SlideShowView = Backbone.View.extend({
+		id: "slide-show-img",
 	        initialize:function (options) {
 	        	this.model = options.model;
 	        	this.metadata = options.metadata;
@@ -66,17 +65,19 @@ define([
         		};
 	        	var slidePreview = new SlideShowView({model : slide,metadata:metadata});
 	        	$("#slide-show-area").empty();
+	        	
 	        	var element = slidePreview.render().el;
 	        	$(element).hide().appendTo("#slide-show-area").fadeIn();
         	}
 		},
 		
-		
         onShow : function(){
         	this.app.addDropArea("slide-show-area");
         	this.app.addDropArea("prev-area");
         	this.app.addDropArea("next-area");
-        	this.app.addClickArea("slide-show-area");
+        	this.app.addClickArea("drop-intro-area");
+//        	this.app.setZoomableArea("#img-zoomer-wrapper");
+        	
 		}
 	});
 	
