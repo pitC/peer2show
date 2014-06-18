@@ -746,6 +746,8 @@
 			ev.targetRect = getTargetRect(true);
 			ev.scale = ev.targetRect.width / smartData.originalSize.width;
 			targetElement.trigger(ev);
+//			console.log('Triggered event');
+//			console.log(ev);
 		}
     }
 
