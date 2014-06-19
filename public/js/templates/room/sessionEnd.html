@@ -1,12 +1,43 @@
 <div id="container">
 	<div id="session-end" class="jumbotron">
-		<h2><%= messageMain%><br> 
-		<small><%= messageExtended%></small> </h2>
+		<div class="row">
+			<h2><%= messageMain%><br> 
+			<small><%= messageExtended%></small> </h2>
+			
+			<p> 
+				Thanks for using peer2show, hope you enjoyed it! But it's not the end yet - pick your action:
+			</p>
+		</div>
+		<br>
+		<div class="row" id="after-actions">
+			<div class="col-md-4">
+				<h2><span class="glyphicon glyphicon-log-in"></span></h2>
+				<p><a class="action-link modal-remote" data-toggle="modal" data-target="#new-session-modal">Create a new session</a></p>
+			</div>
+			
+			<div class="col-md-4">
+				<h2><span class="glyphicon glyphicon-heart"></span></h2>
+				<p> Do you love it that much you want to let the whole world know about it? Share it! </p>
+				<ul class="social-link-panel-lg">
+					<li><a class="social-link-lg" id="fb-link" href="https://www.facebook.com/peer2show"></a></li>
+					<li><a class="social-link-lg" id="gplus-link"></a></li>
+					<li><a class="social-link-lg" id="tweet-link" href="https://twitter.com/peer2show"></a></li>
+				</ul>
+			</div>
+			
+			<div class="col-md-4">
+				<h2>
+		  			<span class="glyphicon glyphicon-envelope"></span>
+		  		</h2>
+		  		<p><a class="action-link modal-remote" data-toggle="modal" data-remote="site/feedback.html" data-target="#feedback-modal">Drop us a message</a></p>
+		  	
+		  		<p>	or</p>
+		  		
+				<p><a class="action-link modal-remote" data-toggle="modal" data-remote="site/smartvote.html" data-target="#smartvote-modal">help us improve</a></p>
+			</div>
+			
+		</div> <!-- row -->
 		
-		<p> Thanks for using peer2show, hope you enjoyed it. But it's not the end yet! Feel free to
-		<a class="action-link modal-remote" data-toggle="modal" data-remote="site/feedback.html" data-target="#feedback-modal">drop us a message</a> or
-		<a class="action-link modal-remote" data-toggle="modal" data-remote="site/smartvote.html" data-target="#smartvote-modal">help us improve</a>!
-		Last but not least, you can always <a class="action-link modal-remote" data-toggle="modal" data-target="#new-session-modal">start a new session</a>.
-		</p>
+		
 	</div>
 </div> <!-- container -->
