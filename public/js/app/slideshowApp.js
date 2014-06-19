@@ -112,7 +112,7 @@ define([
 						setTimeout(self.readfiles(event.dataTransfer.files),0);
 					}
 					// try to read url
-					else{
+					else if (event.dataTransfer.items){
 						event.dataTransfer.items[0].getAsString(function(url){
 							if(url!=null){
 								self.readurl(url);

@@ -76,7 +76,7 @@ define([
         	this.app.addDropArea("prev-area");
         	this.app.addDropArea("next-area");
         	this.app.addClickArea("drop-intro-area");
-//        	this.app.setZoomableArea("#img-zoomer-wrapper");
+        	this.app.setZoomableArea("#img-zoomer-wrapper");
         	
 		}
 	});

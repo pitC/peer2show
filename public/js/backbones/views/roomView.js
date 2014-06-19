@@ -284,7 +284,7 @@ define([
             	this.$el.find("#modal-container").append(this.confirmClose());
 
             },
-                       
+            
             renderOverlay : function(){
             	console.log("Not rerendering everything...");
         		if (this.app.status == AppStatus.READY){
