@@ -4,14 +4,16 @@ define([
          'backbone',
          'backbones/views/roomView',
          'backbones/views/homepageView',
-         'app/settings'
+         'app/settings',
+         'app/logManager'
 
-], function($, _, Backbone, RoomView, HomepageView, Settings){ 
+], function($, _, Backbone, RoomView, HomepageView, Settings, LogManager){ 
 	
 	var AppRouter = Backbone.Router.extend({
         initialize : function(options){
             this.el = options.el;
-            
+            // disable console logs
+            LogManager.switchConsoleLogs(false);
             console.log("App Router init!");
         },
         routes : {

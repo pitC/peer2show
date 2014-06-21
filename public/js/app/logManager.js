@@ -14,7 +14,8 @@ define([
 	Logger.ERROR = 'error';
 	Logger.WARNING = 'warning';
 	Logger.DEBUG = 'debug';
-
+	
+	
 	
 	Logger.logEvent = function(event,lvl){
 		console.log(event);
@@ -55,6 +56,19 @@ define([
 	Logger.init = function(){
 		Logger.lastMessage = "";
 	};
+	
+	Logger.switchConsoleLogs = function(enable){
+		if (enable){
+			if (Logger.oldConsoleLog != null){
+				window['console']['log'] = Logger.oldConsoleLog;
+			}
+		}
+		else{
+			Logger.oldConsoleLog = console.log;
+			window['console']['log'] = function() {};
+		}
+	};
+	
 	
 	
 	return Logger;
