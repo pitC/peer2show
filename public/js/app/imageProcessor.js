@@ -1,4 +1,7 @@
-define([],function () {
+define([
+        'lib/resize',
+        'lib/resizeWorker'
+        ],function (Resize, ResizeWorker) {
 
 	var imageProcessor = function(){
 		
@@ -15,12 +18,22 @@ define([],function () {
 		};
  
 		
-		this.preprocessImage = function(srcUrl, options, callback){
+		this.processImage = function(srcUrl, options, callback){
 			options = options || {};
 			var format = self.getFormat(srcUrl);
 			console.log("Format: "+format);
 			options.format = self.getOutputFormat(format);
-			self.resizeImage(srcUrl, options,callback);
+			var settings = $.extend( {
+				'useWebWroker':false,
+				'maxWidth':800,
+				'maxHeight':500,
+				'quality' : 0.9,
+				'format' : "image/jpeg"
+			}, options);
+			
+			
+			self.resizeImage(srcUrl, settings,callback);
+			
 		};
 		
 		this.isImage = function(file){
@@ -67,12 +80,14 @@ define([],function () {
 		this.resizeImage = function(srcUrl,options, callback){
 //			var image = document.createElement('img');
 			var image = new Image();
-			var MAX_WIDTH = options.maxWidth || 800;
-			var MAX_HEIGHT = options.maxHeight || 500;
-			var JPEG_QUALITY = options.quality || 0.9;
-			var DEST_FORMAT = options.format || "image/jpeg";
+			var MAX_WIDTH = options.maxWidth;
+			var MAX_HEIGHT = options.maxHeight;
+			var JPEG_QUALITY = options.quality;
+			var DEST_FORMAT = options.format;
 			
 			image.onload = function(evt){
+				var srcWidth = image.width;
+				var srcHeight = image.height;
 				var width = image.width;
 				var height = image.height;
 				 
@@ -87,6 +102,9 @@ define([],function () {
 				    height = MAX_HEIGHT;
 				  }
 				}
+				
+				
+				// context2d resize
 				console.log("Create canvas");
 				var canvas = document.createElement('canvas');
 				canvas.width = width;
@@ -98,6 +116,20 @@ define([],function () {
 		        var destUrl = canvas.toDataURL(DEST_FORMAT,JPEG_QUALITY);
 		        console.log("url: "+destUrl);
 		        callback(destUrl);
+				
+				// Resize.js
+				// false - do not use WebWorker
+//				var resized = new Resize(srcWidth, srcHeight, width, height, true, true, false, function(buffer){
+//					// TODO: callback
+//				});
+		        // start resize - pass data from context
+//				var canvas = document.createElement('canvas');
+//				canvas.width = srcWidth;
+//				canvas.height = srcHeight;
+//		        var ctx = canvas.getContext('2d');
+//				ctx.drawImage(image, 0, 0, srcWidth, srcHeight);
+//				var dataToScale = ctx.getImageData(0, 0, srcWidth, srcHeight).data;
+//				resized.resize(dataToScale);
 			};
 			
 	        image.src = srcUrl;

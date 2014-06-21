@@ -14,8 +14,12 @@ define([],function () {
 			maxWidth: 800, // value in pixels
 			maxHeight:500, // value in pixels
 			quality: 0.9 // value from range 0-1
+			
 		},
 		
+		useWebWorker:false, // use web worker for reading files
+		
+		enableConsoleLog:true,
 		
 		previewMaxHeight:100,
 		

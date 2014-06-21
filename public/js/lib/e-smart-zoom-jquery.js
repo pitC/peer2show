@@ -57,9 +57,10 @@
 		  */
 	    init : function(options) {
 	    	// is smartZoomData exists on the targetElement, we have already initialize it
-	    	if(targetElement.data('smartZoomData'))
+	    	if(targetElement.data('smartZoomData')){
+	    		console.log("Smart zoom - skip init!");
 	    		return; 
-	    		
+	    	}
 	    	// Create some defaults, extending them with any options that were provided
 			settings = $.extend( {
 		      'top' : "0",
@@ -106,6 +107,8 @@
 			touchInfos.touchPinch = false; // or is the user is in pinch mode?
 			
 			// smartZoomData is used to saved every plugin vars
+			console.log("Set smartZoomData to");
+			console.log(targetElement);
 		    targetElement.data('smartZoomData', {
                settings : settings, // given settings
                containerDiv : containerDiv, // target container
@@ -141,8 +144,12 @@
 		        	containerDiv.bind('dblclick.smartZoom', mouseDblClickHandler);
 	        }
 	       	document.ondragstart = function () { return false; }; // allow to remove browser default drag behaviour
-	        if(settings.adjustOnResize == true)
-		    	$(window).bind('resize.smartZoom', windowResizeEventHandler); // call "adjustToContainer" on resize
+	        if(settings.adjustOnResize == true){
+	        	
+	        	$(window).bind('resize', windowResizeEventHandler);
+	        }
+	        	 
+//		    	$(window).bind('resize.smartZoom', windowResizeEventHandler); // call "adjustToContainer" on resize
 
 		    if(settings.initCallback != null) // call callback function after plugin initialization
 		    	settings.initCallback.apply(this, targetElement);
@@ -603,31 +610,33 @@
     function adjustToContainer(){
     	
  		var smartData = targetElement.data('smartZoomData');
- 		var containerDiv = smartData.containerDiv; // the zoom container 
- 		var originalSize = smartData.originalSize; // target original size
- 		
- 		// get the zoomable container position from settings
- 		var parentOffset = containerDiv.parent().offset(); 
- 		var containerDivNewLeft = getContainerDivPositionFromSettings(smartData.settings.left, parentOffset.left, containerDiv.parent().width());
- 		var containerDivNewTop = getContainerDivPositionFromSettings(smartData.settings.top, parentOffset.top, containerDiv.parent().height());
- 		
- 		containerDiv.offset({left: containerDivNewLeft, top: containerDivNewTop}); // apply position find
-  		containerDiv.width(getContainerDivSizeFromSettings(smartData.settings.width, containerDiv.parent().width(), containerDivNewLeft - parentOffset.left)); // apply size found to zoomablecontainer 
-		containerDiv.height(getContainerDivSizeFromSettings(smartData.settings.height, containerDiv.parent().height(), containerDivNewTop - parentOffset.top));
-		
-	  	var containerRect = getRect(containerDiv); // get the rectangle from the new containerDiv position and size
-	  	var scaleToFit = Math.min(Math.min(containerRect.width/originalSize.width, containerRect.height/originalSize.height), 1).toFixed(2); // scale to use to include the target into containerRect
-	  	var newWidth = originalSize.width * scaleToFit; // we could now find the new size
-	  	var newHeight = originalSize.height * scaleToFit;
-	  
-	    // store the position and size information in adjustedPosInfos object
-	  	smartData.adjustedPosInfos = {"left":(containerRect.width - newWidth)/2 + parentOffset.left, "top": (containerRect.height - newHeight)/2 + parentOffset.top, "width": newWidth, "height" : newHeight, "scale":scaleToFit};
-	  	stopAnim();
-	  	// call animate method with 10 ms duration to apply new target position and size
-	  	animate(targetElement,  smartData.adjustedPosInfos.left , smartData.adjustedPosInfos.top, newWidth, newHeight, 0, function() {
-	  		targetElement.css('visibility','visible'); // set target visibility to visible if developper whant to hide it before the plugin resize
-	  	});
-	  	updateMouseMoveCursor(); 
+ 		if (smartData != null){
+	 		var containerDiv = smartData.containerDiv; // the zoom container 
+	 		var originalSize = smartData.originalSize; // target original size
+	 		
+	 		// get the zoomable container position from settings
+	 		var parentOffset = containerDiv.parent().offset(); 
+	 		var containerDivNewLeft = getContainerDivPositionFromSettings(smartData.settings.left, parentOffset.left, containerDiv.parent().width());
+	 		var containerDivNewTop = getContainerDivPositionFromSettings(smartData.settings.top, parentOffset.top, containerDiv.parent().height());
+	 		
+	 		containerDiv.offset({left: containerDivNewLeft, top: containerDivNewTop}); // apply position find
+	  		containerDiv.width(getContainerDivSizeFromSettings(smartData.settings.width, containerDiv.parent().width(), containerDivNewLeft - parentOffset.left)); // apply size found to zoomablecontainer 
+			containerDiv.height(getContainerDivSizeFromSettings(smartData.settings.height, containerDiv.parent().height(), containerDivNewTop - parentOffset.top));
+			
+		  	var containerRect = getRect(containerDiv); // get the rectangle from the new containerDiv position and size
+		  	var scaleToFit = Math.min(Math.min(containerRect.width/originalSize.width, containerRect.height/originalSize.height), 1).toFixed(2); // scale to use to include the target into containerRect
+		  	var newWidth = originalSize.width * scaleToFit; // we could now find the new size
+		  	var newHeight = originalSize.height * scaleToFit;
+		  
+		    // store the position and size information in adjustedPosInfos object
+		  	smartData.adjustedPosInfos = {"left":(containerRect.width - newWidth)/2 + parentOffset.left, "top": (containerRect.height - newHeight)/2 + parentOffset.top, "width": newWidth, "height" : newHeight, "scale":scaleToFit};
+		  	stopAnim();
+		  	// call animate method with 10 ms duration to apply new target position and size
+		  	animate(targetElement,  smartData.adjustedPosInfos.left , smartData.adjustedPosInfos.top, newWidth, newHeight, 0, function() {
+		  		targetElement.css('visibility','visible'); // set target visibility to visible if developper whant to hide it before the plugin resize
+		  	});
+		  	updateMouseMoveCursor();
+ 		}
     }
     
     /**
@@ -816,7 +825,9 @@
      * reinit the component when the user resize the window 
      */
    	function windowResizeEventHandler(){
+   		console.log("Resize -> adjust to container");
    		adjustToContainer();
+   		
    	}
 
  	/**

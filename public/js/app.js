@@ -13,7 +13,7 @@ define([
         initialize : function(options){
             this.el = options.el;
             // disable console logs
-            LogManager.switchConsoleLogs(false);
+            LogManager.switchConsoleLogs(Settings.enableConsoleLog);
             console.log("App Router init!");
         },
         routes : {

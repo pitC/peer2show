@@ -1,6 +1,6 @@
 //JavaScript Image Resizer (c) 2012 - Grant Galitz
-var scripts = document.getElementsByTagName("script");
-var sourceOfWorker = scripts[scripts.length-1].src;
+
+var sourceOfWorker = 'js/lib/resize.js';
 function Resize(widthOriginal, heightOriginal, targetWidth, targetHeight, blendAlpha, interpolationPass, useWebWorker, resizeCallback) {
 	this.widthOriginal = Math.abs(parseInt(widthOriginal) || 0);
 	this.heightOriginal = Math.abs(parseInt(heightOriginal) || 0);

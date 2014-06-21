@@ -102,10 +102,6 @@ define([
 				dropArea.ondragend = function () {  return false; };
 				dropArea.ondrop = function(event){
 					event.preventDefault();
-					console.log(event);
-					console.log(event.dataTransfer);
-					
-					
 					// read files
 					if(event.dataTransfer.files.length > 0){;
 					
@@ -141,7 +137,6 @@ define([
 					var webkitTransform = elemRect.css('-webkit-transform');
 					var transform = elemRect.css('transform');
 					var finalTransform = webkitTransform || transform;
-					
 					self.rpcTransformImage(null,finalTransform);
 				});
 			}
@@ -269,7 +264,7 @@ define([
 		
 		// PRIVATE METHODS
 		
-		previewfile : function(file) {
+		readImage : function(file) {
 						
 		    var reader = new FileReader();
 		    var self = this;
@@ -279,7 +274,7 @@ define([
 		    	if (Settings.imageSettings.processImage){
 		    			var options = Settings.imageSettings;
 		    			var url = event.target.result;
-		    			destUrl = self.imageProcessor.preprocessImage(url, options, function(destUrl){
+		    			destUrl = self.imageProcessor.processImage(url, options, function(destUrl){
 		    			var destFile = self.imageProcessor.dataURLtoFile(destUrl);
 		    			var metadata = {
 			    				src:'local'
@@ -347,21 +342,51 @@ define([
 			if (this.queueLength > 0){
 				this.setStatus(AppStatus.LOADING_PHOTO);
 			}
-		    for (var i = 0; i < files.length; i++) {
-		      var file = files[i];
-		      console.log("Read file!");
-		      console.log(file);
-		      if (this.imageProcessor.isImage(file)){
-		    	  noImages = false;
-		    	  this.previewfile(file);
-		      }
-		      else{
-		    	  this.queueLength -= 1;
-		      }
-		    }
+			var self = this;
+			var worker = new	Worker('/js/app/imageReader.js');
+			 worker.onmessage = function(e) {
+   			  self.onWorkerRead(e);
+   		  	};
+   		  	
+			Array.prototype.forEach.call(files, function(file){
+				
+			      console.log("Read file!");
+			      console.log(file);
+			      
+			      if (self.imageProcessor.isImage(file)){
+			    	  noImages = false;
+			    	  if (Settings.useWebWorker){
+			    		  console.log("Start worker!");  
+			    		  worker.postMessage(file);
+			    	  }
+			    	  else{
+			    		  self.readImage(file);
+			    	  }
+			      }
+			      else{
+			    	  this.queueLength -= 1;
+			      }
+			});
+			
 		    if (noImages){
 		    	this.setStatus(AppStatus.READY);
 		    }
+		},
+		
+		onWorkerRead : function(e){
+			console.log("Message from worker!");
+			  console.log(e);
+			  var url = e.data.url;
+			  var file = e.data.file;
+			  var metadata = {
+	    				src:'local'
+			  };
+			  var index = this.addNewSlide(url,null,metadata);
+			  metadata.index = index;
+			  if (this.SEND_IMG){
+		    		
+				  this.webrtc.sendFile(file,metadata);
+			  }
 		},
 		
 		addNewSlide : function (url,index, metadata){
@@ -402,8 +427,6 @@ define([
 	    	
 	    }
 		
-		
-	    
 	});
 		
 	return App;

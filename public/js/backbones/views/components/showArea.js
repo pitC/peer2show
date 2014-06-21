@@ -8,6 +8,12 @@ define([
          
 ], function($, _, Backbone, SlideshowApp, SlideFullAreaTmpl, SlideFullTmpl
 ){
+	Backbone.View.prototype.fadeIn = function(template, wrapper) {
+	    wrapper.is(':hidden') ? 
+	    wrapper.html(template).show(200) : 
+	    wrapper.hide(200, function(){ wrapper.html(template).show(200); }
+	    );
+	};
 	
 	SlideShowView = Backbone.View.extend({
 		id: "slide-show-img",
@@ -42,7 +48,7 @@ define([
 			this.app = app;
 			this.slideCollection = app.slideCollection;
 			
-			this.slideCollection.on('all',this.render,this);
+			this.slideCollection.on('all',this.renderCurrentSlide,this);
             this.template = _.template(SlideFullAreaTmpl);
         },
         render : function(){
@@ -52,8 +58,23 @@ define([
 			this.$el.html(this.template());
 			var slide = this.slideCollection.getCurrentSlide();
 			this.renderSlide(slide);
-			this.onShow();
+//			this.onShow();
 			return this;
+        },
+        
+        renderCurrentSlide : function(){
+        	// if the img-zoomer-wrapper does not exist yet, delay setting the zoomable area.
+        	// otherwise the picture is not ready yet
+        	var delay = (1-$("#img-zoomer-wrapper").length)*500;
+        	
+        	var slide = this.slideCollection.getCurrentSlide();
+        	this.renderSlide(slide);
+        	
+        	
+        	var self = this;
+        	setTimeout(function(){
+        		self.app.setZoomableArea("#img-zoomer-wrapper");
+			},delay);
         },
         
         renderSlide : function(slide){
@@ -67,11 +88,12 @@ define([
 	        	$("#slide-show-area").empty();
 	        	
 	        	var element = slidePreview.render().el;
-	        	$(element).hide().appendTo("#slide-show-area").fadeIn();
+	        	$(element).appendTo("#slide-show-area");
         	}
 		},
 		
         onShow : function(){
+        	console.log("Show area onShow!");
         	this.app.addDropArea("slide-show-area");
         	this.app.addDropArea("prev-area");
         	this.app.addDropArea("next-area");
