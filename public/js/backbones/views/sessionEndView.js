@@ -3,17 +3,23 @@ define([
          'underscore', 
          'backbone',
          'text!templates/room/sessionEnd.html',
+         'text!templates/room/errors/fatalError.html',
+         'text!templates/room/errors/browserError.html',
+         'text!templates/room/errors/connectionError.html',
          'app/settings',
          'app/appStatus',
          'backbones/views/components/newSessionModal'
          
-], function($, _, Backbone, SessionEndTmpl, Settings, AppStatus, NewSessionModal){
+], function($, _, Backbone, SessionEndTmpl, FatalErrorTmpl,BrowserErrorTmpl,ConnectionErrorTmpl, Settings, AppStatus, NewSessionModal){
 
 	
 	
 	SessionViewEnd = Backbone.View.extend({
 		initialize:function (options) {
-			this.template = _.template(SessionEndTmpl);
+			this.sessionEndTmpl = _.template(SessionEndTmpl);
+			this.fatalErrorTmpl = _.template(FatalErrorTmpl);
+			this.browserErrorTmpl = _.template(BrowserErrorTmpl);
+			this.connectionErrorTmpl = _.template(ConnectionErrorTmpl);
 			this.options = options || {};
 			this.newSessionModal = new NewSessionModal();
         },
@@ -21,18 +27,37 @@ define([
         	
         	var messageMain = options.status||"Session ended";
         	var messageExtended = "";
-        	if (options == AppStatus.SESSION_ENDED){
+        	var template = null;
+        	        	
+        	if (options.status == AppStatus.SESSION_ENDED){
+        		
         		messageExtended = "closed by the user";
+        		template = this.sessionEndTmpl;
+        	}
+        	else if (options.status == AppStatus.FATAL_ERROR){
+        		messageExtended = options.message ||"";
+        		// Incompatible browser error
+        		if (messageExtended.indexOf("browser") >= 0){
+        			template = this.browserErrorTmpl;
+        		}
+        		// Connection to session problem
+        		else if (messageExtended.indexOf("connect") >= 0){
+        			template = this.connectionErrorTmpl;
+        			
+        		}
+        		else{
+        			template = this.fatalErrorTmpl;
+        		}
         	}
         	else{
-        		messageExtended = options.message ||"";
+        		template = this.sessionEntTmpl;
         	}
         	
         	
         	var event = {messageMain:messageMain,messageExtended:messageExtended};
         	
-        	this.$el.html(this.template(event));
         	
+        	this.$el.html(template(event));
         	
         	Settings.reset();
         	
