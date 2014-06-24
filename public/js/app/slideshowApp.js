@@ -140,7 +140,6 @@ define([
 					self.rpcTransformImage(null,finalTransform);
 				});
 			}
-			
 			this.zoomableArea = elemRect;
 		},
 		

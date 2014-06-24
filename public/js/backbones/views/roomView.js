@@ -179,9 +179,12 @@ define([
                 "change #file-input" : "onFileInput",
                 "click #sidebar-toggle":"sidebarToggle",
                 "click #btn-fullscr": "fullscreen",
-               
                 "click #confirm-close": "switchOffConfirmed",
+                "click a[data-target='#chat-area']":"onChatAreaClick"
 //                "keypress ": "onKeypress"
+            },
+            onChatAreaClick : function(e){
+            	this.roomSubviews.subviews['#chat-area'].toggleBlink(false);
             },
                        
             switchOffConfirmed : function(e){
