@@ -57,12 +57,12 @@ define([
             this.el.append(homepageView.render().el);
             homepageView.onShow();
         	
-            $('#feedback-modal').on('show.bs.modal', function (e) {
-            	console.log("show modal!");
-            	var iframe = $(".uvw-dialog-iframe");
-            	console.log(iframe);
-            	iframe.src = iframe.src;
-            });
+//            $('#feedback-modal').on('show.bs.modal', function (e) {
+//            	console.log("show modal!");
+//            	var iframe = $(".uvw-dialog-iframe");
+//            	console.log(iframe);
+//            	//iframe.attr('src', iframe.attr('src'));
+//            });
         },
         
         initRoom : function(options){

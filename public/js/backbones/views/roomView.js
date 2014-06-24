@@ -180,9 +180,22 @@ define([
                 "click #sidebar-toggle":"sidebarToggle",
                 "click #btn-fullscr": "fullscreen",
                 "click #confirm-close": "switchOffConfirmed",
-                "click a[data-target='#chat-area']":"onChatAreaClick"
+                "click a[data-target='#chat-area']":"onChatAreaClick",
+                "click a[data-target='#feedback-modal']": "onFeedbackFormOpen",
+                "click a[data-target='#smartvote-modal']": "onFeedbackFormOpen"
 //                "keypress ": "onKeypress"
             },
+            
+//            onFeedbackFormOpen : function(e){
+//            	console.log("open form and reload");
+//            	ev.preventDefault();
+//                var target = $(this).attr("data-remote");
+//
+//                // load the url and show modal on success
+//                $("#feedback-modal").load(target, function() { 
+//                     $("#feedback-modal").modal("show"); 
+//                });
+//            },
             onChatAreaClick : function(e){
             	this.roomSubviews.subviews['#chat-area'].toggleBlink(false);
             },
