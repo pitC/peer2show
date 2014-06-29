@@ -58,7 +58,8 @@ exports.logEvent = function(req, res){
 	console.log(event);
 	console.log("Origin: "+req.headers.host);
 	
-	 
+	console.log(event.message);
+	
 	if (forwardEvent(event, req)){
 		keen.addEvent(KEEN_CLIENT_COLLECTION, event, function(err, res) {
 		    if (err) {
@@ -79,7 +80,8 @@ var forwardEvent = function(event,req){
 	if (
 			event 
 			&& hostName.indexOf("localhost") == -1 
-			&& event.type != 'browser-incompatible'
+			&& event.type != 'browser-incompatible' 
+			&& event.type != 'no-such-session'
 		)
 	{
 		console.log("Forward event!");
