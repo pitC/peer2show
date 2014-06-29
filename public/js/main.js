@@ -28,7 +28,8 @@ require.config({
 		jquery_pick_a_color: 'lib/pick-a-color-1.1.7.min',
 		peerjs: 'webrtc/peer',
 		keen:'lib/keen',
-		zoomer : 'lib/e-smart-zoom-jquery'
+		zoomer : 'lib/e-smart-zoom-jquery',
+		hammer : 'lib/hammer.min'
 	},
 	shim: {
 		
