@@ -732,21 +732,22 @@
     function dispatchSmartZoomEvent(actionType, actionStep, stop){
 		var smartData = targetElement.data('smartZoomData');
 		var eventTypeToDispatch = '';
-
-		if(stop == true && smartData.currentActionType != actionType){ // if the action type has changed and that the function is called from "stopAnim" dispatch END event
-			eventTypeToDispatch = smartData.currentActionType+'_'+ESmartZoomEvent.END;
-			smartData.currentActionType = '';
-			smartData.currentActionStep = '';
-		}else{ 
-			if(smartData.currentActionType != actionType || smartData.currentActionStep == ESmartZoomEvent.END){ // if the current action had changed (MOVE to ZOOM for exemple) and the last action step was END we whant to dispatch START
-				smartData.currentActionType = actionType;
-				smartData.currentActionStep = ESmartZoomEvent.START;
-				eventTypeToDispatch = smartData.currentActionType+'_'+smartData.currentActionStep;
-			}else if(smartData.currentActionType == actionType && actionStep == ESmartZoomEvent.END){ // dispatch END if actionstep ask is END and action type don't change
-				smartData.currentActionStep = ESmartZoomEvent.END;
-				eventTypeToDispatch = smartData.currentActionType+'_'+smartData.currentActionStep;
+		if (smartData != null){
+			if(stop == true && smartData.currentActionType != actionType){ // if the action type has changed and that the function is called from "stopAnim" dispatch END event
+				eventTypeToDispatch = smartData.currentActionType+'_'+ESmartZoomEvent.END;
 				smartData.currentActionType = '';
 				smartData.currentActionStep = '';
+			}else{ 
+				if(smartData.currentActionType != actionType || smartData.currentActionStep == ESmartZoomEvent.END){ // if the current action had changed (MOVE to ZOOM for exemple) and the last action step was END we whant to dispatch START
+					smartData.currentActionType = actionType;
+					smartData.currentActionStep = ESmartZoomEvent.START;
+					eventTypeToDispatch = smartData.currentActionType+'_'+smartData.currentActionStep;
+				}else if(smartData.currentActionType == actionType && actionStep == ESmartZoomEvent.END){ // dispatch END if actionstep ask is END and action type don't change
+					smartData.currentActionStep = ESmartZoomEvent.END;
+					eventTypeToDispatch = smartData.currentActionType+'_'+smartData.currentActionStep;
+					smartData.currentActionType = '';
+					smartData.currentActionStep = '';
+				}
 			}
 		}
 
