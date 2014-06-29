@@ -21,6 +21,7 @@ define([],function () {
 		
 		enableConsoleLog:false,
 		
+		
 		previewMaxHeight:100,
 		
 		init : function(){

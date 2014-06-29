@@ -3,17 +3,13 @@ define(['jquery',
         ],function ($,printStackTrace) {
 	
 	function Logger()  {
-		
-		this.ERROR = 'error';
-		this.WARNING = 'warning';
-		this.DEBUG = 'debug';
-		this.lastMessage = "";
-
+	
 	};
 	
 	Logger.ERROR = 'error';
 	Logger.WARNING = 'warning';
 	Logger.DEBUG = 'debug';
+	Logger.KEEN = 'keen';
 	
 	
 	
@@ -24,12 +20,8 @@ define(['jquery',
 		
 		lvl = lvl || Logger.DEBUG;
 
-		if (lvl === Logger.ERROR){
-			
-			
-						
-			event = Logger.processEvent(event);
-			
+		if (lvl === Logger.ERROR || lvl === Logger.KEEN){
+			event = Logger.processEvent(event);	
 			$.post("event",event);
 		}
 	};
@@ -68,12 +60,13 @@ define(['jquery',
 	};
 	
 	Logger.processEvent = function(event){
-		console.log("## Input ##");
-		console.log(event);
+		
 		var extendedAttr = {type:event.type||'',stack:event.stack||''};
 		
-		if (event.message.indexOf('Could not connect to peer') !== -1){
-			extendedAttr.type = "no-such-session";
+		if (event.message){
+			if (event.message.indexOf('Could not connect to peer') !== -1){
+				extendedAttr.type = "no-such-session";
+			}
 		}
 		
 		var trace = printStackTrace();
@@ -81,8 +74,6 @@ define(['jquery',
 		extendedAttr.stack = trace;
 		$.extend(event,extendedAttr);
 		
-		console.log("## Output ##");
-		console.log(event);
 		return event;
 	};
 	

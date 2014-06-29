@@ -89,6 +89,7 @@ define([
 				
 				if (this.owner){
 					this.webRTCClient.create({roomName:this.roomName,username:this.username},this.onRoomInitChange,this);
+					
 				}
 				else{
 					this.webRTCClient.join({roomName:this.roomName,username:this.username},this.onRoomInitChange, this);
@@ -113,6 +114,13 @@ define([
 							appendMode : true
 					};
 					self.notificationManager.render(options);
+					
+					if (Settings.owner){
+						if (Settings.userName !== 'do-not-log'){
+							var event = {session:Settings.roomName,type:'new-guest'};
+							LogManager.logEvent(event,LogManager.KEEN);
+						}
+					};
 				};
 				
 				this.webRTCClient.onclose = function(e) {
