@@ -9,8 +9,9 @@ define([
         'app/appStatus',
         'app/settings',
         'app/logManager',
-        'zoomer'
-],function ($, _, Backbone,SlideCollection, SlideModel,MessageCollection,ImageProcessor, AppStatus, Settings,Logger, SmartZoom) {
+        'zoomer',
+        'hammer'
+],function ($, _, Backbone,SlideCollection, SlideModel,MessageCollection,ImageProcessor, AppStatus, Settings,Logger, SmartZoom, Hammer) {
 
 	App = Backbone.Model.extend({
 		
@@ -132,13 +133,55 @@ define([
 			if (elemRect.length > 0){
 				$(elemRect).smartZoom();
 				$(elemRect).off('SmartZoom_ZOOM_END SmartZoom_PAN_END').on('SmartZoom_ZOOM_END SmartZoom_PAN_END',function(event){
-//					console.log('caught event!');
-//					console.log(event);	
-					var webkitTransform = elemRect.css('-webkit-transform');
-					var transform = elemRect.css('transform');
-					var finalTransform = webkitTransform || transform;
-					self.rpcTransformImage(null,finalTransform);
+					self.rpcTransformImage(null,self.getTransform(elemRect));
 				});
+			}
+			this.zoomableArea = elemRect;
+		},
+		
+		getTransform : function(object){
+			// TODO: use other transform value
+			var webkitTransform = object.css('-webkit-transform');
+			var transform = object.css('transform');
+			var finalTransform = webkitTransform || transform;
+			return finalTransform;
+		},
+		
+		isImageZoomed : function(){
+			var transformString = this.getTransform(this.zoomableArea);
+			// assumes the transform string has following format : (scaleX,0,0,scaleY,panX,panY)
+			
+			var values = transformString.split('(')[1];
+		    values = values.split(')')[0];
+		    values = values.split(',');
+		    console.log(values);
+		    var scaleX = values[0];
+		    var scaleY = values[3];
+		    if (scaleX == 1 && scaleY == 1){
+		    	return false;
+		    }
+		    else{
+		    	return true;
+		    }
+		},
+		
+		setSwipeArea : function(swipeAreaId){
+			var elemRect =  document.getElementById(swipeAreaId);
+			var self = this;
+			if (elemRect != null){
+				var hammertime = Hammer(elemRect).on('swipe, dragend', function(event){
+					console.log("Hammer swipe!");
+					console.log(event);
+					if (!self.isImageZoomed()){						
+						if (event.gesture.direction == 'left'){
+							self.nextSlide();
+						}
+						else if (event.gesture.direction == 'right'){
+							self.prevSlide();
+						}
+					}
+				});
+				console.log("Swipe area set!");
 			}
 			this.zoomableArea = elemRect;
 		},

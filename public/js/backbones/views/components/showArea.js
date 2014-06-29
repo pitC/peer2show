@@ -74,6 +74,7 @@ define([
         	var self = this;
         	setTimeout(function(){
         		self.app.setZoomableArea("#img-zoomer-wrapper");
+//        		self.app.setSwipeArea("slide-show-area");
 			},delay);
         },
         
@@ -99,7 +100,7 @@ define([
         	this.app.addDropArea("next-area");
         	this.app.addClickArea("drop-intro-area");
         	this.app.setZoomableArea("#img-zoomer-wrapper");
-        	
+        	this.app.setSwipeArea("slide-show-area");
 		}
 	});
 	
