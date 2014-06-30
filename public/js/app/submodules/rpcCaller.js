@@ -48,6 +48,7 @@ define([
 				if(destPeer){
 					var self = app;
 					console.log("Retransmit files!");
+					
 					app.slideCollection.each(function(slide){
 						 var index = self.slideCollection.indexOf(slide);
 						 var src = slide.get("src");
@@ -67,6 +68,9 @@ define([
 						 self.webrtc.sendFile(file,metadata,destPeer);
 						 
 					 }, app);
+					
+					app.rpcJumpToIndex(app.slideCollection.currentSlideIndex);
+					
 				}
 			};
 			
