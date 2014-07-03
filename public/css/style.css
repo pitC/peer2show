@@ -9,6 +9,12 @@ font-family: 'Quicksand', sans-serif;
 	margin-bottom: 0px;
 }
 
+#navbar.landing-page{
+	background-color: #585858;
+	border: none;
+	border-bottom:1px solid #888888;
+}
+
 h1, h2, h3{
 font-family: 'Quicksand', sans-serif;
 }
@@ -433,6 +439,9 @@ background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNv
 
 #pitch-text{
     text-align: center;
+    background-color: #888888;
+    padding-top: 2%;
+    padding-bottom: 2%;
 }
 
 #pitch-text p{
@@ -496,6 +505,7 @@ background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNv
 	/* color:white; */
 	padding-top: 2%;
 	padding-bottom: 5%;
+	text-align: center;
 }
 
 #next-action-field a {
