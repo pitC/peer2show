@@ -1,6 +1,6 @@
 body{
 background-color: #1F1F1F;
-/*font-family: 'Quicksand', sans-serif;*/
+font-family: 'Quicksand', sans-serif;
 }
 
 #navbar{
@@ -10,7 +10,7 @@ background-color: #1F1F1F;
 }
 
 h1, h2, h3{
-/*font-family: 'Quicksand', sans-serif;*/
+font-family: 'Quicksand', sans-serif;
 }
 
 
@@ -343,8 +343,14 @@ background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNv
 #intro {
 
 	color: rgb(233, 233, 233);
-	text-align: center;
+	
+
+	/* text-align: center; */
+	
+
 	padding-left: 0px;
+	
+
 	padding-right: 0px;
 	
 
@@ -415,11 +421,9 @@ background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNv
 
 #pitch {
 	margin-bottom:5%;
+	margin-top: 5%;
 }
 
-#pitch h2{
-	/* z-index:1; */
-}
 
 #pitch #logo{
 	margin-top:-40px;
@@ -427,9 +431,18 @@ background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNv
 	display:inline;
 }
 
-#pitch p{
-	/* z-index:1; */
+#pitch-text{
+	bottom:0;
 }
+
+#pitch-text p{
+	bottom:0;
+}
+
+#logo-section{
+	text-align:center;
+}
+
 
 #intro .row{
 	margin-right: 0px;
@@ -441,6 +454,7 @@ background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNv
     /* vertical-align: middle; */	
     /* height: 150px; */
     margin-bottom: 1%;
+    text-align: center;
 }
 
 #step-one{
