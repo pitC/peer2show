@@ -427,12 +427,12 @@ background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNv
 
 #pitch #logo{
 	margin-top:-40px;
-	margin-bottom: -30px;
+	margin-bottom: -60px;
 	display:inline;
 }
 
 #pitch-text{
-	bottom:0;
+    text-align: center;
 }
 
 #pitch-text p{
@@ -447,7 +447,7 @@ background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNv
 #intro .row{
 	margin-right: 0px;
 	margin-left:0px;	
-	/* margin-bottom: 5%; */
+	margin-bottom: 5%;
 }
 
 #three-steps{
