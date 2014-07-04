@@ -29,7 +29,8 @@ require.config({
 		peerjs: 'webrtc/peer',
 		keen:'lib/keen',
 		zoomer : 'lib/e-smart-zoom-jquery',
-		hammer : 'lib/hammer.min'
+		hammer : 'lib/hammer.min',
+		carousel : 'lib/owl.carousel'
 	},
 	shim: {
 		
@@ -53,7 +54,12 @@ require.config({
 	    'zoomer' : {
 	        deps: ['jquery'],
 	        exports: 'Zoomer'
+	    },
+	    'carousel' : {
+	    	deps: ['jquery'],
+	    	exports: 'Carousel'
 	    }
+	    
 	}
 }); 
 

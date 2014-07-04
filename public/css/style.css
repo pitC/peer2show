@@ -86,6 +86,15 @@ a.modal-remote{
 	font-size: 1em;
 }
 
+.carousel-enabled.owl-carousel {
+	max-width:350px;
+}
+
+#learn-more p{
+
+	font-size: 1.5em;
+}
+
 #learn-more-action{
 	background-color: rgb(255, 202, 66);
 	color: #585858;

@@ -7,8 +7,9 @@ define([
          'text!templates/slideshowApp/introHost.html',
          'text!templates/slideshowApp/introGuest.html',
          'backbones/views/components/newSessionModal',
+         'carousel'
          
-], function($, _, Backbone, Settings, UserInputTmpl,IntroHostTmpl,IntroGuestTmpl,NewSessionModal){
+], function($, _, Backbone, Settings, UserInputTmpl,IntroHostTmpl,IntroGuestTmpl,NewSessionModal,Carousel){
 	
 	
 	HomepageView = Backbone.View.extend({
@@ -69,6 +70,23 @@ define([
         
         onShow : function(){
         	this.newSessionModal.onRender();
+        	$(".carousel-enabled").owlCarousel({
+           	 
+                //navigation : true, // Show next and prev buttons
+                slideSpeed : 300,
+                paginationSpeed : 400,
+//                items : 1,
+                autoPlay:3000,
+                singleItem:true
+           
+                // "singleItem:true" is a shortcut for:
+                // items : 1, 
+                // itemsDesktop : false,
+                // itemsDesktopSmall : false,
+                // itemsTablet: false,
+                // itemsMobile : false
+           
+            });
         }
 	});
 	

@@ -57,6 +57,9 @@ define([
             this.el.empty();
             this.el.append(homepageView.render().el);
             homepageView.onShow();
+            
+            
+            
             $("#navbar").addClass("landing-page");
 //            $('#feedback-modal').on('show.bs.modal', function (e) {
 //            	console.log("show modal!");
