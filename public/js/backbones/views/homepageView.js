@@ -34,7 +34,16 @@ define([
         events: {
             "click #apply-bt": "joinSession",
             "keypress #username-inp": "onEnter",
-            "click #step-one": "focusCreate"
+            "click #step-one": "focusCreate",
+            "click #learn-more-action": "learnMore"
+        },
+        
+        learnMore : function(event){
+        	event.preventDefault();
+            var section = '#learn-more';
+            $("html, body").animate({
+                scrollTop: $(section).offset().top
+            });
         },
         
         focusCreate : function(event){

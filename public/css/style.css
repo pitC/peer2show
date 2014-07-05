@@ -84,20 +84,40 @@ a.modal-remote{
 	color: #585858;
 	margin-top: 0px;
 	font-size: 1em;
+	text-align:center;
+}
+
+#learn-more .row{
+	margin-bottom:5%;
+	margin-top:5%
 }
 
 .carousel-enabled.owl-carousel {
-	max-width:350px;
+	/*max-width:350px;*/
+}
+
+.carousel-item{
+	display: block;
+    width: 100%;
+    
+	height: 150px;
 }
 
 #learn-more p{
 
-	font-size: 1.5em;
+	/* font-size: 1.5em; */
+	
+
+	padding-left: 5%;
+
+	padding-right: 5%;
+
 }
 
 #learn-more-action{
 	background-color: rgb(255, 202, 66);
 	color: #585858;
+	cursor: pointer;
 }
 
 #navbar-logo{
