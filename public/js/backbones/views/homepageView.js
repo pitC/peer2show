@@ -80,22 +80,28 @@ define([
         onShow : function(){
         	this.newSessionModal.onRender();
         	$(".carousel-enabled").owlCarousel({
-           	 
-                //navigation : true, // Show next and prev buttons
+              	 
+//                navigation : true, // Show next and prev buttons
                 slideSpeed : 300,
                 paginationSpeed : 400,
-//                items : 1,
-                autoPlay:3000,
-                singleItem:true
-           
-                // "singleItem:true" is a shortcut for:
-                // items : 1, 
-                // itemsDesktop : false,
-                // itemsDesktopSmall : false,
-                // itemsTablet: false,
-                // itemsMobile : false
+
+//                autoPlay:3000,
+                singleItem:true,
+                afterMove: moved
            
             });
+        	
+        	function moved(el){
+        		var emphesizeClass = 'emph';
+        		console.log("owl moved!");
+        		var srcId = $(el).attr('id');
+        		var num = this.currentItem;
+        		$('.carousel-sync').removeClass(emphesizeClass);
+        		var target = '#'+srcId+"-"+num;
+        		console.log("target "+target);
+        		$(target).addClass(emphesizeClass);
+        		
+        	};
         }
 	});
 	

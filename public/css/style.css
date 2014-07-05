@@ -103,6 +103,10 @@ a.modal-remote{
 	height: 150px;
 }
 
+span.carousel-sync.emph{
+	font-weight:bold;
+}
+
 #learn-more p{
 
 	/* font-size: 1.5em; */
