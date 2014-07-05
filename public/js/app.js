@@ -45,8 +45,6 @@ define([
            		this.loadHomepage(true);
            	}
            	
-           	$("#navbar").removeClass("landing-page");
-        	
         },
         
         loadHomepage : function(guest){
@@ -57,16 +55,6 @@ define([
             this.el.empty();
             this.el.append(homepageView.render().el);
             homepageView.onShow();
-            
-            
-            
-            $("#navbar").addClass("landing-page");
-//            $('#feedback-modal').on('show.bs.modal', function (e) {
-//            	console.log("show modal!");
-//            	var iframe = $(".uvw-dialog-iframe");
-//            	console.log(iframe);
-//            	//iframe.attr('src', iframe.attr('src'));
-//            });
         },
         
         initRoom : function(options){
@@ -76,8 +64,10 @@ define([
         	$(element).empty();
             var roomView = new RoomView(options);
             $(element).html(roomView.render().el);
+            $(".landing-page-style").removeClass("landing-page-style").addClass("session-style");
             roomView.onShow();
-            
+           
+        	
         }
     });
 	

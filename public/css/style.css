@@ -1,6 +1,7 @@
 body{
 background-color: #1F1F1F;
 font-family: 'Quicksand', sans-serif;
+background-color: #585858;
 }
 
 #navbar{
@@ -9,10 +10,19 @@ font-family: 'Quicksand', sans-serif;
 	margin-bottom: 0px;
 }
 
-#navbar.landing-page{
-	background-color: #585858;
+#navbar.landing-page-style{
+	
 	border: none;
 	border-bottom:1px solid #888888;
+	
+}
+
+.landing-page-style{
+	background-color: #585858 !important; 
+}
+
+.session-style{
+	background-color: #1F1F1F !important; 
 }
 
 h1, h2, h3{
@@ -122,6 +132,10 @@ span.carousel-sync.emph{
 	background-color: rgb(255, 202, 66);
 	color: #585858;
 	cursor: pointer;
+}
+
+#learn-more-action:hover{	
+	color: #474747;
 }
 
 #navbar-logo{

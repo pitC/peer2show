@@ -61,6 +61,9 @@ define([
         	
         	Settings.reset();
         	
+        	$(".session-style").removeClass("session-style").addClass("landing-page-style");
+        	
+        	
 			return this;
         }
 	});
