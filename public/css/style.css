@@ -98,9 +98,11 @@ a.modal-remote{
 }
 
 #learn-more .row{
-	margin-bottom:5%;
-	margin-top:5%
-}
+	/* margin-bottom:5%; */
+	/* margin-top:5%
+ */}
+
+/* Carousel item styling */
 
 .carousel-enabled.owl-carousel {
 	/*max-width:350px;*/
@@ -109,12 +111,21 @@ a.modal-remote{
 .carousel-item{
 	display: block;
     width: 100%;
-    
 	height: 150px;
 }
 
 span.carousel-sync.emph{
 	font-weight:bold;
+}
+
+.carousel-item#no-login .input-group{
+	width:50%;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+.carousel-item img{
+	height:50%;
 }
 
 #learn-more p{
