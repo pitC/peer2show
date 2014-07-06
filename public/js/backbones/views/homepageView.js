@@ -57,13 +57,18 @@ define([
         joinSession : function(event){
         	
         	var userName = $("#username-inp").val();
-        	var options = {user : userName,owner:false};
-        	
+        	var isOwner = $("#username-inp").attr('data-is-owner');
         	Settings.userName = userName;
-        	Settings.owner = false;
+        	Settings.owner = isOwner;
+        	if (isOwner){
+        		Settings.roomName = Settings.generateRoomId();
+            	window.location.hash = Settings.roomName;
+        	}
+        	else{
+        		var options = {user : userName,owner:false};
+            	this.callback(options);
+        	}
         	
-        	
-        	this.callback(options);
         },
         
         render : function(){
@@ -85,7 +90,7 @@ define([
                 slideSpeed : 300,
                 paginationSpeed : 400,
 
-//                autoPlay:3000,
+                autoPlay:3000,
                 singleItem:true,
                 afterMove: moved
            
