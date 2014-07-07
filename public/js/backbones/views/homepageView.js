@@ -40,7 +40,7 @@ define([
         
         learnMore : function(event){
         	event.preventDefault();
-            var section = '#learn-more';
+            var section = '#learn-more-header';
             $("html, body").animate({
                 scrollTop: $(section).offset().top
             });
