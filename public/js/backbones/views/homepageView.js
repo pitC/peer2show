@@ -84,17 +84,34 @@ define([
         
         onShow : function(){
         	this.newSessionModal.onRender();
-        	$(".carousel-enabled").owlCarousel({
+        	var carouselEl = $("#learn-more-header");
+        	carouselEl.owlCarousel({
               	 
 //                navigation : true, // Show next and prev buttons
                 slideSpeed : 300,
-                paginationSpeed : 400,
-
+                paginationSpeed : 400, 
                 autoPlay:3000,
                 singleItem:true,
                 afterMove: moved
-           
+//                stopOnHover:true
             });
+        	
+        	var owl = carouselEl.data('owlCarousel');
+        	
+        	$(window).scroll(function() {
+        		   var hT = carouselEl.offset().top,
+        		       hH = carouselEl.outerHeight(),
+        		       wH = $(window).height(),
+        		       wS = $(this).scrollTop();
+        		   if (wS > (hT+hH-wH)){
+        		       console.log('you have scrolled to carousel!');
+        		       owl.play();
+        		   }
+        		   else{
+        			   console.log('you have scrolled out of carousel!');
+        			   owl.stop();
+        		   }
+        		});
         	
         	function moved(el){
         		var emphesizeClass = 'emph';
@@ -107,6 +124,8 @@ define([
         		$(target).addClass(emphesizeClass);
         		
         	};
+        	var self = this;
+        	$("#learn-more-action").on("click",self.learnMore);
         }
 	});
 	
