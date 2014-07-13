@@ -55,9 +55,9 @@ define([
 			this.joinSession(event);
         },
         joinSession : function(event){
-        	
+        	       	
         	var userName = $("#username-inp").val();
-        	var isOwner = $("#username-inp").attr('data-is-owner');
+        	var isOwner = $("#username-inp").attr('data-is-owner') == "true";
         	Settings.userName = userName;
         	Settings.owner = isOwner;
         	if (isOwner){
@@ -68,7 +68,6 @@ define([
         		var options = {user : userName,owner:false};
             	this.callback(options);
         	}
-        	
         },
         
         render : function(){

@@ -61,7 +61,7 @@ define([
         	
         	Settings.reset();
         	
-        	$(".session-style").removeClass("session-style").addClass("landing-page-style");
+        	$(".session-style").removeClass("session-style").addClass("session-end-style");
         	
         	
 			return this;

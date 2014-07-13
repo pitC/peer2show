@@ -11,19 +11,27 @@ background-color: #585858;
 }
 
 #navbar.landing-page-style{
-	
 	border: none;
 	border-bottom:1px solid #888888;
-	
+}
+#navbar.session-end-style{
+	border: none;
+	border-bottom:1px solid #888888;
 }
 
 #navbar.session-style #learn-more-action{
-	
 	display:none;
-	
+}
+
+#navbar.session-end-style #learn-more-action{
+	display:none;
 }
 
 .landing-page-style{
+	background-color: #585858 !important; 
+}
+
+.session-end-style{
 	background-color: #585858 !important; 
 }
 
