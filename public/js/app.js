@@ -65,6 +65,7 @@ define([
             var roomView = new RoomView(options);
             $(element).html(roomView.render().el);
             $(".landing-page-style").removeClass("landing-page-style").addClass("session-style");
+            $(".session-end-style").removeClass("session-end-style").addClass("session-style");
             roomView.onShow();
            
         	
