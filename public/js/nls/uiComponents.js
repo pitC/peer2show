@@ -35,7 +35,7 @@ define({
         "prevTitle":"Previous slide",
         "nextTitle":"Next slide",
         "fullscreenTitle":"Switch to fullscreen mode",
-        "toggleSidebarTitle":"Toggle sidebar",
+        "toggleSidebarTitle":"Toggle sidebar",	
         "uploadImagesTitle":"Upload images",
         
         // MESSAGES 
