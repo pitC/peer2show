@@ -2459,7 +2459,7 @@ Socket.prototype._startWebSocket = function(id) {
       }, 5000);
     }
     setInterval(function() {
-	    	if (self._socket != null){
+	    	if (self._socket != null && !self.disconnected){
 	    		var message = JSON.stringify({type:"KEEPALIVE"});
 	          self._socket.send(message);
 	          console.log("Keep alive!");

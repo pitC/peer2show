@@ -91,7 +91,8 @@ define([
                 paginationSpeed : 400, 
                 autoPlay:3000,
                 singleItem:true,
-                afterMove: moved
+                afterMove: moved,
+                rewindNav:false
 //                stopOnHover:true
             });
         	
