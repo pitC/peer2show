@@ -23,8 +23,8 @@
 			path: '/',
 			config: {'iceServers': [
 			                        { url: 'stun:stun.l.google.com:19302' },
-									{url:'stun:numb.viagenie.ca'},
-									{url:'stun:stun.ekiga.net'},
+									{url:'stun:numb.viagenie.ca:3478'},
+//									{url:'stun:stun.ekiga.net'},
 //									{url:'stun:stun.fwdnet.net'},
 //									{url:'stun:stun.ideasip.com'},
 //									{url:'stun:stun.iptel.org'},
