@@ -41,7 +41,7 @@
 									{url:'stun:stun.voipbuster.com'},
 									{url:'stun:stun.voipstunt.com'},
 									{url:'stun:stun.voxgratia.org'},
-									{url:'stun:stun.xten.com'},
+									{url:'stun:stun.xten.com'}
 //									{
 //									    url: 'turn:numb.viagenie.ca',
 //									    credential: 'muazkh',
