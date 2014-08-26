@@ -1,8 +1,9 @@
 body{
 background-color: #1F1F1F;
-font-family: 'Raleway', sans-serif;
+font-family: 'Quicksand', sans-serif;
 
 background-color: #585858;
+-webkit-text-stroke: 0.25px;
 }
 
 #navbar{
