@@ -60,5 +60,6 @@ module.exports = function(grunt) {
     grunt.registerTask('build', [ 'buildcontrol:development'
                                  // Collection of tasks that build code to the 'dist' directory...
                                ]);
+    grunt.registerTask('heroku:production', 'clean mincss uglify');
     
 };
