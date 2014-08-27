@@ -1,52 +1,52 @@
 module.exports = function(grunt) {
     grunt.initConfig({
-    	clean: {
-    	      tests: ['tmp'],
-    	    },
-    	concat: {
-            css: {
-               src: [
-                     'public/css/*'
-                    ],
-                dest: 'public/combined.css'
-            },
-            js : {
-            	
-            }
-        },
-        cssmin : {
-            css:{
-                src: 'public/combined.css',
-                dest: 'public/combined.min.css'
-            }
-        },
-        uglify : {
-        	build: {
-                src: 'public/js/app.js',
-                dest: 'public/js/app.js'
-            }
-        },
-        buildcontrol: {
-            options: {
-              dir: 'dist',
-              commit: true,
-              push: true,
-              message: 'Built %sourceName% from commit %sourceCommit% on branch %sourceBranch%'
-            },
-            development: {
-              options: {
-                remote: 'staging',
-                branch: 'master'
-              }
-            },
-            
-        },
-        copy: {
-      	  main: {
-      	    src: '*',
-      	    dest: 'dist/',
-      	  },
-      	},
+//    	clean: {
+//    	      tests: ['tmp'],
+//    	    },
+//    	concat: {
+//            css: {
+//               src: [
+//                     'public/css/*'
+//                    ],
+//                dest: 'public/combined.css'
+//            },
+//            js : {
+//            	
+//            }
+//        },
+//        cssmin : {
+//            css:{
+//                src: 'public/combined.css',
+//                dest: 'public/combined.min.css'
+//            }
+//        },
+//        uglify : {
+//        	build: {
+//                src: 'public/js/app.js',
+//                dest: 'public/js/app.js'
+//            }
+//        },
+//        buildcontrol: {
+//            options: {
+//              dir: 'dist',
+//              commit: true,
+//              push: true,
+//              message: 'Built %sourceName% from commit %sourceCommit% on branch %sourceBranch%'
+//            },
+//            development: {
+//              options: {
+//                remote: 'staging',
+//                branch: 'master'
+//              }
+//            },
+//            
+//        },
+//        copy: {
+//      	  main: {
+//      	    src: '*',
+//      	    dest: 'dist/',
+//      	  },
+//      	},
         pkg: grunt.file.readJSON('package.json')
     });
     grunt.loadNpmTasks('grunt-contrib-concat');
