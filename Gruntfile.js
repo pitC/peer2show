@@ -23,7 +23,7 @@ module.exports = function(grunt) {
         uglify : {
         	build: {
                 src: 'public/js/app.js',
-                dest: 'public/js/app_ugly.js'
+                dest: 'public/js/app.js'
             }
         },
         buildcontrol: {
