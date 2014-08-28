@@ -20,12 +20,12 @@ module.exports = function(grunt) {
 //                dest: 'public/combined.min.css'
 //            }
 //        },
-//        uglify : {
-//        	build: {
-//                src: 'public/js/app.js',
-//                dest: 'public/js/app.js'
-//            }
-//        },
+        uglify : {
+        	build: {
+                src: 'public/js/app.js',
+                dest: 'public/js/app.js'
+            }
+        },
 //        buildcontrol: {
 //            options: {
 //              dir: 'dist',
@@ -60,6 +60,7 @@ module.exports = function(grunt) {
     grunt.registerTask('build', [ 'buildcontrol:development'
                                  // Collection of tasks that build code to the 'dist' directory...
                                ]);
-    grunt.registerTask('heroku:production', 'clean mincss uglify');
+//    grunt.registerTask('heroku:production', 'clean mincss uglify');
+    grunt.registerTask('heroku:production', 'uglify');
     
 };
