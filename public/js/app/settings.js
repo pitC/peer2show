@@ -2,8 +2,8 @@ define([],function () {
 	
 	var settings =  {
 		
-		maxWidth : 800,
-		maxHeight : 500,
+//		maxWidth : 1600,
+//		maxHeight : 1000,
 		
 		roomName : null, 
 		userName : null,
@@ -11,8 +11,8 @@ define([],function () {
 		
 		imageSettings : {
 			processImage : true,
-			maxWidth: 800, // value in pixels
-			maxHeight:500, // value in pixels
+			maxWidth: 1600, // value in pixels
+			maxHeight:1000, // value in pixels
 			quality: 0.9 // value from range 0-1
 			
 		},
