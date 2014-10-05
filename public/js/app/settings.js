@@ -1,10 +1,7 @@
 define([],function () {
 	
 	var settings =  {
-		
-//		maxWidth : 1600,
-//		maxHeight : 1000,
-		
+				
 		roomName : null, 
 		userName : null,
 		owner : false, // flag if the user is owner of the session

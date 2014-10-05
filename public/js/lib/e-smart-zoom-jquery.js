@@ -258,7 +258,8 @@
 			$(document).unbind('touchmove.smartZoom');
 	    	$(document).unbind('touchend.smartZoom');
 		
-			targetElement.css({"cursor":"default"}); // reset default cursor
+			targetElement.css({"cursor":"-webkit-zoom-in"/*,"cursor":"-moz-zoom-in"*/}); // reset default cursor; fix #41
+			targetElement.css({"cursor":"-webkit-zoom-in"});
 		    containerDiv.before(targetElement); // move target element to original container 
 	   		animate(targetElement, smartData.originalPosition.left, smartData.originalPosition.top,  smartData.originalSize.width, smartData.originalSize.height, 5); // reset initial position
 	   		targetElement.removeData('smartZoomData');// clean saved data
@@ -318,8 +319,10 @@
     	var currentScale = (targetRect.width / smartData.originalSize.width);
     	if(parseInt(currentScale*100)>parseInt(smartData.adjustedPosInfos.scale*100)) // multiply by 100 to resolve precision problem
     		targetElement.css({"cursor":"move"});     
-    	else	
-    		targetElement.css({"cursor":"default"});
+    	else{	
+    		targetElement.css({"cursor":"-webkit-zoom-in"/*,"cursor":"-moz-zoom-in"*/}); // fix #41
+    		targetElement.css({"cursor":"-moz-zoom-in"});
+    	}
     }
     
     /**
