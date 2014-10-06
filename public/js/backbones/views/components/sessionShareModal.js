@@ -16,23 +16,6 @@ define([
 			this.modalEl = $('#session-share-modal');
         },
         
-        events: {
-            "click #copy-bt": "copyToClipboard"
-        },
-        
-        copyToClipboard : function(event){
-        	console.log("Copy to clipboard!");
-        	
-            var path = 'test copy to clipboard';
-            path = path.replace(/ &amp;gt; /g,".");
-            console.log(path);
-            $('#copypath').val(path);
-            $('#toppathwrap').show();
-            $('#copypath').focus();
-            $('#copypath').select();
-            
-        },
-        
         render : function(){
             this.$el.html(this.template(({link:location.href})));
             return this;
