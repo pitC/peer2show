@@ -4,7 +4,6 @@ define([
          'backbone',
          'text!templates/room/room.html',
          'text!templates/room/overlay.html',
-         'text!templates/modals/linkShareModal.html',
          'text!templates/modals/confirmCloseModal.html',
          'webrtc/webRTCClient',
          'webrtc/roomStatus',
@@ -17,8 +16,9 @@ define([
          'backbones/views/components/userArea',
          'backbones/views/roomSubviews',
          'backbones/views/sessionEndView',
-         'backbones/views/components/newSessionModal'
-], function($, _, Backbone, roomTmpl,overlayTmpl,linkShareModalTmpl,confirmCloseModalTmpl,WebRTCClient,RoomStatus, SlideshowApp, AppStatus, Settings, LogManager,  NotificationManager, UserCollection, UserArea, RoomSubviews, SessionEndView, NewSessionModal){
+         'backbones/views/components/newSessionModal',
+         'backbones/views/components/sessionShareModal'
+], function($, _, Backbone, roomTmpl,overlayTmpl,confirmCloseModalTmpl,WebRTCClient,RoomStatus, SlideshowApp, AppStatus, Settings, LogManager,  NotificationManager, UserCollection, UserArea, RoomSubviews, SessionEndView, NewSessionModal, SessionShareModal){
 
 	
 		var DEFAULT_ROOM_NAME = "test";
@@ -42,11 +42,11 @@ define([
 			
 				
 				this.overlay = _.template(overlayTmpl);
-				this.linkShare = _.template(linkShareModalTmpl);
+				
 				this.confirmClose = _.template(confirmCloseModalTmpl);
 				
 				this.newSessionModal = new NewSessionModal();
-				
+				this.sessionShareModal = new SessionShareModal();
 				
 				this.initApp();
 				this.initWebRTC();
@@ -301,9 +301,9 @@ define([
             },
             
             renderModals : function(){
-            	var encodedUri = "http://peershow.herokuapp.com/"+ window.location.hash;
+            	
             	//encodeURIComponent(location.href);
-            	this.$el.find("#modal-container").append(this.linkShare({link:location.href, encodedUri:encodedUri}));
+            	this.$el.find("#modal-container").append(this.sessionShareModal.render().el);
             	this.$el.find("#modal-container").append(this.newSessionModal.render().el);
             	this.$el.find("#modal-container").append(this.confirmClose());
 
