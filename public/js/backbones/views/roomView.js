@@ -17,8 +17,9 @@ define([
          'backbones/views/roomSubviews',
          'backbones/views/sessionEndView',
          'backbones/views/components/newSessionModal',
-         'backbones/views/components/sessionShareModal'
-], function($, _, Backbone, roomTmpl,overlayTmpl,confirmCloseModalTmpl,WebRTCClient,RoomStatus, SlideshowApp, AppStatus, Settings, LogManager,  NotificationManager, UserCollection, UserArea, RoomSubviews, SessionEndView, NewSessionModal, SessionShareModal){
+         'backbones/views/components/sessionShareModal',
+         "i18n!nls/uiComponents"
+], function($, _, Backbone, roomTmpl,overlayTmpl,confirmCloseModalTmpl,WebRTCClient,RoomStatus, SlideshowApp, AppStatus, Settings, LogManager,  NotificationManager, UserCollection, UserArea, RoomSubviews, SessionEndView, NewSessionModal, SessionShareModal,UIComponents){
 
 	
 		var DEFAULT_ROOM_NAME = "test";
@@ -170,7 +171,9 @@ define([
             	}            	
             	else{
             		console.log("Rerender all!");
-            		this.$el.html(this.template());
+            		
+                	var data = $.extend({},UIComponents,{});
+            		this.$el.html(this.template(data));
             		// TODO: refactor - keep userCollection as peer Ids in app object. Move UserArea to roomSubviews
 	                this.userArea = new UserArea({collection:this.userCollection});
 	            	this.$el.find("#users-area").append(this.userArea.render().el);
@@ -301,12 +304,10 @@ define([
             },
             
             renderModals : function(){
-            	
-            	//encodeURIComponent(location.href);
             	this.$el.find("#modal-container").append(this.sessionShareModal.render().el);
-            	this.$el.find("#modal-container").append(this.newSessionModal.render().el);
-            	this.$el.find("#modal-container").append(this.confirmClose());
-
+            	this.$el.find("#modal-container").append(this.newSessionModal.render().el);            	
+            	var confirmCloseData = UIComponents;
+            	this.$el.find("#modal-container").append(this.confirmClose(confirmCloseData));
             },
             
             renderOverlay : function(){

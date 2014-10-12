@@ -3,7 +3,10 @@ define({
 	
     "newSessionLbl":"Nowa sesja",
     "usernameLbl":"Nazwa",
+    
     // BUTTON labels
-    "createBtn": "Utwórz!"
-    	
+    "createBtn": "Utwórz!",
+    "cancelBtn":"Anuluj",
+    "closeBtn":"Zamknij",
+    "startBtn":"Dołącz!"
 });

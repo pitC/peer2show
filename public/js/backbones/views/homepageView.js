@@ -7,9 +7,10 @@ define([
          'text!templates/slideshowApp/introHost.html',
          'text!templates/slideshowApp/introGuest.html',
          'backbones/views/components/newSessionModal',
-         'carousel'
+         'carousel',
+         "i18n!nls/uiComponents"
          
-], function($, _, Backbone, Settings, UserInputTmpl,IntroHostTmpl,IntroGuestTmpl,NewSessionModal,Carousel){
+], function($, _, Backbone, Settings, UserInputTmpl,IntroHostTmpl,IntroGuestTmpl,NewSessionModal,Carousel,UIComponents){
 	
 	
 	HomepageView = Backbone.View.extend({
@@ -72,7 +73,8 @@ define([
         
         render : function(){
         	
-        	var intro = this.introTemplate();
+        	var data = $.extend({},UIComponents,{});
+        	var intro = this.introTemplate(data);
         	
         	this.$el.html(intro);
         	

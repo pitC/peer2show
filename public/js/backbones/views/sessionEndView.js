@@ -8,9 +8,10 @@ define([
          'text!templates/room/errors/connectionError.html',
          'app/settings',
          'app/appStatus',
-         'backbones/views/components/newSessionModal'
+         'backbones/views/components/newSessionModal',
+         "i18n!nls/uiComponents"
          
-], function($, _, Backbone, SessionEndTmpl, FatalErrorTmpl,BrowserErrorTmpl,ConnectionErrorTmpl, Settings, AppStatus, NewSessionModal){
+], function($, _, Backbone, SessionEndTmpl, FatalErrorTmpl,BrowserErrorTmpl,ConnectionErrorTmpl, Settings, AppStatus, NewSessionModal,UIComponents){
 
 	
 	
@@ -56,8 +57,10 @@ define([
         	
         	var event = {messageMain:messageMain,messageExtended:messageExtended};
         	
+        	var data = $.extend({},UIComponents,event);
         	
-        	this.$el.html(template(event));
+        	
+        	this.$el.html(template(data));
         	
         	Settings.reset();
         	

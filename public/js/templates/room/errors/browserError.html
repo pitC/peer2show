@@ -3,13 +3,11 @@
 		<div class="row">
 			<h2><%= messageMain%><br> 
 			<small id="error-msg-ext"><%= messageExtended%></small> </h2>
-			
 			<p>
-			This browser is not compatible yet. Please also make sure you're using the newest version. Check out our scorecard:				
+			<%= browserIncompatibleMsg %>				
 			</p>
 		</div>
 		<div class="row">
-		
 			<table class="table" id="browser-table">
   				<thead><tr>
   					<th>
@@ -43,27 +41,22 @@
   				</tr>
   				</tbody>
 			</table>
-		
 		</div>
 		<br>
 		<div class="row" id="after-actions">
-			
 			<div class="col-md-4 col-md-offset-4">
 				<div class="action-container">
 					<h2>
 			  			<span class="glyphicon glyphicon-envelope"></span>
 			  		</h2>
 			  		<p>
-			  			Did not help?
+			  			<%= didNotHelpLbl %>	
 			  		</p>
 			  		<p>
-			  			<a class="action-link modal-remote" data-toggle="modal" data-remote="site/feedback.html" data-target="#feedback-modal">Contact us!</a>
+			  			<a class="action-link modal-remote" data-toggle="modal" data-remote="site/feedback.html" data-target="#feedback-modal"><%= contactUsLbl %></a>
 			  		</p>
 				</div>
 			</div>
-			
 		</div> <!-- row -->
-		
-		
 	</div>
 </div> <!-- container -->

@@ -3,11 +3,12 @@ define([
          'underscore', 
          'backbone',
          'text!templates/slideshowApp/messageList.html',
-         'text!templates/slideshowApp/messageElement.html'
+         'text!templates/slideshowApp/messageElement.html',
+         "i18n!nls/uiComponents"
          
          
 ], function($, _, Backbone,
-		MessageListTmpl, MessageElementTmpl
+		MessageListTmpl, MessageElementTmpl,UIComponents
 ){
 	
 	MessageElementView = Backbone.View.extend({
@@ -28,6 +29,7 @@ define([
 			this.app = app;
 			this.collection = app.messageCollection;
 			this.collection.on('all',this.onCollectionEvent,this);
+			
             this.template = _.template(MessageListTmpl);
         },
         
@@ -65,8 +67,8 @@ define([
         },
         
         render : function(){
-        	
-        	this.$el.html(this.template());
+        	var data = $.extend({},UIComponents,{});
+        	this.$el.html(this.template(data));
 			this.collection.each(this.renderMessage,this);
 			
 			// temporary solution for issue #27
