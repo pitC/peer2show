@@ -53,7 +53,7 @@ define([
 				this.initWebRTC();
 				
 				this.userCollection = new UserCollection();
-				this.userCollection.add({username:this.username+"(me)"});
+				this.userCollection.add({username:this.username+UIComponents.userMeLbl});
 				
 				this.roomSubviews = new RoomSubviews(this.$el,this.app);
 				
@@ -98,7 +98,7 @@ define([
 				
 				this.webRTCClient.onopen = function(e){
 					console.log("Open!");
-					var username = e.username || e.peerId || "Guest"; 
+					var username = e.username || e.peerId || UIComponents.userGuestLbl; 
 					self.userCollection.add({username:username});
 					self.app.setStatus(AppStatus.READY);
 					
@@ -111,7 +111,7 @@ define([
 					
 					var options = {
 							'alert_class':'alert-info',
-							'alert_message':username+' joined',
+							'alert_message':username+' '+UIComponents.userJoinedMsg,
 							appendMode : true
 					};
 					self.notificationManager.render(options);
@@ -131,7 +131,7 @@ define([
 					if (success){
 						var options = {
 								'alert_class':'alert-info',
-								'alert_message':e.username+' left!',
+								'alert_message':e.username+' '+UIComponents.userLeftMsg,
 								appendMode : true
 						};
 						self.notificationManager.render(options);

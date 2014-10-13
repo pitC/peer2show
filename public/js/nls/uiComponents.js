@@ -20,6 +20,7 @@ define({
         "toggleSidebarTitle":"Toggle sidebar",	
         "uploadImagesTitle":"Upload images",
         
+        
         // App status
         "ready" : "ready",
 		"upload" : "transferring photos...",
@@ -36,6 +37,12 @@ define({
         
         // Main room view
         "viewersLbl":"Viewers",
+        "userMeLbl":"(me)",
+        "userGuestLbl":"Guest",
+        
+        "userLeftMsg":"left!",
+        "userJoinedMsg":"joined",
+        
         "chatLbl":"Chat",
         "imagesLbl":"Images",
         
