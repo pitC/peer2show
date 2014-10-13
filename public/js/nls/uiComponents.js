@@ -9,6 +9,7 @@ define({
 
         // BUTTON labels and titles
         "createBtn": "Create",
+        "goBtn":"Go!",
         "cancelBtn":"Cancel",
         "closeBtn":"Close",
         "startBtn":"Start!",
