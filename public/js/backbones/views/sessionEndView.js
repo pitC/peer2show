@@ -26,13 +26,13 @@ define([
         },
         render : function(){
         	
-        	var messageMain = options.status||"Session ended";
+        	var messageMain = UIComponents[options.status]||"Session ended";
         	var messageExtended = "";
         	var template = null;
         	        	
         	if (options.status == AppStatus.SESSION_ENDED){
         		
-        		messageExtended = "closed by the user";
+        		messageExtended = UIComponents.closedByUserMsg;
         		template = this.sessionEndTmpl;
         	}
         	else if (options.status == AppStatus.FATAL_ERROR){

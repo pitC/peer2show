@@ -71,6 +71,8 @@ define({
         "sessionEndMsg":"	Thanks for using peer2show, hope you enjoyed it! But it's not the end yet - pick your action:",
         "shareItMsg":"Do you love it that much you want to let the whole world know about it? Share it!",
         "dropMessageMsg":'<p><a class="action-link modal-remote" data-toggle="modal" data-remote="site/feedback.html" data-target="#feedback-modal">Drop us a message</a></p><p>or</p><p><a class="action-link modal-remote" data-toggle="modal" data-remote="site/smartvote.html" data-target="#smartvote-modal">help us improve</a></p>',
+        "closedByUserMsg":"closed by the user",
+        
         
         // Session end error page
         "didNotHelpLbl":"Did not help?",

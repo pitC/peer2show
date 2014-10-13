@@ -5,6 +5,11 @@
 
 require.config({
 	baseUrl: 'js',
+//	config: {
+//        i18n: {
+//            locale: 'pl'
+//        }
+//    },
 	paths: {
 		
 		jquery: ['http://code.jquery.com/jquery-1.10.1.min'
@@ -71,6 +76,8 @@ require([
 'app',
 ], 
 function(App){ 
+	console.log(navigator.language+"/"+navigator.languages);
 	// The "app" dependency is passed in as "App" 
 	App.initialize(); 
+	
 });

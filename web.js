@@ -1,4 +1,5 @@
 var INDEX = "public/index.html";
+var INDEX_PL = "public/index_pl.html";
 var MAX_ROOM_SIZE = 1;
 var LOCAL_PORT = 8080;
 var static = require('node-static');
@@ -23,8 +24,20 @@ var bugReporter = require('./backend/bugReporter');
  app.use("/img", express.static(__dirname + '/public/img'));
  app.use("/site", express.static(__dirname + '/public/site'));
  app.all('/', function(req, res){
-	 	res.sendfile(INDEX);
-	 });
+	 	console.log( req.headers["accept-language"]);
+	 	
+	 	console.log(req.query.lan);
+	 	if (req.headers["accept-language"][0].indexOf("pl") > -1){
+	 		console.log("PL header");
+	 		res.sendfile(INDEX_PL);
+	 	}
+	 	else if (req.query.lan=="pl"){
+	 		res.sendfile(INDEX_PL);
+	 	}
+	 	else{
+	 		res.sendfile(INDEX);
+	 	}
+ });
  
  app.post('/issues', bugReporter.addIssue);
  app.post('/event',bugReporter.logEvent);
