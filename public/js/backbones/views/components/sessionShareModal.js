@@ -4,10 +4,11 @@ define([
          'backbone',
          'text!templates/modals/linkShareModal.html',
          'app/settings',
+         "i18n!nls/uiComponents"
          
          // 'backbones/views/roomView' - no need to add it here, it's already another way round. Just user RoomView
          
-], function($, _, Backbone, LinkShareModalTmpl, Settings
+], function($, _, Backbone, LinkShareModalTmpl, Settings, UIComponents
 ){
 	
 	SessionShareModalView = Backbone.View.extend({
@@ -17,7 +18,8 @@ define([
         },
         
         render : function(){
-            this.$el.html(this.template(({link:location.href})));
+        	var data = $.extend({},UIComponents,{link:location.href});
+            this.$el.html(this.template(data));
             return this;
         }
 	});

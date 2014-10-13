@@ -5,27 +5,8 @@ define({
         "createNewSessionLbl":"Create a new session",
         "usernameLbl":"Username",
         "closeSessionLbl":"Close Session",
-        // Pitch
-        "welcomeLbl":"Welcome to",
-        "sloganLbl":"view pictures together online<br>simply, safely and for free!",
         
-        
-        "shareLinkLbl":"Share this link!",
-        "dropFilesLbl":"Drop photos here!",
-        // Main room view
-        "viewersLbl":"Viewers",
-        "chatLbl":"Chat",
-        "imagesLbl":"Images",
-        
-        // Viewers sidebar subview - userInvite.html
-        "inviteLbl":"Share with someone!",
-        // messageList.html
-        "typeHereLbl":"type text here!",
-        // Session end error page
-        "didNotHelpLbl":"Did not help?",
-        "contactUsLbl":"Contact us!",
-        
-        
+
         // BUTTON labels and titles
         "createBtn": "Create",
         "cancelBtn":"Cancel",
@@ -38,16 +19,58 @@ define({
         "toggleSidebarTitle":"Toggle sidebar",	
         "uploadImagesTitle":"Upload images",
         
-        // MESSAGES 
+        // App status
+        "ready" : "ready",
+		"upload" : "transferring photos...",
+		"channel_open" : "opening channel...",
+		"wait" : "waiting for someone to join",
+		"join" : "joining room...",
+		"load" : "loading photos",
+		"end" : "Session ended!",
+		"fatal" : "Error occured!",
+        
+        // Pitch
+        "welcomeLbl":"Welcome to",
+        "sloganLbl":"view pictures together online<br>simply, safely and for free!",
+        
+        // Main room view
+        "viewersLbl":"Viewers",
+        "chatLbl":"Chat",
+        "imagesLbl":"Images",
+        
+        // Slide area
+        "dropFilesLbl":"Drop photos here!",
+        
+        // Viewers sidebar subview - userInvite.html
+        "inviteLbl":"Share with someone!",
+        // messageList.html
+        "typeHereLbl":"type text here!",
+        
+        // Session share modal
+        "shareLinkLbl":"Share this link!",
+        "howToShareMsg":"Copy and paste the link to share your slideshow with someone.",
+        
+        // Session join view
+        "gotInvitedMsg":'You got invited to a session - join it now and experience a free peer-to-peer slideshow!',
+        
+        //Session end confirm modal
         "closeSessionConfirmMsg":"Are you sure you want to close this session?",
-        "browserIncompatibleMsg":"This browser is not compatible yet. Please also make sure you're using the newest version. Check out our scorecard:",
-        "connectionErrorMsg":'It seems that the link you have just tried is invalid - either it does not point to any open session or the session is already closed. Please try again with a correct one, or <a class="action-link modal-remote" data-toggle="modal" data-target="#new-session-modal">start your own session!</a>',
-        "fatalErrorMsg":"Oops.. something went wrong. But don't be sad, we can help you!",
+        
+        // Page redirect alert
+        "leavePageWarningMsg":"This action will end your session!",
+        
+        //Session end view
         "sessionEndMsg":"	Thanks for using peer2show, hope you enjoyed it! But it's not the end yet - pick your action:",
         "shareItMsg":"Do you love it that much you want to let the whole world know about it? Share it!",
         "dropMessageMsg":'<p><a class="action-link modal-remote" data-toggle="modal" data-remote="site/feedback.html" data-target="#feedback-modal">Drop us a message</a></p><p>or</p><p><a class="action-link modal-remote" data-toggle="modal" data-remote="site/smartvote.html" data-target="#smartvote-modal">help us improve</a></p>',
-        "gotInvitedMsg":'You got invited to a session - join it now and experience a free peer-to-peer slideshow!',
-        "leavePageWarningMsg":"This action will end your session!"
+        
+        // Session end error page
+        "didNotHelpLbl":"Did not help?",
+        "contactUsLbl":"Contact us!",
+        "browserIncompatibleMsg":"This browser is not compatible yet. Please also make sure you're using the newest version. Check out our scorecard:",
+        "connectionErrorMsg":'It seems that the link you have just tried is invalid - either it does not point to any open session or the session is already closed. Please try again with a correct one, or <a class="action-link modal-remote" data-toggle="modal" data-target="#new-session-modal">start your own session!</a>',
+        "fatalErrorMsg":"Oops.. something went wrong. But don't be sad, we can help you!"
+               
         
     },
     "pl":true

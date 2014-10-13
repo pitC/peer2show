@@ -315,9 +315,8 @@ define([
         		if (this.app.status == AppStatus.READY){
         			this.removeOverlay();
         		}
-        		// temporarily block overlay
         		else{
-        			var options = {msg:this.app.status};
+        			var options = {msg:UIComponents[this.app.status]};
         			this.addOverlay(options);
         		}
             },
