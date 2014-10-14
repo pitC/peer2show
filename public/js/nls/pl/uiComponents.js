@@ -1,86 +1,101 @@
 define({
     // LABELS anywhere
-    "newSessionLbl":"New Session",
-    "createNewSessionLbl":"Create a new session",
-    "usernameLbl":"Username",
-    "closeSessionLbl":"Close Session",
+    "newSessionLbl":"Nowa sesja",
+    "createNewSessionLbl":"Utwórz nową sesję",
+    "usernameLbl":"Nazwa użytkownika",
+    "closeSessionLbl":"Zamknij sesję",
     
-	"feedbackLink":"site/pl/feedback.html",
-	"smartvoteLink":"site/pl/smartvote.html",
 
     // BUTTON labels and titles
-    "createBtn": "Create",
-    "goBtn":"Go!",
-    "cancelBtn":"Cancel",
-    "closeBtn":"Close",
+    "createBtn": "Utwórz sesję",
+    "goBtn":"Rozpocznij sesję!",
+    "cancelBtn":"Anuluj",
+    "closeBtn":"Zamknij",
     "startBtn":"Start!",
-    "switchOffTitle":"Switch off session",
-    "prevTitle":"Previous slide",
-    "nextTitle":"Next slide",
-    "fullscreenTitle":"Switch to fullscreen mode",
-    "toggleSidebarTitle":"Toggle sidebar",	
-    "uploadImagesTitle":"Upload images",
+    "switchOffTitle":"Zakończ sesję",
+    "prevTitle":"Poprzedni slajd",
+    "nextTitle":"Następny slajd",
+    "fullscreenTitle":"Przełącz w tryb pełnoekranowy",
+    "toggleSidebarTitle":"Przełącz widok menu",	
+    "uploadImagesTitle":"Dodaj zdjęcia",
     
     
     // App status
-    "ready" : "ready",
-	"upload" : "transferring photos...",
-	"channel_open" : "opening channel...",
-	"wait" : "waiting for someone to join",
-	"join" : "joining room...",
-	"load" : "loading photos",
-	"end" : "Session ended!",
-	"fatal" : "Error occured!",
+    "ready" : "gotowe",
+	"upload" : "wgrywam zdjęcia...",
+	"channel_open" : "nawiązywanie połączenia",
+	"wait" : "oczekiwanie na nowych użytkowników",
+	"join" : "dołączyłeś do sesji...",
+	"load" : "trwa ładowanie zdjęć",
+	"end" : "Koniec sesji!",
+	"fatal" : "Wystąpił błąd.",
     
     // Pitch
-    "welcomeLbl":"Welcome to",
-    "sloganLbl":"view pictures together online<br>simply, safely and for free!",
+    "welcomeLbl":"Witamy na stronie",
+    "sloganLbl":"udostępniaj i oglądaj zdjęcia w czasie rzeczywistym<<br>simply, łatwo, bezpiecznie i bezpłatnie!",
+
+	
     
     // Main room view
-    "viewersLbl":"Viewers",
-    "userMeLbl":"(me)",
-    "userGuestLbl":"Guest",
+    "viewersLbl":"Obecni",
+    "userMeLbl":"ja",
+    "userGuestLbl":"Gość",
     
-    "userLeftMsg":"left!",
-    "userJoinedMsg":"joined",
+    "userLeftMsg":"opuścił/a sesję",
+    "userJoinedMsg":"dołączył/a do sesji",
     
-    "chatLbl":"Chat",
-    "imagesLbl":"Images",
+    "chatLbl":"czat",
+    "imagesLbl":"zdjęcia",
     
     // Slide area
-    "dropFilesLbl":"Drop photos here!",
+    "dropFilesLbl":"Przeciągnij tu zdjęcie!",
     
     // Viewers sidebar subview - userInvite.html
-    "inviteLbl":"Share with someone!",
+    "inviteLbl":"Udostępnij sesję!",
     // messageList.html
-    "typeHereLbl":"type text here!",
+    "typeHereLbl":"wpisz dowolony tekst!",
     
     // Session share modal
-    "shareLinkLbl":"Share this link!",
-    "howToShareMsg":"Copy and paste the link to share your slideshow with someone.",
+    "shareLinkLbl":"Udostępnij link",
+    "howToShareMsg":"Skopiuj i wklej ten link osobie, którą chcesz zaprosić to swojej sesji",
     
     // Session join view
-    "gotInvitedMsg":'You got invited to a session - join it now and experience a free peer-to-peer slideshow!',
+    "gotInvitedMsg":'Otrzymałeś zaproszenie - wpisz swoje imię i wciśnij przycisk "Start!" aby dołączyć do sesji!',
     
     //Session end confirm modal
-    "closeSessionConfirmMsg":"Are you sure you want to close this session?",
+    "closeSessionConfirmMsg":"Czy na pewno chcesz zakończyć obecną sesję?",
     
     // Page redirect alert
-    "leavePageWarningMsg":"This action will end your session!",
+    "leavePageWarningMsg":"Zamknięcie okna spowoduje zakończenie sesji!",
     
     //Session end view
-    "sessionEndMsg":"	Thanks for using peer2show, hope you enjoyed it! But it's not the end yet - pick your action:",
-    "shareItMsg":"Do you love it that much you want to let the whole world know about it? Share it!",
-    "dropMessageMsg":'<p><a class="action-link modal-remote" data-toggle="modal" data-remote="site/feedback.html" data-target="#feedback-modal">Drop us a message</a></p><p>or</p><p><a class="action-link modal-remote" data-toggle="modal" data-remote="site/smartvote.html" data-target="#smartvote-modal">help us improve</a></p>',
-    "closedByUserMsg":"closed by the user",
+    "sessionEndMsg":"Dziękujemy za korzystanie z Peer2show! Co chcieliby Państwo zrobić w następnej kolejności?",
+    "shareItMsg":"zapoznać się z naszymi profilami na Facebooku, Google+ bądź Twitterze?",
+    "dropMessageMsg":'napisać do nas',
+    "orLbl":"lub",
+    "helpImproveMsg":"pomóc nam rozwijać Peer2show",
+    "closedByUserMsg":"zamknięte przez użytkownika",
     
     
     // Session end error page
-    "didNotHelpLbl":"Did not help?",
-    "contactUsLbl":"Contact us!",
-    "browserIncompatibleMsg":"This browser is not compatible yet. Please also make sure you're using the newest version. Check out our scorecard:",
-    "connectionErrorMsg":'It seems that the link you have just tried is invalid - either it does not point to any open session or the session is already closed. Please try again with a correct one, or <a class="action-link modal-remote" data-toggle="modal" data-target="#new-session-modal">start your own session!</a>',
-    "fatalErrorMsg":"Oops.. something went wrong. But don't be sad, we can help you!"
+    "didNotHelpLbl":"Nie odnaleźli Państwo przyczyny problemu?",
+    "contactUsLbl":"Prosimy o kontakt!",
+    "browserIncompatibleMsg":"Państwa przeglądarka nie wspiera protokołu WebRTC. Proszę uaktualnić przeglądarkę do najnowszej wersji i zapoznać się z naszą tabelą kompatybilności:",
+    "connectionErrorMsg":'Zaproszenie do sesji zawiera nieprawidłowy link bądź żądana sesja została już zakończona. Dlaczego by nie <a class="action-link modal-remote" data-toggle="modal" data-target="#new-session-modal">rozpocząć własnej sesji?</a>',
+    "fatalErrorMsg":"Przepraszamy, wystąpił błąd. Z chęcią pomożemy!",
            
-    
+    	//index elements
+	"title":"Udostępniaj zdjęcia: darmowo, bezpiecznie, prosto | peer2show",
+    	// navbar
+	"newSessionLbl":"Nowa sesja",
+	"learnMoreLbl":"O projekcie",
+	"feedbackLink":"site/feedback.html",
+	"smartvoteLink":"site/smartvote.html",
+	"feedbackLbl":"Feedback",
+	// footer
+	"tosLink":"site/tos.html",
+	"tosLbl":"Warunki świadczenia usług",
+	"userFeedbackLbl":"Feedback",
+	"legalNoteLbl":"Zanim zaczniesz korzystać ze strony peer2show zapoznaj się z naszymi warunkami świadczenia usług"
+		
 });

@@ -14,12 +14,22 @@
 				<li><a class="modal-remote" data-toggle="modal" data-target="#new-session-modal"><%= newSessionLbl %></a></li>
 				<li><a class="modal-remote" id="learn-more-action"><%= learnMoreLbl %></a></li>
 				<li><a class="modal-remote" data-toggle="modal" data-remote="<%= feedbackLink %>" data-target="#feedback-modal"><%= feedbackLbl %></a></li>
-			</ul>		
-			<ul class="" id="social-bar">
-				<li><a target="_blank" class="social-link" id="fb-link" href="https://www.facebook.com/peer2show"></a></li>
-				<li><a target="_blank" class="social-link" id="gplus-link" href="https://plus.google.com/u/3/b/105976349513067664645/"></a></li>
-				<li><a target="_blank" class="social-link" id="tweet-link" href="https://twitter.com/peer2show"></a></li>
+				
 			</ul>
+			<ul class="nav navbar-nav navbar-right">
+			<li>
+			<a class="modal-remote dropdown-toggle" id="languageDropdown" data-toggle="dropdown">
+			    			<span class="glyphicon glyphicon-globe "></span>
+			    				PL
+			    			<span class="modal-remote caret"></span>
+			  			</a>
+						<ul class="dropdown-menu" role="menu" aria-labelledby="languageDropdown">
+			  				<li role="presentation"><a role="menuitem" tabindex="-1" >EN</a></li>
+			    			<li role="presentation"><a role="menuitem" tabindex="-1" >PL</a></li>
+						</ul>
+			</li>
+			<li><a class="modal-remote"><span class="glyphicon glyphicon-user "></span> Login</a></li>
+			<ul class="nav navbar-nav">
 		</div><!-- /.nav-collapse -->
 	</div><!-- /.container -->
 </div><!-- /.navbar -->
