@@ -1,5 +1,20 @@
 define({
     "root": {
+    	//index elements
+    	"title":"Real time slideshow online - free, safe and simple | peer2show",
+    	// navbar
+		"newSessionLbl":"New session",
+		"learnMoreLbl":"Learn more",
+		"feedbackLink":"site/feedback.html",
+		"smartvoteLink":"site/smartvote.html",
+		"feedbackLbl":"Feedback & support",
+		// footer
+		"tosLink":"site/tos.html",
+		"tosLbl":"Terms of Service",
+		"userFeedbackLbl":"User Feedback",
+		"legalNoteLbl":"Use of this Web site constitutes acceptance of the Peer2show",
+		
+    	
         // LABELS anywhere
         "newSessionLbl":"New Session",
         "createNewSessionLbl":"Create a new session",
@@ -70,7 +85,9 @@ define({
         //Session end view
         "sessionEndMsg":"	Thanks for using peer2show, hope you enjoyed it! But it's not the end yet - pick your action:",
         "shareItMsg":"Do you love it that much you want to let the whole world know about it? Share it!",
-        "dropMessageMsg":'<p><a class="action-link modal-remote" data-toggle="modal" data-remote="site/feedback.html" data-target="#feedback-modal">Drop us a message</a></p><p>or</p><p><a class="action-link modal-remote" data-toggle="modal" data-remote="site/smartvote.html" data-target="#smartvote-modal">help us improve</a></p>',
+        "dropMessageMsg":'Drop us a message',
+        "orLbl":"or",
+        "helpImproveMsg":"help us improve",
         "closedByUserMsg":"closed by the user",
         
         
@@ -80,7 +97,8 @@ define({
         "browserIncompatibleMsg":"This browser is not compatible yet. Please also make sure you're using the newest version. Check out our scorecard:",
         "connectionErrorMsg":'It seems that the link you have just tried is invalid - either it does not point to any open session or the session is already closed. Please try again with a correct one, or <a class="action-link modal-remote" data-toggle="modal" data-target="#new-session-modal">start your own session!</a>',
         "fatalErrorMsg":"Oops.. something went wrong. But don't be sad, we can help you!"
-               
+        
+        	
         
     },
     "pl":true

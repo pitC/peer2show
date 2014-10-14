@@ -36,15 +36,6 @@ define({
         "privacyHeader":"Privacy & Safety",
         "privacyTxt":'This is where we make the difference.  <span class="carousel-sync" id="learn-more-header-7">Your images are not uploaded to any server </span> - the whole magic happens just between you and the invited person! <span class="carousel-sync" id="learn-more-header-8">You keep the control over who sees your pictures at all times</span>. As a user joins the session, you see a notification in the right top corner. Also  <span class="carousel-sync" id="learn-more-header-9">through not uploading the pictures anywhere you make sure that you do not handle the rights to them to anyone</span>.',
         
-        	
-        
-        
-        
-        
-        
-        
-        
-        
     },
     "pl":true
 });

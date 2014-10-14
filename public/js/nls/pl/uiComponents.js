@@ -5,6 +5,8 @@ define({
     "usernameLbl":"Username",
     "closeSessionLbl":"Close Session",
     
+	"feedbackLink":"site/pl/feedback.html",
+	"smartvoteLink":"site/pl/smartvote.html",
 
     // BUTTON labels and titles
     "createBtn": "Create",

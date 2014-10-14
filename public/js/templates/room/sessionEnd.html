@@ -40,7 +40,19 @@
 					<h2>
 			  			<span class="glyphicon glyphicon-envelope"></span>
 			  		</h2>
-			  		<%= dropMessageMsg %>
+			  		<p>
+			  			<a class="action-link modal-remote" data-toggle="modal" data-remote="<%= feedbackLink%>" data-target="#feedback-modal">
+			  				<%= dropMessageMsg %>
+			  			</a>
+			  		</p>
+			  		<p>
+			  		<%= orLbl %>
+			  		</p>
+			  		<p>
+			  			<a class="action-link modal-remote" data-toggle="modal" data-remote="<%= smartvoteLink %>" data-target="#smartvote-modal">
+			  				<%= helpImproveMsg %>
+			  			</a>
+			  		</p>
 				</div>
 			</div>
 			

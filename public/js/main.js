@@ -2,14 +2,15 @@
 
 // Require.js allows us to configure shortcut alias 
 // There usage will become more apparent further along in the tutorial. 
+var locale = localStorage.getItem('locale') || navigator.language || navigator.userLanguage;
 
 require.config({
 	baseUrl: 'js',
-//	config: {
-//        i18n: {
-//            locale: 'pl'
-//        }
-//    },
+	config: {
+        i18n: {
+            locale: locale
+        }
+    },
 	paths: {
 		
 		jquery: ['http://code.jquery.com/jquery-1.10.1.min'
@@ -76,7 +77,7 @@ require([
 'app',
 ], 
 function(App){ 
-	console.log(navigator.language+"/"+navigator.languages);
+	console.log(navigator.language+"/"+navigator.userLanguage);
 	// The "app" dependency is passed in as "App" 
 	App.initialize(); 
 	

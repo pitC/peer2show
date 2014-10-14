@@ -2,19 +2,21 @@ define([
          'jquery', 
          'underscore', 
          'backbone',
+         'backbones/views/indexView',
          'backbones/views/roomView',
          'backbones/views/homepageView',
          'app/settings',
          'app/logManager'
 
-], function($, _, Backbone, RoomView, HomepageView, Settings, LogManager){ 
+], function($, _, Backbone, IndexView, RoomView, HomepageView, Settings, LogManager){ 
 	
 	var AppRouter = Backbone.Router.extend({
         initialize : function(options){
             this.el = options.el;
             // disable console logs
             LogManager.switchConsoleLogs(Settings.enableConsoleLog);
-            console.log("App Router init!");
+            console.log("App Router init! ");
+            
         },
         routes : {
         	"":"homepage",
@@ -73,9 +75,18 @@ define([
     });
 	
 	var initialize = function(){
+		
+		renderIndex();
+		
 		var router = new AppRouter({el : $('#content')});
 	    Backbone.history.start();
 	};
+	
+	var renderIndex = function(){
+		var indexView = new IndexView({headerEl:$('#header'),footerEl:$('#footer')});
+		indexView.render();
+	};
+	
 	
 	return {
 		initialize : initialize
