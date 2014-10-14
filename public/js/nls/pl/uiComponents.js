@@ -32,7 +32,7 @@ define({
     
     // Pitch
     "welcomeLbl":"Witamy na stronie",
-    "sloganLbl":"udostępniaj i oglądaj zdjęcia w czasie rzeczywistym<<br>simply, łatwo, bezpiecznie i bezpłatnie!",
+    "sloganLbl":"udostępniaj i oglądaj zdjęcia w czasie rzeczywistym<br>łatwo, bezpiecznie i bezpłatnie!",
 
 	
     
@@ -49,6 +49,7 @@ define({
     
     // Slide area
     "dropFilesLbl":"Przeciągnij tu zdjęcie!",
+    "orJustClickLbl":"... albo kliknij żeby wybrać zdjęcia",
     
     // Viewers sidebar subview - userInvite.html
     "inviteLbl":"Udostępnij sesję!",
@@ -89,11 +90,11 @@ define({
     	// navbar
 	"newSessionLbl":"Nowa sesja",
 	"learnMoreLbl":"O projekcie",
-	"feedbackLink":"site/feedback.html",
-	"smartvoteLink":"site/smartvote.html",
+	"feedbackLink":"site/pl/feedback.html",
+	"smartvoteLink":"site/pl/smartvote.html",
 	"feedbackLbl":"Feedback",
 	// footer
-	"tosLink":"site/tos.html",
+	"tosLink":"site/pl/tos.html",
 	"tosLbl":"Warunki świadczenia usług",
 	"userFeedbackLbl":"Feedback",
 	"legalNoteLbl":"Zanim zaczniesz korzystać ze strony peer2show zapoznaj się z naszymi warunkami świadczenia usług"

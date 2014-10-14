@@ -63,6 +63,7 @@ define({
         
         // Slide area
         "dropFilesLbl":"Drop photos here!",
+        "orJustClickLbl":"or just click here...",
         
         // Viewers sidebar subview - userInvite.html
         "inviteLbl":"Share with someone!",

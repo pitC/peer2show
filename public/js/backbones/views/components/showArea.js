@@ -4,9 +4,10 @@ define([
          'backbone',
          'app/slideshowApp',
          'text!templates/slideshowApp/slideFullArea.html',
-         'text!templates/slideshowApp/slideFull.html'
+         'text!templates/slideshowApp/slideFull.html',
+         "i18n!nls/uiComponents"
          
-], function($, _, Backbone, SlideshowApp, SlideFullAreaTmpl, SlideFullTmpl
+], function($, _, Backbone, SlideshowApp, SlideFullAreaTmpl, SlideFullTmpl, UIComponents
 ){
 	Backbone.View.prototype.fadeIn = function(template, wrapper) {
 	    wrapper.is(':hidden') ? 
@@ -54,8 +55,8 @@ define([
         render : function(){
 			this.$el.html('');
 	        
-	        
-			this.$el.html(this.template());
+	        var data = $.extend({},UIComponents,{});
+			this.$el.html(this.template(data));
 			var slide = this.slideCollection.getCurrentSlide();
 			if(slide){
 				this.renderSlide(slide);

@@ -5,7 +5,7 @@ define([
          'app/settings',
          'text!templates/header.html',
          'text!templates/footer.html',
-         "i18n!nls/uiComponents",
+         "i18n!nls/uiComponents"
          
          
 ], function($, _, Backbone, Settings,HeaderTmpl,FooterTmpl, UIComponents){
