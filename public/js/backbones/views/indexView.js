@@ -3,13 +3,14 @@ define([
          'underscore', 
          'backbone',
          'app/settings',
+         'text!templates/index/cookieNotice.html',
          'text!templates/index/header.html',
          'text!templates/index/footer.html',
          'text!templates/index/languageMenuItem.html',
          "i18n!nls/uiComponents"
          
          
-], function($, _, Backbone, Settings,HeaderTmpl,FooterTmpl,LanguageMenuItemTmpl, UIComponents){
+], function($, _, Backbone, Settings,CookieNoticeTmpl,HeaderTmpl,FooterTmpl,LanguageMenuItemTmpl, UIComponents){
 	
 	
 	IndexView = Backbone.View.extend({
@@ -24,6 +25,7 @@ define([
 			
 			this.language = navigator.language || navigator.userLanguage;
 			
+			this.cookieNoticeTemplate = _.template(CookieNoticeTmpl);
 			this.headerTemplate = _.template(HeaderTmpl);
 			this.footerTemplate = _.template(FooterTmpl);
 			this.languageMenuItemTemplate = _.template(LanguageMenuItemTmpl);
@@ -31,7 +33,7 @@ define([
 			console.log("Change locale!");
 
         },
-        
+               
         render : function(){
         	
         	console.log("Render index!");
@@ -40,8 +42,13 @@ define([
         	console.log(data);
         	var header = this.headerTemplate(data);
         	var footer = this.footerTemplate(data);
-        	
-        	this.headerEl.html(header);
+        	if (!this.isCookieAccepted()){
+        		var cookie = this.cookieNoticeTemplate(data);
+        		this.headerEl.append(cookie);
+        		var self = this;
+        		$('#cookie-alert').on('closed.bs.alert', self.cookieAccepted);
+        	}
+        	this.headerEl.append(header);
         	this.footerEl.html(footer);
         	
         	this.propagateLanguageList();
@@ -49,6 +56,14 @@ define([
         	this.setCurrentLanguage();
         	
 			return this;
+        },
+        
+        isCookieAccepted : function(){
+        	return localStorage.getItem('cookie-accepted');
+        },
+        
+        cookieAccepted : function(ev){
+        	localStorage.setItem('cookie-accepted', true);
         },
         
         setCurrentLanguage : function(){

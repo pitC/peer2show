@@ -8,6 +8,9 @@ define({
 		"feedbackLink":"site/feedback.html",
 		"smartvoteLink":"site/smartvote.html",
 		"feedbackLbl":"Feedback & support",
+		// cookie notice
+		"cookieWarningText":"We use cookies in order to provide you best user experience.",
+		"moreInfo":"More details",
 		// footer
 		"tosLink":"site/tos.html",
 		"tosLbl":"Terms of Service",

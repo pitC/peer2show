@@ -3,14 +3,14 @@ define({
     "newSessionLbl":"Nowa sesja",
     "createNewSessionLbl":"Utwórz nową sesję",
     "usernameLbl":"Nazwa użytkownika",
-    "closeSessionLbl":"Zamknij sesję",
+    "closeSessionLbl":"Zakończ sesję",
     
 
     // BUTTON labels and titles
     "createBtn": "Utwórz sesję",
     "goBtn":"Rozpocznij sesję!",
     "cancelBtn":"Anuluj",
-    "closeBtn":"Zamknij",
+    "closeBtn":"Zakończ",
     "startBtn":"Start!",
     "switchOffTitle":"Zakończ sesję",
     "prevTitle":"Poprzedni slajd",
@@ -32,36 +32,36 @@ define({
     
     // Pitch
     "welcomeLbl":"Witamy na stronie",
-    "sloganLbl":"udostępniaj i oglądaj zdjęcia w czasie rzeczywistym<br>łatwo, bezpiecznie i bezpłatnie!",
+    "sloganLbl":"dziel się swoimi zdjęciami w czasie rzeczywistym<br>bezpłatnie, bezpiecznie i bez komplikacji!",
 
 	
     
     // Main room view
     "viewersLbl":"Obecni",
-    "userMeLbl":"ja",
+    "userMeLbl":" (ja)",
     "userGuestLbl":"Gość",
     
     "userLeftMsg":"opuścił/a sesję",
     "userJoinedMsg":"dołączył/a do sesji",
     
-    "chatLbl":"czat",
-    "imagesLbl":"zdjęcia",
+    "chatLbl":"Czat",
+    "imagesLbl":"Zdjęcia",
     
     // Slide area
     "dropFilesLbl":"Przeciągnij tu zdjęcie!",
-    "orJustClickLbl":"... albo kliknij żeby wybrać zdjęcia",
+	"orJustClickLbl":"...lub kliknij, żeby dodać pliki z dysku",
     
     // Viewers sidebar subview - userInvite.html
     "inviteLbl":"Udostępnij sesję!",
     // messageList.html
-    "typeHereLbl":"wpisz dowolony tekst!",
+    "typeHereLbl":"porozmawiaj z innymi!",
     
     // Session share modal
     "shareLinkLbl":"Udostępnij link",
-    "howToShareMsg":"Skopiuj i wklej ten link osobie, którą chcesz zaprosić to swojej sesji",
+    "howToShareMsg":"Skopiuj i wklej ten link osobie, którą chcesz zaprosić do swojej sesji",
     
     // Session join view
-    "gotInvitedMsg":'Otrzymałeś zaproszenie - wpisz swoje imię i wciśnij przycisk "Start!" aby dołączyć do sesji!',
+    "gotInvitedMsg":'Otrzymałeś zaproszenie - wpisz swoje imię, kliknij "Start!" i dołącz do sesji!',
     
     //Session end confirm modal
     "closeSessionConfirmMsg":"Czy na pewno chcesz zakończyć obecną sesję?",
@@ -70,33 +70,38 @@ define({
     "leavePageWarningMsg":"Zamknięcie okna spowoduje zakończenie sesji!",
     
     //Session end view
-    "sessionEndMsg":"Dziękujemy za korzystanie z Peer2show! Co chcieliby Państwo zrobić w następnej kolejności?",
-    "shareItMsg":"zapoznać się z naszymi profilami na Facebooku, Google+ bądź Twitterze?",
-    "dropMessageMsg":'napisać do nas',
+    "sessionEndMsg":"Dziękujemy za korzystanie z peer2show! Co chcieliby Państwo zrobić w następnej kolejności?",
+    "shareItMsg":"zapoznaj się z naszymi profilami na Facebooku, Google+ bądź Twitterze?",
+    "dropMessageMsg":'napisz do nas',
     "orLbl":"lub",
-    "helpImproveMsg":"pomóc nam rozwijać Peer2show",
-    "closedByUserMsg":"zamknięte przez użytkownika",
+    "helpImproveMsg":"pomóż nam ulepszyć peer2show",
+    "closedByUserMsg":"sesja została zakończona przez jedngo z użytkowników",
     
     
     // Session end error page
-    "didNotHelpLbl":"Nie odnaleźli Państwo przyczyny problemu?",
+    "didNotHelpLbl":"Chętnie pomożemy Państwu odnaleźć przyczynę problemu",
     "contactUsLbl":"Prosimy o kontakt!",
     "browserIncompatibleMsg":"Państwa przeglądarka nie wspiera protokołu WebRTC. Proszę uaktualnić przeglądarkę do najnowszej wersji i zapoznać się z naszą tabelą kompatybilności:",
-    "connectionErrorMsg":'Zaproszenie do sesji zawiera nieprawidłowy link bądź żądana sesja została już zakończona. Dlaczego by nie <a class="action-link modal-remote" data-toggle="modal" data-target="#new-session-modal">rozpocząć własnej sesji?</a>',
+    "connectionErrorMsg":'Zaproszenie do sesji zawiera nieprawidłowy link<br>bądź żądana sesja została już zakończona.<br>Dlaczego by nie <a class="action-link modal-remote" data-toggle="modal" data-target="#new-session-modal">rozpocząć własnej sesji?</a>',
     "fatalErrorMsg":"Przepraszamy, wystąpił błąd. Z chęcią pomożemy!",
            
     	//index elements
 	"title":"Udostępniaj zdjęcia: darmowo, bezpiecznie, prosto | peer2show",
+	// cookie notice
+	"cookieWarningText":"Strona korzysta z plików cookies w celu realizacji usług. Możesz określić warunki przechowywania lub dostępu do plików cookies w Twojej przeglądarce.",
+	"moreInfo":"Dowiedz się więcej",
     	// navbar
-	"newSessionLbl":"Nowa sesja",
+	"newSessionLbl":"Utwórz sesję",
 	"learnMoreLbl":"O projekcie",
 	"feedbackLink":"site/pl/feedback.html",
 	"smartvoteLink":"site/pl/smartvote.html",
-	"feedbackLbl":"Feedback",
+	"smartvoteLink":"site/pl/smartvote.html",
+	"feedbackLbl":"Kontakt",
 	// footer
 	"tosLink":"site/pl/tos.html",
 	"tosLbl":"Warunki świadczenia usług",
 	"userFeedbackLbl":"Feedback",
-	"legalNoteLbl":"Zanim zaczniesz korzystać ze strony peer2show zapoznaj się z naszymi warunkami świadczenia usług"
-		
+	"legalNoteLbl":"Zanim zaczniesz korzystać ze strony peer2show zapoznaj się z dokumentem"
+	
+
 });
