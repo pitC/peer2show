@@ -69,13 +69,20 @@ define([
         setCurrentLanguage : function(){
         	var proposedLang = localStorage.getItem('locale') || navigator.language || navigator.userLanguage;
         	console.log("proposed language: "+proposedLang+"?"+$.inArray(proposedLang,Settings.supportedLanguages));
+        	var setLanguage = this.DEFAULT_LANGUAGE;
+        	proposedLang = proposedLang.toLowerCase();
         	
-        	if ($.inArray(proposedLang,Settings.supportedLanguages) > -1){
-        		$("#selectedLanguage").html(proposedLang);
+        	for (var i in Settings.supportedLanguages){
+        		var lang = Settings.supportedLanguages[i];
+        		// if starts with
+        		if (proposedLang.indexOf(lang) == 0){
+        			setLanguage = lang;
+        			break;
+        		}
         	}
-        	else{
-        		$("#selectedLanguage").html(this.DEFAULT_LANGUAGE);
-        	};
+        	
+        	$("#selectedLanguage").html(setLanguage);
+        	
         	
         },
         
