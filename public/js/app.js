@@ -85,6 +85,7 @@ define([
 	var renderIndex = function(){
 		var indexView = new IndexView({headerEl:$('#header'),footerEl:$('#footer')});
 		indexView.render();
+		
 	};
 	
 	

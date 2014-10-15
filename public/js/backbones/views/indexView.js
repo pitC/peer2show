@@ -19,6 +19,7 @@ define([
 			this.headerEl = options.headerEl;
 			this.footerEl = options.footerEl;
 			
+			this.DEFAULT_LANGUAGE = "en";
 			
 			this.language = navigator.language || navigator.userLanguage;
 			
@@ -26,14 +27,8 @@ define([
 			this.footerTemplate = _.template(FooterTmpl);
 			
 			console.log("Change locale!");
-			localStorage.setItem('locale', 'pl');
-//			location.reload();
+
         },
-        events: {
-        	
-        },
-        
-        
         
         render : function(){
         	
@@ -47,12 +42,53 @@ define([
         	this.headerEl.html(header);
         	this.footerEl.html(footer);
         	
+        	this.propagateLanguageList();
+        	
+        	this.setCurrentLanguage();
+        	
 			return this;
         },
         
-        onShow : function(){
+        setCurrentLanguage : function(){
+        	var proposedLang = localStorage.getItem('locale') || navigator.language || navigator.userLanguage;
+        	console.log("proposed language: "+proposedLang+"?"+$.inArray(proposedLang,Settings.supportedLanguages));
         	
-        }
+        	if ($.inArray(proposedLang,Settings.supportedLanguages) > -1){
+        		$("#selectedLanguage").html(proposedLang);
+        	}
+        	else{
+        		$("#selectedLanguage").html(this.DEFAULT_LANGUAGE);
+        	};
+        	
+        },
+        
+        propagateLanguageList : function(){
+        	console.log("Propagate language list!");
+        	
+        	var languageList = Settings.supportedLanguages;
+        	console.log(languageList);
+        	var self = this;
+        	
+        	var liTemplateStart = '<li role="presentation"><a role="menuitem" tabindex="-1" >';
+        	var liTemplateEnd = '</a></li>';
+        	for (var i in languageList) {
+        		var lang = languageList[i];
+        		console.log("add "+lang);
+        		var element = liTemplateStart+lang+liTemplateEnd;
+        		$("#language-list").append(element);
+        	}
+        	
+        	$("#language-list li a").click(self.switchLanguage);
+        },
+        
+        switchLanguage : function(ev){
+
+        	var selectedLanguage = $(this).text();
+        	console.log("Switch language!");
+        	console.log(ev);
+			localStorage.setItem('locale', selectedLanguage);
+			location.reload();
+        },
 	
 	});
 	
