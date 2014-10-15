@@ -5,7 +5,7 @@
 			<small><%= messageExtended%></small> </h2>
 			
 			<p> 
-				Thanks for using peer2show, hope you enjoyed it! But it's not the end yet - pick your action:
+			<%= sessionEndMsg %>
 			</p>
 		</div>
 		<br>
@@ -13,14 +13,14 @@
 			<div class="col-md-4">
 				<div class="action-container">
 					<h2><span class="glyphicon glyphicon-log-in"></span></h2>
-					<p><a class="action-link modal-remote" data-toggle="modal" data-target="#new-session-modal">Create a new session</a></p>
+					<p><a class="action-link modal-remote" data-toggle="modal" data-target="#new-session-modal"><%= createNewSessionLbl %></a></p>
 				</div>
 			</div>
 			
 			<div class="col-md-4">
 				<div class="action-container">
 					<h2><span class="glyphicon glyphicon-heart"></span></h2>
-					<p> Do you love it that much you want to let the whole world know about it? Share it! </p>
+					<p> <%= shareItMsg %> </p>
 					<div class="row social-link-panel-lg">
 						<div class="col-md-4 col-xs-4">
 							<a class="social-link-lg" id="fb-link" target="_blank" href="https://www.facebook.com/peer2show"></a>
@@ -40,11 +40,19 @@
 					<h2>
 			  			<span class="glyphicon glyphicon-envelope"></span>
 			  		</h2>
-			  		<p><a class="action-link modal-remote" data-toggle="modal" data-remote="site/feedback.html" data-target="#feedback-modal">Drop us a message</a></p>
-			  	
-			  		<p>	or</p>
-			  		
-					<p><a class="action-link modal-remote" data-toggle="modal" data-remote="site/smartvote.html" data-target="#smartvote-modal">help us improve</a></p>
+			  		<p>
+			  			<a class="action-link modal-remote" data-toggle="modal" data-remote="<%= feedbackLink%>" data-target="#feedback-modal">
+			  				<%= dropMessageMsg %>
+			  			</a>
+			  		</p>
+			  		<p>
+			  		<%= orLbl %>
+			  		</p>
+			  		<p>
+			  			<a class="action-link modal-remote" data-toggle="modal" data-remote="<%= smartvoteLink %>" data-target="#smartvote-modal">
+			  				<%= helpImproveMsg %>
+			  			</a>
+			  		</p>
 				</div>
 			</div>
 			

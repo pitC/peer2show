@@ -1,7 +1,9 @@
 define([],function () {
 	
 	var settings =  {
-				
+		
+		supportedLanguages : ['pl','en'],
+		
 		roomName : null, 
 		userName : null,
 		owner : false, // flag if the user is owner of the session
@@ -16,7 +18,7 @@ define([],function () {
 		
 		useWebWorker:false, // use web worker for reading files
 		
-		enableConsoleLog:true,
+		enableConsoleLog:false,
 		
 		
 		previewMaxHeight:100,

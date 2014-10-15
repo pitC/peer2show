@@ -4,10 +4,11 @@ define([
          'backbone',
          'text!templates/modals/newSessionModal.html',
          'app/settings',
+         "i18n!nls/uiComponents"
          
          // 'backbones/views/roomView' - no need to add it here, it's already another way round. Just user RoomView
          
-], function($, _, Backbone, NewSessionModalTmpl, Settings
+], function($, _, Backbone, NewSessionModalTmpl, Settings,UIComponents
 ){
 	
 	NewSessionModalView = Backbone.View.extend({
@@ -55,7 +56,11 @@ define([
         },
         
         render : function(){
-            this.$el.html(this.template({userName: Settings.userName}));
+        	console.log("Render new session modal");
+        	console.log(UIComponents);
+        	var data = $.extend({},UIComponents,{userName: Settings.userName});
+        	
+            this.$el.html(this.template(data));
             return this;
             this.onRender();
         },

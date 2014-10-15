@@ -17,8 +17,9 @@ define([
          'backbones/views/roomSubviews',
          'backbones/views/sessionEndView',
          'backbones/views/components/newSessionModal',
-         'backbones/views/components/sessionShareModal'
-], function($, _, Backbone, roomTmpl,overlayTmpl,confirmCloseModalTmpl,WebRTCClient,RoomStatus, SlideshowApp, AppStatus, Settings, LogManager,  NotificationManager, UserCollection, UserArea, RoomSubviews, SessionEndView, NewSessionModal, SessionShareModal){
+         'backbones/views/components/sessionShareModal',
+         "i18n!nls/uiComponents"
+], function($, _, Backbone, roomTmpl,overlayTmpl,confirmCloseModalTmpl,WebRTCClient,RoomStatus, SlideshowApp, AppStatus, Settings, LogManager,  NotificationManager, UserCollection, UserArea, RoomSubviews, SessionEndView, NewSessionModal, SessionShareModal,UIComponents){
 
 	
 		var DEFAULT_ROOM_NAME = "test";
@@ -52,7 +53,7 @@ define([
 				this.initWebRTC();
 				
 				this.userCollection = new UserCollection();
-				this.userCollection.add({username:this.username+"(me)"});
+				this.userCollection.add({username:this.username+UIComponents.userMeLbl});
 				
 				this.roomSubviews = new RoomSubviews(this.$el,this.app);
 				
@@ -97,7 +98,7 @@ define([
 				
 				this.webRTCClient.onopen = function(e){
 					console.log("Open!");
-					var username = e.username || e.peerId || "Guest"; 
+					var username = e.username || e.peerId || UIComponents.userGuestLbl; 
 					self.userCollection.add({username:username});
 					self.app.setStatus(AppStatus.READY);
 					
@@ -110,7 +111,7 @@ define([
 					
 					var options = {
 							'alert_class':'alert-info',
-							'alert_message':username+' joined',
+							'alert_message':username+' '+UIComponents.userJoinedMsg,
 							appendMode : true
 					};
 					self.notificationManager.render(options);
@@ -130,7 +131,7 @@ define([
 					if (success){
 						var options = {
 								'alert_class':'alert-info',
-								'alert_message':e.username+' left!',
+								'alert_message':e.username+' '+UIComponents.userLeftMsg,
 								appendMode : true
 						};
 						self.notificationManager.render(options);
@@ -170,7 +171,9 @@ define([
             	}            	
             	else{
             		console.log("Rerender all!");
-            		this.$el.html(this.template());
+            		
+                	var data = $.extend({},UIComponents,{});
+            		this.$el.html(this.template(data));
             		// TODO: refactor - keep userCollection as peer Ids in app object. Move UserArea to roomSubviews
 	                this.userArea = new UserArea({collection:this.userCollection});
 	            	this.$el.find("#users-area").append(this.userArea.render().el);
@@ -301,12 +304,10 @@ define([
             },
             
             renderModals : function(){
-            	
-            	//encodeURIComponent(location.href);
             	this.$el.find("#modal-container").append(this.sessionShareModal.render().el);
-            	this.$el.find("#modal-container").append(this.newSessionModal.render().el);
-            	this.$el.find("#modal-container").append(this.confirmClose());
-
+            	this.$el.find("#modal-container").append(this.newSessionModal.render().el);            	
+            	var confirmCloseData = UIComponents;
+            	this.$el.find("#modal-container").append(this.confirmClose(confirmCloseData));
             },
             
             renderOverlay : function(){
@@ -314,9 +315,8 @@ define([
         		if (this.app.status == AppStatus.READY){
         			this.removeOverlay();
         		}
-        		// temporarily block overlay
         		else{
-        			var options = {msg:this.app.status};
+        			var options = {msg:UIComponents[this.app.status]};
         			this.addOverlay(options);
         		}
             },
