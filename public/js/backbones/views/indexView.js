@@ -3,12 +3,13 @@ define([
          'underscore', 
          'backbone',
          'app/settings',
-         'text!templates/header.html',
-         'text!templates/footer.html',
+         'text!templates/index/header.html',
+         'text!templates/index/footer.html',
+         'text!templates/index/languageMenuItem.html',
          "i18n!nls/uiComponents"
          
          
-], function($, _, Backbone, Settings,HeaderTmpl,FooterTmpl, UIComponents){
+], function($, _, Backbone, Settings,HeaderTmpl,FooterTmpl,LanguageMenuItemTmpl, UIComponents){
 	
 	
 	IndexView = Backbone.View.extend({
@@ -25,6 +26,7 @@ define([
 			
 			this.headerTemplate = _.template(HeaderTmpl);
 			this.footerTemplate = _.template(FooterTmpl);
+			this.languageMenuItemTemplate = _.template(LanguageMenuItemTmpl);
 			
 			console.log("Change locale!");
 
@@ -69,25 +71,28 @@ define([
         	console.log(languageList);
         	var self = this;
         	
-        	var liTemplateStart = '<li role="presentation"><a role="menuitem" tabindex="-1" >';
-        	var liTemplateEnd = '</a></li>';
         	for (var i in languageList) {
         		var lang = languageList[i];
         		console.log("add "+lang);
-        		var element = liTemplateStart+lang+liTemplateEnd;
+        		var element = this.languageMenuItemTemplate({item:lang});
         		$("#language-list").append(element);
         	}
         	
-        	$("#language-list li a").click(self.switchLanguage);
+        	$("#language-list li").click(self.switchLanguage);
         },
         
         switchLanguage : function(ev){
-
-        	var selectedLanguage = $(this).text();
-        	console.log("Switch language!");
-        	console.log(ev);
-			localStorage.setItem('locale', selectedLanguage);
-			location.reload();
+        	console.log(this);
+        	// remove whitespaces and compare languages. If different, reload page
+        	var selectedLanguage = $.trim($(this).text());
+        	var currentLanguage = $.trim($("#selectedLanguage").text());
+        	console.log(selectedLanguage+" vs "+currentLanguage);
+        	if (selectedLanguage !== currentLanguage){
+	        	console.log("Switch language!");
+	        	console.log(ev);
+				localStorage.setItem('locale', selectedLanguage);
+				location.reload();
+        	}
         },
 	
 	});
