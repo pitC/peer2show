@@ -1,7 +1,7 @@
 define({
     // LABELS anywhere
     "newSessionLbl":"Nowa sesja",
-    "createNewSessionLbl":"Utwórz nową sesję",
+    "createNewSessionLbl":"utwórz nową sesję",
     "usernameLbl":"Nazwa użytkownika",
     "closeSessionLbl":"Zakończ sesję",
     
@@ -70,18 +70,18 @@ define({
     "leavePageWarningMsg":"Zamknięcie okna spowoduje zakończenie sesji!",
     
     //Session end view
-    "sessionEndMsg":"Dziękujemy za korzystanie z peer2show! Co chcieliby Państwo zrobić w następnej kolejności?",
+    "sessionEndMsg":"Dziękujemy za korzystanie z peer2show! To nie musi być koniec, możliwości jest wiele:",
     "shareItMsg":"zapoznaj się z naszymi profilami na Facebooku, Google+ bądź Twitterze?",
     "dropMessageMsg":'napisz do nas',
     "orLbl":"lub",
     "helpImproveMsg":"pomóż nam ulepszyć peer2show",
-    "closedByUserMsg":"sesja została zakończona przez jedngo z użytkowników",
+    "closedByUserMsg":"sesja została zakończona przez użytkownika",
     
     
     // Session end error page
-    "didNotHelpLbl":"Chętnie pomożemy Państwu odnaleźć przyczynę problemu",
+    "didNotHelpLbl":"Chętnie pomożemy odnaleźć przyczynę problemu",
     "contactUsLbl":"Prosimy o kontakt!",
-    "browserIncompatibleMsg":"Państwa przeglądarka nie wspiera protokołu WebRTC. Proszę uaktualnić przeglądarkę do najnowszej wersji i zapoznać się z naszą tabelą kompatybilności:",
+    "browserIncompatibleMsg":"Ta przeglądarka nie wspiera technologii WebRTC. Proszę uaktualnić przeglądarkę do najnowszej wersji i zapoznać się z naszą tabelą kompatybilności:",
     "connectionErrorMsg":'Zaproszenie do sesji zawiera nieprawidłowy link<br>bądź żądana sesja została już zakończona.<br>Dlaczego by nie <a class="action-link modal-remote" data-toggle="modal" data-target="#new-session-modal">rozpocząć własnej sesji?</a>',
     "fatalErrorMsg":"Przepraszamy, wystąpił błąd. Z chęcią pomożemy!",
            
@@ -101,7 +101,7 @@ define({
 	"tosLink":"site/pl/tos.html",
 	"tosLbl":"Warunki świadczenia usług",
 	"userFeedbackLbl":"Feedback",
-	"legalNoteLbl":"Zanim zaczniesz korzystać ze strony peer2show zapoznaj się z dokumentem"
+	"legalNoteLbl":"Zanim zaczniesz korzystać ze strony peer2show, zapoznaj się z dokumentem"
 	
 
 });

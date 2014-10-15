@@ -1,37 +1,40 @@
 define({
-    "pitchTxt":"Experience a free peer-to-peer slideshow.<br>Enjoy the simplicity and the beauty of real time sharing. Forget uploading and waiting.<br>View pictures together with your loved ones.",
+    "pitchTxt":"Odkryj prostą i bezpieczną metodę bezpośredniego przesyłania plików graficznych.<br>Zapomnij o uniedogodnieniach związanych z koniecznością ładowania obrazów na serwer<br>Udostępniaj zdjęcia w internecie bez obaw o utratę prywatności i praw autorskich", 		
     // Step one
-    "createHeader":"Create",
-    "createTxt":"a session by providing your name",
+    "createHeader":"Stwórz",
+    "createTxt":"sesję, wpisując nazwę użytkownika",
     // Step two
-    "dropHeader":"Drop",
-    "dropTxt":"pictures you want to show",
+    "dropHeader":"Dodaj",
+    "dropTxt":"zdjęcia, przeciągając je na ekran",
     // Step three
-    "shareHeader":"Share",
-    "shareTxt":"a link to the session with your peers",
+    "shareHeader":"Udostępnij",
+    "shareTxt":"link w celu zaproszenia innych",
     
-    "tryBtn":"Give it a try",
-    "learnMoreBtn":"learn more &#8595;",
+    "tryBtn":"Rozpocznij sesję",
+    "learnMoreBtn":"dowiedz się więcej &#8595;",
     
     // learn more section
-    "whyHeader":"Why peer2show?",
-    "freeHeader":"Free to use",
-    "noLoginHeader":"No login required",
-    "mobileHeader":"Mobile-friendly",
-    "viewHeader":"View same slide",
-    "zoomHeader":"Zoom & pan",
-    "chatHeader":"Chat",
-    "cloudHeader":"No cloud upload",
-    "controlHeader":"Sharing under control",
-    "copyrightHeader":"No copyright transfer",
-    "convincedHeader":"Convinced? Try it now!",
+    "whyHeader":"Dlaczego warto korzystać z peer2show?",
+    "freeHeader":"Bezpłatny",
+    "noLoginHeader":"Bez konieczności logowania się",
+    "mobileHeader":"Dobrze działa na smartfonie i tablecie",
+    "viewHeader":"Widzisz ten sam slajd co inni użytkownicy",
+    "zoomHeader":"Można powiększać i przesuwać",
+    "chatHeader":"Stary, dobry czat",
+    "cloudHeader":"Pliki nie są przechowywane w chmurze",
+    "controlHeader":"Wiesz kto ogląda Twoje zdjęcia",
+    "copyrightHeader":"Szanujemy Twoje prawa autorskie",
+    "convincedHeader":"Czujesz się przekonany? Wybróbuj peer2show!",
     
-    "convenienceHeader":"Convenience",
-    "convenienceTxt":'We keep it <span class="carousel-sync" id="learn-more-header-1">simple and free</span>. You <span class="carousel-sync" id="learn-more-header-2">do not need to sign-up</span> to create a session. Just give in your name or nickname, drag&drop images and send a link to your friends. Peer2show <span class="carousel-sync" id="learn-more-header-3">supports both desktop and mobile</span> - share the pictures on your computer, tablet and smartphone!',
+    "convenienceHeader":"Wygoda, niezależność<br>i mobilność",
+	
+	"convenienceTxt":'Peer2show to <span class="carousel-sync" id="learn-more-header-1">bezpłatne narzędzie</span> do bezpośredniego udostępniania zdjęć w internecie. <span class="carousel-sync" id="learn-more-header-2">Nie wymagamy logowania się</span> ani podawania adresu mailowego. Aby utworzyć sesję, wystarczy podać dowolną nazwę użytkownika, przeciągnąć zdjęcia i udostępnić link. Za pomocą peer2show zdjęcia oglądać można <span class="carousel-sync" id="learn-more-header-3">zarówno na urządzeniach stacjonarnych jak i mobilnych</span> - smartfonach i tabletach.',
+	
+	
     
-    "realTimeHeader":"Real-time experience",
-    "realTimeTxt":'Experience a free real-time good quality slideshow. As you navigate through your show, <span class="carousel-sync" id="learn-more-header-4">the current slide is displayed to all viewers</span>, so you can be sure everyone stays on the same page. You can also <span class="carousel-sync" id="learn-more-header-5">zoom into the picture</span> to show the details. We also built in the  <span class="carousel-sync" id="learn-more-header-6">chat functionality</span> if you or your friend feel like commenting on the picture!',
+    "realTimeHeader":"Komunikacja w czasie rzeczywistym",
+    "realTimeTxt":'Technologia peer2show pozwala na przesyłanie zdjęć dobrej jakości w czasie rzeczywistym. Podczas sesji <span class="carousel-sync" id="learn-more-header-4">wszystkim użytkownikom wyświetla się ten sam plik graficzny</span> - dzięki temu zdjęcia ogląda się faktycznie wspólnie. Peer2show pozwala także <span class="carousel-sync" id="learn-more-header-5">powiększać i przesuwać</span> fragmenty powiększonego obrazu. Dla fanów słowa pisanego wbudowaliśmy także <span class="carousel-sync" id="learn-more-header-6">funkcję czatu</span>. ',
     
-    "privacyHeader":"Privacy & Safety",
-    "privacyTxt":'This is where we make the difference.  <span class="carousel-sync" id="learn-more-header-7">Your images are not uploaded to any server </span> - the whole magic happens just between you and the invited person! <span class="carousel-sync" id="learn-more-header-8">You keep the control over who sees your pictures at all times</span>. As a user joins the session, you see a notification in the right top corner. Also  <span class="carousel-sync" id="learn-more-header-9">through not uploading the pictures anywhere you make sure that you do not handle the rights to them to anyone</span>.',   
+    "privacyHeader":"Prywatność<br>i bezpieczeństwo",
+    "privacyTxt":'Ochrona prywatności i praw autorskich jest dla nas szczególnie ważna. Zdjęcia pokazywane przez peer2show <span class="carousel-sync" id="learn-more-header-7">nie są przechowywane w chmurze</span> - są przesyłane bezpośrednio między jednym a drugim użytkownikiem. W oknie aplikacji <span class="carousel-sync" id="learn-more-header-8">cały czas wyświetla się lista użytkowników biorących udział w sesji</span> - wiadomo zatem, kto widzi nasze zdjęcia. W momencie dołączenia nowego użytkownika pojawia się w prawym górnym rogu powiadomienie. W przeciwieństwie do rozwiązań popularnych w sieciach społeczościowych, korzystanie z peer2show <span class="carousel-sync" id="learn-more-header-9">nie powoduje utraty praw autorskich do danego zdjęcia bądź grafiki</span>.',   
 });

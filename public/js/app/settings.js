@@ -18,7 +18,7 @@ define([],function () {
 		
 		useWebWorker:false, // use web worker for reading files
 		
-		enableConsoleLog:true,
+		enableConsoleLog:false,
 		
 		
 		previewMaxHeight:100,

@@ -1,17 +1,23 @@
 <div class="container">
-	<ul>
-		<li>peer2show v1.0</li>
-		<li>·</li>
-		<li><a class="modal-remote" data-toggle="modal"  data-remote="<%= tosLink %>" data-target="#tos-modal"><%= tosLbl %></a></li>
-		<li>·</li>
-		<li><a href="http://peer2show.uservoice.com/"><%= userFeedbackLbl %></a></li>	
-	</ul>
-	<ul class="" id="social-bar">
+	<div class="row">
+		<div class="col-md-6 col-md-offset-3">
+			<ul>
+				<li>peer2show v1.0</li>
+				<li>·</li>
+				<li><a class="modal-remote" data-toggle="modal"  data-remote="<%= tosLink %>" data-target="#tos-modal"><%= tosLbl %></a></li>
+				<li>·</li>
+				<li><a href="http://peer2show.uservoice.com/"><%= userFeedbackLbl %></a></li>	
+			</ul>
+			<p>
+				<small><%= legalNoteLbl %> <a class="modal-remote" data-toggle="modal" data-remote="<%= tosLbl %>" data-target="#tos-modal"><%= tosLbl %></a></small>
+			</p>
+		</div>
+		<div class="col-md-3">
+			<ul class="" id="social-bar">
 				<li><a target="_blank" class="social-link" id="fb-link" href="https://www.facebook.com/peer2show"></a></li>
 				<li><a target="_blank" class="social-link" id="gplus-link" href="https://plus.google.com/u/3/b/105976349513067664645/"></a></li>
 				<li><a target="_blank" class="social-link" id="tweet-link" href="https://twitter.com/peer2show"></a></li>
-	</ul>
-	<p>
-		<small><%= legalNoteLbl %> <a class="modal-remote" data-toggle="modal" data-remote="<%= tosLbl %>" data-target="#tos-modal"><%= tosLbl %></a></small>
-	</p>
+			</ul>
+		</div>
+	</div>
 </div>
