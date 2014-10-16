@@ -2,8 +2,13 @@
 
 // Require.js allows us to configure shortcut alias 
 // There usage will become more apparent further along in the tutorial. 
-var locale = localStorage.getItem('locale') || navigator.language || navigator.userLanguage;
-
+var locale = "";
+if (localStorage){
+	locale = localStorage.getItem('locale') || navigator.language || navigator.userLanguage;
+}
+else{
+	locale = navigator.language || navigator.userLanguage;
+}
 require.config({
 	baseUrl: 'js',
 	config: {

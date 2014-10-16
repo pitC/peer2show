@@ -59,15 +59,25 @@ define([
         },
         
         isCookieAccepted : function(){
-        	return localStorage.getItem('cookie-accepted');
+        	var accepted = null;
+        	if (localStorage){
+        		accepted = localStorage.getItem('cookie-accepted');
+        	}
+        	return accepted;
         },
         
         cookieAccepted : function(ev){
-        	localStorage.setItem('cookie-accepted', true);
+        	if (localStorage){
+        		localStorage.setItem('cookie-accepted', "1");
+        	}
         },
         
         setCurrentLanguage : function(){
-        	var proposedLang = localStorage.getItem('locale') || navigator.language || navigator.userLanguage;
+        	var proposedLang = "";
+        	if (localStorage){
+        		proposedLang = localStorage.getItem('locale') || navigator.language || navigator.userLanguage;
+        	}
+        	
         	console.log("proposed language: "+proposedLang+"?"+$.inArray(proposedLang,Settings.supportedLanguages));
         	var setLanguage = this.DEFAULT_LANGUAGE;
         	proposedLang = proposedLang.toLowerCase();
