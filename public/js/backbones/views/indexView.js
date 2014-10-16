@@ -30,6 +30,8 @@ define([
 			this.footerTemplate = _.template(FooterTmpl);
 			this.languageMenuItemTemplate = _.template(LanguageMenuItemTmpl);
 			
+			this.setTitle();
+			
 			console.log("Change locale!");
 
         },
@@ -94,6 +96,10 @@ define([
         	$("#selectedLanguage").html(setLanguage);
         	
         	
+        },
+        
+        setTitle : function(){
+        	$("title").text(UIComponents.title);
         },
         
         propagateLanguageList : function(){
