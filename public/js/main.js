@@ -82,7 +82,6 @@ require([
 'app',
 ], 
 function(App){ 
-	console.log(navigator.language+"/"+navigator.userLanguage);
 	// The "app" dependency is passed in as "App" 
 	App.initialize(); 
 	

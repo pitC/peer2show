@@ -54,7 +54,6 @@ define([
         	var currentId = "#"+this.SLIDE_PREVIEW_ID_PREFIX+currentSlide;
         	$(prevId).removeClass('active-slide').addClass("inactive-slide");
         	$(currentId).removeClass('inactive-slide').addClass("active-slide");
-        	
         },
         
         render : function(event){

@@ -13,8 +13,7 @@ define([
 	var AppRouter = Backbone.Router.extend({
         initialize : function(options){
             this.el = options.el;
-            // disable console logs
-            LogManager.switchConsoleLogs(Settings.enableConsoleLog);
+            
             console.log("App Router init! ");
             
         },
@@ -75,7 +74,8 @@ define([
     });
 	
 	var initialize = function(){
-		
+		// disable console logs
+        LogManager.switchConsoleLogs(Settings.enableConsoleLog);
 		renderIndex();
 		
 		var router = new AppRouter({el : $('#content')});
