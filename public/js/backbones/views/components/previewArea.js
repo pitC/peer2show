@@ -43,7 +43,8 @@ define([
 		initialize:function (app) {
 			this.app = app;
 			this.slideCollection = app.slideCollection;
-			this.slideCollection.on('add remove sort destroy',this.render,this);
+			this.slideCollection.on('remove sort destroy',this.render,this);
+			this.listenTo(this.slideCollection,'add',this.renderAddedSlide);
 			this.slideCollection.on('slideChange',this.renderActiveSlide,this);
             this.template = _.template(SlidePreviewAreaTmpl);
         },
@@ -57,7 +58,27 @@ define([
         	
         },
         
-        render : function(event){
+        renderAddedSlide : function(slide,collection,options){
+        	console.log("Slide added!");
+        	
+        	var index = collection.indexOf(slide);
+        	
+        	var collectionSize = this.slideCollection.length;
+        	console.log(index+" vs "+collectionSize);
+        	// detect if added slide was the last one
+        	if (index+1 == collectionSize){
+        		// then append only
+        		console.log("append slide!");
+        		this.renderSlidePreview(slide,index);
+        	}
+        	else{
+        		// else rerender everything
+        		console.log("rerender everything!");
+        		this.render();
+        	}
+        },
+        
+        render : function(){
         	
         	var focused = $(':focus');
 			this.$el.html(this.template());
@@ -69,11 +90,15 @@ define([
 			return this;
         },
 
-		renderSlidePreview : function(slide){
+		renderSlidePreview : function(slide,index){
+			console.log("Render slide preview");
 			
 			var isCurrent = this.slideCollection.isCurrent(slide);
 //			console.log("Render slide preview! is current? "+isCurrent);
-			var index = this.slideCollection.indexOf(slide);
+//			var index = slide.get("index");
+			if (!index){
+				index = this.slideCollection.indexOf(slide);
+			}
 			
 			var indexedModel = slide;
 			indexedModel.attributes.index = index;
