@@ -9,35 +9,31 @@ define([
 		},
 		
 		next : function(){
-			
+			var prevSlideIndex = this.currentSlideIndex;
 			this.currentSlideIndex += 1;
 			console.log("next! "+this.currentSlideIndex);
 			if (this.currentSlideIndex >= this.length){
 				this.currentSlideIndex = this.length-1;
 			}
-			else{
-				this.trigger('all');
-			}
+			this.trigger('slideChange',this.currentSlideIndex,prevSlideIndex);
 		},
 		
 		prev : function(){
-			
+			var prevSlideIndex = this.currentSlideIndex;
 			this.currentSlideIndex -= 1;
 			console.log("prev! "+this.currentSlideIndex);
 			if (this.currentSlideIndex < 0){
 				this.currentSlideIndex = 0;
-				return;
 			}
-			else{
-				this.trigger('all');
-			}
+			this.trigger('slideChange',this.currentSlideIndex,prevSlideIndex);
 		},
 		
 		jumpTo : function(index){
+			var prevSlideIndex = this.currentSlideIndex;
 			if (index >= 0 && index < this.length && index != this.currentSlideIndex){
 				console.log("Jump to "+index);
 				this.currentSlideIndex = parseInt(index);
-				this.trigger('all');
+				this.trigger('slideChange',this.currentSlideIndex,prevSlideIndex);
 			}
 			return this.at(index);
 		},

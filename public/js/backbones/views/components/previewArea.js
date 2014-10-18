@@ -18,7 +18,7 @@ define([
 		
 		initialize:function (options,isCurrent) {
 			this.model = options.model;
-			
+						
 			this.isActive = isCurrent;
 			
 			this.template = _.template(SlidePreviewTmpl);
@@ -37,13 +37,28 @@ define([
 	});
 	
 	SlidePreviewAreaView = Backbone.View.extend({
+		
+		SLIDE_PREVIEW_ID_PREFIX : "slide-preview-",
+		
 		initialize:function (app) {
 			this.app = app;
 			this.slideCollection = app.slideCollection;
-			this.slideCollection.on('all',this.render,this);
+			this.slideCollection.on('add remove sort destroy',this.render,this);
+			this.slideCollection.on('slideChange',this.renderActiveSlide,this);
             this.template = _.template(SlidePreviewAreaTmpl);
         },
-        render : function(){
+        
+        renderActiveSlide : function(currentSlide,prevSlide){
+        	console.log("render actiev slide! "+currentSlide+" "+prevSlide);
+        	var prevId = "#"+this.SLIDE_PREVIEW_ID_PREFIX+prevSlide;
+        	var currentId = "#"+this.SLIDE_PREVIEW_ID_PREFIX+currentSlide;
+        	$(prevId).removeClass('active-slide').addClass("inactive-slide");
+        	$(currentId).removeClass('inactive-slide').addClass("active-slide");
+        	
+        },
+        
+        render : function(event){
+        	
         	var focused = $(':focus');
 			this.$el.html(this.template());
 			this.slideCollection.each(this.renderSlidePreview,this);
@@ -62,8 +77,9 @@ define([
 			
 			var indexedModel = slide;
 			indexedModel.attributes.index = index;
+			var viewId = this.SLIDE_PREVIEW_ID_PREFIX+index;
 			
-			var slidePreview = new SlidePreviewView({model : indexedModel},isCurrent);
+			var slidePreview = new SlidePreviewView({model : indexedModel,id:viewId},isCurrent);
 			
 	        $("#slide-preview-area").append(slidePreview.render().el);
 		},
@@ -108,11 +124,10 @@ define([
 		jumpTo : function(event){
 			console.log("Jump to!");	
 			console.log(event);
-			
 			var index = $(event.target).attr("data-index");
-		
 			//this.app.jumpToByURL({dataURL:dataUrl});
 			this.app.jumpToByIndex({index:index});
+			
 		},
 				
 		onShow : function(){
