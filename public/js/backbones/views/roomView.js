@@ -344,7 +344,7 @@ define([
             	this.setHeight();
             	this.newSessionModal.onRender();
             },
-            
+                       
             setHeight :function(){
             	var height = "500px";
             	$('#sidebar-panel').css("max-height",height);

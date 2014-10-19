@@ -29,7 +29,7 @@ define([
 		console.log("Render image");
 		var data = $.extend({}, this.model.toJSON(), this.metadata);
 		console.log(data);
-	    this.$el.html(this.template(data)).hide().fadeIn(100);
+	    this.$el.html(this.template(data)).hide().fadeIn(500);
 //		this.$el.html(this.template(data));
 	    return this;
 	},
@@ -52,6 +52,8 @@ define([
 			
 			this.slideCollection.on('all',this.renderCurrentSlide,this);
             this.template = _.template(SlideFullAreaTmpl);
+            this.imageMaxHeight = "100%";
+            
         },
         render : function(){
 			this.$el.html('');
@@ -92,13 +94,18 @@ define([
         		
         		var metadata = {
         				collectionSize : this.slideCollection.length,
-        				index : this.slideCollection.indexOf(slide)+1
+        				index : this.slideCollection.indexOf(slide)+1,
+        				maxHeight:this.imageMaxHeight
         		};
 	        	var slideView = new SlideShowView({model : slide,metadata:metadata});
 	        	$("#slide-show-area").empty();
 	        	
 	        	var element = slideView.render().el;
 	        	$(element).appendTo("#slide-show-area");
+//	        	$(element).css("max-height",this.imageMaxHeight).appendTo("#slide-show-area");
+//	        	$(element);
+//	        	
+//	        	$("#slide-show-area").css("max-height",this.imageMaxHeight);
         	}
 		},
 		
@@ -110,7 +117,37 @@ define([
         	this.app.addClickArea("drop-intro-area");
         	this.app.setZoomableArea("#img-zoomer-wrapper");
         	this.app.setSwipeArea("slide-show-area");
+//        	this.bindFullscreenEvents();
+        	this.bindWindowResize();
+        	this.setImageMaxHeight();
+		},
+		
+		bindWindowResize : function(){
+			console.log("[Show Area] bind window resize")
+			var self = this;
+			$(window).bind('resize', function(){
+				console.log("[Show Area] On window resize!")
+				self.setImageMaxHeight();
+				self.renderCurrentSlide();
+			});
+		},
+		
+		setImageMaxHeight : function(){
+			var windowHeight = $(window).height();
+			var documentHeight = $(document).height();
+			var position = $("#slide-show-area").offset();
+			console.log("[Show Area] Preferred height: "+windowHeight+" "+documentHeight+" "+position.top);
+			var preferredHeight = windowHeight-position.top;
+			this.imageMaxHeight = preferredHeight+"px";
 		}
+//		,
+//		
+//		bindFullscreenEvents : function(){
+//        	var self = this;
+//        	document.addEventListener("webkitfullscreenchange", function () {
+//        		self.renderCurrentSlide();
+//        	}, false);
+//        }
 	});
 	
 	

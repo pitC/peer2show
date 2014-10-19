@@ -829,9 +829,9 @@
      * reinit the component when the user resize the window 
      */
    	function windowResizeEventHandler(){
-   		console.log("Resize -> adjust to container");
-   		adjustToContainer();
-   		
+//   		console.log("Resize -> adjust to container");
+//   		adjustToContainer();
+   		null;
    	}
 
  	/**

@@ -678,8 +678,8 @@ background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNv
 	border:dashed 5px grey;
 }
 
-#slide-show-area div{
-	/* height:100%; */
+#slide-show-img {
+	height:100%;
 	
 	overflow: hidden;
 }
