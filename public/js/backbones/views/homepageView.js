@@ -121,12 +121,12 @@ define([
         	
         	function moved(el){
         		var emphesizeClass = 'emph';
-        		console.log("owl moved!");
+//        		console.log("owl moved!");
         		var srcId = $(el).attr('id');
         		var num = this.currentItem;
         		$('.carousel-sync').removeClass(emphesizeClass);
         		var target = '#'+srcId+"-"+num;
-        		console.log("target "+target);
+//        		console.log("target "+target);
         		$(target).addClass(emphesizeClass);
         		
         	};

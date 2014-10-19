@@ -29,7 +29,8 @@ define([
 		console.log("Render image");
 		var data = $.extend({}, this.model.toJSON(), this.metadata);
 		console.log(data);
-	    this.$el.html(this.template(data));
+	    this.$el.html(this.template(data)).hide().fadeIn(100);
+//		this.$el.html(this.template(data));
 	    return this;
 	},
 	
@@ -93,10 +94,10 @@ define([
         				collectionSize : this.slideCollection.length,
         				index : this.slideCollection.indexOf(slide)+1
         		};
-	        	var slidePreview = new SlideShowView({model : slide,metadata:metadata});
+	        	var slideView = new SlideShowView({model : slide,metadata:metadata});
 	        	$("#slide-show-area").empty();
 	        	
-	        	var element = slidePreview.render().el;
+	        	var element = slideView.render().el;
 	        	$(element).appendTo("#slide-show-area");
         	}
 		},

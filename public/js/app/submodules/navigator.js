@@ -51,7 +51,7 @@ define([
 			};
 			
 			app.transformImage = function(options){
-				app.zoomableArea.css('-webkit-transform',options.transform);
+//				app.zoomableArea.css('-webkit-transform',options.transform);
 				app.zoomableArea.css('transform',options.transform);
 			};
 		};

@@ -671,7 +671,6 @@ background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNv
 	border:dashed 5px rgba(0,0,0,0);
 	padding-bottom: 20%;
 	opacity: 0.7;
-	transition: 0.3s;
 	
 }
 #slide-show-area p:hover{
@@ -681,7 +680,7 @@ background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNv
 
 #slide-show-area div{
 	/* height:100%; */
-	transition: 0.5s;
+	
 	overflow: hidden;
 }
 
@@ -714,8 +713,8 @@ background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNv
 }
 
 #img-zoomer-wrapper{
-	-webkit-transition: all 0s ease-out;
-	transition: all 0s ease-out;
+	/*-webkit-transition: all 0s ease-out;*/
+	/*transition: all 0s ease-out;*/
 }
 
 #slide-show-area:-webkit-full-screen {
