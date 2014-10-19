@@ -18,25 +18,41 @@ define([
 	
 	SlideShowView = Backbone.View.extend({
 		id: "slide-show-img",
-	        initialize:function (options) {
-	        	this.model = options.model;
-	        	this.metadata = options.metadata;
-	    this.template = _.template(SlideFullTmpl);
-	},
-	
-	render : function(){
 		
-		console.log("Render image");
-		var data = $.extend({}, this.model.toJSON(), this.metadata);
-		console.log(data);
-	    this.$el.html(this.template(data)).hide().fadeIn(500);
-//		this.$el.html(this.template(data));
-	    return this;
-	},
+		initialize:function (options) {
+        	this.model = options.model;
+        	this.metadata = options.metadata;
+        	// Transition is optional because when loading large amount of pictures Firefox was hanging
+        	// without transition seems to be fine
+        	if (options.transition == null){
+        		this.transition = true;
+        	}
+        	else{
+        		this.transition = options.transition;
+        	}
+        	
+        	this.template = _.template(SlideFullTmpl);
+	    },
 	
-	dataURL : function(){
-	    return this.model.get('dataURL');
-	}
+		render : function(){
+			console.log("Render image");
+			var data = $.extend({}, this.model.toJSON(), this.metadata);
+			console.log(data);
+			console.log("[Show Area] render with transition?"+this.transition);
+			if (this.transition){
+				
+			    this.$el.html(this.template(data)).hide().fadeIn(200);
+			}
+			else{
+				this.$el.html(this.template(data));
+			}
+
+		    return this;
+		},
+	
+		dataURL : function(){
+		    return this.model.get('dataURL');
+		}
 	});
 	
 	SlideShowAreaView = Backbone.View.extend({
@@ -50,11 +66,29 @@ define([
 			this.app = app;
 			this.slideCollection = app.slideCollection;
 			
-			this.slideCollection.on('all',this.renderCurrentSlide,this);
+			this.slideCollection.on('remove slideChange',this.renderCurrentSlide,this);
+			this.listenTo(this.slideCollection,"add",this.renderAddesSlide);
+//			this.slideCollection.on('add',this.renderAddedSlide,this);
             this.template = _.template(SlideFullAreaTmpl);
             this.imageMaxHeight = "100%";
-            
         },
+        
+        renderAddesSlide : function(){
+        	var metadataContainer = $("#img-metadata");
+        	// just update metadata container
+        	if ($(metadataContainer).length > 0){
+        		console.log("[Show Area] Render only metadata");
+        		var metadataTxt = this.getMetadataDescription();
+        		$(metadataContainer).text(metadataTxt);
+        	}
+        	// render everything only if empty
+        	else{
+        		console.log("[Show Area] Rerender all!");
+        		// render slide without transition effect
+        		this.renderCurrentSlide(false);
+        	}
+        },
+        
         render : function(){
 			this.$el.html('');
 	        
@@ -64,19 +98,23 @@ define([
 			if(slide){
 				this.renderSlide(slide);
 			}
-//			this.onShow();
+			// no slides to render
+			else{
+				this.app.addClickArea("drop-intro-area");
+			}
+			
 			return this;
         },
         
-        renderCurrentSlide : function(){
+        renderCurrentSlide : function(transition){
         	// if the img-zoomer-wrapper does not exist yet, delay setting the zoomable area.
         	// otherwise the picture is not ready yet
+        	
         	var delay = (1-$("#img-zoomer-wrapper").length)*500;
         	
         	var slide = this.slideCollection.getCurrentSlide();
         	if(slide){
-	        	this.renderSlide(slide);
-	        	
+	        	this.renderSlide(slide,transition);
 	        	
 	        	var self = this;
 	        	setTimeout(function(){
@@ -89,24 +127,23 @@ define([
         	}
         },
         
-        renderSlide : function(slide){
+        renderSlide : function(slide, transition){
         	if (slide!= null){
         		
         		var metadata = {
-        				collectionSize : this.slideCollection.length,
-        				index : this.slideCollection.indexOf(slide)+1,
+        				description: this.getMetadataDescription(slide),
         				maxHeight:this.imageMaxHeight
         		};
-	        	var slideView = new SlideShowView({model : slide,metadata:metadata});
+	        	var slideView = new SlideShowView({model : slide,metadata:metadata,transition:transition});
 	        	$("#slide-show-area").empty();
 	        	
 	        	var element = slideView.render().el;
 	        	$(element).appendTo("#slide-show-area");
-//	        	$(element).css("max-height",this.imageMaxHeight).appendTo("#slide-show-area");
-//	        	$(element);
-//	        	
-//	        	$("#slide-show-area").css("max-height",this.imageMaxHeight);
         	}
+		},
+		
+		getMetadataDescription : function(slide){
+			return  (this.slideCollection.currentSlideIndex+1)+"/"+this.slideCollection.length;
 		},
 		
         onShow : function(){
@@ -117,7 +154,6 @@ define([
         	this.app.addClickArea("drop-intro-area");
         	this.app.setZoomableArea("#img-zoomer-wrapper");
         	this.app.setSwipeArea("slide-show-area");
-//        	this.bindFullscreenEvents();
         	this.bindWindowResize();
         	this.setImageMaxHeight();
 		},
@@ -140,14 +176,7 @@ define([
 			var preferredHeight = windowHeight-position.top;
 			this.imageMaxHeight = preferredHeight+"px";
 		}
-//		,
-//		
-//		bindFullscreenEvents : function(){
-//        	var self = this;
-//        	document.addEventListener("webkitfullscreenchange", function () {
-//        		self.renderCurrentSlide();
-//        	}, false);
-//        }
+
 	});
 	
 	
