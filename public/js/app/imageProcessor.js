@@ -36,7 +36,7 @@ define([
 			
 		};
 		
-		this.isImage = function(file){
+		this.isSupported = function(file){
 			var isImage = false;
 			if (file.type){
 				if (file.type.indexOf("image") != -1){
@@ -130,6 +130,12 @@ define([
 //				ctx.drawImage(image, 0, 0, srcWidth, srcHeight);
 //				var dataToScale = ctx.getImageData(0, 0, srcWidth, srcHeight).data;
 //				resized.resize(dataToScale);
+			};
+			
+			image.onerror = function(evt){
+				console.log("loading error!");
+				console.log(evt);
+				callback(null);
 			};
 			
 	        image.src = srcUrl;

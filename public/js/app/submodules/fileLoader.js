@@ -20,15 +20,25 @@ define([
 			    			var options = Settings.imageSettings;
 			    			var url = event.target.result;
 			    			destUrl = self.imageProcessor.processImage(url, options, function(destUrl){
-			    			var destFile = self.imageProcessor.dataURLtoFile(destUrl);
-			    			var metadata = {
-				    				src:'local'
-				    		};
-			    			var index = self.addNewSlide(destUrl,null,metadata);
-			    			metadata.index = index;
-					    		
-						    self.webrtc.sendFile(destFile,metadata);
-						    
+			    			if (destUrl){
+				    			var destFile = self.imageProcessor.dataURLtoFile(destUrl);
+				    			var metadata = {
+					    				src:'local'
+					    		};
+				    			var index = self.addNewSlide(destUrl,null,metadata);
+				    			metadata.index = index;
+				    			
+							    self.webrtc.sendFile(destFile,metadata);
+			    			}
+			    			// error handling
+			    			else{
+			    				console.log("error on loading image");
+			    				console.log(event.target);
+			    				app.queueLength -= 1;
+			    				if (app.queueLength <= 0){
+			    					app.setStatus(AppStatus.READY);
+			    				}
+			    			}
 					    	
 			    		});
 			    		
@@ -86,17 +96,19 @@ define([
 					app.setStatus(AppStatus.LOADING_PHOTO);
 				}
 				var self = app;
-				var worker = new	Worker('/js/app/imageReader.js');
-				 worker.onmessage = function(e) {
-	   			  self.onWorkerRead(e);
-	   		  	};
+				if (Settings.useWebWorker){
+					var worker = new	Worker('/js/app/imageReader.js');
+					 worker.onmessage = function(e) {
+		   			  self.onWorkerRead(e);
+		   		  	};
+				}
 	   		  	
 				Array.prototype.forEach.call(files, function(file){
 					
 				      console.log("Read file!");
 				      console.log(file);
 				      
-				      if (self.imageProcessor.isImage(file)){
+				      if (self.imageProcessor.isSupported(file)){
 				    	  noImages = false;
 				    	  if (Settings.useWebWorker){
 				    		  console.log("Start worker!");  
@@ -115,6 +127,7 @@ define([
 			    	app.setStatus(AppStatus.READY);
 			    }
 			};
+			
 			
 			app.onWorkerRead = function(e){
 				console.log("Message from worker!");
@@ -148,7 +161,6 @@ define([
 					app.slideCollection.add(slide);
 				}
 				assignedIndex = app.slideCollection.indexOf(slide);
-			
 				console.log("Assigned index is "+assignedIndex);
 				app.queueLength -= 1;
 				if (app.queueLength <= 0){
@@ -156,7 +168,6 @@ define([
 				}
 			    return assignedIndex;
 			};
-			
 			app.generateFileId = function () {
 		        return (Math.random() * new Date().getTime()).toString(36).toUpperCase().replace( /\./g , '-');
 		    };
