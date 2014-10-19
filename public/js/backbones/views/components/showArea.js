@@ -159,10 +159,10 @@ define([
 		},
 		
 		bindWindowResize : function(){
-			console.log("[Show Area] bind window resize")
+			console.log("[Show Area] bind window resize");
 			var self = this;
 			$(window).bind('resize', function(){
-				console.log("[Show Area] On window resize!")
+				console.log("[Show Area] On window resize!");
 				self.setImageMaxHeight();
 				self.renderCurrentSlide();
 			});
