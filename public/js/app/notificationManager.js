@@ -16,19 +16,22 @@ define([ 'jquery', 'underscore', 'backbone',
 		 */
 		this.render = function(options) {
 			var notification = this.notificationModal(options);
-			var domTag = '.notification.'+options.alert_class;
-			if (options.appendMode && $(domTag).length > 0) {
 
-				$("<p>" + options.alert_message + "</p>").hide().appendTo(
-						$(domTag)).fadeIn();
+			if (options.appendMode) {
+				if ($('.notification.alert-info').length > 0) {
 
-			
-			} 
-			else {
+					$("<p>" + options.alert_message + "</p>").hide().appendTo(
+							$('.notification.alert-info')).fadeIn();
+
+				} else {
+					$(notification).hide().prependTo(rootEl).fadeIn().css(
+							'z-index', 1);
+				}
+			} else {
 				// put on top
 				// firstly find max z-index value
 				var maxz = 0;
-				$('.notification').each(function() {
+				$('.notification.alert-info').each(function() {
 					var z = parseInt($(this).css('z-index'), 10);
 					if (maxz < z) {
 
