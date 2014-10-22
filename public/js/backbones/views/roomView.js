@@ -71,6 +71,23 @@ define([
 				this.app = new SlideshowApp(appOptions);
 				this.app.bindCommunicationEvents();
 				
+				this.app.loaderLog.on("change",this.updateOverlay);
+				var self = this;
+				this.app.loaderLog.on("finished",function(log){
+					console.log("Load finished!");
+					for (var i in log){
+						var msg = log[i];
+						console.log("Log error");
+						console.log(msg);
+						var options = {
+								'alert_class':'alert-danger',
+								'alert_message':msg.msgType+':'+msg.msg,
+								appendMode : true
+						};
+						self.notificationManager.render(options);
+					}
+					
+				});
 				
 			},
 			
@@ -150,6 +167,15 @@ define([
 					break;
 				}
 				
+			},
+			
+			updateOverlay : function(status){
+				
+				// if status loading photos
+				if($("#overlay").length > 0){
+					console.log("[OVERLAY] Update!"+status);
+					$("#msgExt").text(status);
+				}
 			},
 			
             render : function(){

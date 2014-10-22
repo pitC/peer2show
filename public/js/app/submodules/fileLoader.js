@@ -1,14 +1,14 @@
 define([
         'app/imageProcessor',
         'app/appStatus',
-        'app/settings'
-        ],function (ImageProcessor, AppStatus, Settings) {
+        'app/settings',
+        'backbones/models/loaderLogModel'
+        ],function (ImageProcessor, AppStatus, Settings, LoaderLog) {
 
 	var submodule = function(){
 		this.init = function(app){
+			app.loaderLog = new LoaderLog({callback:app.setStatus});
 			app.imageProcessor = new ImageProcessor();
-			app.queueLength = 0;
-			
 			app.readImage = function(file) {
 				
 			    var reader = new FileReader();
@@ -34,8 +34,7 @@ define([
 			    			else{
 			    				console.log("error on loading image");
 			    				console.log(event.target);
-			    				app.queueLength -= 1;
-			    				if (app.queueLength <= 0){
+			    				if (app.loaderLog.addError(app.loaderLog.IMAGE_LOADING_ERROR,file.name)){
 			    					app.setStatus(AppStatus.READY);
 			    				}
 			    			}
@@ -58,6 +57,14 @@ define([
 			    	}
 			    	
 			    };
+			    
+			    
+			    reader.onerror = function(error){
+			    	if(app.loaderLog.addError(app.loaderLog.FILE_LOADING_ERROR,file.name)){
+			    		app.setStatus(AppStatus.READY);
+			    	}
+			    };
+			    
 			    reader.readAsDataURL(file);
 				
 			    
@@ -77,55 +84,50 @@ define([
 				    		};
 				        	var index = self.addNewSlide(url,null,metadata);
 				        	metadata.index = index;
-					    	
-						    self.webrtc.sendFile(url,metadata);
-						    
+						    self.webrtc.sendFile(url,metadata);	    
 				        }
 				 });
-				
-		    	
 			};
 
 			app.readfiles = function (files) {
 				
-				app.queueLength = files.length;
-				
-				var noImages = true;
-				
-				if (app.queueLength > 0){
+				if (files.length > 0){
 					app.setStatus(AppStatus.LOADING_PHOTO);
-				}
-				var self = app;
-				if (Settings.useWebWorker){
-					var worker = new	Worker('/js/app/imageReader.js');
-					 worker.onmessage = function(e) {
-		   			  self.onWorkerRead(e);
-		   		  	};
-				}
-	   		  	
-				Array.prototype.forEach.call(files, function(file){
+					app.loaderLog.reset(files.length);
+					var self = app;
+					var worker = null;
 					
-				      console.log("Read file!");
-				      console.log(file);
-				      
-				      if (self.imageProcessor.isSupported(file)){
-				    	  noImages = false;
-				    	  if (Settings.useWebWorker){
-				    		  console.log("Start worker!");  
-				    		  worker.postMessage(file);
-				    	  }
-				    	  else{
-				    		  self.readImage(file);
-				    	  }
-				      }
-				      else{
-				    	  app.queueLength -= 1;
-				      }
-				});
-				
-			    if (noImages){
-			    	app.setStatus(AppStatus.READY);
-			    }
+					if (Settings.useWebWorker){
+						worker = new	Worker('/js/app/imageReader.js');
+						 worker.onmessage = function(e) {
+			   			  self.onWorkerRead(e);
+			   		  	};
+					}
+		   		  	
+					Array.prototype.forEach.call(files, function(file){
+						
+					      console.log("Read file!");
+					      console.log(file);
+					      
+					      if (self.imageProcessor.isSupported(file)){
+					   
+					    	  if (Settings.useWebWorker){
+					    		  console.log("Start worker!");  
+					    		  worker.postMessage(file);
+					    	  }
+					    	  else{
+					    		  setTimeout(function(){
+					    			  self.readImage(file);
+					    		  },100);
+					    	  }
+					      }
+					      else{
+					    	  if (self.loaderLog.addError(loaderLog.UNSUPPORTED_FILETYPE,file.name)){
+					    		  self.setStatus(AppStatus.READY);
+					    	  }
+					      }
+					});
+				}
 			};
 			
 			
@@ -162,10 +164,10 @@ define([
 				}
 				assignedIndex = app.slideCollection.indexOf(slide);
 				console.log("Assigned index is "+assignedIndex);
-				app.queueLength -= 1;
-				if (app.queueLength <= 0){
+				// return true if loading finished
+				if (app.loaderLog.addSuccess()){
 					app.setStatus(AppStatus.READY);
-				}
+				};
 			    return assignedIndex;
 			};
 			app.generateFileId = function () {
