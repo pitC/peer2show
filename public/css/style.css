@@ -107,8 +107,14 @@ a.modal-remote{
 	color: rgb(255, 202, 66);
 }
 
-.highlighted-red-text {
-	color: rgb(168, 10, 10);
+
+#switch-off-btn{
+		color: rgb(168, 10, 10);
+}
+
+#switch-off-btn:hover{
+		color: #ffffff;
+		background-color:#080808;
 }
 
 
