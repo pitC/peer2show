@@ -103,7 +103,7 @@ define({
         "fatalErrorMsg":"Oops.. something went wrong. But don't be sad, we can help you!",
         
         // image loading errors - see loaderLogModel.js
-        "fileLoadingError":"Error: ",
+        "loadingError":"Error: ",
         "unsupportedFile":"This file type is not supported",
 		"fileLoadingError":"This file could not be read",
 		"imageLoadingError":"This image could not be loaded",
