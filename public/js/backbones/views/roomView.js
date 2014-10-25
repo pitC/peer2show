@@ -81,7 +81,8 @@ define([
 						console.log(msg);
 						var options = {
 								'alertClass':'alert-danger',
-								'alertMessage':msg.msgType+':'+msg.msg
+								'alertMessage':msg.msgType+':'+msg.msg,
+								'alertMessageExt':''
 						};
 						self.notificationManager.render(options);
 					}
@@ -127,7 +128,8 @@ define([
 					
 					var options = {
 							'alertClass':'alert-info',
-							'alertMessage':username+' '+UIComponents.userJoinedMsg
+							'alertMessage':username+' '+UIComponents.userJoinedMsg,
+							'alertMessageExt':''
 					};
 					self.notificationManager.render(options);
 					
@@ -146,7 +148,8 @@ define([
 					if (success){
 						var options = {
 								'alertClass':'alert-info',
-								'alertMessage':e.username+' '+UIComponents.userLeftMsg
+								'alertMessage':e.username+' '+UIComponents.userLeftMsg,
+								'alertMessageExt':''
 						};
 						self.notificationManager.render(options);
 					}
