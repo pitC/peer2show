@@ -101,7 +101,12 @@ define({
 	"tosLink":"site/pl/tos.html",
 	"tosLbl":"Warunki świadczenia usług",
 	"userFeedbackLbl":"Feedback",
-	"legalNoteLbl":"Zanim zaczniesz korzystać ze strony peer2show, zapoznaj się z dokumentem"
+	"legalNoteLbl":"Zanim zaczniesz korzystać ze strony peer2show, zapoznaj się z dokumentem",
 	
+	"loadingError":"Błąd: ",
+    "unsupportedFile":"Ten typ plików nie jest wspierany",
+	"fileLoadingError":"Ten plik nie mógł zostać wczytany",
+	"imageLoadingError":"Ten obraz nie mógł zostać wczytany",
+	"unknownError":"Nieznany błąd :("
 
 });

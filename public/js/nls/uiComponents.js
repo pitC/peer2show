@@ -100,8 +100,14 @@ define({
         "contactUsLbl":"Contact us!",
         "browserIncompatibleMsg":"This browser is not compatible yet. Please also make sure you're using the newest version. Check out our scorecard:",
         "connectionErrorMsg":'It seems that the link you have just tried is invalid - either it does not point to any open session or the session is already closed. Please try again with a correct one, or <a class="action-link modal-remote" data-toggle="modal" data-target="#new-session-modal">start your own session!</a>',
-        "fatalErrorMsg":"Oops.. something went wrong. But don't be sad, we can help you!"
+        "fatalErrorMsg":"Oops.. something went wrong. But don't be sad, we can help you!",
         
+        // image loading errors - see loaderLogModel.js
+        "fileLoadingError":"Error: ",
+        "unsupportedFile":"This file type is not supported",
+		"fileLoadingError":"This file could not be read",
+		"imageLoadingError":"This image could not be loaded",
+		"unknownError":"Unknown error occured!"
         	
         
     },

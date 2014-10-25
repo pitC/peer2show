@@ -73,22 +73,22 @@ define([
 				
 				this.app.loaderLog.on("change",this.updateOverlay);
 				var self = this;
-				this.app.loaderLog.on("finished",function(log){
+				this.app.loaderLog.on("finished",function(errorLog){
 					console.log("Load finished!");
-					for (var i in log){
-						var msg = log[i];
+					for (var i in errorLog){
+						var msg = errorLog[i];
 						console.log("Log error");
 						console.log(msg);
+						var alertMsg = UIComponents.loadingError+msg.msg;
+						var alertMsgExt = UIComponents[msg.msgType];
 						var options = {
 								'alertClass':'alert-danger',
-								'alertMessage':msg.msgType+':'+msg.msg,
-								'alertMessageExt':''
+								'alertMessage':alertMsg,
+								'alertMessageExt':alertMsgExt
 						};
 						self.notificationManager.render(options);
 					}
-					
 				});
-				
 			},
 			
 			
