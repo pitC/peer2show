@@ -63,6 +63,17 @@ font-family: 'Comfortaa', sans-serif;
 	height:auto;
 }
 
+:-moz-full-screen{
+	width:auto;
+	height:auto;
+}
+
+:full-screen{
+	width:auto;
+	height:auto;
+
+}
+
 
  {
   -webkit-border-radius: 0 !important;
@@ -306,7 +317,7 @@ background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNv
 /* end of social buttons */
 
 #notifications-container{
-	position: absolute;	
+	position: fixed;	
 	/*top: 50px;*/
 	bottom:0px;
 	right: 5px;
@@ -730,6 +741,24 @@ background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNv
 	width:auto;
 	height:auto;
 }
+
+#slide-show-area:fullscreen {
+	width:auto;
+	height:auto;
+}
+
+.fullscreen-element{
+	display:none;
+}
+
+#close-fullscreen{
+	position:fixed;
+	top:5px;
+	right:5px;
+	font-size:3em;
+	color:grey;
+}
+
 
 #sidebar{
 	/* padding-left: 1px; */

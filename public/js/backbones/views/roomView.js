@@ -213,6 +213,7 @@ define([
                 "change #file-input" : "onFileInput",
                 "click #sidebar-toggle":"sidebarToggle",
                 "click #btn-fullscr": "fullscreen",
+                "click #close-fullscreen":"leaveFullscreen",
                 "click #confirm-close": "switchOffConfirmed",
                 "click a[data-target='#chat-area']":"onChatAreaClick",
                 "click a[data-target='#feedback-modal']": "onFeedbackFormOpen",
@@ -236,6 +237,7 @@ define([
             	if (element.webkitRequestFullScreen)
             		{
             		element.webkitRequestFullScreen();
+            		
             		}
             	else if(element.mozRequestFullScreen) {
             		element.mozRequestFullScreen();
@@ -243,6 +245,11 @@ define([
             	else{
             		element.requestFullScreen();
             	};
+            },
+            
+            leaveFullscreen : function(e){
+            	console.log("Leave fullscreen!");
+            	document.webkitCancelFullScreen();
             },
         
             prev : function(e){
@@ -357,13 +364,29 @@ define([
             	this.onKeypressInit();
             	this.setHeight();
             	this.newSessionModal.onRender();
+            	this.listenToFullscreenEvents();
             },
                        
             setHeight :function(){
             	var height = "500px";
             	$('#sidebar-panel').css("max-height",height);
-            	
-            }
+            },
+            
+            listenToFullscreenEvents : function(){
+            	var self = this;
+            	console.log("[ROOM VIEW] listen to fullscreen");
+		    	document.addEventListener("fullscreenchange", self.onFullScreenChange, false);      
+		    	document.addEventListener("webkitfullscreenchange", self.onFullScreenChange, false);
+		    	document.addEventListener("mozfullscreenchange", self.onFullScreenChange, false);
+            },
+            
+            onFullScreenChange : function(){
+            	console.log("[ROOM VIEW] toggle elements");
+            	$('.fullscreen-element').toggle();
+            },
+            
+            
+            
             
 			
         });
