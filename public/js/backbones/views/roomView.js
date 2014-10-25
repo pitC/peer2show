@@ -272,13 +272,16 @@ define([
             
             sidebarToggle : function(event){
             	var displayed = $("#sidebar").is(":visible");
+            	var self = this; 
             	if (displayed){
             		// if displayed, then hide
             		$('#sidebar').toggleClass('hidden');
             		
-            		$('#show-area').toggleClass('col-md-10 col-md-12',300).promise().done(function(){});
+            		$('#show-area').toggleClass('col-md-10 col-md-12',300).promise().done(function(){
+            			self.roomSubviews.subviews["#show-area"].renderCurrentSlide();
+            		});
             		// slide topbar to the left
-            		$('#topbar').toggleClass('col-md-offset-2 col-md-offset-3',300).promise().done(function(){});
+            		$('#topbar').toggleClass('col-md-offset-4 col-md-offset-3',300).promise().done(function(){});
             		
             		$('#sidebar-toggle-div').toggleClass('col-md-offset-3 col-md-offset-4',300);
             		
@@ -286,17 +289,19 @@ define([
             	else{
             		// if hidden, then display
             		// slide topbar to the right
-            		$('#topbar').toggleClass('col-md-offset-2 col-md-offset-3',300);
+            		$('#topbar').toggleClass('col-md-offset-4 col-md-offset-3',300);
             		// slide toggle button right-most
         			$('#sidebar-toggle-div').toggleClass('col-md-offset-3 col-md-offset-4',300);
         			
         			// side bar must be toggled after,
         			// otherwise it's shown shortly at the bottom of the page for small pictures
             		$('#show-area').toggleClass('col-md-10 col-md-12',300).promise().done(function(){
-            			$('#sidebar').toggleClass('hidden');	
-            		});
-            		
+            			$('#sidebar').toggleClass('hidden');
+            			self.roomSubviews.subviews["#show-area"].renderCurrentSlide();
+            		});	
             	}
+            	
+            	
             },
             
             onKeypressInit : function(){

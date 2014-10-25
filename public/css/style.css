@@ -37,6 +37,18 @@ font-family: 'Comfortaa', sans-serif;
 	display:none;
 }
 
+#navbar.session-end-style #switch-off-btn{
+	display:none;
+}
+#navbar.landing-page-style #switch-off-btn{
+	display:none;
+}
+
+#navbar.session-style #language-dropdown-li{
+	display:none;
+}
+
+
 .landing-page-style{
 	background-color: #585858 !important; 
 }

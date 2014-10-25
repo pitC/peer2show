@@ -17,8 +17,10 @@
 				
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-			<li><a class="modal-remote"><span class="glyphicon glyphicon-off "></span></a></li>
-			<li class="dropdown">
+			<li>
+			<a id="switch-off-btn" data-toggle="modal" data-target="#confirm-close-modal" class="btn highlighted-red-text"  title="<%= switchOffTitle %>"><span class="glyphicon glyphicon-off "></span></a>
+			</li>
+			<li id="language-dropdown-li" class="dropdown">
 				<a class="modal-remote dropdown-toggle" id="languageDropdown" data-toggle="dropdown">
 	    			<span class="glyphicon glyphicon-globe "></span>
 	    			<span id="selectedLanguage">no-lang-selected</span>
