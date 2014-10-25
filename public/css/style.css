@@ -305,13 +305,22 @@ background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNv
 }
 /* end of social buttons */
 
-.notification{
-	position: absolute;
-	
-	top: 5px;
+#notifications-container{
+	position: absolute;	
+	/*top: 50px;*/
+	bottom:0px;
 	right: 5px;
+	z-index:5;
+}
+
+.notification{
 	padding-top: 5px;
 	padding-bottom: 5px;
+	margin-bottom:1px;
+}
+
+.notification.on-top{
+	
 }
 
 .slide-preview{

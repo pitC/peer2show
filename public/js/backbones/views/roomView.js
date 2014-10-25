@@ -37,7 +37,7 @@ define([
 				this.username = options.user || DEFAULT_USER_NAME;
 				this.owner = options.owner || false;
 				
-				this.notificationManager = new NotificationManager(this.$el);
+				this.notificationManager = new NotificationManager();
 			
 				this.template = _.template(roomTmpl);
 			
@@ -80,9 +80,8 @@ define([
 						console.log("Log error");
 						console.log(msg);
 						var options = {
-								'alert_class':'alert-danger',
-								'alert_message':msg.msgType+':'+msg.msg,
-								appendMode : true
+								'alertClass':'alert-danger',
+								'alertMessage':msg.msgType+':'+msg.msg
 						};
 						self.notificationManager.render(options);
 					}
@@ -127,9 +126,8 @@ define([
 					},2000);
 					
 					var options = {
-							'alert_class':'alert-info',
-							'alert_message':username+' '+UIComponents.userJoinedMsg,
-							appendMode : true
+							'alertClass':'alert-info',
+							'alertMessage':username+' '+UIComponents.userJoinedMsg
 					};
 					self.notificationManager.render(options);
 					
@@ -147,9 +145,8 @@ define([
 					var success = self.userCollection.removeUser(e.username);
 					if (success){
 						var options = {
-								'alert_class':'alert-info',
-								'alert_message':e.username+' '+UIComponents.userLeftMsg,
-								appendMode : true
+								'alertClass':'alert-info',
+								'alertMessage':e.username+' '+UIComponents.userLeftMsg
 						};
 						self.notificationManager.render(options);
 					}
@@ -223,16 +220,7 @@ define([
 //                "keypress ": "onKeypress"
             },
             
-//            onFeedbackFormOpen : function(e){
-//            	console.log("open form and reload");
-//            	ev.preventDefault();
-//                var target = $(this).attr("data-remote");
-//
-//                // load the url and show modal on success
-//                $("#feedback-modal").load(target, function() { 
-//                     $("#feedback-modal").modal("show"); 
-//                });
-//            },
+
             onChatAreaClick : function(e){
             	this.roomSubviews.subviews['#chat-area'].toggleBlink(false);
             },
