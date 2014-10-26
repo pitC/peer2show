@@ -24,19 +24,7 @@ var bugReporter = require('./backend/bugReporter');
  app.use("/img", express.static(__dirname + '/public/img'));
  app.use("/site", express.static(__dirname + '/public/site'));
  app.all('/', function(req, res){
-	 	console.log( req.headers["accept-language"]);
-	 	
-	 	console.log(req.query.lan);
-	 	if (req.headers["accept-language"][0].indexOf("pl") > -1){
-	 		console.log("PL header");
-	 		res.sendfile(INDEX_PL);
-	 	}
-	 	else if (req.query.lan=="pl"){
-	 		res.sendfile(INDEX_PL);
-	 	}
-	 	else{
-	 		res.sendfile(INDEX);
-	 	}
+	 	res.sendfile(INDEX);
  });
  
  app.post('/issues', bugReporter.addIssue);
