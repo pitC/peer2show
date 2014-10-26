@@ -1,5 +1,4 @@
 var INDEX = "public/index.html";
-var INDEX_PL = "public/index_pl.html";
 var MAX_ROOM_SIZE = 1;
 var LOCAL_PORT = 8080;
 var static = require('node-static');
