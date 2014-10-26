@@ -3,6 +3,7 @@ define([
          'underscore', 
          'backbone',
          'app/settings',
+         'backbones/views/components/loginModal',
          'text!templates/index/cookieNotice.html',
          'text!templates/index/header.html',
          'text!templates/index/footer.html',
@@ -10,7 +11,7 @@ define([
          "i18n!nls/uiComponents"
          
          
-], function($, _, Backbone, Settings,CookieNoticeTmpl,HeaderTmpl,FooterTmpl,LanguageMenuItemTmpl, UIComponents){
+], function($, _, Backbone, Settings,LoginModal,CookieNoticeTmpl,HeaderTmpl,FooterTmpl,LanguageMenuItemTmpl, UIComponents){
 	
 	
 	IndexView = Backbone.View.extend({
@@ -33,7 +34,8 @@ define([
 			this.setTitle();
 			
 			console.log("Change locale!");
-
+			
+			this.loginModal = new LoginModal();
         },
                
         render : function(){
@@ -56,8 +58,12 @@ define([
         	this.propagateLanguageList();
         	
         	this.setCurrentLanguage();
-        	
+        	this.renderModals();
 			return this;
+        },
+        
+        renderModals : function(){
+        	$("#modal-container").append(this.loginModal.render().el);
         },
         
         isCookieAccepted : function(){

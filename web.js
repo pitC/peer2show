@@ -1,4 +1,5 @@
 var INDEX = "public/index.html";
+
 var MAX_ROOM_SIZE = 1;
 var LOCAL_PORT = 8080;
 var static = require('node-static');
@@ -27,9 +28,51 @@ var bugReporter = require('./backend/bugReporter');
   * USER MANAGEMENT PART
   * 
   * */
+//
+ var dbConfig = require('./backend/db/db');
+ var mongoose = require('mongoose');
+//Connect to DB
+mongoose.connect(dbConfig.url); 
  
+
+//Configuring Passport
+ var passport = require('passport');
+ var expressSession = require('express-session');
  
+ app.use(expressSession({
+	 secret: 'mySecretKey',
+	 saveUninitialized: true,
+     resave: true
+     }));
+ app.use(passport.initialize());
+ app.use(passport.session());
  
+ var initPassport = require('./backend/user_manager/init');
+ initPassport(passport);
+ 
+ var auth = function(req, res, next){
+	  if (!req.isAuthenticated()) 
+	  	res.send(401);
+	  else
+	  	next();
+ };
+ 
+ app.post('/login',passport.authenticate('login'),function(req,res){
+	 console.log("got post");
+	 res.send(req.user);
+ });
+ 
+ app.post('/signup',passport.authenticate('signup'),function(req,res){
+	 
+ });
+ 
+ app.get('/login',function(req,res){
+	 res.sendfile('public/login.html');
+ });
+ 
+ app.get('/home',auth,function(req,res){
+	res.send('ok!'); 
+ });
  
  
  
@@ -41,7 +84,6 @@ var bugReporter = require('./backend/bugReporter');
   * 
   */
  
- app.post('/issues', bugReporter.addIssue);
  app.post('/event',bugReporter.logEvent);
 
  app.listen(process.env.PORT || LOCAL_PORT);

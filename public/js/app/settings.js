@@ -18,7 +18,7 @@ define([],function () {
 		
 		useWebWorker:false, // use web worker for reading files
 		
-		enableConsoleLog:process.env.ENABLE_CONSOLE||true,
+		enableConsoleLog:true,
 		
 		
 		previewMaxHeight:100,
