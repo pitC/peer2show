@@ -1,15 +1,20 @@
 {
-    "name": "peershow",
-    "version": "0.0.1",
+    "name": "peer2show",
+    "version": "0.1.5",
     "private": true,
     "dependencies": {
       "express": "4.x",
+      "express-session":"~1.9.1",
       "socket.io": "~0.9.16",
       "webrtc.io": "0.0.4",
       "node-static": "0.7.0",
       "peer":"0.2.4",
       "body-parser":"",
-      "keen.io":""
+      "keen.io":"",
+      "passport":"~0.2.0",
+      "passport-local":"~1.0.0",
+      "mongoose":"~3.8.18"
+      
   },
   "engines": {
     "node": "0.10.x"
