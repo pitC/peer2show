@@ -333,10 +333,12 @@ define([
             },
             
             renderModals : function(){
-            	$("#modal-container").append(this.sessionShareModal.render().el);
-            	$("#modal-container").append(this.newSessionModal.render().el);            	
+            	var modalContainer = this.$el.find("#modal-container");
+            	$(modalContainer).append(this.sessionShareModal.render().el);
+            	$(modalContainer).append(this.newSessionModal.render().el);            	
             	var confirmCloseData = UIComponents;
-            	$("#modal-container").append(this.confirmClose(confirmCloseData));
+            	$(modalContainer).append(this.confirmClose(confirmCloseData));
+//            	$("#modal-container").append(this.confirmClose(confirmCloseData));
             },
             
             renderOverlay : function(){

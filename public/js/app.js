@@ -21,7 +21,8 @@ define([
         },
         routes : {
         	"":"homepage",
-            "s/:roomId": "room"
+            "s/:roomId": "room",
+//            ":roomId": "room"
         },
         
         

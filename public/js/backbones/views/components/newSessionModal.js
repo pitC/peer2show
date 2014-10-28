@@ -54,7 +54,7 @@ define([
 //        	$('#new-session-modal').modal('hide');
 //        	window.location.hash = Settings.roomName;
 //        	window.location = window.location+"s/"+Settings.roomName;
-        	Globals.router.navigate("s/"+Settings.roomName,{trigger:true});
+        	Globals.router.navigate("s/"+Settings.roomName,{trigger:true,replace: true});
         },
         
         render : function(){

@@ -63,7 +63,7 @@ define([
         },
         
         renderModals : function(){
-//        	$("#modal-container").append(this.loginModal.render().el);
+        	$("#global-modal-container").append(this.loginModal.render().el);
         },
         
         isCookieAccepted : function(){
