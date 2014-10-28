@@ -10,7 +10,7 @@ else{
 	locale = navigator.language || navigator.userLanguage;
 }
 require.config({
-	baseUrl: 'js',
+	baseUrl: '/js',
 	config: {
         i18n: {
             locale: locale

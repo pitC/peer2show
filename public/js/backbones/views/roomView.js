@@ -230,7 +230,7 @@ define([
             },
                        
             switchOffConfirmed : function(e){
-            	
+            	console.log("switch off!");
             	this.app.close();
             },
             

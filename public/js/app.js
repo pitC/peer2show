@@ -6,20 +6,22 @@ define([
          'backbones/views/roomView',
          'backbones/views/homepageView',
          'app/settings',
+         'app/globals',
          'app/logManager'
 
-], function($, _, Backbone, IndexView, RoomView, HomepageView, Settings, LogManager){ 
+], function($, _, Backbone, IndexView, RoomView, HomepageView, Settings, Globals, LogManager){ 
 	
 	var AppRouter = Backbone.Router.extend({
         initialize : function(options){
             this.el = options.el;
             
             console.log("App Router init! ");
+            Globals.router = this;
             
         },
         routes : {
         	"":"homepage",
-            ":roomId": "room"
+            "s/:roomId": "room"
         },
         
         
@@ -79,7 +81,8 @@ define([
 		renderIndex();
 		
 		var router = new AppRouter({el : $('#content')});
-	    Backbone.history.start();
+	    Backbone.history.start({pushState:true});
+//	    Backbone.history.start();
 	};
 	
 	var renderIndex = function(){

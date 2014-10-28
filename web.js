@@ -23,6 +23,9 @@ var bugReporter = require('./backend/bugReporter');
  app.all('/', function(req, res){
 	 res.sendfile(INDEX);	
  });
+ app.all('/s/*', function(req, res){
+	 res.sendfile(INDEX);	
+ });
  
  /*
   * USER MANAGEMENT PART

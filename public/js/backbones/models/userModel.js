@@ -4,13 +4,7 @@ define([
          'backbone'
 ], function($, _, Backbone){
 	UserModel = Backbone.Model.extend({
-		/*
-		 * Dynamically added attributes:
-		 * id - UUID set in slideshowApp
-		 * dataURL
-		 * upload - status of upload in %
-		 * 
-		 * */
+		
 		login : function(username, password,callback){
 			var credentials = {"username":username,"password":password};
 			var login = $.ajax({

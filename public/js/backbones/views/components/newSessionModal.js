@@ -4,11 +4,12 @@ define([
          'backbone',
          'text!templates/modals/newSessionModal.html',
          'app/settings',
+         'app/globals',
          "i18n!nls/uiComponents"
          
          // 'backbones/views/roomView' - no need to add it here, it's already another way round. Just user RoomView
          
-], function($, _, Backbone, NewSessionModalTmpl, Settings,UIComponents
+], function($, _, Backbone, NewSessionModalTmpl, Settings,Globals,UIComponents
 ){
 	
 	NewSessionModalView = Backbone.View.extend({
@@ -51,8 +52,9 @@ define([
         	Settings.owner = true;
         	Settings.roomName = Settings.generateRoomId();
 //        	$('#new-session-modal').modal('hide');
-        	window.location.hash = Settings.roomName;
-//        	window.location = window.location+Settings.roomName;
+//        	window.location.hash = Settings.roomName;
+//        	window.location = window.location+"s/"+Settings.roomName;
+        	Globals.router.navigate("s/"+Settings.roomName,{trigger:true});
         },
         
         render : function(){
