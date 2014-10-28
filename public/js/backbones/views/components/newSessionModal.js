@@ -64,7 +64,6 @@ define([
         	
             this.$el.html(this.template(data));
             return this;
-            this.onRender();
         },
         
         onRender :function(){

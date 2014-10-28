@@ -8,19 +8,19 @@
       </div>
       
       <div class="modal-body">
-	      <form class="form-signin" role="form" action="/login" method="post">
+	      <form id="login-form" class="form-signin" role="form" action="/login" method="post">
 	        <h2 class="form-signin-heading">Please sign in</h2>
 	        <input id="usernameLoginInp" type="text" name="username" class="form-control" placeholder="username" required autofocus>
 	        <input id="passwordLoginInp" type="password" name="password" class="form-control" placeholder="Password" required>
 	        <label class="checkbox">
 	          <input type="checkbox" value="remember-me"> Remember me
 	        </label>
-	        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+	        <button class="btn btn-primary">Sign in</button>
 	      </form>
 	  </div>
       <div class="modal-footer">
-        <button id="login-btn" type="button" class="btn btn-default"><%= signInBtn %></button>
-        <button type="button" class="btn"><%= registerBtn %></button>
+        
+        <button id="sign-toggle-btn" type="button" class="btn btn-block"><%= registerBtn %></button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->

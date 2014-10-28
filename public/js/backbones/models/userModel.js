@@ -1,25 +1,57 @@
 define([ 
          'jquery', 
          'underscore', 
-         'backbone'
-], function($, _, Backbone){
+         'backbone',
+         'app/settings'
+], function($, _, Backbone, Settings){
 	UserModel = Backbone.Model.extend({
 		
-		login : function(username, password,callback){
+		loginStatus : null,
+		
+		logout : function(){
+			
+		},
+		
+		login : function(username, password){
 			var credentials = {"username":username,"password":password};
+			var self = this;
 			var login = $.ajax({
 	              url : '/login',
 	              data : credentials,
 	              type : 'POST'
 	        });
 			login.done(function(response){
-	              console.log("Authenticated!");
-	              console.log(response);// response is the user object delivered by server
-	              if (callback){
-	            	  callback();
-	              }
+	            self.onLoginSuccess(response);
 	          });
+			login.fail(function(response){
+				self.onLoginFail(response);
+			});
+		},
+		
+		onLoginSuccess : function(response){
+			console.log("success!");
+			Settings.userName = response.username;
+			console.log(Settings);
+			this.loginStatus = "Authorised";
+			this.trigger("authorised");
+		},
+		
+		onLoginFail : function(response){
+			console.log(response);
+			this.loginStatus = response.responseText;
+			this.trigger("unauthorised");
+		},
+		
+		isAuthorised : function(){
+			if (this.loginStatus == "Authorised"){
+				return true;
+			}
+			else{
+				return false;
+			}
 		}
+		
+		
 	});
 	
 	

@@ -101,8 +101,8 @@ define([
             });
         	
         	var owl = carouselEl.data('owlCarousel');
-        	
-        	owl.stop();
+        	if (owl)
+        		owl.stop();
         	
         	$(window).scroll(function() {
         		   var hT = carouselEl.offset().top,

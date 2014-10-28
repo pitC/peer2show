@@ -8,10 +8,12 @@ define([
          'text!templates/index/header.html',
          'text!templates/index/footer.html',
          'text!templates/index/languageMenuItem.html',
-         "i18n!nls/uiComponents"
+         'text!templates/index/userDropdown.html',
+         "i18n!nls/uiComponents",
+         "backbones/models/userModel"
          
          
-], function($, _, Backbone, Settings,LoginModal,CookieNoticeTmpl,HeaderTmpl,FooterTmpl,LanguageMenuItemTmpl, UIComponents){
+], function($, _, Backbone, Settings,LoginModal,CookieNoticeTmpl,HeaderTmpl,FooterTmpl,LanguageMenuItemTmpl,UserDropdownTmpl, UIComponents,UserModel){
 	
 	
 	IndexView = Backbone.View.extend({
@@ -30,22 +32,47 @@ define([
 			this.headerTemplate = _.template(HeaderTmpl);
 			this.footerTemplate = _.template(FooterTmpl);
 			this.languageMenuItemTemplate = _.template(LanguageMenuItemTmpl);
-			
+			this.userDropdownTemplate = _.template(UserDropdownTmpl);
 			this.setTitle();
 			
 			console.log("Change locale!");
 			
-			this.loginModal = new LoginModal();
+			this.userModel = new UserModel();
+			this.listenTo(this.userModel,"authorised",this.onAuthorised);
+			this.loginModal = new LoginModal({model:this.userModel});
         },
                
         render : function(){
         	
         	console.log("Render index!");
         	
-        	var data = $.extend({},UIComponents,{});
+        	
         	console.log(data);
-        	var header = this.headerTemplate(data);
+        	this.renderHeader();
+        	
+        	var data = $.extend({},UIComponents,{});
         	var footer = this.footerTemplate(data);
+        	this.footerEl.html(footer);
+        	this.renderModals();
+			return this;
+        },
+        
+        renderHeader : function(){
+        	this.headerEl.empty();
+        	var data = $.extend({},UIComponents,{});
+        	
+        	var header = this.headerTemplate(data);
+        	// render dropdown menu instead
+        	if(this.userModel.isAuthorised()){
+        		//TODO: exchange for userModel model
+        		console.log("Render user dropdown");
+        		var userDropdownData = $.extend({},UIComponents,{username:Settings.userName});
+        		var userDropdown = this.userDropdownTemplate(userDropdownData);
+        		console.log(userDropdown);
+        		console.log($("#user-dropdown-li"));
+        		$("#user-dropdown-li").html(userDropdown);
+        		$("#user-dropdown-li").addClass("dropdown");
+        	}
         	if (!this.isCookieAccepted()){
         		var cookie = this.cookieNoticeTemplate(data);
         		this.headerEl.append(cookie);
@@ -53,13 +80,8 @@ define([
         		$('#cookie-alert').on('closed.bs.alert', self.cookieAccepted);
         	}
         	this.headerEl.append(header);
-        	this.footerEl.html(footer);
-        	
-        	this.propagateLanguageList();
-        	
-        	this.setCurrentLanguage();
-        	this.renderModals();
-			return this;
+           	this.propagateLanguageList();
+           	this.setCurrentLanguage();
         },
         
         renderModals : function(){
@@ -138,6 +160,16 @@ define([
 				location.reload();
         	}
         },
+        
+        onAuthorised : function(){
+//        	this.renderHeader();
+        },
+        
+        onShow : function(){
+        	this.loginModal.onShow();
+        },
+        
+        
 	
 	});
 	

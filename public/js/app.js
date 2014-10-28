@@ -14,6 +14,7 @@ define([
 	var AppRouter = Backbone.Router.extend({
         initialize : function(options){
             this.el = options.el;
+            this.indexView = options.indexView;
             
             console.log("App Router init! ");
             Globals.router = this;
@@ -22,9 +23,17 @@ define([
         routes : {
         	"":"homepage",
             "s/:roomId": "room",
+            "home/":"loginHome"
 //            ":roomId": "room"
         },
         
+        loginHome : function(){
+        	
+        	console.log("Render login homepage...");
+        	console.log(Settings);
+        	this.loadHomepage(true);
+        	this.indexView.renderHeader();
+        },
         
         homepage: function(){
         	console.log("Render homepage...");
@@ -79,9 +88,9 @@ define([
 	var initialize = function(){
 		// disable console logs
         LogManager.switchConsoleLogs(Settings.enableConsoleLog);
-		renderIndex();
+		var indexView = renderIndex();
 		
-		var router = new AppRouter({el : $('#content')});
+		var router = new AppRouter({el : $('#content'),indexView:indexView});
 	    Backbone.history.start({pushState:true});
 //	    Backbone.history.start();
 	};
@@ -89,7 +98,8 @@ define([
 	var renderIndex = function(){
 		var indexView = new IndexView({headerEl:$('#header'),footerEl:$('#footer')});
 		indexView.render();
-		
+		indexView.onShow();
+		return indexView;
 	};
 	
 	
