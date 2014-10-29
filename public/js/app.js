@@ -23,7 +23,7 @@ define([
         routes : {
         	"":"homepage",
             "s/:roomId": "room",
-            "home/":"loginHome"
+            "home(/)":"loginHome"
 //            ":roomId": "room"
         },
         

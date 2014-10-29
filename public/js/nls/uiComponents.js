@@ -112,7 +112,10 @@ define({
         // Login modal
 		"loginLbl":"Login",
 		"signInBtn":"Sign in",
-		"registerBtn":"Register"
+		"registerBtn":"Register",
+		"logoutLbl":"Logout",
+		"settingsLbl":"Settings"
+		
     },
     "pl":true
 });

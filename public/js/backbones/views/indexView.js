@@ -3,17 +3,19 @@ define([
          'underscore', 
          'backbone',
          'app/settings',
+         'app/globals',
          'backbones/views/components/loginModal',
          'text!templates/index/cookieNotice.html',
          'text!templates/index/header.html',
          'text!templates/index/footer.html',
          'text!templates/index/languageMenuItem.html',
          'text!templates/index/userDropdown.html',
+         'text!templates/index/userLogin.html',
          "i18n!nls/uiComponents",
          "backbones/models/userModel"
          
          
-], function($, _, Backbone, Settings,LoginModal,CookieNoticeTmpl,HeaderTmpl,FooterTmpl,LanguageMenuItemTmpl,UserDropdownTmpl, UIComponents,UserModel){
+], function($, _, Backbone, Settings, Globals, LoginModal,CookieNoticeTmpl,HeaderTmpl,FooterTmpl,LanguageMenuItemTmpl,UserDropdownTmpl,UserLoginTmpl, UIComponents,UserModel){
 	
 	
 	IndexView = Backbone.View.extend({
@@ -33,6 +35,7 @@ define([
 			this.footerTemplate = _.template(FooterTmpl);
 			this.languageMenuItemTemplate = _.template(LanguageMenuItemTmpl);
 			this.userDropdownTemplate = _.template(UserDropdownTmpl);
+			this.userLoginTemplate = _.template(UserLoginTmpl);
 			this.setTitle();
 			
 			console.log("Change locale!");
@@ -62,6 +65,7 @@ define([
         	var data = $.extend({},UIComponents,{});
         	
         	var header = this.headerTemplate(data);
+        	this.headerEl.append(header);
         	// render dropdown menu instead
         	if(this.userModel.isAuthorised()){
         		//TODO: exchange for userModel model
@@ -70,8 +74,13 @@ define([
         		var userDropdown = this.userDropdownTemplate(userDropdownData);
         		console.log(userDropdown);
         		console.log($("#user-dropdown-li"));
-        		$("#user-dropdown-li").html(userDropdown);
-        		$("#user-dropdown-li").addClass("dropdown");
+        		$("#user-login-li").append(userDropdown);
+        		$("#user-login-li").addClass("dropdown");
+        	}
+        	else{
+        		console.log("Render user login btn");
+        		var userLogin = this.userLoginTemplate(data);
+        		$("#user-login-li").append(userLogin);
         	}
         	if (!this.isCookieAccepted()){
         		var cookie = this.cookieNoticeTemplate(data);
@@ -79,7 +88,7 @@ define([
         		var self = this;
         		$('#cookie-alert').on('closed.bs.alert', self.cookieAccepted);
         	}
-        	this.headerEl.append(header);
+        	
            	this.propagateLanguageList();
            	this.setCurrentLanguage();
         },
@@ -162,11 +171,23 @@ define([
         },
         
         onAuthorised : function(){
+        	
 //        	this.renderHeader();
+        	var self = this;
+        	var modal = $('#login-modal');
+        	if (modal.data('bs.modal').isShown){
+        		modal.modal('hide').on('hidden.bs.modal',function(){
+            		self.renderHeader();
+            		Globals.router.navigate("home/",{trigger:true,replace: true});
+            	});
+        	}else{
+        		self.renderHeader();
+        	}
+        	
         },
         
         onShow : function(){
-        	this.loginModal.onShow();
+//        	this.loginModal.onShow();
         },
         
         

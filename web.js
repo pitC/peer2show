@@ -27,6 +27,10 @@ var bugReporter = require('./backend/bugReporter');
 	 res.sendfile(INDEX);	
  });
  
+ app.all('/home', function(req, res){
+	 res.sendfile(INDEX);	
+ });
+ 
  /*
   * USER MANAGEMENT PART
   * 
@@ -73,9 +77,9 @@ mongoose.connect(dbConfig.url);
 	 res.sendfile('public/login.html');
  });
  
- app.get('/home',auth,function(req,res){
-	res.send('ok!'); 
- });
+// app.get('/home',auth,function(req,res){
+//	res.send('ok!'); 
+// });
  
  
  
