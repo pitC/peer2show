@@ -51,9 +51,6 @@ define([
         	Settings.userName = username;
         	Settings.owner = true;
         	Settings.roomName = Settings.generateRoomId();
-//        	$('#new-session-modal').modal('hide');
-//        	window.location.hash = Settings.roomName;
-//        	window.location = window.location+"s/"+Settings.roomName;
         	Globals.router.navigate("s/"+Settings.roomName,{trigger:true,replace: true});
         },
         
@@ -77,7 +74,7 @@ define([
 			});
         	
         	$('#new-session-modal').on('shown.bs.modal', function (e) {
-				
+        		$("#username-modal-inp").val(Settings.userName);
 				self.createEvent = false;
 			});
         }

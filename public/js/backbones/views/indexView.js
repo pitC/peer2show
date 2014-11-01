@@ -41,7 +41,7 @@ define([
 			
 			console.log("Change locale!");
 			
-			this.userModel = new UserModel();
+			this.userModel = Globals.user;
 			this.listenTo(this.userModel,"authorised",this.onAuthorised);
 			this.loginModal = new LoginModal({model:this.userModel});
 			this.newSessionModal = new NewSessionModal();
@@ -50,7 +50,6 @@ define([
         render : function(){
         	
         	console.log("Render index!");
-        	
         	
         	console.log(data);
         	this.renderHeader();
@@ -71,16 +70,14 @@ define([
         	// render dropdown menu instead
         	if(this.userModel.isAuthorised()){
         		//TODO: exchange for userModel model
-        		console.log("Render user dropdown");
+        		;
         		var userDropdownData = $.extend({},UIComponents,{username:Settings.userName});
         		var userDropdown = this.userDropdownTemplate(userDropdownData);
-        		console.log(userDropdown);
-        		console.log($("#user-dropdown-li"));
         		$("#user-login-li").append(userDropdown);
         		$("#user-login-li").addClass("dropdown");
         	}
         	else{
-        		console.log("Render user login btn");
+        		
         		var userLogin = this.userLoginTemplate(data);
         		$("#user-login-li").append(userLogin);
         	}
@@ -96,6 +93,7 @@ define([
         },
         
         renderModals : function(){
+        	console.log("Render global modals");
         	$("#global-modal-container").append(this.loginModal.render().el);
         	$("#global-modal-container").append(this.newSessionModal.render().el);
         },
@@ -134,7 +132,6 @@ define([
         	}
         	
         	$("#selectedLanguage").html(setLanguage);
-        	
         	
         },
         
@@ -178,15 +175,19 @@ define([
 //        	this.renderHeader();
         	var self = this;
         	var modal = $('#login-modal');
-        	if (modal.data('bs.modal').isShown){
-        		modal.modal('hide').on('hidden.bs.modal',function(){
+        	if (typeof modal.data ('bs.modal')!= 'undefined'){
+        		if (modal.data('bs.modal').isShown){
+            		modal.modal('hide').on('hidden.bs.modal',function(){
+                		self.renderHeader();
+                		Globals.router.navigate("home/",{trigger:true,replace: true});
+                	});
+            	}else{
             		self.renderHeader();
-            		Globals.router.navigate("home/",{trigger:true,replace: true});
-            	});
-        	}else{
+            	}
+        	}
+        	else{
         		self.renderHeader();
         	}
-        	
         },
         
         onShow : function(){

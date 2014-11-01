@@ -5,11 +5,12 @@ define([
          'backbones/views/indexView',
          'backbones/views/roomView',
          'backbones/views/homepageView',
+         'backbones/views/homeUserView',
          'app/settings',
          'app/globals',
          'app/logManager'
 
-], function($, _, Backbone, IndexView, RoomView, HomepageView, Settings, Globals, LogManager){ 
+], function($, _, Backbone, IndexView, RoomView, HomepageView, HomeUserView, Settings, Globals, LogManager){ 
 	
 	var AppRouter = Backbone.Router.extend({
         initialize : function(options){
@@ -23,16 +24,16 @@ define([
         routes : {
         	"":"homepage",
             "s/:roomId": "room",
-            "home(/)":"loginHome"
+            "home(/)":"userHome"
 //            ":roomId": "room"
         },
         
-        loginHome : function(){
+        userHome : function(){
         	
         	console.log("Render login homepage...");
-        	console.log(Settings);
-        	this.loadHomepage(true);
-        	this.indexView.renderHeader();
+        	var homeuserView = new HomeUserView();
+            this.el.empty();
+            this.el.append(homeuserView.render().el);
         },
         
         homepage: function(){
@@ -88,10 +89,14 @@ define([
 	var initialize = function(){
 		// disable console logs
         LogManager.switchConsoleLogs(Settings.enableConsoleLog);
-		var indexView = renderIndex();
-		
+        
+        Globals.init();
+        var indexView = renderIndex();
 		var router = new AppRouter({el : $('#content'),indexView:indexView});
 	    Backbone.history.start({pushState:true});
+	    
+	    Globals.user.autoLogin();
+	    
 //	    Backbone.history.start();
 	};
 	

@@ -73,8 +73,13 @@ mongoose.connect(dbConfig.url);
 	 
  });
  
- app.get('/login',function(req,res){
-	 res.sendfile('public/login.html');
+ 
+ app.get('/autoLogin',auth,function(req,res){
+	 res.send(req.user);
+ });
+
+ app.get('userSettings',auth,function(req,res){
+	 
  });
  
 // app.get('/home',auth,function(req,res){
