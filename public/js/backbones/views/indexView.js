@@ -5,6 +5,7 @@ define([
          'app/settings',
          'app/globals',
          'backbones/views/components/loginModal',
+         'backbones/views/components/newSessionModal',
          'text!templates/index/cookieNotice.html',
          'text!templates/index/header.html',
          'text!templates/index/footer.html',
@@ -15,7 +16,7 @@ define([
          "backbones/models/userModel"
          
          
-], function($, _, Backbone, Settings, Globals, LoginModal,CookieNoticeTmpl,HeaderTmpl,FooterTmpl,LanguageMenuItemTmpl,UserDropdownTmpl,UserLoginTmpl, UIComponents,UserModel){
+], function($, _, Backbone, Settings, Globals, LoginModal,NewSessionModal,CookieNoticeTmpl,HeaderTmpl,FooterTmpl,LanguageMenuItemTmpl,UserDropdownTmpl,UserLoginTmpl, UIComponents,UserModel){
 	
 	
 	IndexView = Backbone.View.extend({
@@ -43,6 +44,7 @@ define([
 			this.userModel = new UserModel();
 			this.listenTo(this.userModel,"authorised",this.onAuthorised);
 			this.loginModal = new LoginModal({model:this.userModel});
+			this.newSessionModal = new NewSessionModal();
         },
                
         render : function(){
@@ -95,6 +97,7 @@ define([
         
         renderModals : function(){
         	$("#global-modal-container").append(this.loginModal.render().el);
+        	$("#global-modal-container").append(this.newSessionModal.render().el);
         },
         
         isCookieAccepted : function(){
@@ -188,6 +191,7 @@ define([
         
         onShow : function(){
 //        	this.loginModal.onShow();
+        	this.newSessionModal.onRender();
         },
         
         

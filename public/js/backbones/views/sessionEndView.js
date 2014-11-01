@@ -8,10 +8,9 @@ define([
          'text!templates/room/errors/connectionError.html',
          'app/settings',
          'app/appStatus',
-         'backbones/views/components/newSessionModal',
          "i18n!nls/uiComponents"
          
-], function($, _, Backbone, SessionEndTmpl, FatalErrorTmpl,BrowserErrorTmpl,ConnectionErrorTmpl, Settings, AppStatus, NewSessionModal,UIComponents){
+], function($, _, Backbone, SessionEndTmpl, FatalErrorTmpl,BrowserErrorTmpl,ConnectionErrorTmpl, Settings, AppStatus,UIComponents){
 
 	
 	
@@ -22,7 +21,6 @@ define([
 			this.browserErrorTmpl = _.template(BrowserErrorTmpl);
 			this.connectionErrorTmpl = _.template(ConnectionErrorTmpl);
 			this.options = options || {};
-			this.newSessionModal = new NewSessionModal();
         },
         render : function(){
         	

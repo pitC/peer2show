@@ -3,15 +3,15 @@ define([
          'underscore', 
          'backbone',
          'app/settings',
+         'app/globals',
          'text!templates/slideshowApp/usernameInput.html',
          'text!templates/slideshowApp/introHost.html',
          'text!templates/slideshowApp/introGuest.html',
-         'backbones/views/components/newSessionModal',
          'carousel',
          "i18n!nls/uiComponents",
          "i18n!nls/pitchScreen"
          
-], function($, _, Backbone, Settings, UserInputTmpl,IntroHostTmpl,IntroGuestTmpl,NewSessionModal,Carousel,UIComponents, PitchScreen){
+], function($, _, Backbone, Settings, Globals,UserInputTmpl,IntroHostTmpl,IntroGuestTmpl,Carousel,UIComponents, PitchScreen){
 	
 	
 	HomepageView = Backbone.View.extend({
@@ -30,7 +30,6 @@ define([
 				
 			}
 			
-			this.newSessionModal = new NewSessionModal(options);
 			
         },
         events: {
@@ -64,7 +63,7 @@ define([
         	Settings.owner = isOwner;
         	if (isOwner){
         		Settings.roomName = Settings.generateRoomId();
-            	window.location.hash = Settings.roomName;
+        		Globals.router.navigate("s/"+Settings.roomName,{trigger:true,replace: true});
         	}
         	else{
         		var options = {user : userName,owner:false};
@@ -80,13 +79,11 @@ define([
         	
         	this.$el.html(intro);
         	
-        	this.$el.append(this.newSessionModal.render().el);
-        	
 			return this;
         },
         
         onShow : function(){
-        	this.newSessionModal.onRender();
+        	
         	var carouselEl = $("#learn-more-header");
         	carouselEl.owlCarousel({
               	 
