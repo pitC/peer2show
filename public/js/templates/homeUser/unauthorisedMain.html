@@ -1,6 +1,50 @@
-<div class="jumbotron">
-	<div class="row">
-		<p>Sorry, only registered users can view this page!</p>
-		<a class="action-link modal-remote" data-toggle="modal" data-target="#login-modal">Login</a>
-	</div>
+<div class="container">
+	<div id="container">
+		<div id="session-end" class="jumbotron">
+			<div class="row">
+				<h2>Welcome guest</h2><br>
+				
+				<p> 
+				This section is available only for logged-in users. Pick your action:
+				</p>
+			</div>
+			<br>
+			<div class="row" id="after-actions">
+				<div class="col-md-4">
+					<div class="action-container">
+						<h2><span class="glyphicon glyphicon-log-in"></span></h2>
+						<p><a class="action-link modal-remote" data-toggle="modal" data-target="#new-session-modal"><%= createNewSessionLbl %></a></p>
+					</div>
+				</div>
+				
+				<div class="col-md-4">
+					<div class="action-container">
+						<h2><span class="glyphicon glyphicon-user"></span></h2>
+						<p><a class="action-link modal-remote" data-toggle="modal" data-target="#login-modal"><%= loginLbl %></a></p>
+					</div>
+				</div>
+				
+				<div class="col-md-4">
+					<div class="action-container">
+						<h2>
+				  			<span class="glyphicon glyphicon-envelope"></span>
+				  		</h2>
+				  		<p>
+				  			<a class="action-link modal-remote" data-toggle="modal" data-remote="<%= feedbackLink%>" data-target="#feedback-modal">
+				  				<%= dropMessageMsg %>
+				  			</a>
+				  		</p>
+				  		<p>
+				  		<%= orLbl %>
+				  		</p>
+				  		<p>
+				  			<a class="action-link modal-remote" data-toggle="modal" data-remote="<%= smartvoteLink %>" data-target="#smartvote-modal">
+				  				<%= helpImproveMsg %>
+				  			</a>
+				  		</p>
+					</div>
+				</div>
+			</div> <!-- row -->
+		</div>
+	</div> <!-- container -->
 </div>
