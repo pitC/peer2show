@@ -7,10 +7,11 @@ define([
          'text!templates/room/errors/browserError.html',
          'text!templates/room/errors/connectionError.html',
          'app/settings',
+         'app/globals',
          'app/appStatus',
          "i18n!nls/uiComponents"
          
-], function($, _, Backbone, SessionEndTmpl, FatalErrorTmpl,BrowserErrorTmpl,ConnectionErrorTmpl, Settings, AppStatus,UIComponents){
+], function($, _, Backbone, SessionEndTmpl, FatalErrorTmpl,BrowserErrorTmpl,ConnectionErrorTmpl, Settings, Globals, AppStatus,UIComponents){
 
 	
 	
@@ -62,7 +63,7 @@ define([
         	
         	Settings.reset();
         	
-        	$(".session-style").removeClass("session-style").addClass("session-end-style");
+        	Globals.switchWindowStyle("session-end-style");
         	
         	
 			return this;

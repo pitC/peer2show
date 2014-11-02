@@ -46,8 +46,8 @@ define([
         	event.preventDefault();
         	console.log("Trying to log in...");
         	
-        	var username = $("#usernameLoginInp").val();
-        	var password = $("#passwordLoginInp").val();
+        	var username = $("#username-login-inp").val();
+        	var password = $("#password-login-inp").val();
         	this.model.login(username,password);
         }
         

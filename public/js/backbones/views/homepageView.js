@@ -87,50 +87,53 @@ define([
         },
         
         onShow : function(){
-        	
+        	       	
         	var carouselEl = $("#learn-more-header");
-        	carouselEl.owlCarousel({
-              	 
-//                navigation : true, // Show next and prev buttons
-                slideSpeed : 300,
-                paginationSpeed : 400, 
-                autoPlay:3000,
-                singleItem:true,
-                afterMove: moved,
-                rewindNav:false
-//                stopOnHover:true
-            });
         	
-        	var owl = carouselEl.data('owlCarousel');
-        	if (owl)
-        		owl.stop();
-        	
-        	$(window).scroll(function() {
-        		   var hT = carouselEl.offset().top,
-        		       hH = carouselEl.outerHeight(),
-        		       wH = $(window).height(),
-        		       wS = $(this).scrollTop();
-        		   if (wS > (hT+hH-wH)){
-        		       console.log('you have scrolled to carousel!');
-        		       owl.play();
-        		   }
-        		   else{
-        			   console.log('you have scrolled out of carousel!');
-        			   owl.stop();
-        		   }
-        		});
-        	
-        	function moved(el){
-        		var emphesizeClass = 'emph';
-//        		console.log("owl moved!");
-        		var srcId = $(el).attr('id');
-        		var num = this.currentItem;
-        		$('.carousel-sync').removeClass(emphesizeClass);
-        		var target = '#'+srcId+"-"+num;
-//        		console.log("target "+target);
-        		$(target).addClass(emphesizeClass);
-        		
-        	};
+        	if ($(carouselEl).length > 0){
+	        	carouselEl.owlCarousel({
+	              	 
+	//                navigation : true, // Show next and prev buttons
+	                slideSpeed : 300,
+	                paginationSpeed : 400, 
+	                autoPlay:3000,
+	                singleItem:true,
+	                afterMove: moved,
+	                rewindNav:false
+	//                stopOnHover:true
+	            });
+	        	
+	        	var owl = carouselEl.data('owlCarousel');
+	        	if (owl)
+	        		owl.stop();
+	        	
+	        	$(window).scroll(function() {
+	        		   var hT = carouselEl.offset().top,
+	        		       hH = carouselEl.outerHeight(),
+	        		       wH = $(window).height(),
+	        		       wS = $(this).scrollTop();
+	        		   if (wS > (hT+hH-wH)){
+	        		       console.log('you have scrolled to carousel!');
+	        		       owl.play();
+	        		   }
+	        		   else{
+	        			   console.log('you have scrolled out of carousel!');
+	        			   owl.stop();
+	        		   }
+	        		});
+	        	
+	        	function moved(el){
+	        		var emphesizeClass = 'emph';
+	//        		console.log("owl moved!");
+	        		var srcId = $(el).attr('id');
+	        		var num = this.currentItem;
+	        		$('.carousel-sync').removeClass(emphesizeClass);
+	        		var target = '#'+srcId+"-"+num;
+	//        		console.log("target "+target);
+	        		$(target).addClass(emphesizeClass);
+	        		
+	        	};
+        	}
         	var self = this;
         	$("#learn-more-action").on("click",self.learnMore);
         }

@@ -7,9 +7,11 @@ define([
          'backbones/views/userHomeSections/userSettingsView',
          'text!templates/homeUser/homeUserMain.html',
          'text!templates/homeUser/sessionSettings.html',
+         'text!templates/homeUser/unauthorisedMain.html',
+         'text!templates/homeUser/authorisationOngoing.html',
          "i18n!nls/uiComponents"
          
-], function($, _, Backbone, Settings, Globals,UserSettingsView,HomeUserTmpl,SessionSettingsTmpl,UIComponents){
+], function($, _, Backbone, Settings, Globals,UserSettingsView,HomeUserTmpl,SessionSettingsTmpl,UnauthorisedTmpl,AuthorisationOngoingTmpl,UIComponents){
 	
 	
 	HomeUserView = Backbone.View.extend({
@@ -20,6 +22,7 @@ define([
 			this.template = _.template(HomeUserTmpl);
 			this.userModel = Globals.user;
 			this.listenTo(this.userModel,"change:username",this.onUsernameChange);
+			this.listenTo(this.userModel,"change:loginStatus",this.render);
 			
 			var sessionSettingsModel = this.userModel.get("sessionSettings");
 			this.settingSections = {
@@ -28,14 +31,47 @@ define([
         },
         
         render : function(){
+        	var status = this.userModel.get("loginStatus");
+        	console.log("What is the loginStatus? "+status);
+        	if (status =="authorised"){
+        		this.renderAuthorised();
+        	}
+        	else if (status == "unauthorised"){
+        		this.renderUnauthorised();
+        	}
+        	else{
+        		this.renderAuthorising();
+        	}
+        	
+        	return this;
+        },
+        
+        renderAuthorised : function(){
         	console.log("Render user home!");
-        	;
+        	
         	var data = $.extend({},UIComponents,this.userModel.toJSON());
         	console.log(data);
+        	
         	var mainElement = this.template(data);
         	this.$el.html(mainElement);
         	this.renderSettingSections();
-			return this;
+        	return this;
+        },
+        
+        renderUnauthorised : function(){
+        	var unauthorisedTemplate = _.template(UnauthorisedTmpl);
+        	var data = $.extend({},UIComponents,{});
+        	var mainElement = unauthorisedTemplate(data);
+        	this.$el.html(mainElement);
+        	return this;
+        },
+        
+        renderAuthorising : function(){
+        	var authorisingTemplate = _.template(AuthorisationOngoingTmpl);
+        	var data = $.extend({},UIComponents,{});
+        	var mainElement = authorisingTemplate(data);
+        	this.$el.html(mainElement);
+        	return this;
         },
         
         renderSettingSections : function(){

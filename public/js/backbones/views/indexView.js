@@ -58,7 +58,7 @@ define([
         	console.log(data);
         	this.renderHeader();
         	
-        	var data = $.extend({},UIComponents,{});
+        	var data = $.extend({},UIComponents,{pageStyle:Globals.windowStyle});
         	var footer = this.footerTemplate(data);
         	this.footerEl.html(footer);
         	this.renderModals();
@@ -67,7 +67,7 @@ define([
         
         renderHeader : function(){
         	this.headerEl.empty();
-        	var data = $.extend({},UIComponents,{});
+        	var data = $.extend({},UIComponents,{pageStyle:Globals.windowStyle});
         	
         	var header = this.headerTemplate(data);
         	this.headerEl.append(header);
@@ -177,23 +177,30 @@ define([
         	}
         },
         
-        onAuthoriseChange : function(){
+        onAuthoriseChange : function(model){
         	
-
+        	var authorised = model.get("loginStatus");
         	var self = this;
-        	var modal = $('#login-modal');
-        	if (typeof modal.data ('bs.modal')!= 'undefined'){
-        		if (modal.data('bs.modal').isShown){
-            		modal.modal('hide').on('hidden.bs.modal',function(){
-                		self.renderHeader();
-                		Globals.router.navigate("home/",{trigger:true,replace: true});
-                	});
-            	}else{
-            		self.renderHeader();
-            	}
+        	if (authorised){
+	        	
+	        	var modal = $('#login-modal');
+	        	if (typeof modal.data ('bs.modal')!= 'undefined'){
+	        		if (modal.data('bs.modal').isShown){
+	            		modal.modal('hide').on('hidden.bs.modal',function(){
+	                		self.renderHeader();
+	                		Globals.router.navigate("home/",{trigger:true,replace: true});
+	                	});
+	            	}else{
+	            		self.renderHeader();
+	            	}
+	        	}
+	        	else{
+	        		self.renderHeader();
+	        	}
         	}
         	else{
         		self.renderHeader();
+        		Globals.router.navigate("home/",{trigger:true,replace: true});
         	}
         },
         

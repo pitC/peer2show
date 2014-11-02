@@ -9,7 +9,7 @@ define([
 	UserModel = Backbone.Model.extend({
 		
 		defaults:{
-			"loginStatus" : null,
+			"loginStatus" : "unauthorised",
 			"username" : null,
 			"email" : null,
 			"sessionSettings":new UserSettings()
@@ -26,11 +26,12 @@ define([
 				console.log("[USER MODEL]");
 				console.log(response);
 	            self.onLoginSuccess(response);
-	           
 	        });
 			autoLogin.fail(function(response){
 				// do nothing
+				self.onLoginFail(response);
 			});
+			this.set("loginStatus","checking...");
 		},
 		
 		logout : function(){
@@ -43,8 +44,7 @@ define([
 	            self.onLogoutSuccess(response);
 	        });
 			logout.fail(function(response){
-				// no necessary to handle (?)
-				null;
+				self.onLoginFail(response);
 			});
 		},
 		
@@ -68,7 +68,7 @@ define([
 			
 			this.setUserSettings();
 			this.setUserParameters(response);
-			this.set("loginStatus", "Authorised");
+			this.set("loginStatus", "authorised");
 		},
 		
 		onLogoutSuccess : function(response){
@@ -98,15 +98,15 @@ define([
 		
 		onLoginFail : function(response){
 			console.log(response);
-			this.setloginStatus = response.responseText;
-			this.trigger("unauthorised");
+			
+			this.set("loginStatus","unauthorised");
 		},
 		
 		isAuthorised : function(){
-			
-			if (this.get("loginStatus") == "Authorised"){
-				// ask server again
-				this.autoLogin();
+			console.log("[USER MODEL] is authorised? "+this.get("loginStatus"));
+			if (this.get("loginStatus") == "authorised"){
+				// ask server again - in case session expired
+//				this.autoLogin();
 				return true;
 			}
 			else{
@@ -114,9 +114,6 @@ define([
 			}
 		}
 	});
-	
-	
-	
 	
 	return UserModel;
 });

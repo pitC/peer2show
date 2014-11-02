@@ -31,16 +31,10 @@ define([
         userHome : function(){
         	
         	console.log("Render login homepage...");
-        	var view;
-        	if(Globals.user.isAuthorised()){
-        		view = new HomeUserView();
-        	}
-        	else{
-        		
-        	}
-        	
+        	var homeuserView = new HomeUserView();
             this.el.empty();
-            this.el.append(view.render().el);
+            this.el.append(homeuserView.render().el);
+            Globals.switchWindowStyle("session-end-style");
         },
         
         homepage: function(){
@@ -68,6 +62,7 @@ define([
            	// load guest page 
            	else {
            		this.loadHomepage(true);
+           		Globals.switchWindowStyle("session-end-style");
            	}
            	
         },
@@ -89,8 +84,7 @@ define([
         	$(element).empty();
             var roomView = new RoomView(options);
             $(element).html(roomView.render().el);
-            $(".landing-page-style").removeClass("landing-page-style").addClass("session-style");
-            $(".session-end-style").removeClass("session-end-style").addClass("session-style");
+            Globals.switchWindowStyle("session-style");
             roomView.onShow();
            
         	
