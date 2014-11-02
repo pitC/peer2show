@@ -42,10 +42,14 @@ define([
 			console.log("Change locale!");
 			
 			this.userModel = Globals.user;
-			this.listenTo(this.userModel,"authorised",this.onAuthorised);
+			this.listenTo(this.userModel,"change:loginStatus",this.onAuthoriseChange);
 			this.loginModal = new LoginModal({model:this.userModel});
 			this.newSessionModal = new NewSessionModal();
+			
+			var self = this;
+			
         },
+        
                
         render : function(){
         	
@@ -69,12 +73,15 @@ define([
         	this.headerEl.append(header);
         	// render dropdown menu instead
         	if(this.userModel.isAuthorised()){
-        		//TODO: exchange for userModel model
-        		;
-        		var userDropdownData = $.extend({},UIComponents,{username:Settings.userName});
+        		
+        		var userDropdownData = $.extend({},UIComponents,this.userModel.toJSON());
         		var userDropdown = this.userDropdownTemplate(userDropdownData);
         		$("#user-login-li").append(userDropdown);
         		$("#user-login-li").addClass("dropdown");
+        		var self = this;
+        		$("#logout-btn").on("click",function(){
+        			self.userModel.logout();
+        		});
         	}
         	else{
         		
@@ -170,9 +177,9 @@ define([
         	}
         },
         
-        onAuthorised : function(){
+        onAuthoriseChange : function(){
         	
-//        	this.renderHeader();
+
         	var self = this;
         	var modal = $('#login-modal');
         	if (typeof modal.data ('bs.modal')!= 'undefined'){

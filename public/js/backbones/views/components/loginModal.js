@@ -16,12 +16,16 @@ define([
 			this.template = _.template(LoginModalTmpl);
 			this.modalEl = $('#login-modal');
 			
-			this.listenTo(this.model,"authorised",this.onAuthorised);
-			this.listenTo(this.model,"unauthorised",this.onUnauthorised);
+			
+			this.listenTo(this.model,"change:loginStatus",this.onLogout);
 			this.loggedIn = false;
         },
         
-        
+        onLogout : function(){
+        	if (!this.model.isAuthorised()){
+        		this.render();
+        	}
+        },
         
         render : function(){
         	var data = $.extend({},UIComponents,{});

@@ -34,7 +34,18 @@ define([
 		},
 		
 		logout : function(){
-			
+			var self = this;
+			var logout = $.ajax({
+	              url : '/logout',
+	              type : 'POST'
+	        });
+			logout.done(function(response){
+	            self.onLogoutSuccess(response);
+	        });
+			logout.fail(function(response){
+				// no necessary to handle (?)
+				null;
+			});
 		},
 		
 		login : function(username, password){
@@ -54,29 +65,29 @@ define([
 		},
 		
 		onLoginSuccess : function(response){
-			console.log("success!");
-			console.log(response);
-			this.setSettings(response);
+			
 			this.setUserSettings();
 			this.setUserParameters(response);
-			console.log(Settings);
 			this.set("loginStatus", "Authorised");
+		},
+		
+		onLogoutSuccess : function(response){
 			
-			this.trigger("authorised");
+			this.resetUserSettings();
+			this.clear({silent:true}).set(this.defaults);
+			
 		},
 		
-		setSettings : function(response){
-			Settings.userName = response.username;
-			Settings.imageSettings = response.settings.imageSettings;
+		resetUserSettings : function(){
+			var settings = this.get("sessionSettings"); 
+			settings.clear({silent:true}).set(settings.defaults);
+			
 		},
-		
 
 		setUserSettings : function(response){
-//			var imageSettings = new UserSettings();
+
 			var imageSettings = this.get("sessionSettings");
 			imageSettings.fetch();
-			
-//			this.set("sessionSettings",imageSettings );
 			
 		},
 		
@@ -92,7 +103,10 @@ define([
 		},
 		
 		isAuthorised : function(){
+			
 			if (this.get("loginStatus") == "Authorised"){
+				// ask server again
+				this.autoLogin();
 				return true;
 			}
 			else{

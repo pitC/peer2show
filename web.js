@@ -72,7 +72,13 @@ mongoose.connect(dbConfig.url);
 	 
  });
  
+ app.post('/logout',function(req,res){
+	 req.logout();
+	 res.send("logged out");
+ });
  
+ 
+ // check if logged in
  app.get('/login',auth,function(req,res){
 	 res.send(req.user);
  });

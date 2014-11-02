@@ -31,9 +31,16 @@ define([
         userHome : function(){
         	
         	console.log("Render login homepage...");
-        	var homeuserView = new HomeUserView();
+        	var view;
+        	if(Globals.user.isAuthorised()){
+        		view = new HomeUserView();
+        	}
+        	else{
+        		
+        	}
+        	
             this.el.empty();
-            this.el.append(homeuserView.render().el);
+            this.el.append(view.render().el);
         },
         
         homepage: function(){
