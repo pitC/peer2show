@@ -29,7 +29,7 @@ define([
 				this.introTemplate = _.template(IntroHostTmpl);
 				
 			}
-			
+			this.listenTo(Globals.user,"change:username",this.onUsernameChange);
 			
         },
         events: {
@@ -80,6 +80,10 @@ define([
         	this.$el.html(intro);
         	
 			return this;
+        },
+        
+        onUsernameChange : function(model){
+        	$("#username-inp").val(model.get('username'));
         },
         
         onShow : function(){

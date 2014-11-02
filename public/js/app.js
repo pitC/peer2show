@@ -44,11 +44,15 @@ define([
         room : function(inpRoomId){
         	
         	
-           	console.log("Inp room ID "+inpRoomId);
-        	
+           	console.log("Inp room ID "+inpRoomId+" "+Settings.roomName);
+           	
+           	
+           	Settings.roomName = inpRoomId||location.href.replace( /\/|:|#|%|\.|\[|\]/g , '');
+           	Settings.imageSettings = Globals.user.get("sessionSettings").toJSON();
+           	
            	// open new room as a host/guest
            	if (Settings.owner || Settings.userName){
-           		var options = {roomId: location.href.replace( /\/|:|#|%|\.|\[|\]/g , ''),
+           		var options = {roomId: Settings.roomName,
            				user:Settings.userName,
            				owner:Settings.owner
            				};
