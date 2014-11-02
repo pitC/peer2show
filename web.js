@@ -65,7 +65,6 @@ mongoose.connect(dbConfig.url);
  };
  
  app.post('/login',passport.authenticate('login'),function(req,res){
-	 console.log("got post");
 	 res.send(req.user);
  });
  
@@ -74,17 +73,28 @@ mongoose.connect(dbConfig.url);
  });
  
  
- app.get('/autoLogin',auth,function(req,res){
+ app.get('/login',auth,function(req,res){
 	 res.send(req.user);
  });
+ 
+ var userSettings = require('./backend/user_manager/userSettings');
 
- app.get('userSettings',auth,function(req,res){
+ 
+ app.get('/settings/session',auth,function(req,res){
+	 console.log("Got user settings request");
 	 
+	 userSettings.getSettings(req,res,'imageSettings');
  });
  
-// app.get('/home',auth,function(req,res){
-//	res.send('ok!'); 
-// });
+ app.put('/settings/session',auth,function(req,res){
+	 console.log("Received put!");
+	 userSettings.updateSettings(req,res,'imageSettings'); 
+ });
+ 
+ app.post('/settings/session',auth,function(req,res){
+	 console.log("Received post!");
+	 userSettings.updateSettings(req,res,'imageSettings'); 
+ });
  
  
  

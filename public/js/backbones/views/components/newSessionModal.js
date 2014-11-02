@@ -19,6 +19,7 @@ define([
 			this.template = _.template(NewSessionModalTmpl);
 			this.modalEl = $('#new-session-modal');
 			this.createEvent = false;
+			this.listenTo(Globals.user,"change:username",this.onUsernameChange);
         },
         
         events: {
@@ -74,9 +75,13 @@ define([
 			});
         	
         	$('#new-session-modal').on('shown.bs.modal', function (e) {
-        		$("#username-modal-inp").val(Settings.userName);
+        		
 				self.createEvent = false;
 			});
+        },
+        
+        onUsernameChange : function(model){
+        	$("#username-modal-inp").val(model.get('username'));
         }
 	});
 	

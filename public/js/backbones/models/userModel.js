@@ -8,15 +8,17 @@ define([
 ], function($, _, Backbone, Settings,UserSettings){
 	UserModel = Backbone.Model.extend({
 		
-		loginStatus : null,
-		username : null,
-		email : null,
-		
+		defaults:{
+			"loginStatus" : null,
+			"username" : null,
+			"email" : null,
+			"sessionSettings":new UserSettings()
+		},
 		
 		// checks if session authorised
 		autoLogin : function(){
 			var autoLogin = $.ajax({
-	              url : '/autoLogin',
+	              url : '/login',
 	              type : 'GET'
 	        });
 			var self = this;
@@ -28,10 +30,7 @@ define([
 	        });
 			autoLogin.fail(function(response){
 				// do nothing
-				self.setUserSettings(response);
 			});
-			
-			
 		},
 		
 		logout : function(){
@@ -58,9 +57,10 @@ define([
 			console.log("success!");
 			console.log(response);
 			this.setSettings(response);
+			this.setUserSettings();
 			this.setUserParameters(response);
 			console.log(Settings);
-			this.loginStatus = "Authorised";
+			this.set("loginStatus", "Authorised");
 			
 			this.trigger("authorised");
 		},
@@ -72,33 +72,32 @@ define([
 		
 
 		setUserSettings : function(response){
-			this.userSettings = new UserSettings();
-//			this.userSettings.fetch();
+//			var imageSettings = new UserSettings();
+			var imageSettings = this.get("sessionSettings");
+			imageSettings.fetch();
+			
+//			this.set("sessionSettings",imageSettings );
 			
 		},
 		
 		setUserParameters : function(response){
-			this.username = response.username;
-			this.email = response.email;
+			this.set("username", response.username);
+			this.set("email", response.email);
 		},
 		
 		onLoginFail : function(response){
 			console.log(response);
-			this.loginStatus = response.responseText;
+			this.setloginStatus = response.responseText;
 			this.trigger("unauthorised");
 		},
 		
 		isAuthorised : function(){
-			if (this.loginStatus == "Authorised"){
+			if (this.get("loginStatus") == "Authorised"){
 				return true;
 			}
 			else{
 				return false;
 			}
-		},
-		
-		getUsername : function(){
-			return this.usernmame;
 		}
 	});
 	
