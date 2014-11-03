@@ -46,19 +46,15 @@ define([
         toggleSignInUp : function(){
         	console.log("goto!");
         	var index = 0;
-        	var btnLbl = '';
         	if (this.currentView == 0){
         		index = 1;
-        		// TODO: change for string literal
-        		btnLbl = UIComponents.loginLbl;
         	}
         	else{
         		index = 0;
-        		btnLbl = UIComponents.registerLbl;
         	}
         
         	this.gotoView(index);
-        	$('#item-toggle-btn').text(btnLbl);
+        	
         },
         
         gotoPasswordReset : function(e){
@@ -66,9 +62,20 @@ define([
         	this.gotoView(2);
         },
         
+        
         gotoView : function(index){
+        	var btnLbl = '';
+        	switch(index){
+        	case 0:
+        		btnLbl = UIComponents.registerLbl;
+        		break;
+        	case 1,2:
+        		btnLbl = UIComponents.loginLbl;
+        		break;
+        	}
         	this.currentView = index;
         	$('#user-management-carousel').carousel(index);
+        	$('#item-toggle-btn').text(btnLbl);
         },
         
         
