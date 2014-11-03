@@ -34,14 +34,15 @@ define([
         	});
         	
         	this.model.save(null,{
-        		error:function(obj,err){
+        		error:function(model,errors){
         			console.log("Saving error!");
-        			console.log(err);
-        			self.onSaveError();
+        			console.log(errors);
+        			self.onSaveError(model,errors);
         		},
         		success:function(){
         			self.onSaveSuccess();
         		}
+        		
         	});
         	this.wait();
         },
@@ -68,10 +69,14 @@ define([
         	this.toggleElements(false);
         },
         
-        onSaveError : function(){
+        onSaveError : function(model,errors){
         	this.done();
         	this.$el.find(".save-btn").text("Not saved!");
-        	//.addClass("btn-danger");
+        	for (var i in errors){
+        		var field = errors[i].field;
+        		var error = errors[i].error;
+        		console.log("["+field+"]:"+error);
+        	}
         },
         
         onSaveSuccess : function(){
