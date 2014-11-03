@@ -19,6 +19,7 @@ define([
 			
 			this.listenTo(this.model,"change:loginStatus",this.onLogout);
 			this.loggedIn = false;
+			this.currentView = 0;
         },
         
         onLogout : function(){
@@ -37,10 +38,41 @@ define([
         
         
         events : {
-//        	"click #login-btn": "login",
-        	"submit #login-form":"login"
-        		
+        	"submit #login-form":"login",
+        	"click #item-toggle-btn" : "toggleSignInUp",
+        	"click #password-reset-btn": "gotoPasswordReset"
         },
+        
+        toggleSignInUp : function(){
+        	console.log("goto!");
+        	var index = 0;
+        	var btnLbl = '';
+        	if (this.currentView == 0){
+        		index = 1;
+        		// TODO: change for string literal
+        		btnLbl = UIComponents.loginLbl;
+        	}
+        	else{
+        		index = 0;
+        		btnLbl = UIComponents.registerLbl;
+        	}
+        
+        	this.gotoView(index);
+        	$('#item-toggle-btn').text(btnLbl);
+        },
+        
+        gotoPasswordReset : function(e){
+        	e.preventDefault();
+        	this.gotoView(2);
+        },
+        
+        gotoView : function(index){
+        	this.currentView = index;
+        	$('#user-management-carousel').carousel(index);
+        },
+        
+        
+        
         
         login : function(event){
         	event.preventDefault();

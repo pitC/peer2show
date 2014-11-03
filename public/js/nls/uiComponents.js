@@ -111,8 +111,7 @@ define({
         	
         // Login modal
 		"loginLbl":"Login",
-		"signInBtn":"Sign in",
-		"registerBtn":"Register",
+		"registerLbl":"Register",
 		"logoutLbl":"Logout",
 		"settingsLbl":"Settings"
 		

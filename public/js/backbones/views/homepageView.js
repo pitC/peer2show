@@ -91,6 +91,17 @@ define([
         	var carouselEl = $("#learn-more-header");
         	
         	if ($(carouselEl).length > 0){
+        		function moved(el){
+            		var emphesizeClass = 'emph';
+//            		console.log("owl moved!");
+            		var srcId = $(el).attr('id');
+            		var num = this.currentItem;
+            		$('.carousel-sync').removeClass(emphesizeClass);
+            		var target = '#'+srcId+"-"+num;
+//            		console.log("target "+target);
+            		$(target).addClass(emphesizeClass);
+            		
+            	};
 	        	carouselEl.owlCarousel({
 	              	 
 	//                navigation : true, // Show next and prev buttons
@@ -122,17 +133,7 @@ define([
 	        		   }
 	        		});
 	        	
-	        	function moved(el){
-	        		var emphesizeClass = 'emph';
-	//        		console.log("owl moved!");
-	        		var srcId = $(el).attr('id');
-	        		var num = this.currentItem;
-	        		$('.carousel-sync').removeClass(emphesizeClass);
-	        		var target = '#'+srcId+"-"+num;
-	//        		console.log("target "+target);
-	        		$(target).addClass(emphesizeClass);
-	        		
-	        	};
+	        	
         	}
         	var self = this;
         	$("#learn-more-action").on("click",self.learnMore);
