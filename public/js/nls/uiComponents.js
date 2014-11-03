@@ -5,8 +5,8 @@ define({
     	// navbar
 		"newSessionLbl":"New session",
 		"learnMoreLbl":"Learn more",
-		"feedbackLink":"site/feedback.html",
-		"smartvoteLink":"site/smartvote.html",
+		"feedbackLink":"/site/feedback.html",
+		"smartvoteLink":"/site/smartvote.html",
 		"feedbackLbl":"Feedback & support",
 		// cookie notice
 		"cookieWarningText":"We use cookies in order to provide you best user experience.",

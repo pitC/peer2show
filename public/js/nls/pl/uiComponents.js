@@ -93,9 +93,9 @@ define({
     	// navbar
 	"newSessionLbl":"Utwórz sesję",
 	"learnMoreLbl":"O projekcie",
-	"feedbackLink":"site/pl/feedback.html",
-	"smartvoteLink":"site/pl/smartvote.html",
-	"smartvoteLink":"site/pl/smartvote.html",
+	"feedbackLink":"/site/pl/feedback.html",
+	"smartvoteLink":"/site/pl/smartvote.html",
+	"smartvoteLink":"/site/pl/smartvote.html",
 	"feedbackLbl":"Kontakt",
 	// footer
 	"tosLink":"site/pl/tos.html",
