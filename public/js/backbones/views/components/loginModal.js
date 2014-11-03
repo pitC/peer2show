@@ -69,7 +69,8 @@ define([
         	case 0:
         		btnLbl = UIComponents.registerLbl;
         		break;
-        	case 1,2:
+        	case 1:
+        	case 2:
         		btnLbl = UIComponents.loginLbl;
         		break;
         	}
