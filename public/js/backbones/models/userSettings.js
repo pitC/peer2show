@@ -26,7 +26,7 @@ define([
 	        if (attrs.maxWidth < 200 || attrs.maxWidth > 5000){
 	        	errors.push({field:'maxWidth',error:attrs.maxWidth+' is not within range 200-5000px'});
 	        }
-//	        console.log(errors);
+	        console.log(errors);
 	        return errors.length > 0 ? errors : false;
 	    }
 		

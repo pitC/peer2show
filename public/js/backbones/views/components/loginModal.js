@@ -19,6 +19,9 @@ define([
 			
 			this.listenTo(this.model,"change:loginStatus",this.onLogout);
 			this.loggedIn = false;
+			// 0 - login
+			// 1 - Sign up
+			// 2 - password reset
 			this.currentView = 0;
         },
         
@@ -31,7 +34,7 @@ define([
         render : function(){
         	var data = $.extend({},UIComponents,{});
             this.$el.html(this.template(data));
-            
+            $("#login-error").hide();
             return this;
         },
         
@@ -88,8 +91,17 @@ define([
         	
         	var username = $("#username-login-inp").val();
         	var password = $("#password-login-inp").val();
-        	this.model.login(username,password);
+        	this.model.login(username,password,this.onLoginFail);
+        	$("#login-btn").text(UIComponents.logingInLbl).prop("disabled", true);
+        	
+        },
+        
+        onLoginFail : function(){
+        	$("#login-error").hide(100).show(100);
+        	$("#login-btn").text(UIComponents.loginLbl).prop("disabled", false);
+        	
         }
+        
         
 	});
 	

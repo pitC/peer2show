@@ -12,6 +12,7 @@
   
 		 	<div class="carousel-inner" role="listbox">
     			<div class="item active">
+    				<div id="login-error" class="alert alert-danger" role="alert" ><%= loginFailLbl %></div>
       				<form id="login-form" class="form-signin" role="form" action="/login" method="post">
 	        			<div class="form-group">
   							<label class="control-label" for="username-login-inp">Username</label>
@@ -21,7 +22,7 @@
   							<label class="control-label" for="password-login-inp">Password</label>
   							<input type="password" class="form-control" id="password-login-inp" name="password" required>
 						</div>
-	        			<button class="btn btn-primary"><%= loginLbl %></button>
+	        			<button id="login-btn" class="btn btn-primary"><%= loginLbl %></button>
 	      			</form>
 	      			<br>
 	      			<a id="password-reset-btn" href=""><small>Forgot password?</small></a>

@@ -108,12 +108,16 @@ define({
 		"fileLoadingError":"This file could not be read",
 		"imageLoadingError":"This image could not be loaded",
 		"unknownError":"Unknown error occured!",
-        	
+        
+		
         // Login modal
 		"loginLbl":"Login",
+		"logingInLbl":"Loging in...",
 		"registerLbl":"Register",
 		"logoutLbl":"Logout",
-		"settingsLbl":"Settings"
+		"settingsLbl":"Settings",
+		"loginFailLbl" :"Username and/or password invalid"
+		
 		
     },
     "pl":true

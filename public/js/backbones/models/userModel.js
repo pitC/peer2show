@@ -18,8 +18,8 @@ define([
 		// checks if session authorised
 		autoLogin : function(){
 			var autoLogin = $.ajax({
-	              url : '/login',
-	              type : 'GET'
+	              url : '/autologin',
+	              type : 'POST'
 	        });
 			var self = this;
 			autoLogin.done(function(response){
@@ -48,7 +48,7 @@ define([
 			});
 		},
 		
-		login : function(username, password){
+		login : function(username, password, onFailCallback){
 			var credentials = {"username":username,"password":password};
 			var self = this;
 			var login = $.ajax({
@@ -61,6 +61,7 @@ define([
 	          });
 			login.fail(function(response){
 				self.onLoginFail(response);
+				onFailCallback();
 			});
 		},
 		

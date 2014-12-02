@@ -79,7 +79,7 @@ mongoose.connect(dbConfig.url);
  
  
  // check if logged in
- app.get('/login',auth,function(req,res){
+ app.post('/autologin',auth,function(req,res){
 	 res.send(req.user);
  });
  

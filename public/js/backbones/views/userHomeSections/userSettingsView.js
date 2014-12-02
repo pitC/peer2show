@@ -33,18 +33,27 @@ define([
         		self.model.set(id,val);
         	});
         	
-        	this.model.save(null,{
-        		error:function(model,errors){
+        	this.model.on('invalid', function(model, errors) {
+    		    _.each(errors, function(error, i) {
+    		        console.log(error);
+    		    });
+    		});
+        	
+        	this.model.save({},{
+        		
+        		success:function(){
+        			self.onSaveSuccess();
+        		},
+        		error:function(){
         			console.log("Saving error!");
         			console.log(errors);
         			self.onSaveError(model,errors);
-        		},
-        		success:function(){
-        			self.onSaveSuccess();
         		}
         		
         	});
-        	this.wait();
+        	
+        	
+//        	this.wait();
         },
         
 
@@ -70,6 +79,7 @@ define([
         },
         
         onSaveError : function(model,errors){
+        	console.log("on save error");
         	this.done();
         	this.$el.find(".save-btn").text("Not saved!");
         	for (var i in errors){
