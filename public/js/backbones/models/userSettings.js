@@ -26,6 +26,9 @@ define([
 	        if (attrs.maxWidth < 200 || attrs.maxWidth > 5000){
 	        	errors.push({field:'maxWidth',error:attrs.maxWidth+' is not within range 200-5000px'});
 	        }
+	        if (attrs.maxHeight < 200 || attrs.maxHeight > 5000){
+	        	errors.push({field:'maxHeight',error:attrs.maxHeight+' is not within range 200-5000px'});
+	        }
 	        console.log(errors);
 	        return errors.length > 0 ? errors : false;
 	    }

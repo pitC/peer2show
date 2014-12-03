@@ -24,8 +24,10 @@ define([
         },
         
         save : function(){
-        	// TODO: validate and handle errors
+        	
         	var self = this;
+        	this.hideValidationErrors();
+        	
         	this.$el.find(".model-input").each(function(){
         		console.log(this);
         		var id = $(this).attr("id");
@@ -35,7 +37,7 @@ define([
         	
         	this.model.on('invalid', function(model, errors) {
     		    _.each(errors, function(error, i) {
-    		        console.log(error);
+    		        self.showValidationError(error.field, error.error);
     		    });
     		});
         	
@@ -44,7 +46,7 @@ define([
         		success:function(){
         			self.onSaveSuccess();
         		},
-        		error:function(){
+        		error:function(model,errors){
         			console.log("Saving error!");
         			console.log(errors);
         			self.onSaveError(model,errors);
@@ -61,12 +63,27 @@ define([
         	var data = $.extend({},UIComponents,this.model.toJSON());
         	var mainElement = this.template(data);
         	this.$el.html(mainElement);
+        	this.hideValidationErrors();
 			return this;
         },
         
         toggleElements :function(disable){
         	this.$el.find("input").prop("disabled", disable);
         	this.$el.find(".save-btn").prop("disabled",disable);
+        },
+        
+        hideValidationErrors : function(){
+        	this.$el.find(".validation-error").hide();
+        	this.$el.find(".has-error.has-feedback").removeClass("has-error");
+        	
+        },
+        
+        showValidationError : function(attribute, msg){
+        	
+        	var msgId = "#"+attribute+"-error";
+        	var formId = "#"+attribute+"-form";
+        	$(formId).addClass("has-error");
+        	$(msgId).text(msg).show();
         },
         
         wait : function(){
@@ -81,12 +98,7 @@ define([
         onSaveError : function(model,errors){
         	console.log("on save error");
         	this.done();
-        	this.$el.find(".save-btn").text("Not saved!");
-        	for (var i in errors){
-        		var field = errors[i].field;
-        		var error = errors[i].error;
-        		console.log("["+field+"]:"+error);
-        	}
+        	this.$el.find(".save-btn").text("Not saved!").addClass("btn-warning");
         },
         
         onSaveSuccess : function(){
@@ -97,7 +109,7 @@ define([
         
         resetFeedbackElements : function(){
         	console.log("input change!");
-        	this.$el.find(".save-btn").text("Save").removeClass("btn-success");
+        	this.$el.find(".save-btn").text("Save").removeClass("btn-success").removeClass("btn-warning");
         }
         
         
