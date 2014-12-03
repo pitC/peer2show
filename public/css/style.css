@@ -334,6 +334,19 @@ background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNv
 }
 /* end of social buttons */
 
+#user-home{
+	margin-top:5%;
+	margin-left:5%;
+	margin-right:5%;
+	
+}
+
+#user-home p {
+	font-size:2em;
+	color: rgb(233, 233, 233);
+}
+
+
 #notifications-container{
 	position: fixed;	
 	/*top: 50px;*/

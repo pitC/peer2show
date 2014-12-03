@@ -23,8 +23,8 @@ define([
 	        if (isNaN(attrs.maxHeight)) {
 	        	errors.push({field:'maxHeight',error:attrs.maxHeight+' is not a valid number'});
 	        }
-	        if (attrs.maxWidth < 200 || attrs.maxWidth > 5000){
-	        	errors.push({field:'maxWidth',error:attrs.maxWidth+' is not within range 200-5000px'});
+	        if (attrs.maxWidth < 400 || attrs.maxWidth > 5000){
+	        	errors.push({field:'maxWidth',error:attrs.maxWidth+' is not within range 400-5000px'});
 	        }
 	        if (attrs.maxHeight < 200 || attrs.maxHeight > 5000){
 	        	errors.push({field:'maxHeight',error:attrs.maxHeight+' is not within range 200-5000px'});
