@@ -3,11 +3,12 @@ define([
          'underscore', 
          'backbone',
          'text!templates/homeUser/passwordReset.html',
+         'backbones/views/components/passwordResetFormView',
          'app/settings',
          'app/globals',
          "i18n!nls/uiComponents"
          
-], function($, _, Backbone, PasswordResetTmpl, Settings, Globals, UIComponents){
+], function($, _, Backbone, PasswordResetTmpl, PasswordResetForm, Settings, Globals, UIComponents){
 
 	
 	
@@ -19,6 +20,7 @@ define([
 			console.log(options);
 			this.token = this.options.token;
 			this.user = Globals.user;
+			this.passwordResetForm = new PasswordResetForm(this.options);
         },
         render : function(){
         	
@@ -26,54 +28,16 @@ define([
         	var data = $.extend({},UIComponents,event);
         	
         	this.$el.html(this.passwordResetTemplate(data));
-
+        	var formViewEl = this.passwordResetForm.render().el;
+        	console.log("Render Form view");
+        	console.log(formViewEl);
+        	this.$el.find("#password-reset").append(formViewEl);
+        	
 			return this;
         },
         
-        events : {
-        	"submit #reset-form":"reset"
-        },
-        
-        reset : function(event){
-        	event.preventDefault();
-        	var self = this;
-        	
-        	var data = {
-        			'password':$("#password-inp").val(),
-        			'passwordConfirm':$("#password-confirm-inp").val(),
-        			'token':self.token
-        	};
-        	$("#reset-success").hide();
-        	$("#reset-error").hide();
-        	$("#reset-btn").text(UIComponents.changingPasswordLbl).prop("disabled", true);
-        	this.user.resetPassword(data,self.resetDone,self.resetFail);
-        },
-        
-        resetDone : function(response){
-        	console.log("Reset done!");
-        	console.log(response);
-        	
-            $("#reset-success").show(100);
-            $("#reset-btn").text(UIComponents.changePasswordLbl).prop("disabled", false);
-        },
-        
-        resetFail : function(response){
-        	$("#reset-error").show(100);
-        	console.log("Reset failed!");
-        	console.log(response);
-        	if (response.responseText){
-        		$("#reset-error").text(response.responseText).show(100);
-        	}
-        	else{
-        		$("#reset-error").text(UIComponents.resetFailLbl).show(100);
-        	}
-        	
-        	$("#reset-btn").text(UIComponents.changePasswordLbl).prop("disabled", false);
-        },
-        
         onShow : function(){
-        	$("#reset-error").hide();
-            $("#reset-success").hide();
+        	this.passwordResetForm.onShow();
         }
         
 	});

@@ -74,32 +74,40 @@ exports.reset = function(req, res){
 	                   function(done) {
 	                	 console.log("Token: "+req.body.token);
 	                	 console.log("Date:"+Date.now());
-	                     User.findOne({ passwordResetToken: req.body.token, passwordResetExpire: { $gt: Date.now() } }, function(err, user) {
-	                       if (!user) {
-	                    	   	console.log('Password reset token is invalid or has expired.');
-	                         	res.status(409);
+	                	 
+	                	 var process = function(err, user) {
+		                       if (!user) {
+		                    	   	console.log('Password reset token is invalid or has expired.');
+		                         	res.status(409);
 
-	                         	return res.send("Password reset token is invalid or has expired.");
-	                       }
-	                       
-	                       if (req.body.password !== req.body.passwordConfirm){
-	                    	   	console.log('Passwords not same');
-	                    	   	res.status(409);
-	                    	   	return res.send("Passwords not same");
+		                         	return res.send("Password reset token is invalid or has expired.");
+		                       }
+		                       
+		                       if (req.body.password !== req.body.passwordConfirm){
+		                    	   	console.log('Passwords not same');
+		                    	   	res.status(409);
+		                    	   	return res.send("Passwords not same");
 
-	                       }
+		                       }
 
-	                       user.password = createHash(req.body.password);
-	                       
-	                       user.passwordResetToken = undefined;
-	                       user.passwordResetExpire = undefined;
+		                       user.password = createHash(req.body.password);
+		                       
+		                       user.passwordResetToken = undefined;
+		                       user.passwordResetExpire = undefined;
 
-	                       user.save(function(err) {
-	                         req.logIn(user, function(err) {
-	                           done(err, user);
-	                         });
-	                       });
-	                     });
+		                       user.save(function(err) {
+		                         req.logIn(user, function(err) {
+		                           done(err, user);
+		                         });
+		                       });
+		                     };
+	                	 if (req.isAuthenticated()){
+	                		 
+	                		 User.findOne({'username':req.user.username},process);
+	                	 }
+	                	 else{
+	                		 User.findOne({ passwordResetToken: req.body.token, passwordResetExpire: { $gt: Date.now() } }, process);
+	                	 }
 	                   },
 	                   function(user, done) {
 	                     var smtpTransport = nodemailer.createTransport({
