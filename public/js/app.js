@@ -6,11 +6,12 @@ define([
          'backbones/views/roomView',
          'backbones/views/homepageView',
          'backbones/views/homeUserView',
+         'backbones/views/passwordResetView',
          'app/settings',
          'app/globals',
          'app/logManager'
 
-], function($, _, Backbone, IndexView, RoomView, HomepageView, HomeUserView, Settings, Globals, LogManager){ 
+], function($, _, Backbone, IndexView, RoomView, HomepageView, HomeUserView, PasswordResetView, Settings, Globals, LogManager){ 
 	
 	var AppRouter = Backbone.Router.extend({
         initialize : function(options){
@@ -24,12 +25,22 @@ define([
         routes : {
         	"":"homepage",
             "s/:roomId": "room",
-            "home(/)":"userHome"
+            "home(/)":"userHome",
+            "reset/:token":"resetPassword"
 //            ":roomId": "room"
         },
         
+        resetPassword : function(token){
+        	var options = {token:token}; 
+            var passwordResetView = new PasswordResetView(options);
+            this.el.empty();
+            
+            this.el.append(passwordResetView.render().el);
+        	Globals.switchWindowStyle("session-end-style");
+        	passwordResetView.onShow();
+        },
+        
         userHome : function(){
-        	
         	console.log("Render login homepage...");
         	var homeuserView = new HomeUserView();
             this.el.empty();
@@ -40,8 +51,8 @@ define([
         homepage: function(){
         	console.log("Render homepage...");
         	this.loadHomepage(false);
-        }
-        ,
+        },
+        
         room : function(inpRoomId){
         	
         	
@@ -86,8 +97,6 @@ define([
             $(element).html(roomView.render().el);
             Globals.switchWindowStyle("session-style");
             roomView.onShow();
-           
-        	
         }
     });
 	
@@ -99,7 +108,6 @@ define([
         var indexView = renderIndex();
 		var router = new AppRouter({el : $('#content'),indexView:indexView});
 	    Backbone.history.start({pushState:true});
-	    
 	    Globals.user.autoLogin();
 	    
 //	    Backbone.history.start();

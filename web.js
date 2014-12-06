@@ -12,7 +12,7 @@ var app = express();
 var bodyParser = require('body-parser');
 app.use(bodyParser());
 
-var bugReporter = require('./backend/bugReporter');
+
 
 
  app.use("/js", express.static(__dirname + '/public/js'));
@@ -28,6 +28,10 @@ var bugReporter = require('./backend/bugReporter');
  });
  
  app.all('/home', function(req, res){
+	 res.sendfile(INDEX);	
+ });
+ 
+ app.get('/reset/*', function(req, res){
 	 res.sendfile(INDEX);	
  });
  
@@ -83,6 +87,10 @@ mongoose.connect(dbConfig.url);
 	 res.send(req.user);
  });
  
+ var passwordReset = require('./backend/user_manager/passwordReset');
+ app.post('/forgot',passwordReset.forgot);
+ app.post('/reset',passwordReset.reset);
+ 
  var userSettings = require('./backend/user_manager/userSettings');
 
  
@@ -113,6 +121,7 @@ mongoose.connect(dbConfig.url);
   * REMOTE LOGGING PART
   * 
   */
+ var bugReporter = require('./backend/bugReporter');
  
  app.post('/event',bugReporter.logEvent);
 

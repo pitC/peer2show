@@ -10,6 +10,8 @@ module.exports = mongoose.model('User',{
     username: String,
     password: String,
     email: String,
+    passwordResetToken : String,
+    passwordResetExpire : Date,
     settings:{
     	imageSettings:{
     		processImage:Boolean,

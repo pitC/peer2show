@@ -35,6 +35,8 @@ define([
         	var data = $.extend({},UIComponents,{});
             this.$el.html(this.template(data));
             $("#login-error").hide();
+            $("#forgot-error").hide();
+            $("#forgot-success").hide();
             return this;
         },
         
@@ -42,8 +44,9 @@ define([
         
         events : {
         	"submit #login-form":"login",
+        	"submit #forgot-form":"forgotPassword",
         	"click #item-toggle-btn" : "toggleSignInUp",
-        	"click #password-reset-btn": "gotoPasswordReset"
+        	"click #goto-forgot-btn": "gotoPasswordReset"
         },
         
         toggleSignInUp : function(){
@@ -68,18 +71,25 @@ define([
         
         gotoView : function(index){
         	var btnLbl = '';
+        	var headerLbl = '';
         	switch(index){
         	case 0:
         		btnLbl = UIComponents.registerLbl;
+        		headerLbl = UIComponents.loginLbl;
         		break;
         	case 1:
+        		btnLbl = UIComponents.loginLbl;
+        		headerLbl = UIComponents.registerLbl;
+        		break;
         	case 2:
         		btnLbl = UIComponents.loginLbl;
+        		headerLbl = UIComponents.passwordResetLbl;
         		break;
         	}
         	this.currentView = index;
         	$('#user-management-carousel').carousel(index);
         	$('#item-toggle-btn').text(btnLbl);
+        	$('#carousel-item-header').text(headerLbl);
         },
         
         
@@ -92,12 +102,37 @@ define([
         	var username = $("#username-login-inp").val();
         	var password = $("#password-login-inp").val();
         	this.model.login(username,password,this.onLoginFail);
+        	$("#login-error").hide(100);
         	$("#login-btn").text(UIComponents.logingInLbl).prop("disabled", true);
         	
         },
         
+        forgotPassword : function(event){
+        	event.preventDefault();
+        	var email = $("#email-inp").val();
+        	var self = this;
+        	this.model.forgotPassword(email,self.onForgotDone,self.onForgotFail);
+        	$("#forgot-error").hide(100);
+        	$("#forgot-success").hide(100);
+        	$("#forgot-btn").text(UIComponents.sendingLinkLbl).prop("disabled", true);
+        },
+        
+        onForgotDone : function(response){
+        	console.log("Forgot done!");
+        	console.log(response);
+        	$("#forgot-success").show(100);
+        	$("#forgot-btn").text(UIComponents.forgotLbl).prop("disabled", false);
+        },
+        
+        onForgotFail : function(response){
+        	console.log("Forgot failed!");
+        	console.log("response");
+        	$("#forgot-error").show(100);
+        	$("#forgot-btn").text(UIComponents.forgotLbl).prop("disabled", false);
+        },
+        
         onLoginFail : function(){
-        	$("#login-error").hide(100).show(100);
+        	$("#login-error").show(100);
         	$("#login-btn").text(UIComponents.loginLbl).prop("disabled", false);
         	
         }

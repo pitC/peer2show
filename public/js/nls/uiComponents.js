@@ -114,10 +114,18 @@ define({
 		"loginLbl":"Login",
 		"logingInLbl":"Loging in...",
 		"registerLbl":"Register",
+		"passwordResetLbl":"Password reset",
 		"logoutLbl":"Logout",
 		"settingsLbl":"Settings",
-		"loginFailLbl" :"Username and/or password invalid"
-		
+		"forgotLbl":"Send reset link",
+		"sendingLinkLbl":"Sending reset linkg...",
+		"loginFailLbl" :"Username and/or password invalid",
+		"forgotFailLbl" : "Sending reset link failed.",
+		"forgotDoneLbl" : "Reset link sent. Please check your mailbox.",
+		"resetFailLbl" : "Password reset failed.",
+		"resetDoneLbl" : "Password reset succesful! <a href='/home' class='alert-link'>Click here to got to your home page</a>",
+		"changePasswordLbl":"Change password",
+		"changingPasswordLbl":"Changing password..."
 		
     },
     "pl":true

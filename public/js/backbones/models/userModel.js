@@ -113,6 +113,47 @@ define([
 			else{
 				return false;
 			}
+		},
+		
+		forgotPassword : function(email,successCb, errorCb){
+			var postData = {'email':email};
+			var forgot = $.ajax({
+	              url : '/forgot',
+	              type : 'POST',
+	              data : postData
+	        });
+			forgot.done(function(response){
+	            successCb(response);
+	        });
+			forgot.fail(function(response){
+				errorCb(response);
+			});
+		},
+		
+		resetPassword : function(data,successCb, errorCb){
+			var self = this;
+			if (data){
+				if (data.password !== data.passwordConfirm){
+					var response = {msg:"Provided passwords not the same"};
+					errorCb(response);
+				}
+			}
+			
+			var reset = $.ajax({
+	              url : '/reset',
+	              type : 'POST',
+	              data : data
+	        });
+			
+			
+			reset.done(function(response){
+				self.autoLogin();
+	            successCb(response);
+	        });
+			
+			reset.fail(function(response){
+				errorCb(response);
+			});
 		}
 	});
 	
