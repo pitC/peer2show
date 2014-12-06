@@ -133,9 +133,10 @@ define([
 		resetPassword : function(data,successCb, errorCb){
 			var self = this;
 			if (data){
-				if (data.password !== data.passwordConfirm){
-					var response = {msg:"Provided passwords not the same"};
+				if (data.password != data.passwordConfirm){
+					var response = {responseText:"Provided passwords not the same"};
 					errorCb(response);
+					return;
 				}
 			}
 			

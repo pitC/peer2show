@@ -40,7 +40,7 @@ define([
         	
         	var data = {
         			'password':$("#password-inp").val(),
-        			'passwordConfirm':$("#password-inp").val(),
+        			'passwordConfirm':$("#password-confirm-inp").val(),
         			'token':self.token
         	};
         	$("#reset-success").hide();
@@ -61,6 +61,13 @@ define([
         	$("#reset-error").show(100);
         	console.log("Reset failed!");
         	console.log(response);
+        	if (response.responseText){
+        		$("#reset-error").text(response.responseText).show(100);
+        	}
+        	else{
+        		$("#reset-error").text(UIComponents.resetFailLbl).show(100);
+        	}
+        	
         	$("#reset-btn").text(UIComponents.changePasswordLbl).prop("disabled", false);
         },
         
