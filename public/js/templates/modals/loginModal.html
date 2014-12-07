@@ -14,13 +14,21 @@
     			<div class="item active">
     				<div id="login-error" class="alert alert-danger" role="alert" ><%= loginFailLbl %></div>
       				<form id="login-form" class="form-signin" role="form" action="/login" method="post">
-	        			<div class="form-group">
-  							<label class="control-label" for="username-login-inp">Username</label>
-  							<input type="text" class="form-control" id="username-login-inp" name="username" required>
+      					<div class="form-group">
+							<div class="input-group">
+								<span class="input-group-addon">
+									<span class="glyphicon glyphicon-user"></span> Username
+								</span>
+	  							<input type="text" class="form-control" id="username-login-inp" name="username" required>
+							</div>
 						</div>
-						<div class="form-group">
-  							<label class="control-label" for="password-login-inp">Password</label>
-  							<input type="password" class="form-control" id="password-login-inp" name="password" required>
+	        			<div class="form-group">
+							<div class="input-group">
+								<span class="input-group-addon">
+									<span class="glyphicon glyphicon-lock"></span> Password
+								</span>
+	  							<input type="password" class="form-control" id="password-login-inp" name="password" required>
+							</div>
 						</div>
 	        			<button id="login-btn" class="btn btn-primary"><%= loginLbl %></button>
 	      			</form>
@@ -36,10 +44,15 @@
     			<div class="item">
       				<div id="forgot-error" class="alert alert-danger" role="alert" ><%= forgotFailLbl %></div>
 					<div id="forgot-success" class="alert alert-success" role="alert" ><%= forgotDoneLbl %></div>
+						
       				<form id="forgot-form" role="form" action="/forgot" method="post">
 	        			<div class="form-group">
-  							<label class="control-label" for="email-inp">Email</label>
-  							<input type="text" class="form-control" id="email-inp" name="email" required autofocus>
+							<div class="input-group">
+								<span class="input-group-addon">
+									<span class="glyphicon glyphicon-envelope"></span> E-mail address
+								</span>
+	  							<input type="text" class="form-control" id="email-inp" name="email" required autofocus>
+							</div>
 						</div>
 	        			<button id="forgot-btn" class="btn btn-primary"><%= forgotLbl %></button>
 	      			</form>

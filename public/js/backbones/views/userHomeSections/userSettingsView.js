@@ -19,8 +19,13 @@ define([
         
         events : {
         	"click .save-btn":"save",
-        	"change input": "resetFeedbackElements"
-        		
+        	"change input": "resetFeedbackElements",
+        	"submit form" : "submitForm"
+        },
+        
+        submitForm : function(event){
+        	event.preventDefault();
+        	this.save();
         },
         
         save : function(){
