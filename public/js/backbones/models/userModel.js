@@ -148,7 +148,9 @@ define([
 			
 			
 			reset.done(function(response){
-				self.autoLogin();
+				if (!self.isAuthorised()){
+					self.autoLogin();
+				}
 	            successCb(response);
 	        });
 			

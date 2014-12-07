@@ -5,13 +5,14 @@ define([
          'app/settings',
          'app/globals',
          'backbones/views/userHomeSections/userSettingsView',
+         'backbones/views/userHomeSections/accountSettingsView',
          'text!templates/homeUser/homeUserMain.html',
          'text!templates/homeUser/sessionSettings.html',
          'text!templates/homeUser/unauthorisedMain.html',
          'text!templates/homeUser/authorisationOngoing.html',
          "i18n!nls/uiComponents"
          
-], function($, _, Backbone, Settings, Globals,UserSettingsView,HomeUserTmpl,SessionSettingsTmpl,UnauthorisedTmpl,AuthorisationOngoingTmpl,UIComponents){
+], function($, _, Backbone, Settings, Globals,UserSettingsView,AccountSettingsView, HomeUserTmpl,SessionSettingsTmpl,UnauthorisedTmpl,AuthorisationOngoingTmpl,UIComponents){
 	
 	
 	HomeUserView = Backbone.View.extend({
@@ -28,6 +29,8 @@ define([
 			this.settingSections = {
 					"#session-settings":new UserSettingsView({model:sessionSettingsModel,template:SessionSettingsTmpl})
 			};
+			
+			this.accountSettingsView = new AccountSettingsView({model:this.userModel});
         },
         
         render : function(){
@@ -55,6 +58,8 @@ define([
         	var mainElement = this.template(data);
         	this.$el.html(mainElement);
         	this.renderSettingSections();
+        	this.renderAccountSettings();
+        	this.onShow();
         	return this;
         },
         
@@ -71,6 +76,7 @@ define([
         	var data = $.extend({},UIComponents,{});
         	var mainElement = authorisingTemplate(data);
         	this.$el.html(mainElement);
+        	
         	return this;
         },
         
@@ -81,10 +87,19 @@ define([
         	}
         },
         
+        renderAccountSettings : function(){
+        	
+        	this.$el.find("#account-settings").append(this.accountSettingsView.render().el);
+        },
+        
         onUsernameChange : function(event){
         	console.log(event);
         	var username = this.userModel.get("username");
         	$("#username").text(username);
+        },
+        
+        onShow : function(){
+        	this.accountSettingsView.onShow();
         }
         
 	});

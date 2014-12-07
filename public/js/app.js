@@ -46,6 +46,8 @@ define([
             this.el.empty();
             this.el.append(homeuserView.render().el);
             Globals.switchWindowStyle("session-end-style");
+            
+            homeuserView.onShow();
         },
         
         homepage: function(){

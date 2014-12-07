@@ -39,6 +39,7 @@ define([
         	var self = this;
         	
         	var data = {
+        			'oldPassword':$("#old-password-inp").val(),
         			'password':$("#password-inp").val(),
         			'passwordConfirm':$("#password-confirm-inp").val(),
         			'token':self.token
@@ -74,6 +75,10 @@ define([
         onShow : function(){
         	$("#reset-error").hide();
             $("#reset-success").hide();
+            // if token exists, do not require old password
+            if (this.token){
+            	$("#old-password-form").remove();
+            }
         }
         
 	});

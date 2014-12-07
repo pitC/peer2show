@@ -72,8 +72,6 @@ exports.forgot = function(req, res){
 exports.reset = function(req, res){
 	  async.waterfall([
 	                   function(done) {
-	                	 console.log("Token: "+req.body.token);
-	                	 console.log("Date:"+Date.now());
 	                	 
 	                	 var process = function(err, user) {
 		                       if (!user) {
@@ -82,9 +80,15 @@ exports.reset = function(req, res){
 
 		                         	return res.send("Password reset token is invalid or has expired.");
 		                       }
+		                       // if no token then check if old password is correct
+		                       if (!req.body.token){
+		                    	   if (!isValidPassword(user,req.body.oldPassword)){
+		                    		   res.status(409);
+		                    		   return res.send("Old password incorrect");
+		                    	   }
+		                       }
 		                       
 		                       if (req.body.password !== req.body.passwordConfirm){
-		                    	   	console.log('Passwords not same');
 		                    	   	res.status(409);
 		                    	   	return res.send("Passwords not same");
 
@@ -143,4 +147,16 @@ exports.reset = function(req, res){
 //Generates hash using bCrypt
 var createHash = function(password){
     return bCrypt.hashSync(password, bCrypt.genSaltSync(10), null);
+};
+
+var isValidPassword = function(user, password){
+	var check = false;
+	try{
+		check = bCrypt.compareSync(password, user.password);
+	}
+	catch(err){
+		// do nothing
+		null;
+	}
+    return	check; 
 };
