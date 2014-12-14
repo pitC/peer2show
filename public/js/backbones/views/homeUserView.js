@@ -2,6 +2,7 @@ define([
          'jquery', 
          'underscore', 
          'backbone',
+         'utils/domUtils',
          'app/settings',
          'app/globals',
          'backbones/views/userHomeSections/userSettingsView',
@@ -12,7 +13,7 @@ define([
          'text!templates/homeUser/authorisationOngoing.html',
          "i18n!nls/uiComponents"
          
-], function($, _, Backbone, Settings, Globals,UserSettingsView,AccountSettingsView, HomeUserTmpl,SessionSettingsTmpl,UnauthorisedTmpl,AuthorisationOngoingTmpl,UIComponents){
+], function($, _, Backbone, DomUtils, Settings, Globals,UserSettingsView,AccountSettingsView, HomeUserTmpl,SessionSettingsTmpl,UnauthorisedTmpl,AuthorisationOngoingTmpl,UIComponents){
 	
 	
 	HomeUserView = Backbone.View.extend({
@@ -84,41 +85,25 @@ define([
         	for (var key in this.settingSections){
         		var view = this.settingSections[key];
         		this.$el.find(key).append(view.render().el);
-        		this.adjustSectionWidth(key);
+        		DomUtils.adjustInputWidths(key);
         	}
         },
         
         renderAccountSettings : function(){
         	
         	this.$el.find("#account-settings").append(this.accountSettingsView.render().el);
-        	this.adjustSectionWidth("#account-settings");
+        
+        	DomUtils.adjustInputWidths("#account-settings");
         },
         
         adjustWidths : function(){
         	for (var key in this.settingSections){
-        		this.adjustSectionWidth(key);	
+        		DomUtils.adjustInputWidths(key);	
         	}
-        	this.adjustSectionWidth("#account-settings");
+        	DomUtils.adjustInputWidths("#account-settings");
         },
         
-        adjustSectionWidth : function(sectionId){
-        	var maxWidthFound = 0;
-        	var currentWidth = 0;
-        	$(sectionId).find('.input-group-addon').each(function(){
-        		currentWidth = $(this).outerWidth();
-        		console.log("Current width: "+currentWidth);
-        		console.log($(this));
-        		if (currentWidth > maxWidthFound){
-        			
-        			maxWidthFound = currentWidth;
-        		}
-        	});
-        	console.log("max width found:"+maxWidthFound);
-        	// apply to all
-        	if (maxWidthFound > 0){
-        		$(sectionId).find('.input-group-addon').css({"min-width":maxWidthFound,'text-align':'left'});
-        	}
-        },
+        
         
         onUsernameChange : function(event){
         	console.log(event);

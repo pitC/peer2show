@@ -26,7 +26,7 @@ define([
         	"":"homepage",
             "s/:roomId": "room",
             "home(/)":"userHome",
-            "reset/:token":"resetPassword"
+            "r/:token":"resetPassword"
 //            ":roomId": "room"
         },
         

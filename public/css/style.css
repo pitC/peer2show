@@ -334,12 +334,12 @@ background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNv
 }
 /* end of social buttons */
 
-#user-home{
+.page-with-panels{
 	margin-top:5%;
 	margin-left:5%;
 	margin-right:5%;
-	
 }
+
 
 #user-home p {
 	font-size:2em;
@@ -868,6 +868,11 @@ background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNv
 
 #login-modal .modal-body{
 	min-height:220px;
+}
+
+#login-modal #login-form .input-group-addon{
+	min-width:120px;
+	text-align:left;
 }
 
 #about-modal-dialog{

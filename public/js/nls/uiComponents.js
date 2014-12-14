@@ -118,7 +118,7 @@ define({
 		"logoutLbl":"Logout",
 		"settingsLbl":"Settings",
 		"forgotLbl":"Send reset link",
-		"sendingLinkLbl":"Sending reset linkg...",
+		"sendingLinkLbl":"Sending reset link...",
 		"loginFailLbl" :"Username and/or password invalid",
 		"forgotFailLbl" : "Sending reset link failed.",
 		"forgotDoneLbl" : "Reset link sent. Please check your mailbox.",

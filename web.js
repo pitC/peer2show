@@ -31,7 +31,7 @@ app.use(bodyParser());
 	 res.sendfile(INDEX);	
  });
  
- app.get('/reset/*', function(req, res){
+ app.get('/r/*', function(req, res){
 	 res.sendfile(INDEX);	
  });
  
