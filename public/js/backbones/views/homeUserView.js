@@ -128,7 +128,7 @@ define([
         
         onShow : function(){
         	this.accountSettingsView.onShow();
-//        	this.adjustWidths();
+        	this.adjustWidths();
         }
         
 	});

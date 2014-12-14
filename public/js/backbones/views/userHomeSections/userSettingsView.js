@@ -53,14 +53,9 @@ define([
         			self.onSaveSuccess();
         		},
         		error:function(model,errors){
-        			console.log("Saving error!");
-        			console.log(errors);
         			self.onSaveError(model,errors);
         		}
-        		
         	});
-        	
-        	
 //        	this.wait();
         },
         
@@ -113,8 +108,27 @@ define([
         	this.toggleElements(false);
         },
         
+        handleBackendErrors : function(errors){
+        	var errorMsg =  JSON.parse(errors.responseText);
+        	var self = this;
+        	for (var key in errorMsg.errors){
+        		console.log(key);
+        		var field = "";
+        		var path = errorMsg.errors[key].path;
+        		var message = errorMsg.errors[key].message;
+        		// parse attribute name from path - last section in dot notation
+        		try{
+        		  field = path.substring(path.lastIndexOf(".")+1);
+        		}catch(e){
+        		  field = location;
+        		}
+        		self.showValidationError(field, message);
+        	}
+        },
+        
         onSaveError : function(model,errors){
         	console.log("on save error");
+        	this.handleBackendErrors(errors);
         	this.done();
         	this.$el.find(".save-btn").text("Not saved!").addClass("btn-warning");
         },

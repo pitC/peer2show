@@ -7,6 +7,11 @@
 var mongoose = require('mongoose');
 var validator = require('../validators/userValidator');
 
+
+mongoose.Error.messages.Number.min = "{VALUE} is less than minimum allowed value ({MIN}).";
+mongoose.Error.messages.Number.max = "{VALUE} is more than maximum allowed value ({MAX}).";
+
+
 module.exports = mongoose.model('User',{
     username: {type: String, validate : [validator.validateUsername, validator.rules.username.error]},
     password: {type: String, validate : [validator.validatePassword, validator.rules.password.error]},
