@@ -205,7 +205,6 @@ define([
         },
         
         onShow : function(){
-        	this.loginModal.onShow();
         	this.newSessionModal.onRender();
         },
         
