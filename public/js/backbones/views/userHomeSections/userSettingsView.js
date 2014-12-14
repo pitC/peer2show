@@ -2,9 +2,10 @@ define([
          'jquery', 
          'underscore', 
          'backbone',
+         'validation/rules',
          "i18n!nls/uiComponents"
          
-], function($, _, Backbone,UIComponents){
+], function($, _, Backbone,Rules,UIComponents){
 	
 	
 	UserSettingsView = Backbone.View.extend({
@@ -14,7 +15,7 @@ define([
 			
 			this.template = _.template(options.template);
 			
-			this.listenTo(this.model, "change", this.render);
+			this.listenTo(this.model, "change", this.renderValues);
         },
         
         events : {
@@ -65,11 +66,23 @@ define([
         
 
         render : function(){
-        	var data = $.extend({},UIComponents,this.model.toJSON());
+        	var data = $.extend({},UIComponents,this.model.toJSON(),{rules:Rules});
+        	console.log("*** USER SETTINGS ***");
+        	console.log(data);
         	var mainElement = this.template(data);
         	this.$el.html(mainElement);
         	this.hideValidationErrors();
 			return this;
+        },
+        
+        renderValues : function(model,data){
+        	console.log("Render values");
+        	console.log(model);
+        	for (var key in model.changed){
+        		var id = '#'+key;
+        		var value = model.changed[key];
+        		$(id).val(value);
+        	}
         },
         
         toggleElements :function(disable){

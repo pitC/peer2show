@@ -5,9 +5,10 @@ define([
          'text!templates/homeUser/passwordResetForm.html',
          'app/settings',
          'app/globals',
+         'validation/rules',
          "i18n!nls/uiComponents"
          
-], function($, _, Backbone, PasswordResetTmpl, Settings, Globals, UIComponents){
+], function($, _, Backbone, PasswordResetTmpl, Settings, Globals, Rules, UIComponents){
 
 	
 	
@@ -22,8 +23,7 @@ define([
         },
         render : function(){
         	
-        	
-        	var data = $.extend({},UIComponents,event);
+        	var data = $.extend({},UIComponents,event,{rules:Rules});
         	
         	this.$el.html(this.passwordResetTemplate(data));
 

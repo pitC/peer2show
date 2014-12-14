@@ -1,9 +1,10 @@
 define([ 
          'jquery', 
          'underscore', 
-         'backbone'
+         'backbone',
+         'validation/rules'
          
-], function($, _, Backbone){
+], function($, _, Backbone,Rules){
 	UserSettings = Backbone.Model.extend({
 		
 		urlRoot:'/settings/session',
@@ -23,10 +24,10 @@ define([
 	        if (isNaN(attrs.maxHeight)) {
 	        	errors.push({field:'maxHeight',error:attrs.maxHeight+' is not a valid number'});
 	        }
-	        if (attrs.maxWidth < 400 || attrs.maxWidth > 5000){
+	        if (attrs.maxWidth < Rules.maxWidth.min || attrs.maxWidth > Rules.maxWidth.max){
 	        	errors.push({field:'maxWidth',error:attrs.maxWidth+' is not within range 400-5000px'});
 	        }
-	        if (attrs.maxHeight < 200 || attrs.maxHeight > 5000){
+	        if (attrs.maxHeight < Rules.maxHeight.min || attrs.maxHeight > Rules.maxHeight.max){
 	        	errors.push({field:'maxHeight',error:attrs.maxHeight+' is not within range 200-5000px'});
 	        }
 	        console.log(errors);
