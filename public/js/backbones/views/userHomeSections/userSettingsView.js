@@ -101,7 +101,7 @@ define([
         
         wait : function(){
         	this.toggleElements(true);
-        	this.$el.find(".save-btn").text("Saving...");
+        	this.$el.find(".save-btn").text(UIComponents.savingBtn);
         },
         
         done : function(){
@@ -130,19 +130,20 @@ define([
         	console.log("on save error");
         	this.handleBackendErrors(errors);
         	this.done();
-        	this.$el.find(".save-btn").text("Not saved!").addClass("btn-warning");
+        	this.$el.find(".save-btn").text(UIComponents.notSavedBtn).addClass("btn-warning");
         },
         
         onSaveSuccess : function(){
         	console.log("on save success!");
         	this.done();
-        	this.$el.find(".save-btn").text("Saved!").addClass("btn-success");
+        	this.$el.find(".save-btn").text(UIComponents.savedBtn).addClass("btn-success");
         },
         
         resetFeedbackElements : function(){
         	console.log("input change!");
-        	this.$el.find(".save-btn").text("Save").removeClass("btn-success").removeClass("btn-warning");
+        	this.$el.find(".save-btn").text(UIComponents.saveBtn).removeClass("btn-success").removeClass("btn-warning");
         }
+        
         
         
         

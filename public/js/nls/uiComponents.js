@@ -37,7 +37,10 @@ define({
         "fullscreenTitle":"Switch to fullscreen mode",
         "toggleSidebarTitle":"Toggle sidebar",	
         "uploadImagesTitle":"Upload images",
-        
+        "saveBtn" : "Save",
+        "savingBtn":"Saving...",
+        "savedBtn":"Saved!",
+        "notSavedBtn":"Not saved!",
         
         // App status
         "ready" : "ready",
@@ -114,7 +117,11 @@ define({
 		"loginLbl":"Login",
 		"logingInLbl":"Loging in...",
 		"registerLbl":"Register",
+		"passwordLbl" :"Password",
+		"emailLbl":"E-mail address",
+		"forgotTxt":"Forgot password?",
 		"passwordResetLbl":"Password reset",
+		"noPublicRegTxt":"Public registration is not enabled right now. If you want to participate in closed beta tests of functionalities for premium users, contact us at <a href='mailto:support@peer2show.com'>support@peer2show.com!</a>",
 		"logoutLbl":"Logout",
 		"settingsLbl":"Settings",
 		"forgotLbl":"Send reset link",
@@ -125,7 +132,21 @@ define({
 		"resetFailLbl" : "Password reset failed.",
 		"resetDoneLbl" : "Password reset succesful! <a href='/home' class='alert-link'>Click here to got to your home page</a>",
 		"changePasswordLbl":"Change password",
-		"changingPasswordLbl":"Changing password..."
+		"changingPasswordLbl":"Changing password...",
+		
+		// User home
+		"helloLbl":"Hello",
+		"helloGuestLbl":"Welcome guest",
+		"sessionPrefLbl":"Session preferences",
+		"maxWidthLbl" : "Max image width (px)",
+		"maxHeightLbl" : "Max image height (px)",
+		"accountSettingsLbl":"Accound settings",
+		"oldPasswordLbl" : "Old password",
+		"newPasswordLbl" : "New password",
+		"confirmPasswordLbl" : "Confirm new password",
+		"onlyLoggedInTxt":"This section is available only for logged-in users. Pick your action:",
+		
+		
 		
     },
     "pl":true

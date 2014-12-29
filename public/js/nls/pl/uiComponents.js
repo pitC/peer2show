@@ -18,7 +18,10 @@ define({
     "fullscreenTitle":"Przełącz w tryb pełnoekranowy",
     "toggleSidebarTitle":"Przełącz widok menu",	
     "uploadImagesTitle":"Dodaj zdjęcia",
-    
+    "saveBtn" : "Zapisz",
+    "savingBtn":"Zapisuję...",
+    "savedBtn":"Zapisano!",
+    "notSavedBtn":"Błąd!",
     
     // App status
     "ready" : "gotowe",

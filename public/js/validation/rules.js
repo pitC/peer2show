@@ -8,16 +8,16 @@ define(function(require) {
 		"password":{
 			// any character, min 4 
 			pattern:'^.{4,}$',
-			error:'minimum 4 characters!'
+			error:'passwordError'
 		},
 		"username":{
 			// only letters, min 3
 			pattern:'^[a-z]{3,}$',
-			error:''
+			error:'usernameError'
 		},
 		"email":{
 			pattern:'^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$',
-			error:''
+			error:'emailError'
 		},
 		"maxWidth":{
 			min:400,

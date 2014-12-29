@@ -871,7 +871,7 @@ background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNv
 }
 
 #login-modal #login-form .input-group-addon{
-	min-width:120px;
+	min-width: 180px;
 	text-align:left;
 }
 

@@ -16,7 +16,7 @@
       					<div class="form-group">
 							<div class="input-group">
 								<span class="input-group-addon">
-									<span class="glyphicon glyphicon-user"></span> Username
+									<span class="glyphicon glyphicon-user"></span> <%= usernameLbl%>
 								</span>
 	  							<input type="text" class="form-control" id="username-login-inp" name="username" required>
 							</div>
@@ -24,7 +24,7 @@
 	        			<div class="form-group">
 							<div class="input-group">
 								<span class="input-group-addon">
-									<span class="glyphicon glyphicon-lock"></span> Password
+									<span class="glyphicon glyphicon-lock"></span> <%= passwordLbl %>
 								</span>
 	  							<input type="password" class="form-control" id="password-login-inp" name="password" required>
 							</div>
@@ -32,12 +32,11 @@
 	        			<button id="login-btn" class="btn btn-primary"><%= loginLbl %></button>
 	      			</form>
 	      			<br>
-	      			<a id="goto-forgot-btn" href=""><small>Forgot password?</small></a>
+	      			<a id="goto-forgot-btn" href=""><small><%= forgotTxt %></small></a>
     			</div>
     			<div class="item">
       				<p>
-      				Public registration is not enabled right now. 
-      				If you want to participate in closed beta tests of functionalities for premium users, contact us at <a href="mailto:support@peer2show.com">support@peer2show.com!</a>
+      				<%= noPublicRegTxt%>
       				</p>
     			</div>
     			<div class="item">
@@ -48,7 +47,7 @@
 	        			<div class="form-group">
 							<div class="input-group">
 								<span class="input-group-addon">
-									<span class="glyphicon glyphicon-envelope"></span> E-mail address
+									<span class="glyphicon glyphicon-envelope"></span> <%= emailLbl %>
 								</span>
 	  							<input type="email" class="form-control" id="email-inp" name="email" required autofocus>
 							</div>

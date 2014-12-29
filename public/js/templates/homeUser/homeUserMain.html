@@ -1,16 +1,16 @@
 <div id="user-home" class="page-with-panels">
 	<div class="row">
-		<p><span class="glyphicon glyphicon-home"></span> Hello <span id="username"> <%=username %></span> </p>
+		<p><span class="glyphicon glyphicon-home"></span> <%= helloLbl %> <span id="username"> <%=username %></span> </p>
 		
 		<div class="panel panel-default">
   			<div class="panel-heading">
-    			<h3 class="panel-title">Session preferences</h3>
+    			<h3 class="panel-title"><%= sessionPrefLbl %></h3>
   			</div>
   			<div id="session-settings" class="panel-body"></div>
 		</div>
 		<div class="panel panel-default">
   			<div class="panel-heading">
-    			<h3 class="panel-title">Account settings</h3>
+    			<h3 class="panel-title"><%= accountSettingsLbl%></h3>
   			</div>
   			<div id="account-settings" class="panel-body"></div>
 		</div>

@@ -2,9 +2,11 @@ define([
          'jquery', 
          'underscore', 
          'backbone',
-         'validation/rules'
+         'validation/rules',
+         "i18n!nls/validationErrors",
+         'utils/stringUtils'
          
-], function($, _, Backbone,Rules){
+], function($, _, Backbone,Rules,ValidationErrors,StringUtils){
 	UserSettings = Backbone.Model.extend({
 		
 		urlRoot:'/settings/session',
@@ -19,16 +21,20 @@ define([
 			var errors = [];
 			console.log(attrs);
 	        if (isNaN(attrs.maxWidth)) {
-	            errors.push({field:'maxWidth',error:attrs.maxWidth+' is not a valid number'});
+	        	var errorMsg = StringUtils.replace(ValidationErrors.invalidNumber,{"%VALUE%":attrs.maxWidth});
+	            errors.push({field:'maxWidth',error:errorMsg});
 	        }
 	        if (isNaN(attrs.maxHeight)) {
-	        	errors.push({field:'maxHeight',error:attrs.maxHeight+' is not a valid number'});
+	        	var errorMsg = StringUtils.replace(ValidationErrors.invalidNumber,{"%VALUE%":attrs.maxHeight});
+	        	errors.push({field:'maxHeight',error:errorMsg});
 	        }
 	        if (attrs.maxWidth < Rules.maxWidth.min || attrs.maxWidth > Rules.maxWidth.max){
-	        	errors.push({field:'maxWidth',error:attrs.maxWidth+' is not within range 400-5000px'});
+	        	var errorMsg = StringUtils.replace(ValidationErrors.rangeError,{"%VALUE%":attrs.maxWidth,"%MIN%":Rules.maxWidth.min,"%MAX%":Rules.maxWidth.max,"%FORMAT%":"px"});
+	        	errors.push({field:'maxWidth',error:errorMsg});
 	        }
 	        if (attrs.maxHeight < Rules.maxHeight.min || attrs.maxHeight > Rules.maxHeight.max){
-	        	errors.push({field:'maxHeight',error:attrs.maxHeight+' is not within range 200-5000px'});
+	        	var errorMsg = StringUtils.replace(ValidationErrors.rangeError,{"%VALUE%":attrs.maxHeight,"%MIN%":Rules.maxWidth.min,"%MAX%":Rules.maxWidth.max,"%FORMAT%":"px"});
+	        	errors.push({field:'maxHeight',error:errorMsg});
 	        }
 	        console.log(errors);
 	        return errors.length > 0 ? errors : false;
