@@ -96,8 +96,7 @@ define({
         "orLbl":"or",
         "helpImproveMsg":"help us improve",
         "closedByUserMsg":"closed by the user",
-        
-        
+                
         // Session end error page
         "didNotHelpLbl":"Did not help?",
         "contactUsLbl":"Contact us!",
@@ -111,8 +110,7 @@ define({
 		"fileLoadingError":"This file could not be read",
 		"imageLoadingError":"This image could not be loaded",
 		"unknownError":"Unknown error occured!",
-        
-		
+
         // Login modal
 		"loginLbl":"Login",
 		"logingInLbl":"Loging in...",

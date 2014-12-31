@@ -1,7 +1,7 @@
 define({
     // LABELS anywhere
     "newSessionLbl":"Nowa sesja",
-    "createNewSessionLbl":"utwórz nową sesję",
+    "createNewSessionLbl":"Utwórz nową sesję",
     "usernameLbl":"Nazwa użytkownika",
     "closeSessionLbl":"Zakończ sesję",
     
@@ -75,7 +75,7 @@ define({
     //Session end view
     "sessionEndMsg":"Dziękujemy za korzystanie z peer2show! To nie musi być koniec, możliwości jest wiele:",
     "shareItMsg":"zapoznaj się z naszymi profilami na Facebooku, Google+ bądź Twitterze?",
-    "dropMessageMsg":'napisz do nas',
+    "dropMessageMsg":'Napisz do nas',
     "orLbl":"lub",
     "helpImproveMsg":"pomóż nam ulepszyć peer2show",
     "closedByUserMsg":"sesja została zakończona przez użytkownika",
