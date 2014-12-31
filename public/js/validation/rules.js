@@ -10,6 +10,15 @@ define(function(require) {
 			pattern:'^.{4,}$',
 			error:'passwordError'
 		},
+		"oldPassword":{
+			error:'wrongPasswordError'
+		},
+		"passwordConfirm":{
+			error:'passwordsNotEqual'
+		},
+		"resetToken":{
+			error:"invalidTokenError"
+		},
 		"username":{
 			// only letters, min 3
 			pattern:'^[a-z]{3,}$',

@@ -3,9 +3,11 @@ define([
          'underscore', 
          'backbone',
          'app/settings',
-         "backbones/models/userSettings"
+         "backbones/models/userSettings",
+         'validation/rules',
+         "i18n!nls/validationErrors"
          
-], function($, _, Backbone, Settings,UserSettings){
+], function($, _, Backbone, Settings,UserSettings,ValidationRules,ValidationErrors){
 	UserModel = Backbone.Model.extend({
 		
 		defaults:{
@@ -134,7 +136,7 @@ define([
 			var self = this;
 			if (data){
 				if (data.password != data.passwordConfirm){
-					var response = {responseText:"Provided passwords not the same"};
+					var response = {responseText:ValidationRules.passwordConfirm.error};
 					errorCb(response);
 					return;
 				}

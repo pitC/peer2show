@@ -5,6 +5,10 @@ var crypto = require('crypto');
 var async = require('async');
 var nodemailer = require('nodemailer');
 
+var errorCodes = require('../../public/js/validation/rules');
+
+var TOKEN_VALID_TIME = 900000;  // 15 minutes
+
 exports.forgot = function(req, res){
 	async.waterfall([
 	                 // Step 1 - generate token
@@ -24,7 +28,7 @@ exports.forgot = function(req, res){
 		                         return res.send("No such user found");
 	                		 }
 	                		 user.passwordResetToken = token;
-	                		 user.passwordResetExpire = Date.now()+900000; // 15 minutes
+	                		 user.passwordResetExpire = Date.now()+TOKEN_VALID_TIME;
 	                		 console.log("Date now: "+Date.now());
 	                		 console.log("Password expires: "+user.passwordResetExpire);
 	                		 user.save(function(err){
@@ -78,19 +82,19 @@ exports.reset = function(req, res){
 		                    	   	console.log('Password reset token is invalid or has expired.');
 		                         	res.status(409);
 
-		                         	return res.send("Password reset token is invalid or has expired.");
+		                         	return res.send(errorCodes.resetToken.error);
 		                       }
 		                       // if no token then check if old password is correct
 		                       if (!req.body.token){
 		                    	   if (!isValidPassword(user,req.body.oldPassword)){
 		                    		   res.status(409);
-		                    		   return res.send("Old password incorrect");
+		                    		   return res.send(errorCodes.oldPassword.error);
 		                    	   }
 		                       }
 		                       
 		                       if (req.body.password !== req.body.passwordConfirm){
 		                    	   	res.status(409);
-		                    	   	return res.send("Passwords not same");
+		                    	   	return res.send(errorCodes.passwordConfirm.error);
 
 		                       }
 

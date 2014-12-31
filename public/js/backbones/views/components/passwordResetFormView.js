@@ -6,9 +6,10 @@ define([
          'app/settings',
          'app/globals',
          'validation/rules',
-         "i18n!nls/uiComponents"
+         "i18n!nls/uiComponents",
+         "i18n!nls/validationErrors"
          
-], function($, _, Backbone, PasswordResetTmpl, Settings, Globals, Rules, UIComponents){
+], function($, _, Backbone, PasswordResetTmpl, Settings, Globals, Rules, UIComponents,ValidationErrors){
 
 	
 	
@@ -23,7 +24,7 @@ define([
         },
         render : function(){
         	
-        	var data = $.extend({},UIComponents,event,{rules:Rules});
+        	var data = $.extend({},UIComponents,event,{rules:Rules},{errors:ValidationErrors});
         	
         	this.$el.html(this.passwordResetTemplate(data));
 
@@ -62,13 +63,10 @@ define([
         	$("#reset-error").show(100);
         	console.log("Reset failed!");
         	console.log(response);
-        	if (response.responseText){
-        		$("#reset-error").text(response.responseText).show(100);
-        	}
-        	else{
-        		$("#reset-error").text(UIComponents.resetFailLbl).show(100);
-        	}
+        	var uiText = ValidationErrors[response.responseText]||UIComponents.resetFailLbl;
         	
+        	$("#reset-error").text(uiText).show(100);
+         	
         	$("#reset-btn").text(UIComponents.changePasswordLbl).prop("disabled", false);
         },
         

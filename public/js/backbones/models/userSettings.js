@@ -34,6 +34,7 @@ define([
 	        }
 	        if (attrs.maxHeight < Rules.maxHeight.min || attrs.maxHeight > Rules.maxHeight.max){
 	        	var errorMsg = StringUtils.replace(ValidationErrors.rangeError,{"%VALUE%":attrs.maxHeight,"%MIN%":Rules.maxWidth.min,"%MAX%":Rules.maxWidth.max,"%FORMAT%":"px"});
+	        	console.log("Max height not in range! "+errorMsg);
 	        	errors.push({field:'maxHeight',error:errorMsg});
 	        }
 	        console.log(errors);
