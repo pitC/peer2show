@@ -141,10 +141,10 @@ define({
 		"maxWidthLbl" : "Max image width (px)",
 		"maxHeightLbl" : "Max image height (px)",
 		"accountSettingsLbl":"Accound settings",
-		"oldPasswordLbl" : "Old password",
+		"oldPasswordLbl" : "Current password",
 		"newPasswordLbl" : "New password",
 		"confirmPasswordLbl" : "Confirm new password",
-		"onlyLoggedInTxt":"This section is available only for logged-in users. Pick your action:",
+		"onlyLoggedInTxt":"This section is available only for logged-in users. Pick your action:"
 		
 		
 		

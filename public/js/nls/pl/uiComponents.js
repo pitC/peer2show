@@ -110,6 +110,38 @@ define({
     "unsupportedFile":"Ten typ plików nie jest wspierany",
 	"fileLoadingError":"Ten plik nie mógł zostać wczytany",
 	"imageLoadingError":"Ten obraz nie mógł zostać wczytany",
-	"unknownError":"Nieznany błąd :("
-
+	"unknownError":"Nieznany błąd :(",
+	
+	// Login modal
+	"loginLbl":"Zaloguj",
+	"logingInLbl":"Logowanie...",
+	"registerLbl":"Zarejestruj się",
+	"passwordLbl" :"Hasło",
+	"emailLbl":"E-mail",
+	"forgotTxt":"Nie pamiętasz hasła?",
+	"passwordResetLbl":"Resetowanie hasła",
+	"noPublicRegTxt":"Publiczna rejestracja jest w tej chwili niedostępna. Chcesz zostać beta-testerem funkcji dla zarejestrowanych użytkowników? Skontaktuj się z nami: <a href='mailto:kontakt@peer2show.com'>kontakt@peer2show.com</a>",
+	"logoutLbl":"Wyloguj",
+	"settingsLbl":"Ustawienia",
+	"forgotLbl":"Wyślij e-mail weryfikacyjny",
+	"sendingLinkLbl":"Wysyłanie...",
+	"loginFailLbl" :"Nazwa użytkownika i/lub hasło są niepoprawne",
+	"forgotFailLbl" : "Wysłanie linka resetującego nie powiodło się :(",
+	"forgotDoneLbl" : "Link wysłany. Sprawdź swoją skrzynkę.",
+	"resetFailLbl" : "Zmiana hasła nie powiodła się.",
+	"resetDoneLbl" : "Hasło zmienione. <a href='/home' class='alert-link'>Kliknij tu do strony domowej</a>",
+	"changePasswordLbl":"Zmień hasło",
+	"changingPasswordLbl":"Zmiana hasła...",
+	
+	// User home
+	"helloLbl":"Witaj",
+	"helloGuestLbl":"Witaj gościu",
+	"sessionPrefLbl":"Preferencje sesji",
+	"maxWidthLbl" : "Max szerokość zdjęcia (px)",
+	"maxHeightLbl" : "Max wysokość zdjęcia (px)",
+	"accountSettingsLbl":"Ustawienia konta",
+	"oldPasswordLbl" : "Bieżące hasło",
+	"newPasswordLbl" : "Nowe hasło",
+	"confirmPasswordLbl" : "Potwierdź nowe hasło",
+	"onlyLoggedInTxt":"Ta strona jest dostępna tylko dla zalogowanych użytkowników."
 });

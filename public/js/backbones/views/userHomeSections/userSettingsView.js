@@ -38,6 +38,9 @@ define([
         		console.log(this);
         		var id = $(this).attr("id");
         		var val = $(this).val();
+        		if (val.length < 1){
+        			val = ' ';
+        		}
         		self.model.set(id,val);
         	});
         	
