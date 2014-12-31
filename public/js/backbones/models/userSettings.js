@@ -12,7 +12,7 @@ define([
 		urlRoot:'/settings/session',
 		
 		defaults:{
-			"maxWidth" : 1000,
+			"maxWidth" : 800,
 			"maxHeight" : 500,
 			"quality":0.9
 		},
