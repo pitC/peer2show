@@ -111,7 +111,13 @@ mongoose.connect(dbConfig.url);
  });
  
  
+ /*
+  * ICE Broker 
+  */
  
+ var iceBroker = require('./backend/iceBroker');
+ 
+ app.post('/ice',iceBroker.getIceCandidates);
  
  
  
