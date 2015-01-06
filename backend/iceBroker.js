@@ -1,4 +1,6 @@
 
+var iceBroker = process.env.ICE_BROKER || false;
+
 var XIRSYS_DATA = {
 		ident: "peertoshow",
         secret: "1c43f593-b722-4993-b269-88d9a6328b9a",
@@ -47,7 +49,18 @@ var useDefault = function(callback){
 };
 
 exports.getIceCandidates = function(req, res) {
-	useXirsys(function(config){
+	
+	var callback = function(config){
 		res.send(config);
-	});
+	};
+	
+	if (iceBroker){
+		useXirsys(callback);
+	}
+	else{
+		useDefault(callback);
+	}
+	
+	
+	
 };
