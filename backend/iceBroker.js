@@ -8,7 +8,7 @@ var XIRSYS_DATA = {
         application: "default",
         room: "default",
         secure: 1
-}; 
+};
 
 var request = require('request');
 

@@ -129,7 +129,7 @@ define({
 	"forgotFailLbl" : "Wysłanie linka resetującego nie powiodło się :(",
 	"forgotDoneLbl" : "Link wysłany. Sprawdź swoją skrzynkę.",
 	"resetFailLbl" : "Zmiana hasła nie powiodła się.",
-	"resetDoneLbl" : "Hasło zmienione. <a href='/home' class='alert-link'>Kliknij tu do strony domowej</a>",
+	"resetDoneLbl" : "Hasło zmienione. <a href='/home' class='alert-link'>Kliknij tu aby przejść do strony domowej</a>",
 	"changePasswordLbl":"Zmień hasło",
 	"changingPasswordLbl":"Zmiana hasła...",
 	
