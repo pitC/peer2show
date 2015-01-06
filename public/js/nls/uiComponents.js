@@ -138,7 +138,7 @@ define({
 		"sessionPrefLbl":"Session preferences",
 		"maxWidthLbl" : "Max image width (px)",
 		"maxHeightLbl" : "Max image height (px)",
-		"accountSettingsLbl":"Accound settings",
+		"accountSettingsLbl":"Account settings",
 		"oldPasswordLbl" : "Current password",
 		"newPasswordLbl" : "New password",
 		"confirmPasswordLbl" : "Confirm new password",
