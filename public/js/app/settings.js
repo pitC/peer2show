@@ -8,17 +8,11 @@ define([],function () {
 		userName : null,
 		owner : false, // flag if the user is owner of the session
 		
-		imageSettings : {
-			processImage : true,
-			maxWidth: 1600, // value in pixels
-			maxHeight:1000, // value in pixels
-			quality: 0.9 // value from range 0-1
-			
-		},
+		imageSettings : null, // take over from user model
 		
 		useWebWorker:false, // use web worker for reading files
 		
-		enableConsoleLog:false,
+		enableConsoleLog:true,
 		
 		
 		previewMaxHeight:100,

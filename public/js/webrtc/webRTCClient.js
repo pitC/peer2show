@@ -82,14 +82,17 @@
 			console.log(data);
 			
 			if (destPeer){
-				console.log("Unicast "+destPeer);
+				console.log("Unicast!");
+				console.log(destPeer);
 				var peerConnection;
 				
 				if(destPeer == self.ownerPeerId){
 					peerConnection = self.ownerConnection;
 				}
 				else{
+					
 					peerConnection = self.peerConnections[destPeer];
+					
 				}
 				if (peerConnection){
 					console.log("Peer found, send now!");
@@ -281,10 +284,31 @@
 				 }
 			 });
 		};
+		
+		this.setIceConfig = function(){
+
+			// This object will take in an array of STUN / TURN servers
+			// and override the original config object
+			var customConfig;
+			var self = this;
+			// Call XirSys ICE servers
+			$.ajax({
+			  type: "POST",
+			  dataType: "json",
+			  url: "/ice",
+			  success: function (data, status) {
+				customConfig = data;
+			    console.log("ICE obtained!");
+			    console.log(customConfig);
+			    self.peerJSOptions.config = customConfig;
+			  },
+			  async: false
+			});
+		};
 
 		this.create = function(options,callback, caller){
 			console.log("Create!");
-			
+			this.setIceConfig();
 			this.ownUsername = options.username;
 			
 			this.ownPeer = new Peer(this.ownerPeerId,this.peerJSOptions);
@@ -302,6 +326,7 @@
 		
 		this.join = function(options,callback,caller){
 			console.log("Join!");
+			this.setIceConfig();
 			this.ownPeer = new Peer(this.peerJSOptions);
 			var self = this;
 			

@@ -4,11 +4,12 @@ define([
          'backbone',
          'text!templates/modals/newSessionModal.html',
          'app/settings',
+         'app/globals',
          "i18n!nls/uiComponents"
          
          // 'backbones/views/roomView' - no need to add it here, it's already another way round. Just user RoomView
          
-], function($, _, Backbone, NewSessionModalTmpl, Settings,UIComponents
+], function($, _, Backbone, NewSessionModalTmpl, Settings,Globals,UIComponents
 ){
 	
 	NewSessionModalView = Backbone.View.extend({
@@ -18,6 +19,7 @@ define([
 			this.template = _.template(NewSessionModalTmpl);
 			this.modalEl = $('#new-session-modal');
 			this.createEvent = false;
+			this.listenTo(Globals.user,"change:username",this.onUsernameChange);
         },
         
         events: {
@@ -50,9 +52,7 @@ define([
         	Settings.userName = username;
         	Settings.owner = true;
         	Settings.roomName = Settings.generateRoomId();
-//        	$('#new-session-modal').modal('hide');
-        	window.location.hash = Settings.roomName;
-//        	window.location = window.location+Settings.roomName;
+        	Globals.router.navigate("s/"+Settings.roomName,{trigger:true,replace: true});
         },
         
         render : function(){
@@ -62,7 +62,6 @@ define([
         	
             this.$el.html(this.template(data));
             return this;
-            this.onRender();
         },
         
         onRender :function(){
@@ -76,9 +75,13 @@ define([
 			});
         	
         	$('#new-session-modal').on('shown.bs.modal', function (e) {
-				
+        		
 				self.createEvent = false;
 			});
+        },
+        
+        onUsernameChange : function(model){
+        	$("#username-modal-inp").val(model.get('username'));
         }
 	});
 	

@@ -230,7 +230,7 @@ define([
             },
                        
             switchOffConfirmed : function(e){
-            	
+            	console.log("switch off!");
             	this.app.close();
             },
             
@@ -333,10 +333,12 @@ define([
             },
             
             renderModals : function(){
-            	this.$el.find("#modal-container").append(this.sessionShareModal.render().el);
-            	this.$el.find("#modal-container").append(this.newSessionModal.render().el);            	
+            	var modalContainer = this.$el.find("#modal-container");
+            	$(modalContainer).append(this.sessionShareModal.render().el);
+            	$(modalContainer).append(this.newSessionModal.render().el);            	
             	var confirmCloseData = UIComponents;
-            	this.$el.find("#modal-container").append(this.confirmClose(confirmCloseData));
+            	$(modalContainer).append(this.confirmClose(confirmCloseData));
+//            	$("#modal-container").append(this.confirmClose(confirmCloseData));
             },
             
             renderOverlay : function(){

@@ -3,14 +3,20 @@ define([
          'underscore', 
          'backbone',
          'app/settings',
+         'app/globals',
+         'backbones/views/components/loginModal',
+         'backbones/views/components/newSessionModal',
          'text!templates/index/cookieNotice.html',
          'text!templates/index/header.html',
          'text!templates/index/footer.html',
          'text!templates/index/languageMenuItem.html',
-         "i18n!nls/uiComponents"
+         'text!templates/index/userDropdown.html',
+         'text!templates/index/userLogin.html',
+         "i18n!nls/uiComponents",
+         "backbones/models/userModel"
          
          
-], function($, _, Backbone, Settings,CookieNoticeTmpl,HeaderTmpl,FooterTmpl,LanguageMenuItemTmpl, UIComponents){
+], function($, _, Backbone, Settings, Globals, LoginModal,NewSessionModal,CookieNoticeTmpl,HeaderTmpl,FooterTmpl,LanguageMenuItemTmpl,UserDropdownTmpl,UserLoginTmpl, UIComponents,UserModel){
 	
 	
 	IndexView = Backbone.View.extend({
@@ -29,35 +35,74 @@ define([
 			this.headerTemplate = _.template(HeaderTmpl);
 			this.footerTemplate = _.template(FooterTmpl);
 			this.languageMenuItemTemplate = _.template(LanguageMenuItemTmpl);
-			
+			this.userDropdownTemplate = _.template(UserDropdownTmpl);
+			this.userLoginTemplate = _.template(UserLoginTmpl);
 			this.setTitle();
 			
 			console.log("Change locale!");
-
+			
+			this.userModel = Globals.user;
+			this.listenTo(this.userModel,"change:loginStatus",this.onAuthoriseChange);
+			this.loginModal = new LoginModal({model:this.userModel});
+			this.newSessionModal = new NewSessionModal();
+			
+			var self = this;
+			
         },
+        
                
         render : function(){
         	
         	console.log("Render index!");
         	
-        	var data = $.extend({},UIComponents,{});
         	console.log(data);
-        	var header = this.headerTemplate(data);
+        	this.renderHeader();
+        	
+        	var data = $.extend({},UIComponents,{pageStyle:Globals.windowStyle});
         	var footer = this.footerTemplate(data);
+        	this.footerEl.html(footer);
+        	this.renderModals();
+			return this;
+        },
+        
+        renderHeader : function(){
+        	this.headerEl.empty();
+        	var data = $.extend({},UIComponents,{pageStyle:Globals.windowStyle});
+        	
+        	var header = this.headerTemplate(data);
+        	this.headerEl.append(header);
+        	// render dropdown menu instead
+        	if(this.userModel.isAuthorised()){
+        		
+        		var userDropdownData = $.extend({},UIComponents,this.userModel.toJSON());
+        		var userDropdown = this.userDropdownTemplate(userDropdownData);
+        		$("#user-login-li").append(userDropdown);
+        		$("#user-login-li").addClass("dropdown");
+        		var self = this;
+        		$("#logout-btn").on("click",function(){
+        			self.userModel.logout();
+        		});
+        	}
+        	else{
+        		
+        		var userLogin = this.userLoginTemplate(data);
+        		$("#user-login-li").append(userLogin);
+        	}
         	if (!this.isCookieAccepted()){
         		var cookie = this.cookieNoticeTemplate(data);
         		this.headerEl.append(cookie);
         		var self = this;
         		$('#cookie-alert').on('closed.bs.alert', self.cookieAccepted);
         	}
-        	this.headerEl.append(header);
-        	this.footerEl.html(footer);
         	
-        	this.propagateLanguageList();
-        	
-        	this.setCurrentLanguage();
-        	
-			return this;
+           	this.propagateLanguageList();
+           	this.setCurrentLanguage();
+        },
+        
+        renderModals : function(){
+        	console.log("Render global modals");
+        	$("#global-modal-container").append(this.loginModal.render().el);
+        	$("#global-modal-container").append(this.newSessionModal.render().el);
         },
         
         isCookieAccepted : function(){
@@ -95,7 +140,6 @@ define([
         	
         	$("#selectedLanguage").html(setLanguage);
         	
-        	
         },
         
         setTitle : function(){
@@ -132,6 +176,39 @@ define([
 				location.reload();
         	}
         },
+        
+        onAuthoriseChange : function(model){
+        	
+        	var authorised = model.get("loginStatus");
+        	var self = this;
+        	if (authorised){
+	        	
+	        	var modal = $('#login-modal');
+	        	if (typeof modal.data ('bs.modal')!= 'undefined'){
+	        		if (modal.data('bs.modal').isShown){
+	            		modal.modal('hide').on('hidden.bs.modal',function(){
+	                		self.renderHeader();
+	                		Globals.router.navigate("home/",{trigger:true,replace: true});
+	                	});
+	            	}else{
+	            		self.renderHeader();
+	            	}
+	        	}
+	        	else{
+	        		self.renderHeader();
+	        	}
+        	}
+        	else{
+        		self.renderHeader();
+        		Globals.router.navigate("home/",{trigger:true,replace: true});
+        	}
+        },
+        
+        onShow : function(){
+        	this.newSessionModal.onRender();
+        },
+        
+        
 	
 	});
 	

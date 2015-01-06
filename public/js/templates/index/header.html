@@ -1,4 +1,4 @@
-<div class="navbar navbar-inverse landing-page-style" id="navbar" role="navigation">
+<div class="navbar navbar-inverse <%= pageStyle%>" id="navbar" role="navigation">
 	<div class="nav-container">
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#nav-actions">
@@ -11,7 +11,7 @@
 		<!-- Place everything within .navbar-collapse to hide it until above 768px -->
 		<div class="collapse navbar-collapse" id="nav-actions">
 			<ul class="nav navbar-nav">
-				<li><a class="modal-remote" data-toggle="modal" data-target="#new-session-modal"><%= newSessionLbl %></a></li>
+				<li><a class="modal-remote" id="new-session-header-bt" data-toggle="modal" data-target="#new-session-modal"><%= newSessionLbl %></a></li>
 				<li><a class="modal-remote" id="learn-more-action"><%= learnMoreLbl %></a></li>
 				<li><a class="modal-remote" data-toggle="modal" data-remote="<%= feedbackLink %>" data-target="#feedback-modal"><%= feedbackLbl %></a></li>
 				
@@ -29,7 +29,8 @@
 				<ul class="dropdown-menu" id="language-list" role="menu" aria-labelledby="languageDropdown">
 				</ul>
 			</li>
-			<!-- <li><a class="modal-remote"><span class="glyphicon glyphicon-user "></span> Login</a></li> -->
+			<li id="user-login-li"></li>
+			<!-- <li><a class="modal-remote"><span class="glyphicon glyphicon-user "></span> <%=loginLbl%></a></li> -->
 		</div><!-- /.nav-collapse -->
 	</div><!-- /.container -->
 </div><!-- /.navbar -->

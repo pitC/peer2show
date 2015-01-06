@@ -10,7 +10,7 @@ else{
 	locale = navigator.language || navigator.userLanguage;
 }
 require.config({
-	baseUrl: 'js',
+	baseUrl: '/js',
 	config: {
         i18n: {
             locale: locale
@@ -36,8 +36,6 @@ require.config({
 		            'http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min'
 //		            ,'lib/fallback/bootstrap.min'
 		            ],
-		tiny_color : 'lib/tinycolor-0.9.15.min',
-		jquery_pick_a_color: 'lib/pick-a-color-1.1.7.min',
 		peerjs: 'webrtc/peer',
 		keen:'lib/keen',
 		zoomer : 'lib/e-smart-zoom-jquery',
