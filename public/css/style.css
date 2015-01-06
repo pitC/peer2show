@@ -48,6 +48,20 @@ font-family: 'Comfortaa', sans-serif;
 	display:none;
 }
 
+#navbar.landing-page-style #new-session-header-bt,
+#navbar.session-end-style #new-session-header-bt
+{
+	color: rgb(255, 202, 66);
+}
+
+#navbar.landing-page-style #new-session-header-bt:hover,
+#navbar.session-end-style #new-session-header-bt:hover
+{
+	color: #ffffff;
+}
+
+
+
 
 .landing-page-style{
 	background-color: #585858 !important; 
