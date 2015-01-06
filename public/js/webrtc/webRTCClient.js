@@ -284,10 +284,40 @@
 				 }
 			 });
 		};
+		
+		this.setIceConfig = function(){
+
+			// This object will take in an array of XirSys STUN / TURN servers
+			// and override the original config object
+			var customConfig;
+			var self = this;
+			// Call XirSys ICE servers
+			$.ajax({
+			  type: "POST",
+			  dataType: "json",
+			  url: "https://api.xirsys.com/getIceServers",
+			  data: {
+				  ident: "peertoshow",
+				  secret: "1c43f593-b722-4993-b269-88d9a6328b9a",
+				  domain: "www.peer2show.com",
+				  application: "default",
+				  room: "default",
+			    secure: 1
+			  },
+			  success: function (data, status) {
+			    // data.d is where the iceServers object lives
+			    customConfig = data.d;
+			    console.log("Xirsys ICE obtained!");
+			    console.log(customConfig);
+			    self.peerJSOptions.config = customConfig;
+			  },
+			  async: false
+			});
+		};
 
 		this.create = function(options,callback, caller){
 			console.log("Create!");
-			
+			this.setIceConfig();
 			this.ownUsername = options.username;
 			
 			this.ownPeer = new Peer(this.ownerPeerId,this.peerJSOptions);
@@ -305,6 +335,7 @@
 		
 		this.join = function(options,callback,caller){
 			console.log("Join!");
+			this.setIceConfig();
 			this.ownPeer = new Peer(this.peerJSOptions);
 			var self = this;
 			
