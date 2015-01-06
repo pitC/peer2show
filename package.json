@@ -10,7 +10,7 @@
       "webrtc.io": "0.0.4",
       "node-static": "0.7.0",
       "peer":"0.2.4",
-      "body-parser":"",res.send();res.send();
+      "body-parser":"",
       "keen.io":"",
       "passport":"~0.2.0",
       "passport-local":"~1.0.0",
