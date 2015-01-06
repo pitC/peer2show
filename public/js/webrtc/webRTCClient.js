@@ -82,14 +82,17 @@
 			console.log(data);
 			
 			if (destPeer){
-				console.log("Unicast "+destPeer);
+				console.log("Unicast!");
+				console.log(destPeer);
 				var peerConnection;
 				
 				if(destPeer == self.ownerPeerId){
 					peerConnection = self.ownerConnection;
 				}
 				else{
+					
 					peerConnection = self.peerConnections[destPeer];
+					
 				}
 				if (peerConnection){
 					console.log("Peer found, send now!");

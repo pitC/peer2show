@@ -52,7 +52,7 @@ define([
 			    		var index = self.addNewSlide(destUrl,null,metadata);
 		    			metadata.index = index;
 				    	
-					    self.webrtc.send(destFile,metadata);
+					    self.webrtc.sendFile(destFile,metadata);
 					    
 			    	}
 			    	

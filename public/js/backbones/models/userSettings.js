@@ -14,7 +14,8 @@ define([
 		defaults:{
 			"maxWidth" : 800,
 			"maxHeight" : 500,
-			"quality":0.9
+			"quality":0.9,
+			"processImage":true
 		},
 		
 		validate: function (attrs,options) {
