@@ -7,7 +7,7 @@ define({
     	"invalidNumber":'"%VALUE%" is not a valid number!',
     	"passwordsNotEqual":"Passwords are not the same!",
     	"invalidTokenError":"Password reset token is invalid or has expired.",
-    	"wrongPasswordError":"Provided old password is incorrect!!!"
+    	"wrongPasswordError":"Provided current password is incorrect!"
     },
     "pl":true
 });
