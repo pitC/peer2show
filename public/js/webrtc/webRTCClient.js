@@ -258,7 +258,7 @@
 			
 			// remove peer from associated array
 			delete self.peerConnections[this.peer];
-			
+			self.syncMonitor.removePeer(this.peer);
 			// propagate event
 			if(self.onclose){
 				var eventData = {username:this.metadata.username};

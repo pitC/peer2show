@@ -87,6 +87,7 @@ define([
 		
 		removePeer : function(peerId){
 			delete this.syncStatus[peerId];
+			this.isFullySynced(true);
 		},
 		
 		isFullySynced:function(trigger){
