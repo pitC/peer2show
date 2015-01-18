@@ -10,6 +10,19 @@ h1, h2, h3{
 font-family: 'Comfortaa', sans-serif;
 }
 
+.user-status{
+	float:right;
+	color:transparent;
+}
+
+.user-status span{
+	float:right;
+	color:transparent;
+	border-radius: 50%;
+	background-color: rgb(188, 188, 188);
+	display:none;
+}
+
 #cookie-alert{
 	border-radius:0px;
 }

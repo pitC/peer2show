@@ -40,7 +40,6 @@ define([
 			console.log(data);
 			console.log("[Show Area] render with transition?"+this.transition);
 			if (this.transition){
-				
 			    this.$el.html(this.template(data)).hide().fadeIn(200);
 			}
 			else{
@@ -68,14 +67,14 @@ define([
 			
 			
 			this.slideCollection.on('remove slideChange',this.renderCurrentSlide,this);
-			this.listenTo(this.slideCollection,"add",this.renderAddesSlide);
+			this.listenTo(this.slideCollection,"add",this.renderAddedSlide);
 			this.listenTo(this.app.syncMonitor,"synced unsynced syncProgress",this.renderMetadataContainer);
 //			this.slideCollection.on('add',this.renderAddedSlide,this);
             this.template = _.template(SlideFullAreaTmpl);
             this.imageMaxHeight = "100%";
         },
         
-        renderAddesSlide : function(){
+        renderAddedSlide : function(){
         	var metadataContainer = $("#img-metadata");
         	// just update metadata container
         	if ($(metadataContainer).length > 0){
