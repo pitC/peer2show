@@ -388,7 +388,7 @@
 					 // Propagate event
 					 if(self.onopen){
 						 	// TODO transmit real username
-							var eventData = {username:"Host"};
+							var eventData = {username:"Host",peerId:ownerId};
 							
 							self.onopen(eventData);
 					 }
