@@ -156,8 +156,9 @@ define([
 				
 		onShow : function(){
 			this.app.addClickArea('upload-more-btn');
-			this.bindWindowResize();
-			this.adjustListStyle();
+//			Do not enable this - needs to adjust scrolling
+//			this.bindWindowResize();
+//			this.adjustListStyle();
 		},
 		
 
