@@ -173,13 +173,13 @@ define([
 		adjustListStyle : function(){
 			var container = $("#slide-preview-area");
 			console.log("[Preview Area] On window resize! "+$(container).height()+"vs"+$(container).width());
-			if ($(container).width() > 200){
+			if ($(container).width() > 200 || $(window).width() < 762){
 				$(container).addClass("list-inline");
 				$(container).css("overflow-x","scroll");
 			}
 			else{
 				$(container).removeClass("list-inline");
-				$(container).css("overflow-x","auto");
+				$(container).css("overflow-x","hidden");
 			}
 		}
 	});
