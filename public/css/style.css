@@ -394,7 +394,7 @@ background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNv
 
 .slide-preview{
 	height: 100px;
-	width: 100%;
+	/*width: 100%;*/
 	padding: 1px 1px 1px 1px;
 	background-color: #f5f5f5;
 	/* text-align: center; */
@@ -869,6 +869,7 @@ background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNv
 	overflow-x:hidden;
 	word-wrap: break-word;
 }
+
 
 #slide-preview-area {
 	padding: 0px 0px 0px 0px;
