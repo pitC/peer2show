@@ -380,6 +380,10 @@ background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNv
 	bottom:0px;
 	right: 5px;
 	z-index:5;
+	/* white-space: nowrap; */     
+	/* overflow: hidden; */     
+	/* text-overflow: ellipsis; */
+	max-width: 50%;
 }
 
 .notification{

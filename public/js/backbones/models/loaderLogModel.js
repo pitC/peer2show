@@ -15,6 +15,8 @@ define([
 		// else??
 		UNKNOWN_ERROR :"unknownError",
 		
+		URL_INVALID : "invalidUrlError",
+		
 		
 		initialize:function (options) {	
 			this.setStatusCallback = options.callback;
@@ -33,7 +35,8 @@ define([
 		
 		isLoaded : function(){
 			console.log("[LOADER LOG] is loaded?:"+this.loaded+"/"+this.queueLength);
-			if (this.loaded == this.queueLength){
+			// in case of web no queue is needed, therefore equal OR greater then
+			if (this.loaded >= this.queueLength){
 //				this.setStatusCallback(AppStatus.READY);
 				console.log("[LOADER LOG] finished with following errors:");
 				console.log(this.errorLog);

@@ -110,6 +110,7 @@ define({
 		"fileLoadingError":"This file could not be read",
 		"imageLoadingError":"This image could not be loaded",
 		"unknownError":"Unknown error occured!",
+		"invalidUrlError":"Invalid URL!",
 
         // Login modal
 		"loginLbl":"Login",

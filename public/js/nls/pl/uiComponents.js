@@ -111,6 +111,7 @@ define({
 	"fileLoadingError":"Ten plik nie mógł zostać wczytany",
 	"imageLoadingError":"Ten obraz nie mógł zostać wczytany",
 	"unknownError":"Nieznany błąd :(",
+	"invalidUrlError":"Błędny URL!",
 	
 	// Login modal
 	"loginLbl":"Zaloguj",

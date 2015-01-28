@@ -79,7 +79,7 @@ define([
 						var msg = errorLog[i];
 						console.log("Log error");
 						console.log(msg);
-						var alertMsg = UIComponents.loadingError+msg.msg;
+						var alertMsg = UIComponents.loadingError+msg.msg||UIComponents[msg.msgType];
 						var alertMsgExt = UIComponents[msg.msgType];
 						var options = {
 								'alertClass':'alert-danger',

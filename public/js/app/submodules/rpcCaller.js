@@ -69,7 +69,8 @@ define([
 								 null;
 							 }
 						 }
-						 else if (src === 'web'){
+						 // send web links only if owner (to avoid duplicates)
+						 else if (src === 'web' && self.webrtc.isOwner()){
 							 file = dataUrl;
 						 }
 						 if (file != null){

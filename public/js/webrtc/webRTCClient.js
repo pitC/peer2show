@@ -126,7 +126,7 @@
 			}
 		};
 		
-		this._isOwner = function(){
+		this.isOwner = function(){
 			if (this.ownerPeerId == this.ownPeer.id){
 				return true;
 			}
@@ -277,7 +277,7 @@
 		
 		// function to propagate 
 		this.sendOtherPeers = function(destPeer){
-			if (this._isOwner()){
+			if (this.isOwner()){
 				var peers = [];
 				for (var peerId in this.peerConnections){
 					console.log("Send to "+peerId);

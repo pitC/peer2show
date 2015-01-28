@@ -20,7 +20,7 @@ define([ 'jquery', 'underscore', 'backbone',
 		this.id = 0;
 		
 		
-		this.fadeOut = {"alert-info":5000,"alert-danger":60000};
+		this.fadeOut = {"alert-info":5000,"alert-danger":3600000};
 		/*
 		 * options:
 		 * alert_class - used in template

@@ -73,10 +73,14 @@ define([
 			app.readurl = function(url){
 				console.log("Read url "+url);
 				var self = app;
+				
 				// first check if under url a valid image is available
 				$("<img>", {
 				        src: url,
-				        error: function() { alert('Not a valid image! url: '+url); },
+				        error: function() {
+//				        	alert("Invalid url! "+url);
+				        	self.loaderLog.addError(app.loaderLog.URL_INVALID,url);
+				        	},
 				        load: function() { 
 				        	// on success, add the slide and send to peers
 				        	var metadata = {
