@@ -88,11 +88,7 @@ define([
 				Logger.logEvent(event,Logger.DEBUG);
 				self.setStatus(AppStatus.SESSION_ENDED);
 			};
-			
-			
 		},
-	
-		
 			
 	    close : function(){
 	    	var self = this;
