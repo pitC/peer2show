@@ -18,7 +18,7 @@ define([
 		
 		initialize:function (options,isCurrent) {
 			this.model = options.model;
-			
+						
 			this.isActive = isCurrent;
 			
 			this.template = _.template(SlidePreviewTmpl);
@@ -37,13 +37,48 @@ define([
 	});
 	
 	SlidePreviewAreaView = Backbone.View.extend({
+		
+		SLIDE_PREVIEW_ID_PREFIX : "slide-preview-",
+		
 		initialize:function (app) {
 			this.app = app;
 			this.slideCollection = app.slideCollection;
-			this.slideCollection.on('all',this.render,this);
+			this.slideCollection.on('remove sort destroy',this.render,this);
+			this.listenTo(this.slideCollection,'add',this.renderAddedSlide);
+			this.slideCollection.on('slideChange',this.renderActiveSlide,this);
             this.template = _.template(SlidePreviewAreaTmpl);
         },
+        
+        renderActiveSlide : function(currentSlide,prevSlide){
+        	console.log("render actiev slide! "+currentSlide+" "+prevSlide);
+        	var prevId = "#"+this.SLIDE_PREVIEW_ID_PREFIX+prevSlide;
+        	var currentId = "#"+this.SLIDE_PREVIEW_ID_PREFIX+currentSlide;
+        	$(prevId).removeClass('active-slide').addClass("inactive-slide");
+        	$(currentId).removeClass('inactive-slide').addClass("active-slide");
+        },
+        
+        renderAddedSlide : function(slide,collection,options){
+        	console.log("Slide added!");
+        	
+        	var index = collection.indexOf(slide);
+        	
+        	var collectionSize = this.slideCollection.length;
+        	console.log(index+" vs "+collectionSize);
+        	// detect if added slide was the last one
+        	if (index+1 == collectionSize){
+        		// then append only
+        		console.log("append slide!");
+        		this.renderSlidePreview(slide,index);
+        	}
+        	else{
+        		// else rerender everything
+        		console.log("rerender everything!");
+        		this.render();
+        	}
+        },
+        
         render : function(){
+        	
         	var focused = $(':focus');
 			this.$el.html(this.template());
 			this.slideCollection.each(this.renderSlidePreview,this);
@@ -54,16 +89,21 @@ define([
 			return this;
         },
 
-		renderSlidePreview : function(slide){
+		renderSlidePreview : function(slide,index){
+			console.log("Render slide preview");
 			
 			var isCurrent = this.slideCollection.isCurrent(slide);
 //			console.log("Render slide preview! is current? "+isCurrent);
-			var index = this.slideCollection.indexOf(slide);
+//			var index = slide.get("index");
+			if (!index){
+				index = this.slideCollection.indexOf(slide);
+			}
 			
 			var indexedModel = slide;
 			indexedModel.attributes.index = index;
+			var viewId = this.SLIDE_PREVIEW_ID_PREFIX+index;
 			
-			var slidePreview = new SlidePreviewView({model : indexedModel},isCurrent);
+			var slidePreview = new SlidePreviewView({model : indexedModel,id:viewId},isCurrent);
 			
 	        $("#slide-preview-area").append(slidePreview.render().el);
 		},
@@ -108,15 +148,40 @@ define([
 		jumpTo : function(event){
 			console.log("Jump to!");	
 			console.log(event);
-			
 			var index = $(event.target).attr("data-index");
-		
 			//this.app.jumpToByURL({dataURL:dataUrl});
 			this.app.jumpToByIndex({index:index});
+			
 		},
 				
 		onShow : function(){
 			this.app.addClickArea('upload-more-btn');
+//			Do not enable this - needs to adjust scrolling
+//			this.bindWindowResize();
+//			this.adjustListStyle();
+		},
+		
+
+		bindWindowResize : function(){
+			console.log("[Preview Area] bind window resize");
+			var self = this;
+			
+			$(window).bind('resize', function(){
+				self.adjustListStyle();
+			});
+		},
+		
+		adjustListStyle : function(){
+			var container = $("#slide-preview-area");
+			console.log("[Preview Area] On window resize! "+$(container).height()+"vs"+$(container).width());
+			if ($(container).width() > 200 || $(window).width() < 762){
+				$(container).addClass("list-inline");
+				$(container).css("overflow-x","scroll");
+			}
+			else{
+				$(container).removeClass("list-inline");
+				$(container).css("overflow-x","hidden");
+			}
 		}
 	});
 	

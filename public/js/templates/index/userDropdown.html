@@ -1,0 +1,11 @@
+<a class="modal-remote dropdown-toggle" id="userDropdown" data-toggle="dropdown">
+	<span class="glyphicon glyphicon-user "></span>
+	<span ><%=username%></span>
+	<span class="modal-remote caret"></span>
+</a>
+<ul class="dropdown-menu"role="menu" aria-labelledby="userDropdown">
+	<li  role="presentation">
+		<a href="/home" class="modal-remote" role="menuitem" tabindex="-1"><%= settingsLbl %></a>
+		<a id="logout-btn" class="modal-remote" role="menuitem" tabindex="-1"><%= logoutLbl %></a>
+	</li>
+</ul>

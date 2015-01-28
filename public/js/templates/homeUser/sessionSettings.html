@@ -1,0 +1,26 @@
+<form class="form-horizontal" role="form">
+	<div id="maxWidth-form" class="form-group has-feedback">
+		
+		<div class="input-group">
+			<span class="input-group-addon">
+				<span class="glyphicon glyphicon-resize-horizontal"></span> <%=maxWidthLbl%>
+			</span>
+	  		<input id="maxWidth" value="<%=maxWidth%>" placeholder=" " min="<%=rules.maxWidth.min%>" step="10" max="<%=rules.maxWidth.max%>" size="4" class="form-control model-input" type="number" required>
+		</div>
+		<small id="maxWidth-error" class="control-label validation-error">Input with error</small>
+	</div>
+
+	<div id="maxHeight-form" class="form-group has-feedback">
+		<div class="input-group">
+			<span class="input-group-addon">
+				<span class="glyphicon glyphicon-resize-vertical"></span> <%=maxHeightLbl%>
+			</span>
+	  		<input id="maxHeight" value="<%=maxHeight%>" placeholder=" " min="<%=rules.maxHeight.min%>" step="10" max="<%=rules.maxHeight.max%>" size="4" class="form-control model-input" type="number" required>
+		</div>
+		<small id="maxHeight-error" class="control-label validation-error">Input with error</small>
+	</div>
+<!--Compress Quality:<input id="quality" value="<%=quality%>" min="0.1" step="0.05" max="1" placeholder=" " class="form-control model-input" type="range" required>-->
+
+
+	<button id="save-settings-btn" class="btn save-btn btn-default" type="button" class="btn btn-default"><%=saveBtn%></button>
+</form>

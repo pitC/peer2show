@@ -7,10 +7,11 @@ define([
          'text!templates/room/errors/browserError.html',
          'text!templates/room/errors/connectionError.html',
          'app/settings',
+         'app/globals',
          'app/appStatus',
-         'backbones/views/components/newSessionModal'
+         "i18n!nls/uiComponents"
          
-], function($, _, Backbone, SessionEndTmpl, FatalErrorTmpl,BrowserErrorTmpl,ConnectionErrorTmpl, Settings, AppStatus, NewSessionModal){
+], function($, _, Backbone, SessionEndTmpl, FatalErrorTmpl,BrowserErrorTmpl,ConnectionErrorTmpl, Settings, Globals, AppStatus,UIComponents){
 
 	
 	
@@ -21,17 +22,16 @@ define([
 			this.browserErrorTmpl = _.template(BrowserErrorTmpl);
 			this.connectionErrorTmpl = _.template(ConnectionErrorTmpl);
 			this.options = options || {};
-			this.newSessionModal = new NewSessionModal();
         },
         render : function(){
         	
-        	var messageMain = options.status||"Session ended";
+        	var messageMain = UIComponents[options.status]||"Session ended";
         	var messageExtended = "";
         	var template = null;
         	        	
         	if (options.status == AppStatus.SESSION_ENDED){
         		
-        		messageExtended = "closed by the user";
+        		messageExtended = UIComponents.closedByUserMsg;
         		template = this.sessionEndTmpl;
         	}
         	else if (options.status == AppStatus.FATAL_ERROR){
@@ -56,12 +56,14 @@ define([
         	
         	var event = {messageMain:messageMain,messageExtended:messageExtended};
         	
+        	var data = $.extend({},UIComponents,event);
         	
-        	this.$el.html(template(event));
+        	
+        	this.$el.html(template(data));
         	
         	Settings.reset();
         	
-        	$(".session-style").removeClass("session-style").addClass("session-end-style");
+        	Globals.switchWindowStyle("session-end-style");
         	
         	
 			return this;

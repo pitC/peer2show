@@ -3,13 +3,15 @@ define([
          'underscore', 
          'backbone',
          'app/settings',
+         'app/globals',
          'text!templates/slideshowApp/usernameInput.html',
          'text!templates/slideshowApp/introHost.html',
          'text!templates/slideshowApp/introGuest.html',
-         'backbones/views/components/newSessionModal',
-         'carousel'
+         'carousel',
+         "i18n!nls/uiComponents",
+         "i18n!nls/pitchScreen"
          
-], function($, _, Backbone, Settings, UserInputTmpl,IntroHostTmpl,IntroGuestTmpl,NewSessionModal,Carousel){
+], function($, _, Backbone, Settings, Globals,UserInputTmpl,IntroHostTmpl,IntroGuestTmpl,Carousel,UIComponents, PitchScreen){
 	
 	
 	HomepageView = Backbone.View.extend({
@@ -27,8 +29,7 @@ define([
 				this.introTemplate = _.template(IntroHostTmpl);
 				
 			}
-			
-			this.newSessionModal = new NewSessionModal(options);
+			this.listenTo(Globals.user,"change:username",this.onUsernameChange);
 			
         },
         events: {
@@ -62,7 +63,7 @@ define([
         	Settings.owner = isOwner;
         	if (isOwner){
         		Settings.roomName = Settings.generateRoomId();
-            	window.location.hash = Settings.roomName;
+        		Globals.router.navigate("s/"+Settings.roomName,{trigger:true,replace: true});
         	}
         	else{
         		var options = {user : userName,owner:false};
@@ -72,60 +73,68 @@ define([
         
         render : function(){
         	
-        	var intro = this.introTemplate();
+        	var data = $.extend({},UIComponents,PitchScreen);
+        	console.log(data);
+        	var intro = this.introTemplate(data);
         	
         	this.$el.html(intro);
-        	
-        	this.$el.append(this.newSessionModal.render().el);
         	
 			return this;
         },
         
+        onUsernameChange : function(model){
+        	$("#username-inp").val(model.get('username'));
+        },
+        
         onShow : function(){
-        	this.newSessionModal.onRender();
+        	       	
         	var carouselEl = $("#learn-more-header");
-        	carouselEl.owlCarousel({
-              	 
-//                navigation : true, // Show next and prev buttons
-                slideSpeed : 300,
-                paginationSpeed : 400, 
-                autoPlay:3000,
-                singleItem:true,
-                afterMove: moved,
-                rewindNav:false
-//                stopOnHover:true
-            });
         	
-        	var owl = carouselEl.data('owlCarousel');
-        	
-        	owl.stop();
-        	
-        	$(window).scroll(function() {
-        		   var hT = carouselEl.offset().top,
-        		       hH = carouselEl.outerHeight(),
-        		       wH = $(window).height(),
-        		       wS = $(this).scrollTop();
-        		   if (wS > (hT+hH-wH)){
-        		       console.log('you have scrolled to carousel!');
-        		       owl.play();
-        		   }
-        		   else{
-        			   console.log('you have scrolled out of carousel!');
-        			   owl.stop();
-        		   }
-        		});
-        	
-        	function moved(el){
-        		var emphesizeClass = 'emph';
-        		console.log("owl moved!");
-        		var srcId = $(el).attr('id');
-        		var num = this.currentItem;
-        		$('.carousel-sync').removeClass(emphesizeClass);
-        		var target = '#'+srcId+"-"+num;
-        		console.log("target "+target);
-        		$(target).addClass(emphesizeClass);
-        		
-        	};
+        	if ($(carouselEl).length > 0){
+        		function moved(el){
+            		var emphesizeClass = 'emph';
+//            		console.log("owl moved!");
+            		var srcId = $(el).attr('id');
+            		var num = this.currentItem;
+            		$('.carousel-sync').removeClass(emphesizeClass);
+            		var target = '#'+srcId+"-"+num;
+//            		console.log("target "+target);
+            		$(target).addClass(emphesizeClass);
+            		
+            	};
+	        	carouselEl.owlCarousel({
+	              	 
+	//                navigation : true, // Show next and prev buttons
+	                slideSpeed : 300,
+	                paginationSpeed : 400, 
+	                autoPlay:3000,
+	                singleItem:true,
+	                afterMove: moved,
+	                rewindNav:false
+	//                stopOnHover:true
+	            });
+	        	
+	        	var owl = carouselEl.data('owlCarousel');
+	        	if (owl)
+	        		owl.stop();
+	        	
+	        	$(window).scroll(function() {
+	        		   var hT = carouselEl.offset().top,
+	        		       hH = carouselEl.outerHeight(),
+	        		       wH = $(window).height(),
+	        		       wS = $(this).scrollTop();
+	        		   if (wS > (hT+hH-wH)){
+	        		       console.log('you have scrolled to carousel!');
+	        		       owl.play();
+	        		   }
+	        		   else{
+	        			   console.log('you have scrolled out of carousel!');
+	        			   owl.stop();
+	        		   }
+	        		});
+	        	
+	        	
+        	}
         	var self = this;
         	$("#learn-more-action").on("click",self.learnMore);
         }

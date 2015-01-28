@@ -2,20 +2,13 @@ define([],function () {
 	
 	var settings =  {
 		
-		maxWidth : 800,
-		maxHeight : 500,
+		supportedLanguages : ['pl','en'],
 		
 		roomName : null, 
 		userName : null,
 		owner : false, // flag if the user is owner of the session
 		
-		imageSettings : {
-			processImage : true,
-			maxWidth: 800, // value in pixels
-			maxHeight:500, // value in pixels
-			quality: 0.9 // value from range 0-1
-			
-		},
+		imageSettings : null, // take over from user model
 		
 		useWebWorker:false, // use web worker for reading files
 		

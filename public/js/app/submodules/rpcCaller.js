@@ -59,14 +59,23 @@ define([
 						 console.log(slide);
 						 var dataUrl = slide.get("dataURL");
 						 var file = null;
+						 
 						 if (src === 'local'){
-							 file = self.imageProcessor.dataURLtoFile(dataUrl);
+							 console.log("To file: "+dataUrl);
+							 try{ 
+								 file = self.imageProcessor.dataURLtoFile(dataUrl);
+							 }
+							 catch(err){
+								 null;
+							 }
 						 }
-						 else if (src === 'web'){
+						 // send web links only if owner (to avoid duplicates)
+						 else if (src === 'web' && self.webrtc.isOwner()){
 							 file = dataUrl;
 						 }
-						 self.webrtc.sendFile(file,metadata,destPeer);
-						 
+						 if (file != null){
+							 self.webrtc.sendFile(file,metadata,destPeer);
+						 }
 					 }, app);
 					
 					app.rpcJumpToIndex(app.slideCollection.currentSlideIndex);

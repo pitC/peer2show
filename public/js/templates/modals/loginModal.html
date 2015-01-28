@@ -1,0 +1,67 @@
+<!-- Modal -->
+<div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="loginModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 id="carousel-item-header" class="modal-title"><%= loginLbl %></h4>
+      </div>
+      
+      <div class="modal-body">
+      	  <div id="user-management-carousel" class="carousel slide" data-ride="carousel" data-interval="false">
+		 	<div class="carousel-inner" role="listbox">
+    			<div class="item active">
+    				<div id="login-error" class="alert alert-danger" role="alert" ><%= loginFailLbl %></div>
+      				<form id="login-form" class="form-signin" role="form" action="/login" method="post">
+      					<div class="form-group">
+							<div class="input-group">
+								<span class="input-group-addon">
+									<span class="glyphicon glyphicon-user"></span> <%= usernameLbl%>
+								</span>
+	  							<input type="text" class="form-control" id="username-login-inp" name="username" required>
+							</div>
+						</div>
+	        			<div class="form-group">
+							<div class="input-group">
+								<span class="input-group-addon">
+									<span class="glyphicon glyphicon-lock"></span> <%= passwordLbl %>
+								</span>
+	  							<input type="password" class="form-control" id="password-login-inp" name="password" required>
+							</div>
+						</div>
+	        			<button id="login-btn" class="btn btn-primary"><%= loginLbl %></button>
+	      			</form>
+	      			<br>
+	      			<a id="goto-forgot-btn" href=""><small><%= forgotTxt %></small></a>
+    			</div>
+    			<div class="item">
+      				<p>
+      				<%= noPublicRegTxt%>
+      				</p>
+    			</div>
+    			<div class="item">
+      				<div id="forgot-error" class="alert alert-danger" role="alert" ><%= forgotFailLbl %></div>
+					<div id="forgot-success" class="alert alert-success" role="alert" ><%= forgotDoneLbl %></div>
+						
+      				<form id="forgot-form" role="form" action="/forgot" method="post">
+	        			<div class="form-group">
+							<div class="input-group">
+								<span class="input-group-addon">
+									<span class="glyphicon glyphicon-envelope"></span> <%= emailLbl %>
+								</span>
+	  							<input type="email" class="form-control" id="email-inp" name="email" required autofocus>
+							</div>
+						</div>
+	        			<button id="forgot-btn" class="btn btn-primary"><%= forgotLbl %></button>
+	      			</form>
+    			</div>
+  		  	</div>
+	  	  </div>	      
+	  </div>	  
+      <div class="modal-footer">
+        
+        <button id="item-toggle-btn" type="button" class="btn btn-block btn-default"><%= registerLbl %></button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

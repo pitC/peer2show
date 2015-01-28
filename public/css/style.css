@@ -1,9 +1,30 @@
 body{
 background-color: #1F1F1F;
-font-family: 'Quicksand', sans-serif;
+font-family: 'Comfortaa', sans-serif;
 
 background-color: #585858;
 -webkit-text-stroke: 0.25px;
+}
+
+h1, h2, h3{
+font-family: 'Comfortaa', sans-serif;
+}
+
+.user-status{
+	float:right;
+	color:transparent;
+}
+
+.user-status span{
+	float:right;
+	color:transparent;
+	border-radius: 50%;
+	background-color: rgb(188, 188, 188);
+	display:none;
+}
+
+#cookie-alert{
+	border-radius:0px;
 }
 
 #navbar{
@@ -29,6 +50,32 @@ background-color: #585858;
 	display:none;
 }
 
+#navbar.session-end-style #switch-off-btn{
+	display:none;
+}
+#navbar.landing-page-style #switch-off-btn{
+	display:none;
+}
+
+#navbar.session-style #language-dropdown-li{
+	display:none;
+}
+
+#navbar.landing-page-style #new-session-header-bt,
+#navbar.session-end-style #new-session-header-bt
+{
+	color: rgb(255, 202, 66);
+}
+
+#navbar.landing-page-style #new-session-header-bt:hover,
+#navbar.session-end-style #new-session-header-bt:hover
+{
+	color: #ffffff;
+}
+
+
+
+
 .landing-page-style{
 	background-color: #585858 !important; 
 }
@@ -41,9 +88,7 @@ background-color: #585858;
 	background-color: #1F1F1F !important; 
 }
 
-h1, h2, h3{
-font-family: 'Quicksand', sans-serif;
-}
+
 
 
 /* not relevant
@@ -55,6 +100,17 @@ font-family: 'Quicksand', sans-serif;
 :-webkit-full-screen{
 	width:auto;
 	height:auto;
+}
+
+:-moz-full-screen{
+	width:auto;
+	height:auto;
+}
+
+:full-screen{
+	width:auto;
+	height:auto;
+
 }
 
 
@@ -78,8 +134,14 @@ a.modal-remote{
 	color: rgb(255, 202, 66);
 }
 
-.highlighted-red-text {
-	color: rgb(168, 10, 10);
+
+#switch-off-btn{
+		color: rgb(168, 10, 10);
+}
+
+#switch-off-btn:hover{
+		color: #ffffff;
+		background-color:#080808;
 }
 
 
@@ -299,18 +361,44 @@ background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNv
 }
 /* end of social buttons */
 
-.notification{
-	position: absolute;
-	
-	top: 5px;
+.page-with-panels{
+	margin-top:5%;
+	margin-left:5%;
+	margin-right:5%;
+}
+
+
+#user-home p {
+	font-size:2em;
+	color: rgb(233, 233, 233);
+}
+
+
+#notifications-container{
+	position: fixed;	
+	/*top: 50px;*/
+	bottom:0px;
 	right: 5px;
+	z-index:5;
+	/* white-space: nowrap; */     
+	/* overflow: hidden; */     
+	/* text-overflow: ellipsis; */
+	max-width: 50%;
+}
+
+.notification{
 	padding-top: 5px;
 	padding-bottom: 5px;
+	margin-bottom:1px;
+}
+
+.notification.on-top{
+	
 }
 
 .slide-preview{
 	height: 100px;
-	width: 100%;
+	/*width: 100%;*/
 	padding: 1px 1px 1px 1px;
 	background-color: #f5f5f5;
 	/* text-align: center; */
@@ -665,7 +753,6 @@ background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNv
 	border:dashed 5px rgba(0,0,0,0);
 	padding-bottom: 20%;
 	opacity: 0.7;
-	transition: 0.3s;
 	
 }
 #slide-show-area p:hover{
@@ -673,9 +760,9 @@ background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNv
 	border:dashed 5px grey;
 }
 
-#slide-show-area div{
-	/* height:100%; */
-	transition: 0.5s;
+#slide-show-img {
+	height:100%;
+	
 	overflow: hidden;
 }
 
@@ -708,14 +795,32 @@ background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNv
 }
 
 #img-zoomer-wrapper{
-	-webkit-transition: all 0s ease-out;
-	transition: all 0s ease-out;
+	/*-webkit-transition: all 0s ease-out;*/
+	/*transition: all 0s ease-out;*/
 }
 
 #slide-show-area:-webkit-full-screen {
 	width:auto;
 	height:auto;
 }
+
+#slide-show-area:fullscreen {
+	width:auto;
+	height:auto;
+}
+
+.fullscreen-element{
+	display:none;
+}
+
+#close-fullscreen{
+	position:fixed;
+	top:5px;
+	right:5px;
+	font-size:3em;
+	color:grey;
+}
+
 
 #sidebar{
 	/* padding-left: 1px; */
@@ -769,6 +874,7 @@ background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNv
 	word-wrap: break-word;
 }
 
+
 #slide-preview-area {
 	padding: 0px 0px 0px 0px;
 	width: 100%;
@@ -792,6 +898,14 @@ background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNv
 	
 }
 
+#login-modal .modal-body{
+	min-height:220px;
+}
+
+#login-modal #login-form .input-group-addon{
+	min-width: 180px;
+	text-align:left;
+}
 
 #about-modal-dialog{
 	width: 85%;

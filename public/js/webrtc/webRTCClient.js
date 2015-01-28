@@ -1,9 +1,11 @@
 ﻿define([ 
 	'peerjs',
 	'webrtc/roomStatus'
-], function(PeerJS, RoomStatus){
+], function(PeerJS, RoomStatus,SyncMonitor){
 
-	var connection = function(){
+	var webrtcClient = function(){
+		
+		this.syncMonitor = null;
 		
 		this.ownerPeerId = location.href.replace( /\/|:|#|%|\.|\[|\]/g , '');
 		this.ownUsername = "?";
@@ -28,7 +30,7 @@
 			                        { url: 'turn:turn.bistri.com:80', credential: 'homeo', username: 'homeo'  }
 			                      ]}
 		};
-		
+			
 		this.dataChannelOptions = {
 			reliable: true
 		};
@@ -66,6 +68,9 @@
 		this.sendFile = function(file,metadata, destPeer){
 			var data =metadata || {};
 			data.file = file;
+			if (this.syncMonitor){
+				data.actionId = this.syncMonitor.produceActionId();
+			}
 			this.send(data, destPeer);
 		};
 		
@@ -82,17 +87,23 @@
 			console.log(data);
 			
 			if (destPeer){
-				console.log("Unicast "+destPeer);
+				console.log("Unicast!");
+				console.log(destPeer);
 				var peerConnection;
 				
 				if(destPeer == self.ownerPeerId){
 					peerConnection = self.ownerConnection;
 				}
 				else{
+					
 					peerConnection = self.peerConnections[destPeer];
+					
 				}
 				if (peerConnection){
 					console.log("Peer found, send now!");
+					if (data.actionId != null){
+						this.syncMonitor.incrCounter(destPeer,data.actionId);
+					}
 					peerConnection.send(data);
 				}
 			}
@@ -100,16 +111,22 @@
 				for (var peerId in self.peerConnections){
 					console.log("Send to "+peerId);
 					var peerConnection= self.peerConnections[peerId];
+					if (data.actionId != null){
+						this.syncMonitor.incrCounter(peerId,data.actionId);
+					}
 					peerConnection.send(data);
 				}
 				if (this.ownerConnection){
 					console.log("Send to session owner");
+					if (data.actionId != null){
+						this.syncMonitor.incrCounter(this.ownerPeerId,data.actionId);
+					}
 					this.ownerConnection.send(data);
 				}
 			}
 		};
 		
-		this._isOwner = function(){
+		this.isOwner = function(){
 			if (this.ownerPeerId == this.ownPeer.id){
 				return true;
 			}
@@ -118,12 +135,22 @@
 			}
 		};
 		
-		
+		this._confirmReception = function(peerConnection,actionId){
+			var data = {confirm:actionId};
+			var json = JSON.stringify(data);
+			console.log(">> Confirm reception!");
+			console.log(data);
+			peerConnection.send(json);
+		},
 		
 		this._onData = function(data){
 			console.log("Received data!");
 			console.log(data);
 			console.log(this);
+			// if actionId exists, send confirmation
+			if (data.actionId != null){
+				self._confirmReception(this,data.actionId);
+			}
 			
 			if (data.file != null){
 				  var file = data.file;
@@ -160,7 +187,7 @@
 				else{
 					console.log("Internal!");
 					console.log(finalMsg);
-					self._handleInternalData(finalMsg);
+					self._handleInternalData(finalMsg,this);
 				}
 			}
 		};
@@ -182,8 +209,15 @@
 		    }
 		};
 		
-		this._handleInternalData = function(data){
-			if (data.peers){
+		this._handleInternalData = function(data,sender){
+			if (data.confirm){
+				console.log("!! CONFIRM !!");
+//				console.log(sender);
+				if (this.syncMonitor){
+					this.syncMonitor.decrCounter(sender.peer,data.confirm);
+				}
+			}
+			else if (data.peers){
 				for (var index in data.peers){
 					var peer = data.peers[index];
 					// for now peer == peerId, later also name 
@@ -193,6 +227,7 @@
 					this.joinOtherPeer(peerId,peerName);
 				}
 			}
+			
 		};
 		
 		this._onPeerConnection = function(conn) {
@@ -223,7 +258,7 @@
 			
 			// remove peer from associated array
 			delete self.peerConnections[this.peer];
-			
+			self.syncMonitor.removePeer(this.peer);
 			// propagate event
 			if(self.onclose){
 				var eventData = {username:this.metadata.username};
@@ -242,7 +277,7 @@
 		
 		// function to propagate 
 		this.sendOtherPeers = function(destPeer){
-			if (this._isOwner()){
+			if (this.isOwner()){
 				var peers = [];
 				for (var peerId in this.peerConnections){
 					console.log("Send to "+peerId);
@@ -250,11 +285,8 @@
 						var peerConnection= self.peerConnections[peerId];
 						var peername = peerConnection.metadata.username;
 						peers.push({peerId:peerId,peerName:peername});
-					}
-					
-					
+					}	
 				}
-				
 				var data = {peers:peers};
 				var json = JSON.stringify(data);
 				this.send(json, destPeer);
@@ -281,10 +313,31 @@
 				 }
 			 });
 		};
+		
+		this.setIceConfig = function(){
+
+			// This object will take in an array of STUN / TURN servers
+			// and override the original config object
+			var customConfig;
+			var self = this;
+			// Call XirSys ICE servers
+			$.ajax({
+			  type: "POST",
+			  dataType: "json",
+			  url: "/ice",
+			  success: function (data, status) {
+				customConfig = data;
+			    console.log("ICE obtained!");
+			    console.log(customConfig);
+			    self.peerJSOptions.config = customConfig;
+			  },
+			  async: false
+			});
+		};
 
 		this.create = function(options,callback, caller){
 			console.log("Create!");
-			
+			this.setIceConfig();
 			this.ownUsername = options.username;
 			
 			this.ownPeer = new Peer(this.ownerPeerId,this.peerJSOptions);
@@ -302,6 +355,7 @@
 		
 		this.join = function(options,callback,caller){
 			console.log("Join!");
+			this.setIceConfig();
 			this.ownPeer = new Peer(this.peerJSOptions);
 			var self = this;
 			
@@ -334,7 +388,7 @@
 					 // Propagate event
 					 if(self.onopen){
 						 	// TODO transmit real username
-							var eventData = {username:"Host"};
+							var eventData = {username:"Host",peerId:ownerId};
 							
 							self.onopen(eventData);
 					 }
@@ -361,9 +415,9 @@
 				callback(ev);
 			}
 		};
-		
+				
 	};
 	
-	return connection;
+	return webrtcClient;
 });
 

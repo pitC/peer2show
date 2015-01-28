@@ -4,6 +4,7 @@ define([
         'backbone',
         'backbones/collections/slideCollection',
         'backbones/models/slideModel',
+    	'backbones/models/syncMonitorModel',
         'backbones/collections/messageCollection',
         'app/appStatus',
         'app/settings',
@@ -12,7 +13,7 @@ define([
         'app/submodules/fileLoader',
         'app/submodules/navigator',
         'app/submodules/rpcCaller'
-],function ($, _, Backbone,SlideCollection, SlideModel,MessageCollection,AppStatus, Settings,Logger, UIActivator, FileLoader,Navigator,RPCCaller) {
+],function ($, _, Backbone,SlideCollection, SlideModel,SyncMonitorModel,MessageCollection,AppStatus, Settings,Logger, UIActivator, FileLoader,Navigator,RPCCaller) {
 
 	App = Backbone.Model.extend({
 		
@@ -20,7 +21,10 @@ define([
 		
 		initialize:function (options) {	
 			
+			this.syncMonitor = new SyncMonitorModel();
 			this.webrtc = options.webRTC;
+			this.webrtc.syncMonitor = this.syncMonitor;
+			
 			this.slideCollection = new SlideCollection();
 			this.messageCollection = new MessageCollection();
 			
@@ -84,11 +88,7 @@ define([
 				Logger.logEvent(event,Logger.DEBUG);
 				self.setStatus(AppStatus.SESSION_ENDED);
 			};
-			
-			
 		},
-	
-		
 			
 	    close : function(){
 	    	var self = this;
