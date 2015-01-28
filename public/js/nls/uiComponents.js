@@ -12,7 +12,7 @@ define({
 		"cookieWarningText":"We use cookies in order to provide you best user experience.",
 		"moreInfo":"More details",
 		// footer
-		"tosLink":"site/tos.html",
+		"tosLink":"/site/tos.html",
 		"tosLbl":"Terms of Service",
 		"userFeedbackLbl":"User Feedback",
 		"legalNoteLbl":"Use of this Web site constitutes acceptance of the Peer2show",
