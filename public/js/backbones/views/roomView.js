@@ -53,7 +53,7 @@ define([
 				this.initWebRTC();
 				
 				this.userCollection = new UserCollection();
-				this.userCollection.add({username:this.username+UIComponents.userMeLbl});
+				this.userCollection.add({username:this.username+UIComponents.userMeLbl,id:-1});
 				
 				this.roomSubviews = new RoomSubviews(this.$el,this.app);
 				
@@ -116,7 +116,7 @@ define([
 				this.webRTCClient.onopen = function(e){
 					console.log("Open!");
 					var username = e.username || e.peerId || UIComponents.userGuestLbl; 
-					self.userCollection.add({username:username});
+					self.userCollection.add({username:username,id:e.peerId});
 					self.app.setStatus(AppStatus.READY);
 					
 					// must be delayed, otherwise receiver is not yet prepared
@@ -201,7 +201,7 @@ define([
                 	var data = $.extend({},UIComponents,{});
             		this.$el.html(this.template(data));
             		// TODO: refactor - keep userCollection as peer Ids in app object. Move UserArea to roomSubviews
-	                this.userArea = new UserArea({collection:this.userCollection});
+	                this.userArea = new UserArea({collection:this.userCollection,app:this.app});
 	            	this.$el.find("#users-area").append(this.userArea.render().el);
 	            	this.roomSubviews.render();
 	            	this.renderModals();

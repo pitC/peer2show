@@ -10,6 +10,19 @@ h1, h2, h3{
 font-family: 'Comfortaa', sans-serif;
 }
 
+.user-status{
+	float:right;
+	color:transparent;
+}
+
+.user-status span{
+	float:right;
+	color:transparent;
+	border-radius: 50%;
+	background-color: rgb(188, 188, 188);
+	display:none;
+}
+
 #cookie-alert{
 	border-radius:0px;
 }
@@ -381,7 +394,7 @@ background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNv
 
 .slide-preview{
 	height: 100px;
-	width: 100%;
+	/*width: 100%;*/
 	padding: 1px 1px 1px 1px;
 	background-color: #f5f5f5;
 	/* text-align: center; */
@@ -856,6 +869,7 @@ background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNv
 	overflow-x:hidden;
 	word-wrap: break-word;
 }
+
 
 #slide-preview-area {
 	padding: 0px 0px 0px 0px;

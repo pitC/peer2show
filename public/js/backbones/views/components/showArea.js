@@ -40,7 +40,6 @@ define([
 			console.log(data);
 			console.log("[Show Area] render with transition?"+this.transition);
 			if (this.transition){
-				
 			    this.$el.html(this.template(data)).hide().fadeIn(200);
 			}
 			else{
@@ -66,20 +65,20 @@ define([
 			this.app = app;
 			this.slideCollection = app.slideCollection;
 			
+			
 			this.slideCollection.on('remove slideChange',this.renderCurrentSlide,this);
-			this.listenTo(this.slideCollection,"add",this.renderAddesSlide);
+			this.listenTo(this.slideCollection,"add",this.renderAddedSlide);
+			this.listenTo(this.app.syncMonitor,"synced unsynced syncProgress",this.renderMetadataContainer);
 //			this.slideCollection.on('add',this.renderAddedSlide,this);
             this.template = _.template(SlideFullAreaTmpl);
             this.imageMaxHeight = "100%";
         },
         
-        renderAddesSlide : function(){
+        renderAddedSlide : function(){
         	var metadataContainer = $("#img-metadata");
         	// just update metadata container
         	if ($(metadataContainer).length > 0){
-        		console.log("[Show Area] Render only metadata");
-        		var metadataTxt = this.getMetadataDescription();
-        		$(metadataContainer).text(metadataTxt);
+        		this.renderMetadataContainer();
         	}
         	// render everything only if empty
         	else{
@@ -87,6 +86,14 @@ define([
         		// render slide without transition effect
         		this.renderCurrentSlide(false);
         	}
+        },
+        
+        renderMetadataContainer : function(statusData){
+        	var metadataContainer = $("#img-metadata");
+        	console.log("[Show Area] Render only metadata");
+        	console.log(statusData);
+    		var metadataTxt = this.getMetadataDescription({statusData:statusData});
+    		$(metadataContainer).text(metadataTxt);
         },
         
         render : function(){
@@ -131,7 +138,7 @@ define([
         	if (slide!= null){
         		
         		var metadata = {
-        				description: this.getMetadataDescription(slide),
+        				description: this.getMetadataDescription({slide:slide}),
         				maxHeight:this.imageMaxHeight
         		};
 	        	var slideView = new SlideShowView({model : slide,metadata:metadata,transition:transition});
@@ -142,8 +149,14 @@ define([
         	}
 		},
 		
-		getMetadataDescription : function(slide){
-			return  (this.slideCollection.currentSlideIndex+1)+"/"+this.slideCollection.length;
+		getMetadataDescription : function(options){
+			options = options || {};
+			var metadataDescr = (this.slideCollection.currentSlideIndex+1)+"/"+this.slideCollection.length;
+			if (options.statusData != null){
+				metadataDescr = metadataDescr + " [Sync: "+options.statusData.progress+"]";
+			}
+			console.log("Metadescription: "+metadataDescr);
+			return  metadataDescr;
 		},
 		
         onShow : function(){

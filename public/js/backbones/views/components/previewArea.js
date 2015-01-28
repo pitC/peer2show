@@ -156,6 +156,32 @@ define([
 				
 		onShow : function(){
 			this.app.addClickArea('upload-more-btn');
+//			Do not enable this - needs to adjust scrolling
+//			this.bindWindowResize();
+//			this.adjustListStyle();
+		},
+		
+
+		bindWindowResize : function(){
+			console.log("[Preview Area] bind window resize");
+			var self = this;
+			
+			$(window).bind('resize', function(){
+				self.adjustListStyle();
+			});
+		},
+		
+		adjustListStyle : function(){
+			var container = $("#slide-preview-area");
+			console.log("[Preview Area] On window resize! "+$(container).height()+"vs"+$(container).width());
+			if ($(container).width() > 200 || $(window).width() < 762){
+				$(container).addClass("list-inline");
+				$(container).css("overflow-x","scroll");
+			}
+			else{
+				$(container).removeClass("list-inline");
+				$(container).css("overflow-x","hidden");
+			}
 		}
 	});
 	
