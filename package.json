@@ -27,8 +27,7 @@
   },
   "devDependencies": {
 	    "grunt": "*",
-	    "grunt-contrib": "*",
-	    "less": "*"
+	    "grunt-contrib-uglify": "*"
   },
   "engines": {
     "node": "0.10.x"
