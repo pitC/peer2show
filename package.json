@@ -22,8 +22,7 @@
       "amdefine": ">=0.1.0",
       "request":"~2.51.0",
       "grunt": "*",
-	    "grunt-contrib": "*",
-	    "less": "*"
+      "grunt-contrib-uglify": "*"
   },
   "devDependencies": {
 	    "grunt": "*",
