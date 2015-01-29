@@ -61,6 +61,6 @@ module.exports = function(grunt) {
 //                                 // Collection of tasks that build code to the 'dist' directory...
 //                               ]);
 ////    grunt.registerTask('heroku:production', 'clean mincss uglify');
-	grunt.registerTask('heroku:production', 'clean less mincss uglify');
+	grunt.registerTask('heroku:production', 'uglify');
     
 };
