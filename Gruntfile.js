@@ -5,7 +5,7 @@ module.exports = function(grunt) {
 			  files: { 
 				  cwd:"public/js/",
 	               src: '**/*.js',  // source files mask
-	               dest: '',    // destination folder
+	               dest: 'public/js/',    // destination folder
 	               expand: true,    // allow dynamic building
 	               //flatten: true,   // remove all unnecessary nesting
 	           }
