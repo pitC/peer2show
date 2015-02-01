@@ -12,7 +12,7 @@ define([],function () {
 		
 		useWebWorker:false, // use web worker for reading files
 		
-		enableConsoleLog:false,
+		enableConsoleLog:true,
 		
 		
 		previewMaxHeight:100,

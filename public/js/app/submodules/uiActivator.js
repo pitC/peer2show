@@ -44,7 +44,7 @@ define([
 				if (elemRect.length > 0){
 					$(elemRect).smartZoom();
 					$(elemRect).off('SmartZoom_ZOOM_END SmartZoom_PAN_END').on('SmartZoom_ZOOM_END SmartZoom_PAN_END',function(event){
-						self.rpcTransformImage(null,self.getTransform(elemRect));
+						self.rpcTransformImage(null,self.getTransform(elemRect),self.getDims(elemRect));
 					});
 				}
 				app.zoomableArea = elemRect;
@@ -57,6 +57,14 @@ define([
 				var finalTransform = webkitTransform || transform;
 				return finalTransform;
 			};
+			
+			app.getDims = function(object){
+				var d = {
+						w:object.width(),
+						h:object.height()
+				};
+				return d;
+			},
 			
 			app.isImageZoomed = function(){
 				var transformString = app.getTransform(app.zoomableArea);

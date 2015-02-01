@@ -36,11 +36,14 @@ define([
 				app.webrtc.rpc(remoteCall,options);
 			};
 			
-			app.rpcTransformImage = function(index, transform){
+			app.rpcTransformImage = function(index, transform, dims){
 				var remoteCall = "transformImage";
 				var options = new Object();
 				options.index = index;
 				options.transform = transform;
+				options.dims = dims;
+				console.log(transform);
+				console.log(dims);
 				app.webrtc.rpc(remoteCall,options);
 			};
 			
