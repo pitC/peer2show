@@ -26,7 +26,7 @@ define([
         render : function(){
         	
         	
-        	var data = $.extend({},UIComponents,event);
+        	var data = $.extend({},UIComponents);
         	
         	this.$el.html(this.passwordResetTemplate(data));
         	var formViewEl = this.passwordResetForm.render().el;

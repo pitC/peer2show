@@ -24,7 +24,7 @@ define([
         },
         render : function(){
         	
-        	var data = $.extend({},UIComponents,event,{rules:Rules},{errors:ValidationErrors});
+        	var data = $.extend({},UIComponents,{rules:Rules},{errors:ValidationErrors});
         	
         	this.$el.html(this.passwordResetTemplate(data));
 
