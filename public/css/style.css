@@ -1,13 +1,30 @@
-body{
-background-color: #1F1F1F;
-font-family: 'Comfortaa', sans-serif;
 
-background-color: #585858;
--webkit-text-stroke: 0.25px;
+@font-face {
+    font-family: RalewayLight;
+    src: url(/fonts/Raleway-Light.ttf);
+ }
+@font-face {
+    font-family: RalewayRegular;
+    src: url(/fonts/Raleway-Regular.ttf);
 }
 
+@font-face {
+    font-family: RalewayMedium;
+    src: url(/fonts/Raleway-Medium.ttf);
+}
+
+
+body{
+background-color: #1F1F1F;
+font-family: 'RalewayLight', sans-serif;
+
+background-color: #585858;
+/*-webkit-text-stroke: 0.25px;*/
+}
+
+
 h1, h2, h3{
-font-family: 'Comfortaa', sans-serif;
+font-family: 'RalewayMedium', sans-serif;
 }
 
 .user-status{
@@ -31,6 +48,7 @@ font-family: 'Comfortaa', sans-serif;
 	background-color: #1F1F1F;
 	border-radius: 2px;
 	margin-bottom: 0px;
+	font-family: 'RalewayMedium', sans-serif;
 }
 
 #navbar.landing-page-style{
