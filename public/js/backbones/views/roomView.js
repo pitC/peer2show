@@ -27,9 +27,9 @@ define([
 
 		RoomView = Backbone.View.extend({
 			
-			tagName: "div",
-			id: "room-container",
-			className: "container",
+//			tagName: "div",
+//			id: "room-container",
+//			className: "container",
 	
 			initialize : function(options){
 				
@@ -199,7 +199,12 @@ define([
             		console.log("Render session end");
             		options = {message:LogManager.getLastMessage(),status:this.app.status};
             		this.sessionEnd = new SessionEndView();
-            		this.$el.html(this.sessionEnd.render().el);
+            		// in some errors the whole room is not rendered yet, therefore there's no container for the error screen
+            		// in such cases - let's create it.
+            		if (this.$el.find("#room-container").length <= 0){
+            			this.$el.html('<div div class="container" id="room-container"></div>');
+            		}
+            		this.$el.find("#room-container").html(this.sessionEnd.render().el);
             		this.removeOverlay();
             	}
             	
