@@ -26,9 +26,13 @@ define([
 		var DEFAULT_USER_NAME = "user";
 
 		RoomView = Backbone.View.extend({
+			
+			tagName: "div",
+			id: "room-container",
+			className: "container",
 	
 			initialize : function(options){
-				LogManager.init();
+				
 				console.log("Settings: ");
 				console.log(Settings);
 				Settings.calculateMaxDimensions();
@@ -36,6 +40,13 @@ define([
 				this.roomName = options.roomId || DEFAULT_ROOM_NAME;
 				this.username = options.user || DEFAULT_USER_NAME;
 				this.owner = options.owner || false;
+				
+				if (this.owner){
+					LogManager.setSessionRole("owner");
+				}
+				else{
+					LogManager.setSessionRole("guest");
+				}
 				
 				this.notificationManager = new NotificationManager();
 			
@@ -57,12 +68,7 @@ define([
 				
 				this.roomSubviews = new RoomSubviews(this.$el,this.app);
 				
-				
-				
-				this.app.on('change_status',this.render,this);
-				
-				window.onerror = LogManager.handleError;
-				
+				this.app.on('change_status',this.render,this);			
 			},
 			
 			initApp : function(){
@@ -98,8 +104,9 @@ define([
 				
 				
 				this.webRTCClient.onerror = function(e){
-//					alert(e.message);
-					
+//					alert(e);
+					console.log(">>> FATAL ERROR!");
+					console.log(e);
 					LogManager.logEvent(e,LogManager.ERROR);
 					
 					self.app.setStatus(AppStatus.FATAL_ERROR);
@@ -156,14 +163,20 @@ define([
 				};
 			},
 			
-			onRoomInitChange : function(caller,status){
+			onRoomInitChange : function(caller,status,event){
 				console.log("Room status change! "+status);
+				console.log(event);
 				switch(status){
 				case RoomStatus.NEW_ROOM: 
 					caller.app.setStatus(AppStatus.READY);
 					break;
 				case RoomStatus.JOINING:
 					caller.app.setStatus(AppStatus.JOINING_ROOM);
+					break;
+				case RoomStatus.FAILED:
+					LogManager.logEvent(event,LogManager.ERROR);
+					caller.app.setStatus(AppStatus.FATAL_ERROR);
+//					caller.render();
 					break;
 				}
 				
@@ -182,13 +195,12 @@ define([
             	console.log("Room view rerender! "+this.app.status);
         
             	if (this.app.status == AppStatus.SESSION_ENDED || this.app.status == AppStatus.FATAL_ERROR){
-            		this.removeOverlay();
-            		console.log("Render session end");
             		
+            		console.log("Render session end");
             		options = {message:LogManager.getLastMessage(),status:this.app.status};
             		this.sessionEnd = new SessionEndView();
-            		this.$el.find("#room-container").html(this.sessionEnd.render().el);
-            		
+            		this.$el.html(this.sessionEnd.render().el);
+            		this.removeOverlay();
             	}
             	
             	else if(this.roomSubviews.isInitialized()){
@@ -343,7 +355,7 @@ define([
             
             renderOverlay : function(){
             	console.log("Not rerendering everything...");
-        		if (this.app.status == AppStatus.READY){
+        		if (this.app.status == AppStatus.READY || this.app.status == AppStatus.FATAL_ERROR){
         			this.removeOverlay();
         		}
         		else{
@@ -369,7 +381,9 @@ define([
             onShow : function(){
             	
             	this.roomSubviews.onShow();
-            	this.userArea.onShow();
+            	if (this.userArea){
+            		this.userArea.onShow();
+            	}
             	this.renderOverlay();
             	this.onKeypressInit();
             	this.setHeight();

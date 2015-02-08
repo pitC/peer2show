@@ -16,13 +16,18 @@ define(['jquery',
 	Logger.logEvent = function(event,lvl){
 		console.log(event);
 		console.log(lvl);
+		
 		Logger.lastMessage = event.message || "";
+		
+		if (event.message === "[object Event]"){
+			Logger.lastMessage = (event.type || "")+" - see console for more details";
+		}
 		
 		lvl = lvl || Logger.DEBUG;
 
 		if (lvl === Logger.ERROR || lvl === Logger.KEEN){
 			event = Logger.processEvent(event);	
-			$.post("event",event);
+			$.post("/event",event);
 		}
 	};
 	
@@ -32,7 +37,7 @@ define(['jquery',
 		var event = {
 				msg:error,
 				url:url,
-				lineNumber:lineNumber,
+				lineNumber:lineNumber
 		};
 				
 		Logger.logEvent(event, Logger.ERROR);
@@ -45,6 +50,11 @@ define(['jquery',
 	
 	Logger.init = function(){
 		Logger.lastMessage = "";
+		Logger.sessionRole = "";
+	};
+	
+	Logger.setSessionRole = function(role){
+		Logger.sessionRole = role;
 	};
 	
 	Logger.switchConsoleLogs = function(enable){
@@ -61,7 +71,7 @@ define(['jquery',
 	
 	Logger.processEvent = function(event){
 		
-		var extendedAttr = {type:event.type||'',stack:event.stack||''};
+		var extendedAttr = {type:event.type||'',stackString:"",role:Logger.sessionRole};
 		
 		if (event.message){
 			if (event.message.indexOf('Could not connect to peer') !== -1){
@@ -69,11 +79,18 @@ define(['jquery',
 			}
 		}
 		
-		var trace = printStackTrace();
+		if (event.stack){
+			extendedAttr.stackString = JSON.stringify(event.stack);
+		}
+		else{
+			var trace = printStackTrace();
+			extendedAttr.stackString = trace||'';
+		}
 		
-		extendedAttr.stack = trace;
 		$.extend(event,extendedAttr);
-		
+		console.log(">>> Processed event");
+		console.log(JSON.stringify(event.stack));
+		console.log(event);
 		return event;
 	};
 	

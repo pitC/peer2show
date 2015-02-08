@@ -95,16 +95,18 @@ define([
         	console.log("init room "+options.user+" "+options.roomId+" is owner?"+options.owner);
         	var element = this.el||this.$el; 
         	$(element).empty();
+        	Globals.switchWindowStyle("session-style");
             var roomView = new RoomView(options);
             $(element).html(roomView.render().el);
-            Globals.switchWindowStyle("session-style");
             roomView.onShow();
         }
     });
 	
 	var initialize = function(){
 		// disable console logs
+		LogManager.init();
         LogManager.switchConsoleLogs(Settings.enableConsoleLog);
+        window.onerror = LogManager.handleError;
         
         Globals.init();
         var indexView = renderIndex();

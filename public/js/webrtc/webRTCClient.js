@@ -12,7 +12,7 @@
 		
 		this.peerJSOptions = {
 			// Cloud peerjs
-			key: '7673s5yzjupzxgvi',
+//			key: '7673s5yzjupzxgvi',
 			debug: 3, // all logs
 			// Local server
 //			host: 'localhost', 
@@ -339,9 +339,17 @@
 			console.log("Create!");
 			this.setIceConfig();
 			this.ownUsername = options.username;
-			
-			this.ownPeer = new Peer(this.ownerPeerId,this.peerJSOptions);
-			
+			try{
+				this.ownPeer = new Peer(this.ownerPeerId,this.peerJSOptions);
+			}
+			catch(e){
+//				self.onerror(e);
+				console.log(e);
+				if (callback){
+					callback(caller,RoomStatus.FAILED,e);
+				}
+				return;
+			}
 			this.ownPeer.on('error',this.onerror);
 			this.ownPeer.on('connection',this._onPeerConnection);
 			this.ownPeer.on('open', function(id) {
@@ -356,7 +364,18 @@
 		this.join = function(options,callback,caller){
 			console.log("Join!");
 			this.setIceConfig();
-			this.ownPeer = new Peer(this.peerJSOptions);
+			try{
+				this.ownPeer = new Peer(this.peerJSOptions);
+			}
+			catch(e){
+
+				console.log(e);
+				
+				if (callback){
+					callback(caller,RoomStatus.FAILED,e);
+				}
+				return;
+			}
 			var self = this;
 			
 			var metadata = {username:options.username};
@@ -380,7 +399,7 @@
 				 
 				 self.ownerConnection.on('data',self._onData);
 				 self.ownerConnection.on('close',self._onOwnerConnectionClose);
-				 
+				 self.ownerConnection.on('error',self.onerror);
 				 // 3. Add callback on connection open
 				 self.ownerConnection.on('open', function() {
 					 console.log("Connection to owner establiished!");
@@ -393,10 +412,7 @@
 							self.onopen(eventData);
 					 }
 				 });
-				 
-				 
 			});
-	
 		};
 		
 		this.close = function(callback){

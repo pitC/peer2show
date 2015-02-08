@@ -363,7 +363,7 @@ Packer.prototype.pack = function(value){
       } else if (typeof value.toBinaryPack == 'function'){
         this.bufferBuilder.append(value.toBinaryPack());
       } else {
-        throw new Error('Type "' + constructor.toString() + '" not yet supported');
+        throw new ('Type "' + constructor.toString() + '" not yet supported');
       }
     }
   } else {
@@ -2433,8 +2433,15 @@ Socket.prototype._startWebSocket = function(id) {
   if (this._socket) {
     return;
   }
-
+  
+  
   this._socket = new WebSocket(this._wsUrl);
+  
+  
+  this._socket.onerror = function(event){
+//	  alert(event);
+	  self.emit('error', event);
+  };
 
   this._socket.onmessage = function(event) {
     var data;

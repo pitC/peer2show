@@ -28,7 +28,7 @@ define({
 	"upload" : "wgrywam zdjęcia...",
 	"channel_open" : "nawiązywanie połączenia",
 	"wait" : "oczekiwanie na nowych użytkowników",
-	"join" : "dołączyłeś do sesji...",
+	"join" : "dołączanie do do sesji...",
 	"load" : "trwa ładowanie zdjęć",
 	"end" : "Koniec sesji!",
 	"fatal" : "Wystąpił błąd.",
