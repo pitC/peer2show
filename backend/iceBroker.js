@@ -1,14 +1,7 @@
 
 var iceBroker = process.env.ICE_BROKER || false;
 
-var XIRSYS_DATA = {
-		ident: "peertoshow",
-        secret: "1c43f593-b722-4993-b269-88d9a6328b9a",
-        domain: "www.peer2show.com",
-        application: "default",
-        room: "default",
-        secure: 1
-};
+var XIRSYS_DATA = proces.env.XIRSYS;
 
 var request = require('request');
 
