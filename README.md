@@ -24,10 +24,14 @@ Depending on the NAT configuration, the data exchange occurs directly between pe
 - exchanges all the slideshow control data (next/previous/zoom-in/zoom-out/pan) and the operations are applied on all peers' instances 
 - sends and received chat messages
 
+## UI
 Below you can see an example of the slideshow UI
 ![UI example](https://github.com/pitC/peer2show/blob/6fe41a119b17c1aacb03fef8238c4759eb3429d3/doc/ui-scr-1.PNG)
 
-.. and the high-level architecture
+Current image is displayed in the centre of the screen with navigation buttons at the top and the panel on the right showing:
+- list of the participants with their status of the file transfer
+- chat
+- preview of all images in the slideshow
 
-
+## Architecture
 ![High level architecture](https://github.com/pitC/peer2show/blob/803d1e80bb022aa94ac6ac592e0c9c7e4ca8ac08/doc/diagram.svg)
