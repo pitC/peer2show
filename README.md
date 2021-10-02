@@ -12,11 +12,11 @@ The way it works:
 5. The images are transferred and displayed to Bob and Charlie
 7. Alice navigates through the slideshow (next/previous image) or zooms-in/pans to see particiluar details within the photo
 8. Displayed image is synced to Bob and Charlie sessions
-9. Through the slideshow the peers can exchange some messages using built-in chat
+9. Through the slideshow the peers can exchange messages using the built-in chat
 10. Once finished, Alice closes the session, which automatically terminates it for Bob and Charlie too
 
 *All the data exchange in the steps 4-10 occurs in purely peer-to-peer fashion.
-Depending on the network NAT configuration, the data exchange occurs directly between peers using STUN (Session Traversal Utilities for NAT) or via a relay server using TURN (Traversal Using Relays around NAT)*
+Depending on the network NAT configuration, it might go directly between peers using STUN (Session Traversal Utilities for NAT) or via a relay server using TURN (Traversal Using Relays around NAT).*
 
 <br/>
 Under the hood the web app:
