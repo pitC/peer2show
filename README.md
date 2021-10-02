@@ -26,7 +26,8 @@ Depending on the NAT configuration, the data exchange occurs directly between pe
 
 ## UI
 Below you can see an example of the slideshow UI
-![UI example](https://github.com/pitC/peer2show/blob/6fe41a119b17c1aacb03fef8238c4759eb3429d3/doc/ui-scr-1.PNG)
+![UI starting page](https://github.com/pitC/peer2show/blob/9acc54a267a83a40e609453a4eeb0dc36e5ce6ab/doc/ui-screen-0.png)
+![UI slideshow](https://github.com/pitC/peer2show/blob/9acc54a267a83a40e609453a4eeb0dc36e5ce6ab/doc/ui-screen-1.png)
 
 Current image is displayed in the centre of the screen with navigation buttons at the top and the panel on the right showing:
 - list of the participants with their status of the file transfer
